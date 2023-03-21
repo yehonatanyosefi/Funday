@@ -1,5 +1,4 @@
-[
-	{
+{
 	"_id": "b101",
 	"title": "Robot dev proj",
 	"isStarred": false,
@@ -23,25 +22,11 @@
 		}
 	],
 	"members": [
-			{"_id": "u101",
-			"fullname": "Dor Toledano",
-			"imgUrl": "https://files.monday.com/euc1/photos/41054538/small/41054538-user_photo_2023_03_18_19_59_31.png?1679169572"
-			},
-			{
-			"_id": "u102",
-			"fullname": "Yael Bilu",
-			"imgUrl": "https://files.monday.com/euc1/photos/41055076/small/41055076-user_photo_2023_03_17_09_11_44.png?1679044305"
-			},
-			{
-			"_id": "u103",
-			"fullname": "Yehonatan Yosefi",
-			"imgUrl": "https://files.monday.com/euc1/photos/41040364/small/41040364-user_photo_2023_03_17_09_12_17.png?1679044337",
-			},
-			{
-			"_id": "u104",
-			"fullname": "Eran Peled",
-			"imgUrl": "https://files.monday.com/euc1/photos/41061269/small/41061269-user_photo_2023_03_21_10_10_39.png?1679393439",
-			}
+		{
+			"_id": "u101",
+			"fullname": "Tal Tarablus",
+			"imgUrl": "https://www.google.com"
+		}
 	],
 	"groups": [
 		{
@@ -67,7 +52,7 @@
 							}
 						},
 						{
-							"id": "ZwPnt", 
+							"id": "ZdPnm", 
 							"txt": "also @Yael Bilu please CR this",
 							"createdAt": 1590999817436,
 							"byMember": {
@@ -77,121 +62,127 @@
 							}
 						}
 					],
-					"memberIds": ["u101","u102","u103","u104"],
+					
+					"checklists": [
+						{
+							"id": "YEhmF",
+							"title": "Checklist",
+							"todos": [
+								{
+									"id": "212jX",
+									"title": "To Do 1",
+									"isDone": false
+								}
+							]
+						}
+					],
+					"memberIds": ["u101"],
+					"labelIds": ["l101", "l102"],
 					"dueDate": 16156215211,
-					"startDate": 1679612400000,
 					"byMember": {
-						"_id": "u104",
-						"username": "peled2k@gmail.com",
-						"fullname": "Eran Peled",
-						"imgUrl": "https://files.monday.com/euc1/photos/41061269/small/41061269-user_photo_2023_03_21_10_10_39.png?1679393439"
+						"_id": "u101",
+						"username": "Tal",
+						"fullname": "Tal Tarablus",
+						"imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
 					},
 					"style": {
 						"bgColor": "#26de81"
 					}
 				},
 				{
-					"id": "t102",
-					"title": "Implement Services",
-					"status": "Done",
-					"priority": "Critical",
-					"text": "",
-					"comments": [],
-					"memberIds": ["u101", "u102"],
-					"startDate": 1679612400000,
-					"dueDate": 1680037200000,
-					"byMember": {
-					  "_id": "u103",
-					  "username": "yehonatanmind@gmail.com",
-					  "fullname": "Yehonatan Yosefi",
-					  "imgUrl": "https://files.monday.com/euc1/photos/41040364/small/41040364-user_photo_2023_03_17_09_12_17.png?1679044337"
-					},
-					"style": {
-					  "bgColor": "#26de81"
-					}
-				  },
-				  {
-					"id": "t103",
-					"title": "Make View Pages",
-					"status": "Stuck",
-					"priority": "Low",
-					"text": "UserDetails,Index",
-					"comments": [],
-					"memberIds": ["u104", "u103"],
-					"dueDate": 1679706000000,
-					"startDate": 1679216400000,
-					"byMember": {
-					  "_id": "u104",
-					  "username": "peled2k@gmail.com",
-					  "fullname": "Eran Peled",
-					  "imgUrl": "https://files.monday.com/euc1/photos/41061269/small/41061269-user_photo_2023_03_21_10_10_39.png?1679393439"
-					},
-					"style": {
-					  "bgColor": "#26de81"
-					}
-				  },
-				  {
-					"id": "t104",
-					"title": "Add svgs",
-					"status": "done",
-					"priority": "",
-					"text": "Connect npm",
-					"comments": [],
-					"memberIds": ["u103"],
-					"dueDate": 1679965200000,
-					"startDate": 1680253200000,
-					"byMember": {
-					  "_id": "u103",
-					  "username": "yehonatanmind@gmail.com",
-					  "fullname": "Yehonatan Yosefi",
-					  "imgUrl": "https://files.monday.com/euc1/photos/41040364/small/41040364-user_photo_2023_03_17_09_12_17.png?1679044337"
-					},
-					"style": {
-					  "bgColor": ""
-					}
-				  },
-				  {
-					"id": "t105",
-					"title": "Convert css to scss",
-					"status": "",
-					"priority": "Critical",
-					"text": "",
-					"comments": [],
-					"memberIds": ["u103"],
-					"dueDate": 16156215211,
-					"startDate": 1679612400000,
-					"byMember": {
-					  "_id": "u103",
-					  "username": "yehonatanmind@gmail.com",
-					  "fullname": "Yehonatan Yosefi",
-					  "imgUrl": "https://files.monday.com/euc1/photos/41040364/small/41040364-user_photo_2023_03_17_09_12_17.png?1679044337"
-					},
-					"style": {
-					  "bgColor": ""
-					}
-				  }
+					"id": "c102",
+					"title": "Add Samples"
+				}
 			],
 			"style": {}
-		}
-	],
-	"activities": [
+		},
 		{
-			"id": "a101",
-			"txt": "Changed Color",
-			"createdAt": 154514,
-			"byMember": {
-				"_id": "u101",
-				"fullname": "Abi Abambi",
-				"imgUrl": "http://some-img"
-			},
-			"task": {
-				"id": "c101",
-				"title": "Replace Logo"
+			"id": "g102",
+			"title": "Group 2",
+			"tasks": [
+				{
+					"id": "c103",
+					"title": "Do that",
+					"archivedAt": "1589983468418"
+				},
+				{
+					"id": "c104",
+					"title": "Help me",
+					"status": "in-progress",
+					"priority": "high",
+					"description": "description",
+					"comments": [
+						{
+							"id": "ZdPnm",
+							"txt": "also @yaronb please CR this",
+							"createdAt": 1590999817436,
+							"byMember": {
+								"_id": "u101",
+								"fullname": "Tal Tarablus",
+								"imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+							}
+						}
+					},
+					{
+						"id": "t104",
+						"title": "Add svgs",
+						"status": "done",
+						"priority": "",
+						"text": "Connect npm",
+						"comments": [],
+						"memberIds": ["u103"],
+						"dueDate": 1679965200000,
+						"startDate": 1680253200000,
+						"byMember": {
+							"_id": "u103",
+							"username": "yehonatanmind@gmail.com",
+							"fullname": "Yehonatan Yosefi",
+							"imgUrl": "https://files.monday.com/euc1/photos/41040364/small/41040364-user_photo_2023_03_17_09_12_17.png?1679044337"
+						},
+						"style": {
+							"bgColor": ""
+						}
+					},
+					{
+						"id": "t105",
+						"title": "Convert css to scss",
+						"status": "",
+						"priority": "Critical",
+						"text": "",
+						"comments": [],
+						"memberIds": ["u103"],
+						"dueDate": 16156215211,
+						"startDate": 1679612400000,
+						"byMember": {
+							"_id": "u103",
+							"username": "yehonatanmind@gmail.com",
+							"fullname": "Yehonatan Yosefi",
+							"imgUrl": "https://files.monday.com/euc1/photos/41040364/small/41040364-user_photo_2023_03_17_09_12_17.png?1679044337"
+						},
+						"style": {
+							"bgColor": ""
+						}
+					}
+				],
+				"style": {}
 			}
-		}
-	],
-	"cmpsOrder": ["status-picker", "member-picker", "date-picker"]
-}
+		],
+		"activities": [
+			{
+				"id": "a101",
+				"txt": "Changed Color",
+				"createdAt": 154514,
+				"byMember": {
+					"_id": "u101",
+					"fullname": "Abi Abambi",
+					"imgUrl": "http://some-img"
+				},
+				"task": {
+					"id": "c101",
+					"title": "Replace Logo"
+				}
+			}
+		],
+		"cmpsOrder": ["status-picker", "member-picker", "date-picker"]
+	}
 ]
-
-
