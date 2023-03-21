@@ -1,33 +1,7 @@
 // import { boardService } from '../services/board.service.local'
 import { boardService } from '../services/board.service'
 
-export function getActionRemoveTask(taskId) {
-    return {
-        type: 'removeTask',
-        taskId
-    }
-}
-export function getActionAddTask(task) {
-    return {
-        type: 'addTask',
-        task
-    }
-}
-export function getActionUpdateTask(task) {
-    return {
-        type: 'updateTask',
-        task
-    }
-}
-export function getActionAddTaskMsg(taskId) {
-    return {
-        type: 'addTaskMsg',
-        taskId,
-        txt: 'Stam txt'
-    }
-}
-
-export const taskStore = {
+export const boardStore = {
     state: {
         tasks: [],
         groups: [],
@@ -106,8 +80,8 @@ export const taskStore = {
         },
         async loadTasks(context) {
             try {
-                const tasks = await boardService.queryTask()
-                context.commit({ type: 'setTasks', tasks })
+                // const tasks = await boardService.queryTask()
+                // context.commit({ type: 'setTasks', tasks })
             } catch (err) {
                 console.log('taskStore: Error in loadTasks', err)
                 throw err

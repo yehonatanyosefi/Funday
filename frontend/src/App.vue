@@ -1,6 +1,6 @@
 <template>
   <section>
-    <AppHeader />
+    <!-- <AppHeader /> -->
     <RouterView/>
     <UserMsg/>
   </section>
@@ -10,7 +10,7 @@
 
 
 import { userService } from './services/user.service'
-import { store } from './store/store'
+import { store } from './store'
 
 import AppHeader from './cmps/AppHeader.vue'
 import UserMsg from './cmps/UserMsg.vue'

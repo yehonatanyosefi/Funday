@@ -1,5 +1,7 @@
 <template>
-	<div class="container home">
+<section>
+	<BoardGroup></BoardGroup>
+	<!-- <div class="container home">
 		<ul class="task-list">
 			<li v-for="task in tasks" :key="task._id">
 				<p>
@@ -19,13 +21,15 @@
 			<input type="text" v-model="taskToAdd.vendor" />
 			<button>Save</button>
 		</form>
-	</div>
+	</div> -->
+</section>
 </template>
 
 <script>
+import BoardHeader from './BoardHeader.vue'
+import BoardGroup from './BoardGroup.vue'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { boardService } from '../services/board.service.local'
-import { getActionRemoveTask, getActionUpdateTask, getActionAddTaskMsg } from '../store/task.store'
 export default {
 	data() {
 		return {
@@ -86,6 +90,10 @@ export default {
 		printTaskToConsole(task) {
 			console.log('Task msgs:', task.msgs)
 		},
+	},
+	components: {
+		BoardHeader,
+		BoardGroup,
 	},
 }
 </script>

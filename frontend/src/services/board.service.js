@@ -14,7 +14,7 @@ export const boardService = {
     removeTask,
     getEmptyTask,
     addTaskMsg,
-    groupQuery,
+    queryGroup,
     getGroupById,
     saveGroup,
     removeGroup,
@@ -42,40 +42,40 @@ window.cs = boardService
 async function saveTask(task) {
     var savedTask
     if (task._id) {
-        // savedTask = await storageService.put(STORAGE_KEY, task)
-        savedTask = await httpService.put(`task/${task._id}`, task)
+        savedTask = await storageService.put(STORAGE_KEY, task)
+        // savedTask = await httpService.put(`task/${task._id}`, task)
 
     } else {
         // Later, owner is set by the backend
         task.owner = userService.getLoggedinUser()
-        // savedTask = await storageService.post(STORAGE_KEY, task)
-        savedTask = await httpService.post('task', task)
+        savedTask = await storageService.post(STORAGE_KEY, task)
+        // savedTask = await httpService.post('task', task)
     }
     return savedTask
 }
 
 async function queryTask(filterBy = { txt: '', price: 0 }) {
-    return httpService.get(STORAGE_KEY, filterBy)
+    // return httpService.get(STORAGE_KEY, filterBy)
 
-    // var tasks = await storageService.query(STORAGE_KEY)
-    // if (filterBy.txt) {
-    //     const regex = new RegExp(filterBy.txt, 'i')
-    //     tasks = tasks.filter(task => regex.test(task.vendor) || regex.test(task.description))
-    // }
-    // if (filterBy.price) {
-    //     tasks = tasks.filter(task => task.price <= filterBy.price)
-    // }
-    // return tasks
+    var tasks = await storageService.query(STORAGE_KEY)
+    if (filterBy.txt) {
+        const regex = new RegExp(filterBy.txt, 'i')
+        tasks = tasks.filter(task => regex.test(task.vendor) || regex.test(task.description))
+    }
+    if (filterBy.price) {
+        tasks = tasks.filter(task => task.price <= filterBy.price)
+    }
+    return tasks
 
 }
 function getTaskById(taskId) {
-    // return storageService.get(STORAGE_KEY, taskId)
-    return httpService.get(`task/${taskId}`)
+    return storageService.get(STORAGE_KEY, taskId)
+    // return httpService.get(`task/${taskId}`)
 }
 
 async function removeTask(taskId) {
-    // await storageService.remove(STORAGE_KEY, taskId)
-    return httpService.delete(`task/${taskId}`)
+    return await storageService.remove(STORAGE_KEY, taskId)
+    // return httpService.delete(`task/${taskId}`)
 }
 
 async function addTaskMsg(taskId, txt) {
@@ -120,40 +120,40 @@ function getEmptyTask() {
 async function saveGroup(group) {
     var savedGroup
     if (group._id) {
-        // savedGroup = await storageService.put(STORAGE_KEY, group)
-        savedGroup = await httpService.put(`group/${group._id}`, group)
+        savedGroup = await storageService.put(STORAGE_KEY, group)
+        // savedGroup = await httpService.put(`group/${group._id}`, group)
 
     } else {
         // Later, owner is set by the backend
         group.owner = userService.getLoggedinUser()
-        // savedGroup = await storageService.post(STORAGE_KEY, group)
-        savedGroup = await httpService.post('group', group)
+        savedGroup = await storageService.post(STORAGE_KEY, group)
+        // savedGroup = await httpService.post('group', group)
     }
     return savedGroup
 }
 
 async function queryGroup(filterBy = { txt: '', price: 0 }) {
-    return httpService.get(STORAGE_KEY, filterBy)
+    // return httpService.get(STORAGE_KEY, filterBy)
 
-    // var groups = await storageService.query(STORAGE_KEY)
-    // if (filterBy.txt) {
-    //     const regex = new RegExp(filterBy.txt, 'i')
-    //     groups = groups.filter(group => regex.test(group.vendor) || regex.test(group.description))
-    // }
-    // if (filterBy.price) {
-    //     groups = groups.filter(group => group.price <= filterBy.price)
-    // }
-    // return groups
+    var groups = await storageService.query(STORAGE_KEY)
+    if (filterBy.txt) {
+        const regex = new RegExp(filterBy.txt, 'i')
+        groups = groups.filter(group => regex.test(group.vendor) || regex.test(group.description))
+    }
+    if (filterBy.price) {
+        groups = groups.filter(group => group.price <= filterBy.price)
+    }
+    return groups
 
 }
 function getGroupById(groupId) {
-    // return storageService.get(STORAGE_KEY, groupId)
-    return httpService.get(`group/${groupId}`)
+    return storageService.get(STORAGE_KEY, groupId)
+    // return httpService.get(`group/${groupId}`)
 }
 
 async function removeGroup(groupId) {
-    // await storageService.remove(STORAGE_KEY, groupId)
-    return httpService.delete(`group/${groupId}`)
+    await storageService.remove(STORAGE_KEY, groupId)
+    // return httpService.delete(`group/${groupId}`)
 }
 
 async function addGroupMsg(groupId, txt) {
