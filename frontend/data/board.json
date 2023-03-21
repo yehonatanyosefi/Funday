@@ -1,4 +1,5 @@
-{
+[
+	{
 	"_id": "b101",
 	"title": "Robot dev proj",
 	"isStarred": false,
@@ -39,7 +40,7 @@
 					"title": "Make components",
 					"status": "Working on it",
 					"priority": "Medium",
-					"Text": "Header,Chat..",
+					"text": "Header,Chat..",
 					"comments": [
 						{
 							"id": "ZdPnm", 
@@ -62,37 +63,99 @@
 							}
 						}
 					],
-					
-					"checklists": [
-						{
-							"id": "YEhmF",
-							"title": "Checklist",
-							"todos": [
-								{
-									"id": "212jX",
-									"title": "To Do 1",
-									"isDone": false
-								}
-							]
-						}
-					],
 					"memberIds": ["u101"],
-					"labelIds": ["l101", "l102"],
 					"dueDate": 16156215211,
+					"startDate": 1679612400000,
 					"byMember": {
-						"_id": "u101",
-						"username": "Tal",
-						"fullname": "Tal Tarablus",
-						"imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+						"_id": "u104",
+						"username": "peled2k@gmail.com",
+						"fullname": "Eran Peled",
+						"imgUrl": "https://files.monday.com/euc1/photos/41061269/small/41061269-user_photo_2023_03_21_10_10_39.png?1679393439"
 					},
 					"style": {
 						"bgColor": "#26de81"
 					}
 				},
 				{
-					"id": "c102",
-					"title": "Add Samples"
-				}
+					"id": "t102",
+					"title": "Implement Services",
+					"status": "Done",
+					"priority": "Critical",
+					"text": "",
+					"comments": [],
+					"memberIds": ["u102", "u103"],
+					"startDate": 1679612400000,
+					"dueDate": 1680037200000,
+					"byMember": {
+					  "_id": "u103",
+					  "username": "yehonatanmind@gmail.com",
+					  "fullname": "Yehonatan Yosefi",
+					  "imgUrl": "https://files.monday.com/euc1/photos/41040364/small/41040364-user_photo_2023_03_17_09_12_17.png?1679044337"
+					},
+					"style": {
+					  "bgColor": "#26de81"
+					}
+				  },
+				  {
+					"id": "t103",
+					"title": "Make View Pages",
+					"status": "Stuck",
+					"priority": "Low",
+					"Text": "UserDetails,Index",
+					"comments": [],
+					"memberIds": ["u104", "u103"],
+					"dueDate": 1679706000000,
+					"startDate": 1679216400000,
+					"byMember": {
+					  "_id": "u104",
+					  "username": "peled2k@gmail.com",
+					  "fullname": "Eran Peled",
+					  "imgUrl": "https://files.monday.com/euc1/photos/41061269/small/41061269-user_photo_2023_03_21_10_10_39.png?1679393439"
+					},
+					"style": {
+					  "bgColor": "#26de81"
+					}
+				  },
+				  {
+					"id": "t104",
+					"title": "Add svgs",
+					"status": "done",
+					"priority": "",
+					"Text": "Connect npm",
+					"comments": [],
+					"memberIds": ["u103"],
+					"dueDate": 1679965200000,
+					"startDate": 1680253200000,
+					"byMember": {
+					  "_id": "u103",
+					  "username": "yehonatanmind@gmail.com",
+					  "fullname": "Yehonatan Yosefi",
+					  "imgUrl": "https://files.monday.com/euc1/photos/41040364/small/41040364-user_photo_2023_03_17_09_12_17.png?1679044337"
+					},
+					"style": {
+					  "bgColor": ""
+					}
+				  },
+				  {
+					"id": "t105",
+					"title": "Convert css to scss",
+					"status": "",
+					"priority": "Critical",
+					"Text": "",
+					"comments": [],
+					"memberIds": ["u103"],
+					"dueDate": 16156215211,
+					"startDate": 1679612400000,
+					"byMember": {
+					  "_id": "u103",
+					  "username": "yehonatanmind@gmail.com",
+					  "fullname": "Yehonatan Yosefi",
+					  "imgUrl": "https://files.monday.com/euc1/photos/41040364/small/41040364-user_photo_2023_03_17_09_12_17.png?1679044337"
+					},
+					"style": {
+					  "bgColor": ""
+					}
+				  }
 			],
 			"style": {}
 		},
@@ -171,3 +234,6 @@
 	],
 	"cmpsOrder": ["status-picker", "member-picker", "date-picker"]
 }
+]
+
+
