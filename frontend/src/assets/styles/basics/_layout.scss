@@ -2,7 +2,35 @@
     max-width: 1500px;
     padding: 10px;
 }
-
+    .main-layout {
+        margin: 0;
+        height: 100vh;
+        width: 100vw;
+        display: grid;
+        grid-template-columns: 25vw 1fr;
+        grid-template-rows: 12.5vh 1fr;
+        grid-template-areas: "sidebar header"
+            "sidebar details";
+        .sidebar {
+                grid-area: sidebar;
+                height: 100%;
+                width: 100%;
+                overflow: hidden;
+            }
+        
+            .header {
+                grid-area: header;
+                height: 100%;
+                width: 100%;
+                overflow: hidden;
+            }
+        
+            .details {
+                grid-area: details;
+                height: 100%;
+                width: 100%;
+            }
+    }
 .main-container {
     display: grid;
     grid-template-columns: 20px 1fr 20px;

@@ -1,5 +1,7 @@
 <template>
-
+     <section class="sidebar">
+          Sidebar
+     </section>
 </template>
 
 <script>
