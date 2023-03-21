@@ -11,10 +11,38 @@
 @import "basics/links";
 @import "basics/forms";
 
+//Dynamic Components
+@import "cmps/dynamicCmps/Date";
+@import "cmps/dynamicCmps/Person";
+@import "cmps/dynamicCmps/Priority";
+@import "cmps/dynamicCmps/Side";
+@import "cmps/dynamicCmps/Status";
+@import "cmps/dynamicCmps/TaskTitle";
+@import "cmps/dynamicCmps/Timeline";
+@import "cmps/dynamicCmps/File";
+
+
 // Components
 @import "cmps/AppHeader";
-@import "cmps/UserMsg";
 @import "cmps/ReviewList";
 @import "cmps/TaskList";
+@import "cmps/BoardDetails";
+@import "cmps/BoardGroup";
+@import "cmps/FoldingSidebar";
+@import "cmps/ImgUploader";
+@import "cmps/MainSidebar";
+@import "cmps/TaskConversation";
+@import "cmps/TaskPreview";
+@import "cmps/UserActivities";
+@import "cmps/TaskDetails";
+@import "cmps/UserMsg";
+@import "cmps/UserPreview";
 
-
+//Views
+@import "views/Chat";
+@import "views/DashboardIndex";
+@import "views/Home";
+@import "views/KanbanIndex";
+@import "views/LoginSignup";
+@import "views/ReviewIndex";
+@import "views/UserDetails";
