@@ -20,6 +20,12 @@ export const boardService = {
     removeGroup,
     getEmptyGroup,
     addGroupMsg,
+    queryBoard,
+    getBoardById,
+    saveBoard,
+    removeBoard,
+    getEmptyBoard,
+    addBoardMsg
 }
 window.cs = boardService
 
@@ -110,6 +116,7 @@ function getEmptyTask() {
 //     // return board
 //     // return group
 // }
+
 async function saveGroup(group) {
     var savedGroup
     if (group._id) {
@@ -166,7 +173,35 @@ function getEmptyGroup() {
     }
 }
 
+async function queryBoard(filterBy={title:''}){
+    // return httpService.get(STORAGE_KEY, filterBy)
 
+    var boards = await storageService.query(STORAGE_KEY)
+    if (filterBy.title) {
+        const regex = new RegExp(filterBy.txt, 'i')
+        boards = boards.filter(board => regex.test(board.title) )
+    }
+    // if (filterBy.price) {
+    //     boards = boards.filter(board => board.price <= filterBy.price)
+    // }
+    return boards
+}
+
+async function getBoardById(){
+
+}
+async function saveBoard(){
+
+}
+async function removeBoard(){
+
+}
+async function getEmptyBoard(){
+
+}
+async function addBoardMsg(){
+
+}
 
 
 
