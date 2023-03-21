@@ -20,7 +20,7 @@ async function query(filterBy = { txt: '' }) {
 async function getById(taskId) {
     try {
         const collection = await dbService.getCollection('task')
-        const task = collection.findOne({ _id: ObjectId(taskId) })
+        const task = collection.findOne({ _id: new ObjectId(taskId) })
         return task
     } catch (err) {
         logger.error(`while finding task ${taskId}`, err)
@@ -31,7 +31,7 @@ async function getById(taskId) {
 async function remove(taskId) {
     try {
         const collection = await dbService.getCollection('task')
-        await collection.deleteOne({ _id: ObjectId(taskId) })
+        await collection.deleteOne({ _id: new ObjectId(taskId) })
         return taskId
     } catch (err) {
         logger.error(`cannot remove task ${taskId}`, err)
@@ -57,7 +57,7 @@ async function update(task) {
             price: task.price
         }
         const collection = await dbService.getCollection('task')
-        await collection.updateOne({ _id: ObjectId(task._id) }, { $set: taskToSave })
+        await collection.updateOne({ _id: new ObjectId(task._id) }, { $set: taskToSave })
         return task
     } catch (err) {
         logger.error(`cannot update task ${taskId}`, err)
@@ -69,7 +69,7 @@ async function addTaskMsg(taskId, msg) {
     try {
         msg.id = utilService.makeId()
         const collection = await dbService.getCollection('task')
-        await collection.updateOne({ _id: ObjectId(taskId) }, { $push: { msgs: msg } })
+        await collection.updateOne({ _id: new ObjectId(taskId) }, { $push: { msgs: msg } })
         return msg
     } catch (err) {
         logger.error(`cannot add task msg ${taskId}`, err)
@@ -80,7 +80,7 @@ async function addTaskMsg(taskId, msg) {
 async function removeTaskMsg(taskId, msgId) {
     try {
         const collection = await dbService.getCollection('task')
-        await collection.updateOne({ _id: ObjectId(taskId) }, { $pull: { msgs: { id: msgId } } })
+        await collection.updateOne({ _id: new ObjectId(taskId) }, { $pull: { msgs: { id: msgId } } })
         return msgId
     } catch (err) {
         logger.error(`cannot add task msg ${taskId}`, err)
