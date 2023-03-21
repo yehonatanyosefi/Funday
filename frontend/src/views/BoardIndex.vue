@@ -1,6 +1,5 @@
 <template>
-<main>
-
+<main class="main-layout">
 <MainSidebar></MainSidebar>
 <BoardHeader></BoardHeader>
 <BoardDetails></BoardDetails>

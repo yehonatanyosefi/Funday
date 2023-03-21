@@ -2,7 +2,43 @@
     max-width: 1500px;
     padding: 10px;
 }
-
+    .main-layout {
+        margin: 0;
+        height: 100vh;
+        width: 100vw;
+        display: grid;
+        grid-template-areas: "sidebar header"
+            "sidebar details";
+        .sidebar {
+                grid-area: sidebar;
+                height: 100vh;
+                width: 25vw;
+                padding: 1rem;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+        
+            .header {
+                grid-area: header;
+                height: 25vh;
+                width: 100%;
+                padding: 1rem;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+        
+            .details {
+                grid-area: details;
+                height: 100%;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 1rem;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+    }
 .main-container {
     display: grid;
     grid-template-columns: 20px 1fr 20px;
