@@ -216,5 +216,3 @@ $colors-list: #037f4c #9cd326 #cab641 #ffcb00 #ff642e #ffadad #ff7575 #bb3354 #f
      $i: index($colors-list, $current-color);
      $label-color-#{$i}: $current-color;
 }
-
-;

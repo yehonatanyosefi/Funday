@@ -1,51 +1,51 @@
-import { carService } from './services/car.service.js'
+import { boardService } from './services/board.service.js'
 import { userService } from './services/user.service.js'
 import { utilService } from './services/util.service.js'
 
 console.log('Simple driver to test some API calls')
 
-window.onLoadCars = onLoadCars
+window.onLoadTasks = onLoadTasks
 window.onLoadUsers = onLoadUsers
-window.onAddCar = onAddCar
-window.onGetCarById = onGetCarById
-window.onRemoveCar = onRemoveCar
-window.onAddCarMsg = onAddCarMsg
+window.onAddTask = onAddTask
+window.onGetTaskById = onGetTaskById
+window.onRemoveTask = onRemoveTask
+window.onAddTaskMsg = onAddTaskMsg
 
-async function onLoadCars() {
-    const cars = await carService.query()
-    render('Cars', cars)
+async function onLoadTasks() {
+    const tasks = await boardService.query()
+    render('Tasks', tasks)
 }
 async function onLoadUsers() {
     const users = await userService.query()
     render('Users', users)
 }
 
-async function onGetCarById() {
-    const id = prompt('Car id?')
+async function onGetTaskById() {
+    const id = prompt('Task id?')
     if (!id) return
-    const car = await carService.getById(id)
-    render('Car', car)
+    const task = await boardService.getById(id)
+    render('Task', task)
 }
 
-async function onRemoveCar() {
-    const id = prompt('Car id?')
+async function onRemoveTask() {
+    const id = prompt('Task id?')
     if (!id) return
-    await carService.remove(id)
-    render('Removed Car')
+    await boardService.remove(id)
+    render('Removed Task')
 }
 
-async function onAddCar() {
+async function onAddTask() {
     await userService.login({ username: 'muki', password: '123' })
-    const savedCar = await carService.save(carService.getEmptyCar())
-    render('Saved Car', savedCar)
+    const savedTask = await boardService.save(boardService.getEmptyTask())
+    render('Saved Task', savedTask)
 }
 
-async function onAddCarMsg() {
+async function onAddTaskMsg() {
     await userService.login({ username: 'muki', password: '123' })
-    const id = prompt('Car id?')
+    const id = prompt('Task id?')
     if (!id) return
 
-    const savedMsg = await carService.addCarMsg(id, 'some msg')
+    const savedMsg = await boardService.addTaskMsg(id, 'some msg')
     render('Saved Msg', savedMsg)
 }
 
