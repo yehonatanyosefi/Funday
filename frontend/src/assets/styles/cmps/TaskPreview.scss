@@ -1,0 +1,15 @@
+.task-preview {
+     display: grid;
+     grid-template-columns: repeat(6, 1fr);
+     gap: 10px;
+     align-items: center;
+     padding: 10px;
+     background-color: white;
+     border: 1px solid lightgray;
+     border-radius: 3px;
+}
+@media (max-width: 767px) {
+     .task-preview {
+          grid-template-columns: repeat(3, 1fr);
+     }
+}

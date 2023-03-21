@@ -1,6 +1,8 @@
 <template>
-<section>
-	<BoardGroup></BoardGroup>
+<section class="board-details">
+	<template v-for="group in groups" :key="group.id">
+		<BoardGroup :group="group" :cmpOrder="cmpOrder"></BoardGroup>
+	</template>
 	<!-- <div class="container home">
 		<ul class="task-list">
 			<li v-for="task in tasks" :key="task._id">
@@ -34,18 +36,19 @@ export default {
 	data() {
 		return {
 			taskToAdd: boardService.getEmptyTask(),
+			cmpOrder: ["TaskTitle", "Date", "Member", "Status", "Text", "Priority"],
 		}
 	},
 	computed: {
 		loggedInUser() {
 			return this.$store.getters.loggedinUser
 		},
-		tasks() {
-			return this.$store.getters.tasks
+		groups() {
+        		return this.$store.getters.groups
 		},
 	},
 	created() {
-		this.$store.dispatch({ type: 'loadTasks' })
+		setTimeout(()=>this.$store.dispatch({ type: "loadGroups" }),100)
 	},
 	methods: {
 		async addTask() {

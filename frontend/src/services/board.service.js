@@ -131,18 +131,18 @@ async function saveGroup(group) {
     }
     return savedGroup
 }
-
+import board from '../../data/board.json' assert {type: 'json'};
 async function queryGroup(filterBy = { txt: '', price: 0 }) {
     // return httpService.get(STORAGE_KEY, filterBy)
-
-    var groups = await storageService.query(STORAGE_KEY)
-    if (filterBy.txt) {
-        const regex = new RegExp(filterBy.txt, 'i')
-        groups = groups.filter(group => regex.test(group.vendor) || regex.test(group.description))
-    }
-    if (filterBy.price) {
-        groups = groups.filter(group => group.price <= filterBy.price)
-    }
+    const groups = board[0].groups
+    // var groups = await storageService.query(STORAGE_KEY)
+    // if (filterBy.txt) {
+    //     const regex = new RegExp(filterBy.txt, 'i')
+    //     groups = groups.filter(group => regex.test(group.vendor) || regex.test(group.description))
+    // }
+    // if (filterBy.price) {
+    //     groups = groups.filter(group => group.price <= filterBy.price)
+    // }
     return groups
 
 }
@@ -173,13 +173,13 @@ function getEmptyGroup() {
     }
 }
 
-async function queryBoard(filterBy={title:''}){
+async function queryBoard(filterBy = { title: '' }) {
     // return httpService.get(STORAGE_KEY, filterBy)
 
     var boards = await storageService.query(STORAGE_KEY)
     if (filterBy.title) {
         const regex = new RegExp(filterBy.txt, 'i')
-        boards = boards.filter(board => regex.test(board.title) )
+        boards = boards.filter(board => regex.test(board.title))
     }
     // if (filterBy.price) {
     //     boards = boards.filter(board => board.price <= filterBy.price)
@@ -187,19 +187,19 @@ async function queryBoard(filterBy={title:''}){
     return boards
 }
 
-async function getBoardById(){
+async function getBoardById() {
 
 }
-async function saveBoard(){
+async function saveBoard() {
 
 }
-async function removeBoard(){
+async function removeBoard() {
 
 }
-async function getEmptyBoard(){
+async function getEmptyBoard() {
 
 }
-async function addBoardMsg(){
+async function addBoardMsg() {
 
 }
 

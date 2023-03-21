@@ -1,6 +1,6 @@
 <template>
 <div>
-     Side
+     Person
 </div>
 </template>
 

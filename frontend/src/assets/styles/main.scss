@@ -13,19 +13,18 @@
 
 //Dynamic Components
 @import "cmps/dynamicCmps/Date";
-@import "cmps/dynamicCmps/Person";
+@import "cmps/dynamicCmps/Member";
 @import "cmps/dynamicCmps/Priority";
 @import "cmps/dynamicCmps/Side";
 @import "cmps/dynamicCmps/Status";
 @import "cmps/dynamicCmps/TaskTitle";
 @import "cmps/dynamicCmps/Timeline";
 @import "cmps/dynamicCmps/File";
-
+@import "cmps/dynamicCmps/Text";
 
 // Components
 @import "cmps/AppHeader";
 @import "cmps/ReviewList";
-@import "cmps/TaskList";
 @import "cmps/BoardDetails";
 @import "cmps/BoardGroup";
 @import "cmps/FoldingSidebar";
@@ -38,12 +37,14 @@
 @import "cmps/UserMsg";
 @import "cmps/UserPreview";
 @import "cmps/BoardHeader";
+@import "cmps/Dashboard";
+@import "cmps/Kanban";
 
 //Views
 @import "views/Chat";
-@import "views/Dashboard";
 @import "views/Home";
-@import "views/Kanban";
 @import "views/LoginSignup";
+@import "views/BoardIndex";
+@import "views/TaskDetails";
 // @import "views/ReviewIndex";
 @import "views/UserDetails";
