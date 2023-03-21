@@ -37,12 +37,13 @@
 @import "cmps/TaskDetails";
 @import "cmps/UserMsg";
 @import "cmps/UserPreview";
+@import "cmps/BoardHeader";
 
 //Views
 @import "views/Chat";
-@import "views/DashboardIndex";
+@import "views/Dashboard";
 @import "views/Home";
-@import "views/KanbanIndex";
+@import "views/Kanban";
 @import "views/LoginSignup";
-@import "views/ReviewIndex";
+// @import "views/ReviewIndex";
 @import "views/UserDetails";

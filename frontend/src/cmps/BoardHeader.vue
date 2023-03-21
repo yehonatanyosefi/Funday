@@ -1,6 +1,6 @@
 <template>
 <div>
-     Group
+     Header
 </div>
 </template>
 
