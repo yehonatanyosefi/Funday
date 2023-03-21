@@ -1,13 +1,21 @@
 <template>
      <section class="sidebar">
           <img src="../assets/funday.png" alt="">
-          <button><WorkManagement class="svg-icon"/></button> 
-          <button><Notifications class="svg-icon"/></button> 
-          <button><Inbox class="svg-icon"/></button> 
-          <button><MyWork class="svg-icon"/></button> 
-          <button><Favorite class="svg-icon"/></button> 
-          <button><Apps class="svg-icon"/></button> 
-          <button><Invite class="svg-icon"/></button> 
+          <!-- <div class="monday-style-divider surface-divider bottom monday-style-divider--horizontal"></div> -->
+          <div class="divider"></div>
+          <div class="flex column">
+               <div class="flex column">
+                    <button><WorkManagement class="svg-icon"/></button> 
+                    <button><Notifications class="svg-icon"/></button> 
+                    <button><Inbox class="svg-icon"/></button> 
+                    <button><MyWork class="svg-icon"/></button> 
+                    <button><Favorite class="svg-icon"/></button> 
+               </div>
+               <button><Apps class="svg-icon"/></button> 
+               <button><Invite class="svg-icon"/></button> 
+
+          </div>
+
           <button><Search class="svg-icon"/></button> 
           <button><Help class="svg-icon"/></button> 
           <button><InstalledProducts class="svg-icon InstalledProducts"/></button> 
@@ -26,6 +34,7 @@ import Invite from '../assets/svg/Invite.svg'
 import Search from '../assets/svg/Search.svg'
 import Help from '../assets/svg/Help.svg'
 import InstalledProducts from '../assets/svg/InstalledProducts.svg'
+import Divider from '../assets/svg/Divider.svg'
 
 export default {
 props: {},
@@ -53,7 +62,8 @@ components: {
      Invite,
      Search,
      Help,
-     InstalledProducts
+     InstalledProducts,
+     Divider
 },
 }
 </script>
