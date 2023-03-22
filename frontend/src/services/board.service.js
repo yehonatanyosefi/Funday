@@ -40,7 +40,7 @@ async function update(boardId, type = 'task', payload, groupId = null) {
             // board.groups.push(payload)
             break
     }
-    saveBoard(board)
+    return await saveBoard(board)
     // board.activities.unshift(activity)
 }
 
