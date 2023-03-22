@@ -1,5 +1,8 @@
 <template>
 <section class="task-preview" v-if="cmpOrder?.length">
+  <div class="task">
+    <input type="checkbox" title="Delete Task" @click="$emit('removeTask',task.id)" class="task-checkbox">
+  </div>
   <div v-for="(cmp, idx) in cmpOrder" :key="idx" class="task">
         <component
           :is="capitalizeFirstLetter(cmp)"
@@ -19,6 +22,7 @@ import Status from "./dynamicCmps/Status.vue";
 import Priority from "./dynamicCmps/Priority.vue";
 import Text from "./dynamicCmps/Text.vue";
 export default {
+  emits: ["updateTask", "removeTask"],
 props: {
     task: Object,
     cmpOrder: Array,

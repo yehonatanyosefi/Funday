@@ -61,6 +61,16 @@ export const boardStore = {
                 throw err
             }
         },
+        async removeTask(context, { ids }) {
+            try {
+                await boardService.remove(ids, 'task')
+                // context.commit({ type: 'removeTask', task })
+                context.dispatch({ type: 'loadGroups' })
+            } catch (err) {
+                console.log('taskStore: Error in removeTask', err)
+                throw err
+            }
+        },
         async saveTask({ commit }, { boardId, groupId, task, activity }) {
             try {
                 board = boardService.saveTask(boardId, groupId, task, activity)
@@ -86,15 +96,6 @@ export const boardStore = {
                 // context.commit({ type: 'setTasks', tasks })
             } catch (err) {
                 console.log('taskStore: Error in loadTasks', err)
-                throw err
-            }
-        },
-        async removeTask(context, { taskId }) {
-            try {
-                await boardService.removeTask(taskId)
-                context.commit(getActionRemoveTask(taskId))
-            } catch (err) {
-                console.log('taskStore: Error in removeTask', err)
                 throw err
             }
         },
