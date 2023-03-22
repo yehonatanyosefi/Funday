@@ -41,3 +41,64 @@
 .portrait-ratio {
     @include aspect-ratio(9, 16);
 }
+
+//MODAL
+.modal {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,.32);
+    background-color: #ffffff;
+    border-radius: 8px;
+    transition: width .1s;
+    background-color: white;
+    pointer-events: all;
+    max-width: 200px;
+  }
+.modal.big {
+    background-color: var(--clr1);
+    width: 50%;
+    height: auto;
+  }
+  
+  .modal-overlay {
+    display: block;
+    opacity: 0.5;
+  
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  
+    background-color: #000;
+    transition: all 0.3s;
+    position: fixed;
+    top: 0;
+    left: 0;
+  
+    margin: 0;
+    padding: 0;
+  }
+
+  //modal colors
+
+.empty {
+    background-color: $color-empty-label;
+}
+.working {
+    background-color: $color-working-on-it;
+}
+.stuck {
+    background-color: $color-stuck;
+}
+.done {
+    background-color: $color-done;
+}
+
+.empty-blue{
+    background-color: $color-empty-blue;
+
+}
