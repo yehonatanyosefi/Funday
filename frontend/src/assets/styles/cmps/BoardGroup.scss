@@ -1,16 +1,17 @@
 .board-group {
+     font-family: $task-font;
      display: grid;
      grid-template-columns: 1fr;
      border-radius: 3px;
-     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
      height: fit-content;
      width: fit-content;
+     .group-header {
+          color: #579bfc;
+     }
      .task-header {
           display: grid;
           grid-template-columns: repeat(6, 1fr);
           align-items: center;
-          background-color: white;
-          border: 1px solid lightgray;
           border-radius: 3px;
           section {
                height: 100%;
@@ -19,10 +20,17 @@
                justify-content: center;
                align-items: center;
                .task {
+                    cursor: grab;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                     width: 175px;
                     height: 100%;
                     padding: 10px;
-                    border: 1px solid lightgray;
+                    border: 1px solid $color-divider;
+                    &:not(.status, .priority):hover {
+                         background-color: $color-highlighted;
+                    }
                }
           }
      }

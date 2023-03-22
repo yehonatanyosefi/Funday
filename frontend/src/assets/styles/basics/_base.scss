@@ -2,19 +2,14 @@
     box-sizing: border-box;
 }
 
-::selection {
-    background-color: $clr1;
-    color: $clr6;
-}
-
 html {
     font-family: montserrat;
     line-height: 1.6;
-    color: $clr2;
 }
 
 body {
-    font-size: rem(18px);
+    color: $color-txt-primary;
+    font-size: rem(16px);
     margin: 0;
     padding: 0;
 }
@@ -25,15 +20,6 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1;
 }
 
-
-section, main, footer {
-    // padding: 5px;
-}
-
-// img {
-//     width: 100%;
-// }
-
 p {
     margin: 0 0 1em;
     max-width: 40ch;
@@ -42,9 +28,14 @@ p {
 a {
     text-decoration: none;
 }
+
 a:hover {
     text-decoration: underline;
 }
 
-
-
+.profile-picture {
+    border-radius: 50%;
+    object-fit: cover;
+    max-width: 30px;
+    border: 2px solid #f5f6f8;
+}

@@ -1,7 +1,7 @@
 <template>
-<section class="task-preview">
+<section class="task-preview" v-if="cmpOrder?.length">
   <div v-for="(cmp, idx) in cmpOrder" :key="idx" class="task">
-        <component :is="Object.values(cmp)[0]" :info="task[Object.keys(cmp)[0]]"></component>
+        <component :is="Object.values(cmp)[0]" :info="task[Object.keys(cmp)[0]]" @updateTask="updateTask($event,cmp)"></component>
   </div>
 </section>
 </template>
@@ -27,7 +27,10 @@ return {
 }
 },
 methods: {
-
+  updateTask(ev,cmp) {
+    console.log(`cmp:`, cmp)
+    console.log(`ev:`,ev)
+  }
 },
 computed: {
     // tasks() {

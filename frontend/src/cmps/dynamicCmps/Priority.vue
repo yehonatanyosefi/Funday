@@ -1,11 +1,12 @@
 <template>
-<div>
+<div class="priority" :class="info">
      {{info}}
 </div>
 </template>
 
 <script>
 export default {
+emits: ['updateTask'],
      name: 'Priority',
 props: {
      info: String,
@@ -22,7 +23,6 @@ methods: {
 
 },
 computed: {
-
 },
 components: {
 

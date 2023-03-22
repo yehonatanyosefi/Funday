@@ -1,11 +1,12 @@
-
-// import { storageService } from './async-storage.service.js'
+import { storageService } from './async-storage.service.js'
 import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
 
 
-const STORAGE_KEY = 'task'
+const STORAGE_KEY_TASK = 'taskDB'
+const STORAGE_KEY_GROUP = 'groupDB'
+const STORAGE_KEY_BOARD = 'boardDB'
 
 export const boardService = {
     queryTask,
@@ -28,6 +29,7 @@ export const boardService = {
 }
 window.cs = boardService
 
+_createDemoData()
 // async function saveTask(boardId, groupId, task, activity) {
 //     const board = getById(boardId)
 //     // PUT /api/board/b123/task/t678
@@ -130,11 +132,11 @@ async function saveGroup(group) {
     }
     return savedGroup
 }
-import board from '../../data/board.json' assert {type: 'json'};
+
 async function queryGroup(filterBy = { txt: '', price: 0 }) {
     // return httpService.get(STORAGE_KEY, filterBy)
-    const groups = board[0].groups
-    // var groups = await storageService.query(STORAGE_KEY)
+    const board = await storageService.query(STORAGE_KEY_BOARD)
+    let groups = board[0].groups
     // if (filterBy.txt) {
     //     const regex = new RegExp(filterBy.txt, 'i')
     //     groups = groups.filter(group => regex.test(group.vendor) || regex.test(group.description))
@@ -159,7 +161,6 @@ async function addGroupMsg(groupId, txt) {
     const savedMsg = await httpService.post(`group/${groupId}/msg`, { txt })
     return savedMsg
 }
-
 
 function getEmptyGroup() {
     return {
@@ -189,6 +190,7 @@ async function queryBoard(filterBy = { title: '' }) {
 async function getBoardById(boardId) {
     return storageService.get(STORAGE_KEY_BOARD, boardId)
 }
+
 async function saveBoard(board) {
     var savedBoard
     if (board._id) {
@@ -206,10 +208,11 @@ async function saveBoard(board) {
     }
     return savedBoard
 }
+
 async function removeBoard(boardId) {
     return await storageService.remove(STORAGE_KEY_BOARD, boardId)
-
 }
+
 async function getEmptyBoard() {
     return {
         _id: '',
@@ -224,6 +227,14 @@ async function getEmptyBoard() {
         style: {},
         labels: [],
         members: [],
-        groups: [],
+        groups: getEmptyGroup(),
+    }
+}
+
+import jsonBoard from '../../data/board.json' assert {type: 'json'};
+function _createDemoData() {
+    const board = utilService.loadFromStorage(STORAGE_KEY_BOARD)
+    if (!board) {
+        utilService.saveToStorage(STORAGE_KEY_BOARD, jsonBoard)
     }
 }

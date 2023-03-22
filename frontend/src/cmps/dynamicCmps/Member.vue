@@ -1,11 +1,12 @@
 <template>
 <div v-for="(id,idx) in info" :key="idx">
-     {{id}}
+     <img :src="user(id).imgUrl" :title="user(id).fullname" class="profile-picture">
 </div>
 </template>
 
 <script>
 export default {
+emits: ['updateTask'],
      name: 'Member',
 props: {
      info: Array,
@@ -19,10 +20,14 @@ return {
 }
 },
 methods: {
-
+     user(id) {
+          return this.users.find(user => user._id === id)
+     },
 },
 computed: {
-
+     users() {
+          return this.$store.getters.users
+     },
 },
 components: {
 
