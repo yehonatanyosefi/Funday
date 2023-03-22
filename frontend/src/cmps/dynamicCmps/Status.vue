@@ -21,7 +21,6 @@
 <script>
 import Edit from '../../assets/svg/Edit.svg'
 
-
 export default {
      emits: ['updateTask'],
      name: 'Status',
