@@ -1,9 +1,5 @@
 <template>
-<<<<<<< HEAD
 <div class="priority" :class="info">
-=======
-<div>
->>>>>>> c2d9ec4 (added dynamic components, with dynamic data from json)
      {{info}}
 </div>
 </template>

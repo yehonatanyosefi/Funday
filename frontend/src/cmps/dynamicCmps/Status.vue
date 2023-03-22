@@ -3,7 +3,6 @@
      {{info}}
      <!-- <div class="folding-corner"><div class="fold"></div></div> -->
 </div>
-<div v-else>No Status Available</div>
 </template>
 
 <script>

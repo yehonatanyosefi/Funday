@@ -1,10 +1,6 @@
 <template>
 <div>
-<<<<<<< HEAD
      {{formattedDate}}
-=======
-     {{info}}
->>>>>>> c2d9ec4 (added dynamic components, with dynamic data from json)
 </div>
 </template>
 
