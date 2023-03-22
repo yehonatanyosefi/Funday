@@ -1,22 +1,27 @@
 <template>
-     <div class="status" :class="statusClass">
+     <div class="status" :class="statusClass" @click="toggleModal" >
           {{ info }}
           <!-- <div class="folding-corner"><div class="fold"></div></div> -->
-          <div class="modal-container">
-               <div class="modal">
-                    <div class="working"><p>Working on it</p> </div>
-                    <div class="done"><p>Done</p> </div>
-                    <div class="stuck"><p>Stuck</p> </div>
-                    <div class="empty"><p></p> </div>
-                    <div class="empty-blue"><p></p></div>
+          <div class="modal" v-if="isOpen">
+               <div class="modal-container">
+                    <div class="working" @click="$emit('updateTask','Working on it')"><p>Working on it</p> </div>
+                    <div class="done" @click="$emit('updateTask','Done')"><p>Done</p> </div>
+                    <div class="stuck" @click="$emit('updateTask','Stuck')"><p>Stuck</p> </div>
+                    <div class="empty" @click="$emit('updateTask','')"><p></p> </div>
+                    <!-- <div class="empty-blue"><p></p></div> -->
                </div>
-               <div class="divider"></div>
+               <section class="edit-labels">
+                    <p class="divider"></p> 
+                    <button><Edit class="svg-icon" />Edit Labels</button>
+               </section>
           </div>
      </div>
-     <div class="divider"></div>
 </template>
 
 <script>
+import Edit from '../../assets/svg/Edit.svg'
+
+
 export default {
      emits: ['updateTask'],
      name: 'Status',
@@ -28,11 +33,13 @@ export default {
      },
      data() {
           return {
-
+               isOpen:false,
           }
      },
      methods: {
-
+          toggleModal(){
+               this.isOpen=!this.isOpen
+          }
      },
      computed: {
           statusClass() {
@@ -46,7 +53,7 @@ export default {
 
      },
      components: {
-
+          Edit
      },
 }
 </script>

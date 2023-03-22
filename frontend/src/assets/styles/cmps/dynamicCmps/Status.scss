@@ -1,43 +1,61 @@
 .status {
   position: relative;
-  .modal-container{
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      height: 100%;
-      .modal {
-          color: #323338;
-          padding: 16px 24px 8px;
-        div {
-          height: 100%;
-          overflow-x: hidden;
-          overflow-y: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          border: 1px solid transparent;
-          border-radius: 2px;
-          padding: 0 4px;
-          height: 32px;
-          width: 152px;
-          cursor: pointer;
-          transition: transform .1s ease-in-out,opacity .1s ease-in-out;
-          position: relative;
-          margin-bottom: 8px;
-          font-family: ROBOTO-reg;
-          
-        }
-        p {
-            color: #fff;
-            margin:0;
-          line-height: 32px;
-          text-align: center;
-        }
-      }
-      
-      .divider{
+  .modal {
+    //   display: flex;
+    //   flex-direction: column;
+    //   width: 100%;
+      height: fit-content;
+    .modal-container {
+      color: #323338;
+      padding: 16px 24px 8px;
+      div {
+        height: 100%;
+        //   overflow-x: hidden;
+        //   overflow-y: hidden;
+        //   text-overflow: ellipsis;
+        white-space: nowrap;
+        border: 1px solid transparent;
+        border-radius: 2px;
+        padding: 0 4px;
+        height: 32px;
+        width: 152px;
+        cursor: pointer;
+        transition: transform 0.1s ease-in-out, opacity 0.1s ease-in-out;
         position: relative;
+        margin-bottom: 8px;
+        font-family: ROBOTO-reg;
+      }
+      p {
+        color: #fff;
+        margin: 0;
+        line-height: 32px;
+        text-align: center;
       }
     }
+    .edit-labels {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 0 16px 8px 16px;
+      .divider {
+        width: 100%;
+        background-color: #d0d4e4;
+      }
+      button {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: #323338;
+        padding: 4px 8px;
+        height: 32px;
+        line-height: 24px;
+        background-color: transparent;
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
 }
 
 // $corner-color: #2196f3;
