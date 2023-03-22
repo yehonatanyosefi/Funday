@@ -1,6 +1,6 @@
 <template>
     <main class="folding-bar">
-        <div>
+        <div class="workspace">
             <span>Workspace</span>
             <p>Main workspace</p>
             <div class="flex column">
