@@ -26,12 +26,13 @@ $lighten-status-amount: 7.5%;
      }
      .task:first-of-type {
           width: 33px;
-          // box-shadow: -6px 0px 0px 0px $group-header-clr;
      }
      .task:nth-of-type(2) {
           width: 367px;
           input {
-               width: 360px;
+               width: 350px;
+               font: inherit;
+               color: inherit;
           }
      }
      .task {

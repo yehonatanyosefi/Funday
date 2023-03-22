@@ -1,0 +1,34 @@
+.dynamic-date {
+  .el-input__inner, .el-input__wrapper {
+    background-color: inherit;
+    text-align: center;
+    font: inherit;
+    color: inherit;
+  }
+  .el-input__prefix {
+    display: none;
+    box-shadow: unset;
+  }
+
+  .el-date-editor.el-input {
+    width: unset;
+    height: unset;
+  }
+
+  .el-input__wrapper {
+    box-shadow: unset;
+    &:hover {
+      box-shadow: unset;
+    }
+    &:focus {
+      border: none;
+      outline: none;
+    }
+  }
+  .el-date-editor {
+    padding: 0;
+    margin: 0;
+    // width: 140 !important;
+    // --el-date-editor-width: 140px;
+  }
+}

@@ -15,7 +15,7 @@
             :cmpOrder="cmpOrder"
             @updateTask="$emit('updateTask',{task:$event,groupId:group.id})"
             @removeTask="$emit('removeTask',{taskId:$event,groupId:group.id})"
-            :class="isLastTask(idx, cmpOrder.length)"></TaskPreview>
+            :class="isLastTask(idx, group.tasks.length)"></TaskPreview>
     </section>
     <!-- <div>Add a task</div> -->
     <!-- <div>Progress bar?</div> -->
@@ -43,7 +43,7 @@ methods: {
         return str.charAt(0).toUpperCase() + str.slice(1);
     },
     isLastTask(idx, length) {
-        return idx === length - 2 ? 'last-task' : ''
+        return idx === length - 1 ? 'last-task' : ''
     },
 },
 computed: {
