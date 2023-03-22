@@ -1,10 +1,9 @@
 <template @keydown.escape="showModal = false">
   <section class="board-filter">
-    <div v-if="vw > 500" class="add-new-btns">
+    <div class="add-new-btns">
       <button @click="addTask">New Item</button>
       <span
         @click="openModal('new-item-modal')"
-        v-svg-icon="'arrowDown'"
         class="add-new-group-btn"
       ></span>
     </div>
@@ -13,7 +12,7 @@
       :class="{'input-open': isSearchClicked, filtering: isFiltering}"
       @click="searchClicked"
     >
-      <span v-svg-icon="'search'"></span>
+      <Search class="svg-img"></Search>
       <input
         class="search-input"
         :class="{open: isSearchClicked || isFiltering}"
@@ -23,33 +22,18 @@
         v-model="txt"
         @input="setFilter('txt', txt)"
       />
-      <input
-        @blur="isSearchClicked = false"
-        v-model="txt"
-        @input="setFilter('txt', txt)"
-        :class="{open: isSearchClicked || isFiltering}"
-        class="search-input-mobile hide"
-        type="text"
-      />
-      <span
-        v-svg-icon="'cancel'"
-        class="cancel"
-        :class="{hide: !isFiltering}"
-        @click="clearFilter"
-      ></span>
     </div>
     <div
-      v-if="vw > 500"
       @click="openModal('filter-person-modal')"
       @mouseover="showTitleModal = true"
       @mouseout="showTitleModal = false"
       class="person-attach"
     >
-      <span v-svg-icon="'account'"></span>
+      <Person class="svg-img"></Person>
       <button>Person</button>
     </div>
     <div class="filter" @click="openModal('multi-filter-modal')">
-      <span v-svg-icon="'filter'"></span>
+      <Filter class="svg-img"></Filter>
       <button>Filter</button>
     </div>
     <!-- <div class="sort">
@@ -57,7 +41,7 @@
             <button>Sort</button>
         </div> -->
 
-    <regular-modal
+    <!-- <regular-modal
       :filter="filter"
       @setFilter="setFilter"
       :users="users"
@@ -65,13 +49,15 @@
       v-if="showModal"
       :class="modalName + '-parent'"
       :cmp="modalName"
-      @addGroup="addGroup"
-    />
+      @addGroup="addGroup" -->
   </section>
 </template>
 <script>
-import titleModal from './dynamic-modals/title-modal.vue'
-import regularModal from './dynamic-modals/regular-modal.vue'
+// import titleModal from './dynamic-modals/title-modal.vue'
+// import regularModal from './dynamic-modals/regular-modal.vue'
+import Search from '../assets/svg/Search.svg'
+import Person from '../assets/svg/Person.svg'
+import Filter from '../assets/svg/Filter.svg'
 export default {
   name: 'BoardFilter',
   props: {
@@ -127,9 +113,6 @@ export default {
       return window.innerWidth
     },
   },
-  components: {
-    regularModal,
-    titleModal,
-  },
+  components: {Search, Person, Filter},
 }
 </script>

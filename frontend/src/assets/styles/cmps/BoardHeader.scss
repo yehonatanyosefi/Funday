@@ -86,10 +86,9 @@
 
     .add-views {
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       border-bottom: 1px solid var(--ui-border-color);
       margin-top: 10px;
-      gap: 10px;
 
       .separator {
         color: var(--ui-border-color);
@@ -99,6 +98,7 @@
         display: flex;
         align-items: center;
         background-color: transparent;
+        margin: 0;
 
         height: 36px;
         // width: 110px;
@@ -108,10 +108,17 @@
         }
       }
 
+      a {
+        text-decoration: none;
+        &:hover {
+          text-decoration: none;
+        }
+      }
+
       .view-title {
-        padding-left: 6px;
+        padding: 0;
+        margin: 0;
         font-size: rem(14px);
-        font-family: roboto-medium;
         color: var(--primary-text-color);
       }
     }
