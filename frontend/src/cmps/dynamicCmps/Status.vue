@@ -1,12 +1,7 @@
 <template>
-<<<<<<< HEAD
 <div class="status" :class="statusClass">
      {{info}}
      <!-- <div class="folding-corner"><div class="fold"></div></div> -->
-=======
-<div v-if="info">
-     {{info}}
->>>>>>> c2d9ec4 (added dynamic components, with dynamic data from json)
 </div>
 <div v-else>No Status Available</div>
 </template>
