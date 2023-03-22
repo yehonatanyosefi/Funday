@@ -3,7 +3,9 @@ import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
 
-const STORAGE_KEY = 'task'
+const STORAGE_KEY_TASK = 'task'
+const STORAGE_KEY_GROUP = 'group'
+const STORAGE_KEY_BOARD = 'broad'
 
 export const boardService = {
   queryTask,
@@ -23,7 +25,6 @@ export const boardService = {
   saveBoard,
   removeBoard,
   getEmptyBoard,
-  addBoardMsg,
 }
 window.cs = boardService
 
@@ -40,21 +41,21 @@ window.cs = boardService
 async function saveTask(task) {
   var savedTask
   if (task._id) {
-    savedTask = await storageService.put(STORAGE_KEY, task)
+    savedTask = await storageService.put(STORAGE_KEY_TASK, task)
     // savedTask = await httpService.put(`task/${task._id}`, task)
   } else {
     // Later, owner is set by the backend
     task.owner = userService.getLoggedinUser()
-    savedTask = await storageService.post(STORAGE_KEY, task)
+    savedTask = await storageService.post(STORAGE_KEY_TASK, task)
     // savedTask = await httpService.post('task', task)
   }
   return savedTask
 }
 
 async function queryTask(filterBy = { txt: '', price: 0 }) {
-  // return httpService.get(STORAGE_KEY, filterBy)
+  // return httpService.get(STORAGE_KEY_TASK, filterBy)
 
-  var tasks = await storageService.query(STORAGE_KEY)
+  var tasks = await storageService.query(STORAGE_KEY_TASK)
   if (filterBy.txt) {
     const regex = new RegExp(filterBy.txt, 'i')
     tasks = tasks.filter(
@@ -67,12 +68,12 @@ async function queryTask(filterBy = { txt: '', price: 0 }) {
   return tasks
 }
 function getTaskById(taskId) {
-  return storageService.get(STORAGE_KEY, taskId)
+  return storageService.get(STORAGE_KEY_TASK, taskId)
   // return httpService.get(`task/${taskId}`)
 }
 
 async function removeTask(taskId) {
-  return await storageService.remove(STORAGE_KEY, taskId)
+  return await storageService.remove(STORAGE_KEY_TASK, taskId)
   // return httpService.delete(`task/${taskId}`)
 }
 
@@ -117,21 +118,21 @@ function getEmptyTask() {
 async function saveGroup(group) {
   var savedGroup
   if (group._id) {
-    savedGroup = await storageService.put(STORAGE_KEY, group)
+    savedGroup = await storageService.put(STORAGE_KEY_GROUP, group)
     // savedGroup = await httpService.put(`group/${group._id}`, group)
   } else {
     // Later, owner is set by the backend
     group.owner = userService.getLoggedinUser()
-    savedGroup = await storageService.post(STORAGE_KEY, group)
+    savedGroup = await storageService.post(STORAGE_KEY_GROUP, group)
     // savedGroup = await httpService.post('group', group)
   }
   return savedGroup
 }
 
 async function queryGroup(filterBy = { txt: '', price: 0 }) {
-  // return httpService.get(STORAGE_KEY, filterBy)
+  // return httpService.get(STORAGE_KEY_GROUP, filterBy)
 
-  var groups = await storageService.query(STORAGE_KEY)
+  var groups = await storageService.query(STORAGE_KEY_GROUP_GROUP)
   if (filterBy.txt) {
     const regex = new RegExp(filterBy.txt, 'i')
     groups = groups.filter(
@@ -144,12 +145,12 @@ async function queryGroup(filterBy = { txt: '', price: 0 }) {
   return groups
 }
 function getGroupById(groupId) {
-  return storageService.get(STORAGE_KEY, groupId)
+  return storageService.get(STORAGE_KEY_GROUP, groupId)
   // return httpService.get(`group/${groupId}`)
 }
 
 async function removeGroup(groupId) {
-  await storageService.remove(STORAGE_KEY, groupId)
+  await storageService.remove(STORAGE_KEY_GROUP, groupId)
   // return httpService.delete(`group/${groupId}`)
 }
 
@@ -169,9 +170,9 @@ function getEmptyGroup() {
 }
 
 async function queryBoard(filterBy = { title: '' }) {
-  // return httpService.get(STORAGE_KEY, filterBy)
+  // return httpService.get(STORAGE_KEY_BOARD, filterBy)
 
-  var boards = await storageService.query(STORAGE_KEY)
+  var boards = await storageService.query(STORAGE_KEY_BOARD)
   if (filterBy.title) {
     const regex = new RegExp(filterBy.txt, 'i')
     boards = boards.filter((board) => regex.test(board.title))
@@ -183,12 +184,12 @@ async function queryBoard(filterBy = { title: '' }) {
 }
 
 async function getBoardById(boardId) {
-  return storageService.get(STORAGE_KEY, boardId)
+  return storageService.get(STORAGE_KEY_BOARD, boardId)
 }
 async function saveBoard(board) {
     var savedBoard
   if (board._id) {
-    savedBoard = await storageService.put(STORAGE_KEY, board)
+    savedBoard = await storageService.put(STORAGE_KEY_BOARD, board)
     // savedBoard = await httpService.put(`board/${board._id}`, board)
   } else {
     // Later, owner is set by the backend
@@ -197,13 +198,13 @@ async function saveBoard(board) {
     board.createdBy._id=_id
     board.createdBy.fullname=fullname
     board.createdBy.imgUrl=imgUrl
-    savedBoard = await storageService.post(STORAGE_KEY, board)
+    savedBoard = await storageService.post(STORAGE_KEY_BOARD, board)
     // savedBoard = await httpService.post('board', board)
   }
   return savedBoard
 }
 async function removeBoard(boardId) {
-  return await storageService.remove(STORAGE_KEY, boardId)
+  return await storageService.remove(STORAGE_KEY_BOARD, boardId)
 
 }
 async function getEmptyBoard() {
