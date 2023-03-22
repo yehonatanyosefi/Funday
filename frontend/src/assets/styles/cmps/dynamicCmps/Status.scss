@@ -1,0 +1,64 @@
+// $corner-color: #2196f3;
+// $corner-animation-duration: 1s;
+// $corner-animation-timing-function: ease-in-out;
+// $corner-width: 10px;
+
+// .container {
+//      position: relative;
+//      width: 200px;
+//      height: 200px;
+//      background-color: $corner-color;
+//      overflow: hidden;
+// }
+// .status {
+//      position: relative;
+//      .folding-corner {
+//                z-index: 2;
+//                width: 0px;
+//                height: 0px;
+//                position: absolute;
+//                top: 0px;
+//                right: 0px;
+//                opacity: 0;
+//                border-width: 0;
+//                border-style: solid;
+//                background: rgba(0, 0, 0, 0.2);
+//                display: block;
+//                -webkit-transition: border-width 0.2s ease-out;
+//                -moz-transition: border-width 0.2s ease-out;
+//                -ms-transition: border-width 0.2s ease-out;
+//                -o-transition: border-width 0.2s ease-out;
+//                transition: border-width 0.2s ease-out;border-width: 0px 10px 10px 0px;
+               
+//      }
+//      &:hover.folding-corner {
+//           opacity: 0.9;
+     
+//           .fold {
+//           }
+//      }
+// }
+
+// @keyframes folding-animation {
+
+//      0%,
+//      100% {
+//           opacity: 0;
+//      }
+
+//      50% {
+//           opacity: 1;
+//      }
+// }
+
+// @keyframes folding-corner-animation {
+
+//      0%,
+//      100% {
+//           transform: translateY(100%) rotate(0deg);
+//      }
+
+//      50% {
+//           transform: translateY(0) rotate(45deg);
+//      }
+// }

@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="priority" :class="info">
      {{info}}
 </div>
 </template>
@@ -22,7 +22,6 @@ methods: {
 
 },
 computed: {
-
 },
 components: {
 

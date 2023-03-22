@@ -1,21 +1,67 @@
 .task-preview {
+     font-family: $task-font;
      display: grid;
-     grid-template-columns: repeat(6, 1fr);
      align-items: center;
-     background-color: white;
-     border: 1px solid lightgray;
+     grid-template-columns: repeat(6, 1fr);
      border-radius: 3px;
      height: 100%;
+     &:hover {
+          background-color: $color-highlighted;
+     }
      .task {
-          border: 1px solid lightgray;
+          border: 1px solid $color-divider;
           height: 100%;
           // width: 100%;
           width: 175px;
-          padding: 10px;
           display: flex;
           justify-content: center;
           align-items: center;
+          & div img{
+               margin-inline-end: -5px;
+          }
+          & .status,
+          & .priority {
+               padding: 10px;
+               width: 100%;
+               height: 100%;
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               color: white;
+          }
+          & .priority {
+               background-color: $color-empty-label;
+               &.Critical{
+                    background-color: $color-critical;
+               }
+               &.High{
+                    background-color: $color-high;
+               }
+               &.Medium{
+                    background-color: $color-medium;
+               }
+               &.Low{
+                    background-color: $color-low;
+               }
+          }
+          & .status {
+               &.working {
+                    background-color: $color-working-on-it;
+               }
+               &.stuck {
+                    background-color: $color-stuck;
+               }
+               &.done {
+                    background-color: $color-done;
+               }
+               &.empty {
+                    background-color: $color-empty-label;
+               }
+          }
      }
+     // .task:not(.status,.priority) {
+     //      padding: 10px;
+     // }
 }
 @media (max-width: 767px) {
      .task-preview {

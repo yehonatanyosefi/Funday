@@ -1,8 +1,8 @@
 <template>
-<div v-if="info">
+<div class="status" :class="statusClass">
      {{info}}
+     <!-- <div class="folding-corner"><div class="fold"></div></div> -->
 </div>
-<div v-else>No Status Available</div>
 </template>
 
 <script>
@@ -23,6 +23,14 @@ methods: {
 
 },
 computed: {
+     statusClass() {
+          return {
+               'working': this.info === 'Working on it',
+               'done': this.info === 'Done',
+               'stuck': this.info === 'Stuck',
+               'empty': this.info === '',
+          }
+     }
 
 },
 components: {
