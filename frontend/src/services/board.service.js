@@ -3,120 +3,92 @@ import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
 
-
-const STORAGE_KEY_TASK = 'taskDB'
-const STORAGE_KEY_GROUP = 'groupDB'
-const STORAGE_KEY_BOARD = 'boardDB'
+const STORAGE_KEY = 'boardDB'
 
 export const boardService = {
-    queryTask,
-    getTaskById,
-    saveTask,
-    removeTask,
-    getEmptyTask,
-    addTaskMsg,
-    queryGroup,
-    getGroupById,
-    saveGroup,
-    removeGroup,
-    getEmptyGroup,
-    addGroupMsg,
-    queryBoard,
-    getBoardById,
-    saveBoard,
-    removeBoard,
+    query,
+    getById,
+    update,
+    remove,
+    addMsg,
     getEmptyBoard,
+    getEmptyGroup,
+    getEmptyTask,
 }
 window.cs = boardService
 
 _createDemoData()
-// async function saveTask(boardId, groupId, task, activity) {
-//     const board = getById(boardId)
-//     // PUT /api/board/b123/task/t678
 
-//     // TODO: find the task, and update
-//     board.activities.unshift(activity)
-//     saveBoard(board)
-//     // return board
-//     // return task
-// }
-async function saveTask(task) {
-    var savedTask
-    if (task._id) {
-        savedTask = await storageService.put(STORAGE_KEY, task)
+function getById(boardId) {
+    return storageService.get(STORAGE_KEY, boardId)
+    // return httpService.get(`boardId/${boardId}`)
+}
+
+async function update(boardId, type = 'task', payload, groupId = null) {
+    let board = await getById(boardId)
+    const groupIdx = board.groups.findIndex(group => group.id === groupId)
+    switch (type) {
+        case 'task':
+            const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === payload.id)
+            const tasks = board.groups[groupIdx].tasks.splice(taskIdx, 1, payload)[0]
+            const group = board.groups.splice(groupIdx, 1, tasks)[0]
+            board.groups[groupIdx] = group
+            // board.groups[groupId].tasks.push(payload)
+            break
+        case 'group':
+            board.groups[groupIdx] = payload
+            // board.groups.push(payload)
+            break
+    }
+    let savedBoard
+    if (board._id) {
+        savedBoard = await storageService.put(STORAGE_KEY, board)
         // savedTask = await httpService.put(`task/${task._id}`, task)
 
     } else {
         // Later, owner is set by the backend
-        task.owner = userService.getLoggedinUser()
-        savedTask = await storageService.post(STORAGE_KEY, task)
+        // board.owner = userService.getLoggedinUser()
+        savedBoard = await storageService.post(STORAGE_KEY, board)
         // savedTask = await httpService.post('task', task)
     }
-    return savedTask
+    return savedBoard
+    // board.activities.unshift(activity)
 }
 
-async function queryTask(filterBy = { txt: '', price: 0 }) {
+async function query(type = 'groups', filterBy = { txt: '', price: 0 }) {
     // return httpService.get(STORAGE_KEY, filterBy)
 
-    var tasks = await storageService.query(STORAGE_KEY)
-    if (filterBy.txt) {
-        const regex = new RegExp(filterBy.txt, 'i')
-        tasks = tasks.filter(task => regex.test(task.vendor) || regex.test(task.description))
+    const board = await storageService.query(STORAGE_KEY) //TODO refactor
+    let entity = board
+    switch (type) {
+        case 'groups':
+            entity = board[0].groups
+            break
+        case 'tasks':
+            entity = board[0].groups[0].tasks
+            break
     }
-    if (filterBy.price) {
-        tasks = tasks.filter(task => task.price <= filterBy.price)
-    }
-    return tasks
-
+    // var tasks = await storageService.query(STORAGE_KEY)
+    // if (filterBy.txt) {
+    //     const regex = new RegExp(filterBy.txt, 'i')
+    //     tasks = tasks.filter(task => regex.test(task.vendor) || regex.test(task.description))
+    // }
+    // if (filterBy.price) {
+    //     tasks = tasks.filter(task => task.price <= filterBy.price)
+    // }
+    // return tasks
+    return entity
 }
-function getTaskById(taskId) {
-    return storageService.get(STORAGE_KEY, taskId)
-    // return httpService.get(`task/${taskId}`)
-}
 
-async function removeTask(taskId) {
-    return await storageService.remove(STORAGE_KEY, taskId)
+async function remove(id, type) {
+    return await storageService.remove(STORAGE_KEY, id)
     // return httpService.delete(`task/${taskId}`)
 }
 
-async function addTaskMsg(taskId, txt) {
+async function addMsg(taskId, txt) {
     const savedMsg = await httpService.post(`task/${taskId}/msg`, { txt })
     return savedMsg
 }
-
-
-function getEmptyTask() {
-    return {
-        id: '',
-        title: '',
-        status: '',
-        priority: '',
-        text: '',
-        comments: [],
-        memberIds: [],
-        dueDate: null,
-        startDate: Date.now(),
-        byMember: {
-            _id: '',
-            username: '',
-            fullname: '',
-            imgUrl: ''
-        },
-        style: {
-            bgColor: ''
-        }
-    }
-}
-// async function saveGroup(boardId, groupId, group, activity) {
-//     const board = getById(boardId)
-//     // PUT /api/board/b123/group/t678
-
-//     // TODO: find the group, and update
-//     board.activities.unshift(activity)
-//     saveBoard(board)
-//     // return board
-//     // return group
-// }
 
 async function saveGroup(group) {
     var savedGroup
@@ -135,7 +107,7 @@ async function saveGroup(group) {
 
 async function queryGroup(filterBy = { txt: '', price: 0 }) {
     // return httpService.get(STORAGE_KEY, filterBy)
-    const board = await storageService.query(STORAGE_KEY_BOARD)
+    const board = await storageService.query(STORAGE_KEY)
     let groups = board[0].groups
     // if (filterBy.txt) {
     //     const regex = new RegExp(filterBy.txt, 'i')
@@ -157,60 +129,40 @@ async function removeGroup(groupId) {
     // return httpService.delete(`group/${groupId}`)
 }
 
-async function addGroupMsg(groupId, txt) {
-    const savedMsg = await httpService.post(`group/${groupId}/msg`, { txt })
-    return savedMsg
+function getEmptyTask() {
+    return {
+        id: '',
+        title: '',
+        status: '',
+        priority: '',
+        text: '',
+        comments: [],
+        person: [],
+        timeline: {
+            startDate: Date.now(),
+            dueDate: null,
+        },
+        date: Date.now(),
+        byMember: {
+            _id: '',
+            username: '',
+            fullname: '',
+            imgUrl: ''
+        },
+        style: {
+            bgColor: ''
+        }
+    }
 }
 
 function getEmptyGroup() {
     return {
-        id: 'g101',
-        'title': 'Frontend',
-        'archivedAt': null,
-        'tasks': [getEmptyTask(), getEmptyTask(),
-        ],
+        id: utilService.makeId(),
+        title: 'Title',
+        archivedAt: null,
+        tasks: [getEmptyTask(), getEmptyTask(),],
         style: {}
     }
-}
-
-async function queryBoard(filterBy = { title: '' }) {
-    // return httpService.get(STORAGE_KEY_BOARD, filterBy)
-
-    var boards = await storageService.query(STORAGE_KEY_BOARD)
-    if (filterBy.title) {
-        const regex = new RegExp(filterBy.txt, 'i')
-        boards = boards.filter((board) => regex.test(board.title))
-    }
-    // if (filterBy.price) {
-    //     boards = boards.filter(board => board.price <= filterBy.price)
-    // }
-    return boards
-}
-
-async function getBoardById(boardId) {
-    return storageService.get(STORAGE_KEY_BOARD, boardId)
-}
-
-async function saveBoard(board) {
-    var savedBoard
-    if (board._id) {
-        savedBoard = await storageService.put(STORAGE_KEY_BOARD, board)
-        // savedBoard = await httpService.put(`board/${board._id}`, board)
-    } else {
-        // Later, owner is set by the backend
-        const user = userService.getLoggedinUser()
-        const { _id, fullname, imgUrl } = user
-        board.createdBy._id = _id
-        board.createdBy.fullname = fullname
-        board.createdBy.imgUrl = imgUrl
-        savedBoard = await storageService.post(STORAGE_KEY_BOARD, board)
-        // savedBoard = await httpService.post('board', board)
-    }
-    return savedBoard
-}
-
-async function removeBoard(boardId) {
-    return await storageService.remove(STORAGE_KEY_BOARD, boardId)
 }
 
 async function getEmptyBoard() {
@@ -233,8 +185,8 @@ async function getEmptyBoard() {
 
 import jsonBoard from '../../data/board.json' assert {type: 'json'};
 function _createDemoData() {
-    const board = utilService.loadFromStorage(STORAGE_KEY_BOARD)
+    const board = utilService.loadFromStorage(STORAGE_KEY)
     if (!board) {
-        utilService.saveToStorage(STORAGE_KEY_BOARD, jsonBoard)
+        utilService.saveToStorage(STORAGE_KEY, jsonBoard)
     }
 }

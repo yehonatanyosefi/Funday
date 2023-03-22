@@ -7,7 +7,7 @@
 <script>
 export default {
 emits: ['updateTask'],
-     name: 'Date',  
+     name: 'Date',
 props: {
      info: Number,
 },
