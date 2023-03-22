@@ -37,7 +37,7 @@ export default {
 		return {
 			taskToAdd: boardService.getEmptyTask(),
 			cmpOrder: [{title:"TaskTitle"}, {startDate:"Date"}, {memberIds:"Member"}, {status:"Status"}, {text:"Text"}, {priority:"Priority"}],
-		}
+		} //startDate -> date, change to same names but capitalize
 	},
 	computed: {
 		loggedInUser() {

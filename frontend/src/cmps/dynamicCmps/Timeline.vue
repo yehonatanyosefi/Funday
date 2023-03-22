@@ -7,6 +7,7 @@
 <script>
 export default {
      name: 'Timeline',
+emits: ['updateTask'],
 props: {
      info: Object,
 },

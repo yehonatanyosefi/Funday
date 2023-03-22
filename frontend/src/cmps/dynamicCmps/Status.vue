@@ -7,6 +7,7 @@
 
 <script>
 export default {
+emits: ['updateTask'],
      name: 'Status',
 props: {
      info: String,

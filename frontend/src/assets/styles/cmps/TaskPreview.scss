@@ -1,3 +1,5 @@
+$lighten-priority-amount: 15%;
+$lighten-status-amount: 7.5%;
 .task-preview {
      font-family: $task-font;
      display: grid;
@@ -9,6 +11,7 @@
           background-color: $color-highlighted;
      }
      .task {
+          cursor: pointer;
           border: 1px solid $color-divider;
           height: 100%;
           // width: 100%;
@@ -45,6 +48,9 @@
                }
           }
           & .status {
+               &.empty {
+                    background-color: $color-empty-label;
+               }
                &.working {
                     background-color: $color-working-on-it;
                }
@@ -54,11 +60,32 @@
                &.done {
                     background-color: $color-done;
                }
-               &.empty {
-                    background-color: $color-empty-label;
-               }
           }
      }
+          &:hover .task .priority, &:hover .task .status.empty {
+               background-color: lighten($color-empty-label, $lighten-status-amount);
+          }
+          &:hover .task .priority.Critical {
+               background-color: lighten($color-critical, $lighten-priority-amount);
+          }
+          &:hover .task .priority.High {
+               background-color: lighten($color-high, $lighten-priority-amount);
+          }
+          &:hover .task .priority.Medium {
+               background-color: lighten($color-medium, $lighten-priority-amount);
+          }
+          &:hover .task .priority.Low {
+               background-color: lighten($color-low, $lighten-priority-amount);
+          }
+          &:hover .task .status.working {
+               background-color: lighten($color-working-on-it, $lighten-status-amount);
+          }
+          &:hover .task .status.stuck {
+               background-color: lighten($color-stuck, $lighten-status-amount);
+          }
+          &:hover .task .status.done {
+               background-color: lighten($color-done, $lighten-status-amount);
+          }
      // .task:not(.status,.priority) {
      //      padding: 10px;
      // }
