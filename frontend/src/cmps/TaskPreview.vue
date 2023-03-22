@@ -1,6 +1,10 @@
 <template>
 <section class="task-preview">
+<<<<<<< HEAD
   <div v-for="(cmp, idx) in cmpOrder" :key="idx" class="task">
+=======
+  <div v-for="(cmp, idx) in cmpOrder" :key="idx">
+>>>>>>> c2d9ec4 (added dynamic components, with dynamic data from json)
         <component :is="Object.values(cmp)[0]" :info="task[Object.keys(cmp)[0]]"></component>
   </div>
 </section>

@@ -1,6 +1,10 @@
 <template>
 <div v-for="(id,idx) in info" :key="idx">
+<<<<<<< HEAD
      <img :src="user(id).imgUrl" :title="user(id).fullname" class="profile-picture">
+=======
+     {{id}}
+>>>>>>> c2d9ec4 (added dynamic components, with dynamic data from json)
 </div>
 </template>
 
