@@ -36,7 +36,7 @@ export default {
 	data() {
 		return {
 			taskToAdd: boardService.getEmptyTask(),
-			cmpOrder: ["TaskTitle", "Date", "Member", "Status", "Text", "Priority"],
+			cmpOrder: [{title:"TaskTitle"}, {startDate:"Date"}, {memberIds:"Member"}, {status:"Status"}, {text:"Text"}, {priority:"Priority"}],
 		}
 	},
 	computed: {
@@ -48,7 +48,7 @@ export default {
 		},
 	},
 	created() {
-		setTimeout(()=>this.$store.dispatch({ type: "loadGroups" }),100)
+		this.$store.dispatch({ type: "loadGroups" })
 	},
 	methods: {
 		async addTask() {

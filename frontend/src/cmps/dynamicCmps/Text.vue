@@ -1,13 +1,16 @@
 <template>
 <div>
-     Text
+     {{info}}
 </div>
 
 </template>
 
 <script>
 export default {
-props: {},
+     name: 'Text',
+props: {
+     info: String,
+},
 created() {
 
 },

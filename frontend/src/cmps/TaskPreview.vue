@@ -1,12 +1,13 @@
 <template>
 <section class="task-preview">
   <div v-for="(cmp, idx) in cmpOrder" :key="idx">
-        <component :is="cmp" :info="task[cmp]"></component>
+        <component :is="Object.values(cmp)[0]" :info="task[Object.keys(cmp)[0]]"></component>
   </div>
 </section>
 </template>
 
 <script>
+// import { Container, Draggable } from "vue3-smooth-dnd";
 import TaskTitle from "./dynamicCmps/TaskTitle.vue";
 import Side from "./dynamicCmps/Side.vue";
 import Member from "./dynamicCmps/Member.vue";

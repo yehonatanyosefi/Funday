@@ -1,12 +1,16 @@
 <template>
-<div>
-     Status
+<div v-if="info">
+     {{info}}
 </div>
+<div v-else>No Status Available</div>
 </template>
 
 <script>
 export default {
-props: {},
+     name: 'Status',
+props: {
+     info: String,
+},
 created() {
 
 },

@@ -1,12 +1,15 @@
 <template>
 <div>
-     Task Title
+     {{info}}
 </div>
 </template>
 
 <script>
 export default {
-props: {},
+     name: 'Status',
+props: {
+     info: String,
+},
 created() {
 
 },

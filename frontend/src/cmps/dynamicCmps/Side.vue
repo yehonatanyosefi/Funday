@@ -1,12 +1,15 @@
 <template>
 <div>
-     Side
+     {{info}}
 </div>
 </template>
 
 <script>
 export default {
-props: {},
+     name: 'Side',
+props: {
+     info: Object,
+},
 created() {
 
 },

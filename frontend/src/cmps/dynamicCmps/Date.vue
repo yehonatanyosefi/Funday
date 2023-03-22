@@ -1,12 +1,15 @@
 <template>
 <div>
-     Date
+     {{info}}
 </div>
 </template>
 
 <script>
 export default {
-props: {},
+     name: 'Date',  
+props: {
+     info: Number,
+},
 created() {
 
 },

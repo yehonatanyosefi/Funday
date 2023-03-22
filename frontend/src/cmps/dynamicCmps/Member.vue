@@ -1,12 +1,15 @@
 <template>
-<div>
-     Person
+<div v-for="(id,idx) in info" :key="idx">
+     {{id}}
 </div>
 </template>
 
 <script>
 export default {
-props: {},
+     name: 'Member',
+props: {
+     info: Array,
+},
 created() {
 
 },

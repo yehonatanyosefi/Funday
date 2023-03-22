@@ -1,12 +1,15 @@
 <template>
 <div>
-     Priority
+     {{info}}
 </div>
 </template>
 
 <script>
 export default {
-props: {},
+     name: 'Priority',
+props: {
+     info: String,
+},
 created() {
 
 },

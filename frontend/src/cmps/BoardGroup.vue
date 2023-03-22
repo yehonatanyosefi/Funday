@@ -1,8 +1,10 @@
 <template>
 <section class="board-group">
-      <!-- <section class="task-labels" v-for="(cmp, idx) in cmpOrder" :key="idx">
-        <component :is="cmp" :info="task[cmp]"></component>
-      </section> -->
+  <div class="task-header">
+      <section v-for="(cmp, idx) in cmpOrder" :key="idx">
+          <div>{{Object.keys(cmp)[0]}} | </div>
+      </section>
+  </div>
     <section class="group" v-for="task in group.tasks" :key="task.id">
           <TaskPreview :task="task" :cmpOrder="cmpOrder"></TaskPreview>
     </section>
@@ -10,6 +12,7 @@
 </template>
 
 <script>
+// import { Container, Draggable } from "vue3-smooth-dnd";
 import TaskPreview from './TaskPreview.vue'
 export default {
 props: {

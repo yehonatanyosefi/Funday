@@ -1,12 +1,15 @@
 <template>
 <div>
-     File
+     {{info}}
 </div>
 </template>
 
 <script>
 export default {
-props: {},
+     name: 'File',
+props: {
+     info: Object,
+},
 created() {
 
 },
