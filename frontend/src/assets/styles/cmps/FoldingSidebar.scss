@@ -1,32 +1,77 @@
-.spacer{
-    border-bottom: 1px solid;
-    border-color: #d0d4e4;
-    margin: 0 20px;
+.spacer {
+  border-bottom: 1px solid;
+  border-color: #d0d4e4;
+  margin: 0 20px;
 }
 
-.folding-bar{
-    color:#323338;
-    width: 255px;
-    background-color: #f6f7fb;
-    font-family: ROBOTO-reg;
+.folding-bar {
+  color: #323338;
+  width: 255px;
+  background-color: #f6f7fb;
+  font-family: ROBOTO-reg;
 
-    // width: 100%;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 0;
-    flex-shrink: 0;
-    border-bottom: 1px solid #e1e1e1;
-    border-bottom: none;
-    flex-shrink: 1;
+  // width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 0;
+  flex-shrink: 0;
+  border-bottom: 1px solid #e1e1e1;
+  border-bottom: none;
+  flex-shrink: 1;
+  flex-grow: 1;
+  min-height: 0;
+  .workspace {
+    margin: 12px 16px 18px 16px;
+    box-shadow: 0px 12px 13px -7px var(--dark-background-color);
+    font-size: em(14px);
+    .main-workspace-title{
+        font-size: 16px;
+    }
+    .btns {
+      padding: 0 16px 16px 14px;
+      button{
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        padding-left: 6px;
+        background-color: transparent;
+        .optn{
+            margin: 0 8px;
+        }
+      }
+    }
+  }
+  .boards {
+    height: 100%;
+    width: 100%;
     flex-grow: 1;
-    min-height: 0;
-    .workspace{
-        box-shadow: 0px 12px 13px -7px var(--dark-background-color);
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    padding-top: 16px;
+    padding-inline-start: em(12px);
+    padding-inline-end: em(8px);
+    .board-link{
+        // height: 100%;
+        // width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 0 8px;
+        span{
+            width: 100%;
+            font-size: em(14px);
+            padding: .5em;
+            // height: 100%;
+        }
     }
-    span{
-        color:#676879;
+  }
+  span {
+    &.workspace-title{
+        color: #676879;
+        justify-content: space-between;
     }
-    button{
-       color:#323338;
-    }
+  }
+  button {
+    color: #323338;
+  }
 }
