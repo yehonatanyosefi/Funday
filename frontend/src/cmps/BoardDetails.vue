@@ -1,7 +1,7 @@
 <template>
 <section class="board-details">
 	<template v-for="group in groups" :key="group.id">
-		<BoardGroup :group="group" :cmpOrder="cmpOrder"></BoardGroup>
+		<BoardGroup :group="group" :cmpOrder="cmpOrder" @updateTask="updateTask"></BoardGroup>
 	</template>
 	<!-- <div class="container home">
 		<ul class="task-list">
@@ -36,8 +36,8 @@ export default {
 	data() {
 		return {
 			taskToAdd: boardService.getEmptyTask(),
-			cmpOrder: [{title:"TaskTitle"}, {startDate:"Date"}, {memberIds:"Member"}, {status:"Status"}, {text:"Text"}, {priority:"Priority"}],
-		} //startDate -> date, change to same names but capitalize
+			cmpOrder: ['title', 'date', 'person', 'status', 'text', 'priority'],
+		}
 	},
 	computed: {
 		loggedInUser() {
@@ -51,6 +51,16 @@ export default {
 		this.$store.dispatch({ type: "loadGroups" })
 	},
 	methods: {
+		async updateTask(payload) {
+			try {
+				const payloadToSave = {...payload,boardId:'b101'}
+				await this.$store.dispatch({type:'updateTask',payload:payloadToSave})
+				// showSuccessMsg('Task updated')
+			} catch (err) {
+				console.log(err)
+				// showErrorMsg('Cannot update task')
+			}
+		},
 		async addTask() {
 			try {
 				await this.$store.dispatch({ type: 'addTask', task: this.taskToAdd })
@@ -68,17 +78,6 @@ export default {
 			} catch (err) {
 				console.log(err)
 				showErrorMsg('Cannot remove task')
-			}
-		},
-		async updateTask(task) {
-			try {
-				task = { ...task }
-				task.price = +prompt('New price?', task.price)
-				await this.$store.dispatch(getActionUpdateTask(task))
-				showSuccessMsg('Task updated')
-			} catch (err) {
-				console.log(err)
-				showErrorMsg('Cannot update task')
 			}
 		},
 		async addTaskMsg(taskId) {

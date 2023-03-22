@@ -1,6 +1,8 @@
 <template>
-<div v-for="(id,idx) in info" :key="idx">
-     <img :src="user(id).imgUrl" :title="user(id).fullname" class="profile-picture">
+<div>
+     <template v-for="(id,idx) in info" :key="idx">
+          <img :src="user(id).imgUrl" :title="user(id).fullname" class="profile-picture">
+     </template>
 </div>
 </template>
 

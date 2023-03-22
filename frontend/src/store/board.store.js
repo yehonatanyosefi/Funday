@@ -4,6 +4,7 @@ export const boardStore = {
     state: {
         tasks: [],
         groups: [],
+        board: [],
     },
     getters: {
         tasks({ tasks }) { return tasks },
@@ -48,6 +49,18 @@ export const boardStore = {
         },
     },
     actions: {
+        async updateTask(context, { payload }) {
+            try {
+                const { boardId, task, groupId } = payload
+                const updatedBoard = await boardService.update(boardId, 'task', task, groupId)
+                // context.commit({ type: 'updateTask', task })
+                context.dispatch({ type: 'loadGroups' })
+                return task
+            } catch (err) {
+                console.log('taskStore: Error in updateTask', err)
+                throw err
+            }
+        },
         async saveTask({ commit }, { boardId, groupId, task, activity }) {
             try {
                 board = boardService.saveTask(boardId, groupId, task, activity)
@@ -59,21 +72,11 @@ export const boardStore = {
         },
         async addTask(context, { task }) {
             try {
-                task = await boardService.saveTask(task)
+                task = await boardService.saveTask(task, 'task')
                 context.commit(getActionAddTask(task))
                 return task
             } catch (err) {
                 console.log('taskStore: Error in addTask', err)
-                throw err
-            }
-        },
-        async updateTask(context, { task }) {
-            try {
-                task = await boardService.saveTask(task)
-                context.commit(getActionUpdateTask(task))
-                return task
-            } catch (err) {
-                console.log('taskStore: Error in updateTask', err)
                 throw err
             }
         },
@@ -135,7 +138,7 @@ export const boardStore = {
         },
         async loadGroups(context) {
             try {
-                const groups = await boardService.queryGroup()
+                const groups = await boardService.query('groups')
                 context.commit({ type: 'setGroups', groups })
             } catch (err) {
                 console.log('groupStore: Error in loadGroups', err)
