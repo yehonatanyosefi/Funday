@@ -1,38 +1,58 @@
 <template>
-<div>
-     {{formattedDate}}
-</div>
+  <div>
+    <el-date-picker
+      ref="datePicker"
+      class="dynamic-date"
+      v-model="info"
+      type="date"
+      placeholder="Pick a day"
+      style="width: 140px"
+      format="MMM DD"
+      @change="select"
+    />
+    <!-- {{ formattedDate }} -->
+  </div>
 </template>
 
 <script>
 export default {
-emits: ['updateTask'],
-     name: 'Date',
-props: {
-     info: Number,
-},
-created() {
-
-},
-data() {
-return {
-
-}
-},
-methods: {
-
-},
-computed: {
-     formattedDate() {
-          const date = new Date(this.info)
-          const day = date.getDate()
-          const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-          const month = monthNames[date.getMonth()]
-          return `${month} ${day}`
-     }
-},
-components: {
-
-},
+  emits: ['updateTask'],
+  name: 'Date',
+  props: {
+    info: Number,
+  },
+  created() {},
+  data() {
+    return {}
+  },
+  methods: {
+    select() {
+      const newVal = new Date(this.info).getTime()
+      this.$emit('updateTask', newVal)
+    },
+  },
+  computed: {
+    formattedDate() {
+      const date = new Date(this.info)
+      const day = date.getDate()
+      const monthNames = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+      ]
+      const month = monthNames[date.getMonth()]
+      return `${month} ${day}`
+    },
+  },
+  components: {},
 }
 </script>
