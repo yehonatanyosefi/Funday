@@ -1,16 +1,27 @@
+.divider{
+    margin-bottom: 12px;
+    margin: 0 8px;
+    height: 1px;
+    width: unset;
+    background-color: $clr-divider;
+}
+
 .sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 66px;
     background-color: $clr-small-side-bar;
     img {
       height: 40px;
       width: 40px;
       margin: 0 0 8px;
+      margin-inline: auto;
     }
     button{
       background-color: $clr-small-side-bar;
     }
     .svg-icon{
-        width: 23px;
-        height: 23px;
       &.InstalledProducts{
       color: #6C6CFF;
   

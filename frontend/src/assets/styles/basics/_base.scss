@@ -46,3 +46,16 @@ a:hover {
     text-decoration: underline;
 }
 
+.monday-style-divider {
+    background-color: #e6e9ef;
+    background-color: var(--layout-border-color);
+}
+.monday-style-divider--horizontal {
+    height: 1px;
+    width: 100%;
+    margin: var(--spacing-small) 0;
+}
+.surface-control-component .surface-control-primary .surface-divider.bottom {
+    margin-bottom: 12px;
+}
+
