@@ -1,0 +1,19 @@
+.spacer{
+    border-bottom: 1px solid;
+    border-color: #d0d4e4;
+    margin: 0 20px;
+}
+
+.folding-bar{
+    color:#323338;
+
+    width: 255px;
+    background-color: #f6f7fb;
+    font-family: ROBOTO-reg;
+    span{
+        color:#676879;
+    }
+    button{
+       color:#323338;
+    }
+}
