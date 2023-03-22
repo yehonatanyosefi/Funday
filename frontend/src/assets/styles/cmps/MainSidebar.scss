@@ -1,0 +1,18 @@
+.sidebar {
+    background-color: $clr-small-side-bar;
+    img {
+      height: 40px;
+      width: 40px;
+      margin: 0 0 8px;
+    }
+    button{
+      background-color: $clr-small-side-bar;
+    }
+    .svg-icon{
+      &.InstalledProducts{
+      color: #6C6CFF;
+  
+      }
+    }
+  }
+  
