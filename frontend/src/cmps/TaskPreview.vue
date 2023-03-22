@@ -1,9 +1,10 @@
 <template>
 <section class="task-preview" v-if="cmpOrder?.length">
   <div v-for="(cmp, idx) in cmpOrder" :key="idx" class="task">
-        <component :is="capitalizeFirstLetter(cmp)"
-        :info="task[cmp]"
-        @updateTask="updateTask($event,cmp)"></component>
+        <component
+          :is="capitalizeFirstLetter(cmp)"
+          :info="task[cmp]"
+          @updateTask="updateTask($event,cmp)"></component>
   </div>
 </section>
 </template>

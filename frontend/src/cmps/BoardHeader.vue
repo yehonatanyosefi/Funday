@@ -28,7 +28,7 @@
         </div>
       </section>
       <section class="add-views">
-        <router-link :to="'/'">
+        <router-link :to="'/board/'">
           <button
             @click="changeView('table')"
             class="view-item"
@@ -59,14 +59,13 @@
         </router-link>
       </section>
 
-      <!-- <BorderFilter
-        v-if="vw < 500"
+      <BorderFilter
         :filter="filter"
         :users="users"
         @setFilter="setFilter"
         @addTask="addTask"
         @addGroup="addGroup"
-      />-->
+      />
     </section>
     <!-- <BorderFilter
       v-if="vw > 500"
@@ -80,7 +79,7 @@
 </template>
 <script>
 import Invite from '../assets/svg/Invite.svg'
-// import BorderFilter from './BoardFilter.vue'
+import BorderFilter from './BoardFilter.vue'
 export default {
   name: 'board-header',
   emits: ['setFilter', 'addTask', 'addGroup', 'saveBoardTitle'],
@@ -134,7 +133,7 @@ export default {
       else this.view = 'table'
     },
   },
-  components: {Invite},
+  components: {BorderFilter, Invite},
   computed: {
     boardTitle() {
       return 'Sprint 4'

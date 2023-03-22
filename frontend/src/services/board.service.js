@@ -26,9 +26,9 @@ function getById(boardId) {
 
 async function update(boardId, type = 'task', payload, groupId = null) {
     let board = await getById(boardId)
+    const groupIdx = board.groups.findIndex(group => group.id === groupId)
     switch (type) {
         case 'task':
-            const groupIdx = board.groups.findIndex(group => group.id === groupId)
             const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === payload.id)
             const tasks = board.groups[groupIdx].tasks.splice(taskIdx, 1, payload)[0]
             const group = board.groups.splice(groupIdx, 1, tasks)[0]
@@ -36,6 +36,7 @@ async function update(boardId, type = 'task', payload, groupId = null) {
             // board.groups[groupId].tasks.push(payload)
             break
         case 'group':
+            board.groups[groupIdx] = payload
             // board.groups.push(payload)
             break
     }
