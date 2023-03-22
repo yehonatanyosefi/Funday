@@ -1,6 +1,6 @@
 <template>
 <section class="task-preview">
-  <div v-for="(cmp, idx) in cmpOrder" :key="idx">
+  <div v-for="(cmp, idx) in cmpOrder" :key="idx" class="task">
         <component :is="Object.values(cmp)[0]" :info="task[Object.keys(cmp)[0]]"></component>
   </div>
 </section>

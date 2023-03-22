@@ -1,12 +1,21 @@
 .task-preview {
      display: grid;
      grid-template-columns: repeat(6, 1fr);
-     gap: 10px;
      align-items: center;
-     padding: 10px;
      background-color: white;
      border: 1px solid lightgray;
      border-radius: 3px;
+     height: 100%;
+     .task {
+          border: 1px solid lightgray;
+          height: 100%;
+          // width: 100%;
+          width: 175px;
+          padding: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+     }
 }
 @media (max-width: 767px) {
      .task-preview {
