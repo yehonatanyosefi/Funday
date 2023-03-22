@@ -6,6 +6,7 @@
 
 <script>
 export default {
+emits: ['updateTask'],
      name: 'File',
 props: {
      info: Object,

@@ -1,5 +1,6 @@
 <template>
-<div>
+<div class="text">
+     <!-- <input type="text" :value="info" name="text"> -->
      {{info}}
 </div>
 
@@ -8,6 +9,7 @@
 <script>
 export default {
      name: 'Text',
+emits: ['updateTask'],
 props: {
      info: String,
 },
