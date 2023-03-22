@@ -36,6 +36,7 @@ async function update(boardId, type = 'task', payload, groupId = null) {
             // board.groups[groupId].tasks.push(payload)
             break
         case 'group':
+            board.groups[groupIdx] = payload
             // board.groups.push(payload)
             break
     }
