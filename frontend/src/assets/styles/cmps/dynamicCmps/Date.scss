@@ -1,4 +1,10 @@
 .dynamic-date {
+  .el-input__inner, .el-input__wrapper {
+    background-color: inherit;
+    text-align: center;
+    font: inherit;
+    color: inherit;
+  }
   .el-input__prefix {
     display: none;
     box-shadow: unset;

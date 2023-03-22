@@ -1,6 +1,10 @@
+$group-column-width: 140px;
+@mixin board-columns() {
+     grid-template-columns: 33px 360px repeat(auto-fit, $group-column-width);
+}
 .board-details {
-     display: grid;
-     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+     // display: grid;
+     // @include board-columns;
      .task-title, .text {
           @include flex-center;
      }

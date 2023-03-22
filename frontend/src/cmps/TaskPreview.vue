@@ -1,13 +1,15 @@
 <template>
-  <section class="task-preview" v-if="cmpOrder?.length">
-    <div v-for="(cmp, idx) in cmpOrder" :key="idx" class="task">
-      <component
-        :is="capitalizeFirstLetter(cmp)"
-        :info="task[cmp]"
-        @updateTask="updateTask($event, cmp)"
-      ></component>
-    </div>
-  </section>
+<section class="task-preview" v-if="cmpOrder?.length">
+  <div class="task">
+    <input type="checkbox" title="Delete Task" @click="$emit('removeTask',task.id)" class="task-checkbox">
+  </div>
+  <div v-for="(cmp, idx) in cmpOrder" :key="idx" class="task">
+        <component
+          :is="capitalizeFirstLetter(cmp)"
+          :info="task[cmp]"
+          @updateTask="updateTask($event,cmp)"></component>
+  </div>
+</section>
 </template>
 
 <script>
@@ -20,7 +22,8 @@ import Status from './dynamicCmps/Status.vue'
 import Priority from './dynamicCmps/Priority.vue'
 import Text from './dynamicCmps/Text.vue'
 export default {
-  props: {
+  emits: ["updateTask", "removeTask"],
+props: {
     task: Object,
     cmpOrder: Array,
   },
@@ -30,9 +33,7 @@ export default {
   },
   methods: {
     updateTask(payload, cmp) {
-      console.log('---->', payload, cmp)
-
-      const taskToSave = JSON.parse(JSON.stringify(this.task))
+       const taskToSave = JSON.parse(JSON.stringify(this.task))
       taskToSave[cmp] = payload
       this.$emit('updateTask', taskToSave)
     },

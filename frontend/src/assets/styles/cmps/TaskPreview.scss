@@ -1,21 +1,45 @@
 $lighten-priority-amount: 15%;
 $lighten-status-amount: 7.5%;
 .task-preview {
-     font-family: $task-font;
      display: grid;
-     align-items: center;
-     grid-template-columns: repeat(6, 1fr);
-     border-radius: 3px;
-     height: 100%;
+     grid-template-columns: 33px 367px repeat(5, $group-column-width);
+     position: relative;
+          &:before {
+               content: '';
+               position: absolute;
+               top: 0;
+               left: -6px;
+               width: 6px;
+               height: 100%;
+               background-color: $group-header-clr;
+          }
+          &.last-task {
+               &:before {
+                    border-bottom-left-radius: 5px;
+               }
+          }
      &:hover {
           background-color: $color-highlighted;
+     }
+     .task:not(:first-of-type,:nth-of-type(2)) {
+          width: $group-column-width;
+     }
+     .task:first-of-type {
+          width: 33px;
+     }
+     .task:nth-of-type(2) {
+          width: 367px;
+          input {
+               width: 350px;
+               font: inherit;
+               color: inherit;
+          }
      }
      .task {
           cursor: pointer;
           border: 1px solid $color-divider;
           height: 100%;
           // width: 100%;
-          width: 175px;
           display: flex;
           justify-content: center;
           align-items: center;

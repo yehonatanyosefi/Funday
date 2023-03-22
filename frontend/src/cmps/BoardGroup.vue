@@ -2,15 +2,23 @@
 <section class="board-group">
     <h2 class="group-header">{{group.title}}</h2>
     <div class="task-header">
+        <section><div class="task">
+            <input type="checkbox" class="task-checkbox" disabled>
+        </div></section>
         <section v-for="(cmp, idx) in cmpOrder" :key="idx">
             <div class="task">{{capitalizeFirstLetter(cmp)}}</div>
         </section>
     </div>
-    <section class="group" v-for="task in group.tasks" :key="task.id">
-          <TaskPreview :task="task" :cmpOrder="cmpOrder" @updateTask="$emit('updateTask',{task:$event,groupId:group.id})"></TaskPreview>
+    <section class="group" v-for="(task,idx) in group.tasks" :key="task.id">
+          <TaskPreview
+            :task="task"
+            :cmpOrder="cmpOrder"
+            @updateTask="$emit('updateTask',{task:$event,groupId:group.id})"
+            @removeTask="$emit('removeTask',{taskId:$event,groupId:group.id})"
+            :class="isLastTask(idx, group.tasks.length)"></TaskPreview>
     </section>
-    <div>Add a task</div>
-    <div>Progress bar?</div>
+    <!-- <div>Add a task</div> -->
+    <!-- <div>Progress bar?</div> -->
 </section>
 </template>
 
@@ -33,6 +41,9 @@ return {
 methods: {
     capitalizeFirstLetter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
+    },
+    isLastTask(idx, length) {
+        return idx === length - 1 ? 'last-task' : ''
     },
 },
 computed: {

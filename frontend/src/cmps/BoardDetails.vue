@@ -1,7 +1,11 @@
 <template>
 <section class="board-details">
 	<template v-for="group in groups" :key="group.id">
-		<BoardGroup :group="group" :cmpOrder="cmpOrder" @updateTask="updateTask"></BoardGroup>
+		<BoardGroup
+			:group="group"
+			:cmpOrder="cmpOrder"
+			@updateTask="updateTask"
+			@removeTask="removeTask"></BoardGroup>
 	</template>
 	<!-- <div class="container home">
 		<ul class="task-list">
@@ -61,37 +65,35 @@ export default {
 				// showErrorMsg('Cannot update task')
 			}
 		},
-		async addTask() {
+		async removeTask(ids) {
 			try {
-				await this.$store.dispatch({ type: 'addTask', task: this.taskToAdd })
-				showSuccessMsg('Task added')
-				this.taskToAdd = boardService.getEmptyTask()
+				ids = {...ids,boardId:'b101'}
+				await this.$store.dispatch({type:'removeTask',ids})
+				// showSuccessMsg('Task removed')
 			} catch (err) {
 				console.log(err)
-				showErrorMsg('Cannot add task')
+				// showErrorMsg('Cannot remove task')
 			}
 		},
-		async removeTask(taskId) {
-			try {
-				await this.$store.dispatch(getActionRemoveTask(taskId))
-				showSuccessMsg('Task removed')
-			} catch (err) {
-				console.log(err)
-				showErrorMsg('Cannot remove task')
-			}
-		},
-		async addTaskMsg(taskId) {
-			try {
-				await this.$store.dispatch(getActionAddTaskMsg(taskId))
-				showSuccessMsg('Task msg added')
-			} catch (err) {
-				console.log(err)
-				showErrorMsg('Cannot add task msg')
-			}
-		},
-		printTaskToConsole(task) {
-			console.log('Task msgs:', task.msgs)
-		},
+		// async addTask() {
+		// 	try {
+		// 		await this.$store.dispatch({ type: 'addTask', task: this.taskToAdd })
+		// 		showSuccessMsg('Task added')
+		// 		this.taskToAdd = boardService.getEmptyTask()
+		// 	} catch (err) {
+		// 		console.log(err)
+		// 		showErrorMsg('Cannot add task')
+		// 	}
+		// },
+		// async addTaskMsg(taskId) {
+		// 	try {
+		// 		await this.$store.dispatch(getActionAddTaskMsg(taskId))
+		// 		showSuccessMsg('Task msg added')
+		// 	} catch (err) {
+		// 		console.log(err)
+		// 		showErrorMsg('Cannot add task msg')
+		// 	}
+		// },
 	},
 	components: {
 		BoardHeader,

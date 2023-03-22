@@ -32,14 +32,19 @@ async function update(boardId, type = 'task', payload, groupId = null) {
             const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === payload.id)
             const tasks = board.groups[groupIdx].tasks.splice(taskIdx, 1, payload)[0]
             const group = board.groups.splice(groupIdx, 1, tasks)[0]
+            // board.groups[groupIdx].tasks.push(payload)
             board.groups[groupIdx] = group
-            // board.groups[groupId].tasks.push(payload)
             break
         case 'group':
             board.groups[groupIdx] = payload
             // board.groups.push(payload)
             break
     }
+    saveBoard(board)
+    // board.activities.unshift(activity)
+}
+
+async function saveBoard(board) {
     let savedBoard
     if (board._id) {
         savedBoard = await storageService.put(STORAGE_KEY, board)
@@ -52,7 +57,6 @@ async function update(boardId, type = 'task', payload, groupId = null) {
         // savedTask = await httpService.post('task', task)
     }
     return savedBoard
-    // board.activities.unshift(activity)
 }
 
 async function query(type = 'groups', filterBy = { txt: '', price: 0 }) {
@@ -80,9 +84,29 @@ async function query(type = 'groups', filterBy = { txt: '', price: 0 }) {
     return entity
 }
 
-async function remove(id, type) {
-    return await storageService.remove(STORAGE_KEY, id)
-    // return httpService.delete(`task/${taskId}`)
+async function remove(ids, type) {
+    const { boardId, groupId, taskId } = ids
+    let board = await getById(boardId)
+    switch (type) {
+        case 'task':
+            const groupIdx = board.groups.findIndex(group => group.id === groupId)
+            const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+            const tasks = board.groups[groupIdx].tasks.splice(taskIdx, 1)[0]
+            const group = board.groups.splice(groupIdx, 1, tasks)[0]
+            // board.groups[groupIdx].tasks.push(payload)
+            board.groups[groupIdx] = group
+            await saveBoard(board)
+            return Promise.resolve()
+            break
+        case 'groups':
+            board = board.groups
+            return Promise.resolve()
+            break
+        case 'board':
+            return await storageService.remove(STORAGE_KEY, id)
+            // return httpService.delete(`task/${taskId}`)
+            break
+    }
 }
 
 async function addMsg(taskId, txt) {

@@ -1,18 +1,35 @@
+$group-header-clr: rgb(87, 155, 252);
 .board-group {
-     font-family: $task-font;
      display: grid;
-     grid-template-columns: 1fr;
      border-radius: 3px;
      height: fit-content;
      width: fit-content;
+     margin-inline-start: 33px;
+     .task-checkbox {
+          width: 16px;
+          height: 16px;
+          color: black;
+          background-color: #fff;
+          // border: 1px solid lightgray;
+     }
      .group-header {
-          color: #579bfc;
+          color: $group-header-clr;
      }
      .task-header {
           display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          align-items: center;
-          border-radius: 3px;
+          grid-template-columns: 33px 367px repeat(5,$group-column-width);
+          position: relative;
+          
+               &:before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: -6px;
+                    width: 6px;
+                    height: 100%;
+                    background-color: $group-header-clr;
+                    border-top-left-radius: 5px;
+               }
           section {
                height: 100%;
                width: 100%;
@@ -24,7 +41,7 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    width: 175px;
+                    width: 100%;
                     height: 100%;
                     padding: 10px;
                     border: 1px solid $color-divider;

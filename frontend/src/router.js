@@ -1,4 +1,4 @@
-import {createRouter, createWebHashHistory} from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 import Home from './views/Home.vue'
 import Chat from './views/Chat.vue'
@@ -26,7 +26,7 @@ const routes = [
         component: Kanban,
       },
       {
-        path: '/board/',
+        path: '/',
         name: 'Board',
         component: BoardDetails,
       },

@@ -6,7 +6,7 @@
       v-model="info"
       type="date"
       placeholder="Pick a day"
-      style="width: 140px"
+      :style="dateStyles"
       format="MMM DD"
       @change="select"
     />
@@ -52,6 +52,9 @@ export default {
       const month = monthNames[date.getMonth()]
       return `${month} ${day}`
     },
+    dateStyles() {
+      return {width: '130px'}
+    }
   },
   components: {},
 }
