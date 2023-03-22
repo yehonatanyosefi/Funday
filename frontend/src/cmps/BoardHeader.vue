@@ -12,24 +12,81 @@
         >
           {{ boardTitle }}
         </h1>
-        <button><Info class="svg-icon" /></button>
-        <!-- <div class="invite">
-          <span v-svg-icon="'inviteMember'"></span>
-          Invite 
-          <a :href="getBoardUrl" target="_blank" rel="noopener noreferrer"></a>
-        </div> -->
+        <div class="board-title-right-container">
+          <!-- <div v-if="getlastSeenUserImg" class="last-seen">
+            Last seen <img :src="getlastSeenUserImg" alt="" />
+          </div> -->
+          <div class="invite">
+            <Invite class="svg-icon" />
+            Invite
+            <a
+              :href="getBoardUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+            ></a>
+          </div>
+        </div>
       </section>
+      <section class="add-views">
+        <router-link :to="'/'">
+          <button
+            @click="changeView('table')"
+            class="view-item"
+            :class="{selected: view === 'table'}"
+          >
+            <p class="view-title">Main Table</p>
+          </button>
+        </router-link>
+        <span class="separator">|</span>
+        <router-link :to="'/board/kanban/'">
+          <button
+            @click="changeView('kanban')"
+            class="view-item"
+            :class="{selected: view === 'kanban'}"
+          >
+            <p class="view-title">Kanban</p>
+          </button>
+        </router-link>
+        <span class="separator">|</span>
+        <router-link :to="'/board/dashboard/'">
+          <button
+            @click="changeView('dashboard')"
+            class="view-item"
+            :class="{selected: view === 'dashboard'}"
+          >
+            <p class="view-title">Dashboard</p>
+          </button>
+        </router-link>
+      </section>
+
+      <!-- <BorderFilter
+        v-if="vw < 500"
+        :filter="filter"
+        :users="users"
+        @setFilter="setFilter"
+        @addTask="addTask"
+        @addGroup="addGroup"
+      />-->
     </section>
+    <!-- <BorderFilter
+      v-if="vw > 500"
+      :filter="filter"
+      :users="users"
+      @setFilter="setFilter"
+      @addTask="addTask"
+      @addGroup="addGroup"
+    /> -->
   </section>
 </template>
 <script>
-import Info from '../assets/svg/Info.svg'
+import Invite from '../assets/svg/Invite.svg'
+// import BorderFilter from './BoardFilter.vue'
 export default {
-  name: 'boardHeader',
+  name: 'board-header',
   emits: ['setFilter', 'addTask', 'addGroup', 'saveBoardTitle'],
   props: {
-    users: [],
-    filter: {},
+    users: Array,
+    filter: Object,
   },
   data() {
     return {
@@ -77,15 +134,17 @@ export default {
       else this.view = 'table'
     },
   },
-  components: {Info},
+  components: {Invite},
   computed: {
     boardTitle() {
-      return 'Sprint 5'
-      // return this.$store.getters.board.title
+      return 'Sprint 4'
+      //  return this.$store.getters.board.title
     },
     board() {
-      return this.$store.getters.board
+      return {_id: 'b101'}
+      //  return this.$store.getters.board
     },
+
     getUsers() {
       return this.$store.getters.users
     },
@@ -98,7 +157,7 @@ export default {
       return this.$store.getters.loggedinUser
     },
     getBoardUrl() {
-      return `https://mail.google.com/mail/u/0/?view=cm&fs=1&su=Hey! come join my someday board &body=You can find it on this link: http://somdey.onrender.com${this.$route.fullPath}.com`
+      return `https://mail.google.com/mail/u/0/?view=cm&fs=1&su=Hey! come join my Funday board &body=You can find it on this link: http://somdey.onrender.com${this.$route.fullPath}.com`
     },
     vw() {
       return window.innerWidth
@@ -108,10 +167,6 @@ export default {
     this.setView()
     this.setLastSeenUserImg(this.loggedinUser?._id)
   },
-  mounted() {
-    socketService.on('user-connected', (userId) => {
-      this.setLastSeenUserImg(userId)
-    })
-  },
+  mounted() {},
 }
 </script>
