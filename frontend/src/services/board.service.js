@@ -25,7 +25,6 @@ export const boardService = {
     saveBoard,
     removeBoard,
     getEmptyBoard,
-    addBoardMsg
 }
 window.cs = boardService
 
@@ -167,19 +166,19 @@ function getEmptyGroup() {
         id: 'g101',
         'title': 'Frontend',
         'archivedAt': null,
-        'tasks': [
+        'tasks': [getEmptyTask(), getEmptyTask(),
         ],
         style: {}
     }
 }
 
 async function queryBoard(filterBy = { title: '' }) {
-    // return httpService.get(STORAGE_KEY, filterBy)
+    // return httpService.get(STORAGE_KEY_BOARD, filterBy)
 
-    var boards = await storageService.query(STORAGE_KEY)
+    var boards = await storageService.query(STORAGE_KEY_BOARD)
     if (filterBy.title) {
         const regex = new RegExp(filterBy.txt, 'i')
-        boards = boards.filter(board => regex.test(board.title))
+        boards = boards.filter((board) => regex.test(board.title))
     }
     // if (filterBy.price) {
     //     boards = boards.filter(board => board.price <= filterBy.price)
@@ -187,21 +186,44 @@ async function queryBoard(filterBy = { title: '' }) {
     return boards
 }
 
-async function getBoardById() {
-
+async function getBoardById(boardId) {
+    return storageService.get(STORAGE_KEY_BOARD, boardId)
 }
-async function saveBoard() {
-
+async function saveBoard(board) {
+    var savedBoard
+    if (board._id) {
+        savedBoard = await storageService.put(STORAGE_KEY_BOARD, board)
+        // savedBoard = await httpService.put(`board/${board._id}`, board)
+    } else {
+        // Later, owner is set by the backend
+        const user = userService.getLoggedinUser()
+        const { _id, fullname, imgUrl } = user
+        board.createdBy._id = _id
+        board.createdBy.fullname = fullname
+        board.createdBy.imgUrl = imgUrl
+        savedBoard = await storageService.post(STORAGE_KEY_BOARD, board)
+        // savedBoard = await httpService.post('board', board)
+    }
+    return savedBoard
 }
-async function removeBoard() {
+async function removeBoard(boardId) {
+    return await storageService.remove(STORAGE_KEY_BOARD, boardId)
 
 }
 async function getEmptyBoard() {
-
+    return {
+        _id: '',
+        title: '',
+        isStarred: false,
+        archivedAt: '',
+        createdBy: {
+            _id: '',
+            fullname: '',
+            imgUrl: '',
+        },
+        style: {},
+        labels: [],
+        members: [],
+        groups: [],
+    }
 }
-async function addBoardMsg() {
-
-}
-
-
-
