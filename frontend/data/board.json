@@ -80,9 +80,12 @@
 								}
 							}
 						],
-						"memberIds": ["u101", "u102", "u103", "u104"],
-						"dueDate": 16156215211,
-						"startDate": 1679612400000,
+						"person": ["u101", "u102", "u103", "u104"],
+						"timeline": {
+							"startDate": 16156215211,
+							"dueDate": null
+						},
+						"date": 1679612400000,
 						"byMember": {
 							"_id": "u104",
 							"username": "peled2k@gmail.com",
@@ -100,8 +103,8 @@
 						"priority": "Critical",
 						"text": "",
 						"comments": [],
-						"memberIds": ["u101", "u102"],
-						"startDate": 1679612400000,
+						"person": ["u101", "u102"],
+						"date": 1679612400000,
 						"dueDate": 1680037200000,
 						"byMember": {
 							"_id": "u103",
@@ -120,9 +123,12 @@
 						"priority": "Low",
 						"text": "UserDetails,Index",
 						"comments": [],
-						"memberIds": ["u104", "u103"],
-						"dueDate": 1679706000000,
-						"startDate": 1679216400000,
+						"person": ["u104", "u103"],
+						"timeline": {
+							"startDate": 1679706000000,
+							"dueDate": null
+						},
+						"date": 1679216400000,
 						"byMember": {
 							"_id": "u104",
 							"username": "peled2k@gmail.com",
@@ -140,9 +146,12 @@
 						"priority": "",
 						"text": "Connect npm",
 						"comments": [],
-						"memberIds": ["u103"],
-						"dueDate": 1679965200000,
-						"startDate": 1680253200000,
+						"person": ["u103"],
+						"timeline": {
+							"startDate": 1679965200000,
+							"dueDate": null
+						},
+						"date": 1680253200000,
 						"byMember": {
 							"_id": "u103",
 							"username": "yehonatanmind@gmail.com",
@@ -160,9 +169,12 @@
 						"priority": "Critical",
 						"text": "",
 						"comments": [],
-						"memberIds": ["u103"],
-						"dueDate": 16156215211,
-						"startDate": 1679612400000,
+						"person": ["u103"],
+						"timeline": {
+							"startDate": 16156215211,
+							"dueDate": null
+						},
+						"date": 1679612400000,
 						"byMember": {
 							"_id": "u103",
 							"username": "yehonatanmind@gmail.com",
