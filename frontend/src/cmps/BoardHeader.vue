@@ -114,8 +114,7 @@ export default {
       this.$emit('saveBoardTitle', val)
     },
     addTask() {
-      const task = boardService.getEmptyTask()
-      this.$store.dispatch({type: 'saveTask', task})
+      this.$store.dispatch({type: 'addTask'})
     },
     setLastSeenUserImg(userId = '') {
       const users = this.getUsers

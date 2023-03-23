@@ -76,6 +76,10 @@ export const boardStore = {
         throw err
       }
     },
+    async addTask({dispatch}) {
+      const task = boardService.getEmptyTask()
+      dispatch({type: 'saveTask', task})
+    },
     async removeTask(context, {ids}) {
       try {
         const updatedBoard = await boardService.remove(ids, 'task')
