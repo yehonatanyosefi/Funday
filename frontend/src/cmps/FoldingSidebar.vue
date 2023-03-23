@@ -1,12 +1,20 @@
 <template>
     <main class="folding-bar">
         <div class="workspace">
-            <span class="workspace-title flex ">Workspace <Menu class="svg-icon" /></span>
+            <span class="workspace-title flex ">Workspace
+                <Menu class="svg-icon" />
+            </span>
             <p class="main-workspace-title">Main workspace</p>
             <div class="btns flex column">
-                <button> <Add class="svg-icon" />  <span class="optn">Add</span> </button>
-                <button><Filter class="svg-icon" />  <span class="optn">Filters</span></button>
-                <button><Search class="svg-icon" /> <span class="optn">Search</span></button>
+                <button>
+                    <Add class="svg-icon" /> <span class="optn">Add</span>
+                </button>
+                <button>
+                    <Filter class="svg-icon" /> <span class="optn">Filters</span>
+                </button>
+                <button>
+                    <Search class="svg-icon" /> <span class="optn">Search</span>
+                </button>
             </div>
         </div>
 
@@ -14,10 +22,19 @@
         <div class="boards">
             <div class="board-link">
                 <Board class="svg-icon" />
-                <span>Dev</span> 
+                <span>Dev</span>
+                <Menu class="svg-icon small-menu" width="16 " height="16"/>
             </div>
-            <div class="board-link"><Board class="svg-icon" /> <span>Finances</span> </div>
-            <div class="board-link"><Board class="svg-icon" /> <span>Sales & Marketing</span> </div>
+            <div class="board-link">
+                <Board class="svg-icon" /> 
+                <span>Finances</span>
+                <Menu class="svg-icon small-menu" width="16 " height="16"/>
+            </div>
+            <div class="board-link">
+                <Board class="svg-icon" /> 
+                <span>Sales & Marketing</span>
+                <Menu class="svg-icon small-menu" width="16 " height="16"/>
+            </div>
 
         </div>
     </main>

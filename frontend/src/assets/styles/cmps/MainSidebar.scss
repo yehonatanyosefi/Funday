@@ -13,8 +13,8 @@
       height: 100%;
       width: 66px;
       background-color: $clr-small-side-bar;
+      
       .mid-icons {
-
         display: flex;
         flex-grow: 1;
         flex-direction: column;
@@ -64,6 +64,8 @@
       }
       button {
         background-color: $clr-small-side-bar;
+        cursor: not-allowed;
+
       }
       .svg-icon {
         &.InstalledProducts {
