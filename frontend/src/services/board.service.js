@@ -6,7 +6,8 @@ import { userService } from './user.service.js'
 const STORAGE_KEY = 'boardDB'
 
 export const boardService = {
-    query,
+    // query,
+    queryList,
     getById,
     save,
     remove,
@@ -64,19 +65,13 @@ async function saveBoard(board) {
     return savedBoard
 }
 
-async function query(type = 'groups', filterBy = { txt: '', price: 0 }) {
+async function queryList(filterBy = { txt: '', price: 0 }) {
     // return httpService.get(STORAGE_KEY, filterBy)
 
-    const board = await storageService.query(STORAGE_KEY) //TODO refactor
-    let entity = board
-    switch (type) {
-        case 'groups':
-            entity = board[0].groups
-            break
-        case 'tasks':
-            entity = board[0].groups[0].tasks
-            break
-    }
+    const boards = await storageService.query(STORAGE_KEY)
+    const boardList = boards.map(board => {
+        return { _id: board._id, title: board.title }
+    })
     // var tasks = await storageService.query(STORAGE_KEY)
     // if (filterBy.txt) {
     //     const regex = new RegExp(filterBy.txt, 'i')
@@ -86,7 +81,7 @@ async function query(type = 'groups', filterBy = { txt: '', price: 0 }) {
     //     tasks = tasks.filter(task => task.price <= filterBy.price)
     // }
     // return tasks
-    return entity
+    return boardList
 }
 
 async function remove(ids, type) {
@@ -112,6 +107,23 @@ async function remove(ids, type) {
             break
     }
 }
+
+
+// async function query(filterBy = { txt: '', price: 0 }) {
+//     // return httpService.get(STORAGE_KEY, filterBy)
+
+//     const boards = await storageService.query(STORAGE_KEY)
+//     // var tasks = await storageService.query(STORAGE_KEY)
+//     // if (filterBy.txt) {
+//     //     const regex = new RegExp(filterBy.txt, 'i')
+//     //     tasks = tasks.filter(task => regex.test(task.vendor) || regex.test(task.description))
+//     // }
+//     // if (filterBy.price) {
+//     //     tasks = tasks.filter(task => task.price <= filterBy.price)
+//     // }
+//     // return tasks
+//     return boards
+// }
 
 function getEmptyTask() {
     return {

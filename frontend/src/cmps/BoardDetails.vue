@@ -1,6 +1,6 @@
 <template>
 <section class="board-details">
-	<template v-for="group in groups" :key="group.id">
+	<template v-for="group in board.groups" :key="group.id">
 		<BoardGroup
 			:group="group"
 			:cmpOrder="cmpOrder"
@@ -23,20 +23,19 @@ export default {
 		}
 	},
 	computed: {
-		loggedInUser() {
+		loggedinUser() {
 			return this.$store.getters.loggedinUser
 		},
-		groups() {
-        		return this.$store.getters.groups
+		board() {
+        		return this.$store.getters.board
 		},
 	},
 	created() {
-		this.$store.dispatch({ type: "loadGroups" })
 	},
 	methods: {
 		async saveTask(payload) {
 			try {
-				const payloadToSave = {...payload,boardId:'b101'}
+				const payloadToSave = {...payload,boardId:this.board._id}
 				await this.$store.dispatch({type:'saveTask',payload:payloadToSave})
 				// showSuccessMsg('Task updated')
 			} catch (err) {
