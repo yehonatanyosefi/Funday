@@ -1,4 +1,4 @@
-import {boardService} from '../services/board.service'
+import { boardService } from '../services/board.service'
 
 export const boardStore = {
   state: {
@@ -6,19 +6,24 @@ export const boardStore = {
     boardList: [],
   },
   getters: {
-    board({board}) {
+    board({ board }) {
       return board
     },
-    boardList({boardList}) {
+    boardList({ boardList }) {
       return boardList
     },
   },
   mutations: {
-    setBoardList(state, {boardList}) {
+    setBoardList(state, { boardList }) {
       state.boardList = boardList
     },
-    setBoard(state, {board}) {
+    setBoard(state, { board }) {
       state.board = board
+    },
+    addBoard(state, { board }) {
+      state.board = board
+      const minBoard = {_id: board._id, title: board.title}
+      state.boardList.unshift(minBoard)
     },
     // setTasks(state, { tasks }) {
     //     state.tasks = tasks
@@ -58,7 +63,7 @@ export const boardStore = {
     // },
   },
   actions: {
-    async saveTask({commit, getters}, {task}) {
+    async saveTask({ commit, getters }, { task }) {
       try {
         const board = getters.board
         const boardId = board._id
@@ -69,47 +74,62 @@ export const boardStore = {
           task,
           groupId
         )
-        commit({type: 'setBoard', board: updatedBoard})
+        commit({ type: 'setBoard', board: updatedBoard })
         return task
       } catch (err) {
         console.log('Store: Error in updateTask', err)
         throw err
       }
     },
+<<<<<<< HEAD
+    async removeTask(context, { ids }) {
+=======
     async addTask({dispatch}) {
       const task = boardService.getEmptyTask()
       dispatch({type: 'saveTask', task})
     },
     async removeTask(context, {ids}) {
+>>>>>>> 09876008466670ff672fd8b656eeb24a0220402c
       try {
         const updatedBoard = await boardService.remove(ids, 'task')
-        context.commit({type: 'setBoard', board: updatedBoard})
+        context.commit({ type: 'setBoard', board: updatedBoard })
       } catch (err) {
         console.log('Store: Error in removeTask', err)
         throw err
       }
     },
-    async getBoardById(context, {boardId}) {
+    async getBoardById(context, { boardId }) {
       try {
         const board = await boardService.getById(boardId)
-        context.commit({type: 'setBoard', board})
+        context.commit({ type: 'setBoard', board })
         return board
       } catch (err) {
         console.log('Store: Error in getBoardById', err)
       }
     },
-    async getFirstBoard({dispatch, state}) {
+    async getFirstBoard({ dispatch, state }) {
       const boardId = state.boardList[0]._id
-      dispatch({type: 'getBoardById', boardId})
+      dispatch({ type: 'getBoardById', boardId })
       return boardId
     },
     async loadBoardList(context) {
       try {
         const boardList = await boardService.queryList()
-        context.commit({type: 'setBoardList', boardList})
+        context.commit({ type: 'setBoardList', boardList })
         return boardList
       } catch (err) {
         console.log('Store: Error in loadBoardList', err)
+        throw err
+      }
+    },
+    async addBoard({ commit }) {
+      try {
+        const board = await boardService.getEmptyBoard()
+        const newBoard = await boardService.save(null,'board',board)
+        commit({ type: 'addBoard', board:newBoard })
+        return newBoard
+      } catch {
+        console.log('Store: Error in addBoard', err)
         throw err
       }
     },

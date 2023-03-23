@@ -24,34 +24,34 @@ function getById(boardId) {
   // return httpService.get(`boardId/${boardId}`)
 }
 
-async function save(boardId, type = 'task', payload, groupId = null) {
-  let board = await getById(boardId)
-  const groupIdx = board.groups.findIndex((group) => group.id === groupId)
-  switch (type) {
-    case 'task':
-      const taskIdx = board.groups[groupIdx].tasks.findIndex(
-        (task) => task.id === payload.id
-      )
-      if (taskIdx > -1) {
-        const tasks = board.groups[groupIdx].tasks.splice(
-          taskIdx,
-          1,
+async function save(boardId=null, type = 'task', payload, groupId = null) {
+    let board = (type!=='board')? await getById(boardId) : payload
+    const groupIdx = (type!=='board')? board?.groups.findIndex((group) => group.id === groupId) : -1
+    switch (type) {
+        case 'task':
+            const taskIdx = board.groups[groupIdx].tasks.findIndex(
+                (task) => task.id === payload.id
+                )
+                if (taskIdx > -1) {
+                    const tasks = board.groups[groupIdx].tasks.splice(
+                        taskIdx,
+                        1,
           payload
-        )[0]
-        const group = board.groups.splice(groupIdx, 1, tasks)[0]
+          )[0]
+          const group = board.groups.splice(groupIdx, 1, tasks)[0]
         board.groups[groupIdx] = group
       } else {
         board.groups[groupIdx].tasks.push(payload)
       }
       break
-    case 'group':
+      case 'group':
       if (groupIdx > -1) {
-        board.groups[groupIdx] = payload
-      } else {
-        board.groups.push(payload)
-      }
-      break
-  }
+          board.groups[groupIdx] = payload
+        } else {
+            board.groups.push(payload)
+        }
+        break
+    }
   return await saveBoard(board)
   // board.activities.unshift(activity)
 }
@@ -169,7 +169,7 @@ function getEmptyGroup() {
 
 async function getEmptyBoard() {
   return {
-    title: '',
+    title: 'New Board',
     isStarred: false,
     archivedAt: '',
     cmpOrder: ['title', 'date', 'person', 'status', 'text', 'priority'],
@@ -181,7 +181,7 @@ async function getEmptyBoard() {
     style: {},
     labels: [],
     members: [],
-    groups: getEmptyGroup(),
+    groups:[ getEmptyGroup()],
   }
 }
 
