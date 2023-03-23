@@ -156,7 +156,7 @@ export default {
       return this.$store.getters.loggedinUser
     },
     getBoardUrl() {
-      return `https://mail.google.com/mail/u/0/?view=cm&fs=1&su=Hey! come join my Funday board &body=You can find it on this link: http://somdey.onrender.com${this.$route.fullPath}.com`
+      return `https://mail.google.com/mail/u/0/?view=cm&fs=1&su=Hey! come join my Funday board &body=You can find it on this link: http://funday.onrender.com${this.$route.fullPath}`
     },
     vw() {
       return window.innerWidth

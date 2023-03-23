@@ -1,26 +1,18 @@
 <template>
 <div class="priority" :class="info" @click="toggleModal" >
      {{info}}
-     <div class="modal" v-if="isOpen">
-                    <div class="modal-container">
-                         <div class="Critical" @click="$emit('updateTask','Critical')"><p>Critical</p> </div>
-                         <div class="High" @click="$emit('updateTask','High')"><p>High</p> </div>
-                         <div class="Medium" @click="$emit('updateTask','Medium')"><p>Medium</p> </div>
-                         <div class="Low" @click="$emit('updateTask','Low')"><p>Low</p> </div>
-                         <div class="empty" @click="$emit('updateTask','')"><p></p> </div>
-                         <!-- <div class="empty-blue"><p></p></div> -->
-                    </div>
-                    <section class="edit-labels">
-                         <p class="divider"></p> 
-                         <button><Edit class="svg-icon" />Edit Labels</button>
-                    </section>
-               </div>
+     <LabelPicker
+          v-if="isOpen"
+          class="modal"
+          :labels="labels"
+          @updateTask="$emit('updateTask',$event)"
+          @closeModal="closeModal"></LabelPicker>
 </div>
 
 </template>
 
 <script>
-import Edit from '../../assets/svg/Edit.svg'
+import LabelPicker from './LabelPicker.vue'
 export default {
 emits: ['updateTask'],
      name: 'Priority',
@@ -33,17 +25,24 @@ created() {
 data() {
 return {
      isOpen:false,
+     labels: [{Critical:'Critical'}, {High:'High'}, {Medium:'Medium'}, {Low:'Low'},{empty:''}],
 }
 },
 methods: {
      toggleModal(){
-               this.isOpen=!this.isOpen
-          }
+               this.isOpen =! this.isOpen
+     },
+     openModal() {
+          this.isOpen = true
+     },
+     closeModal() {
+          this.isOpen = false
+     },
 },
 computed: {
 },
 components: {
-     Edit,
+     LabelPicker,
 },
 }
 </script>

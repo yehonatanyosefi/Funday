@@ -6,7 +6,8 @@
             <input type="checkbox" class="task-checkbox" disabled>
         </div></section>
         <section v-for="(cmp, idx) in cmpOrder" :key="idx">
-            <div class="task">{{capitalizeFirstLetter(cmp)}}</div>
+            <div v-if="cmp!=='title'" class="task">{{capitalizeFirstLetter(cmp)}}</div>
+            <div v-else class="task">Task</div>
         </section>
     </div>
     <section class="group" v-for="(task,idx) in group.tasks" :key="task.id">

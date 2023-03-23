@@ -1,25 +1,18 @@
 <template>
-     <div class="status" :class="statusClass" @click="toggleModal" >
+     <div class="status" :class="statusClass" @click="toggleModal">
           {{ info }}
           <!-- <div class="folding-corner"><div class="fold"></div></div> -->
-          <div class="modal" v-if="isOpen">
-               <div class="modal-container">
-                    <div class="working" @click="$emit('updateTask','Working on it')"><p>Working on it</p> </div>
-                    <div class="done" @click="$emit('updateTask','Done')"><p>Done</p> </div>
-                    <div class="stuck" @click="$emit('updateTask','Stuck')"><p>Stuck</p> </div>
-                    <div class="empty" @click="$emit('updateTask','')"><p></p> </div>
-                    <!-- <div class="empty-blue"><p></p></div> -->
-               </div>
-               <section class="edit-labels">
-                    <p class="divider"></p> 
-                    <button><Edit class="svg-icon" />Edit Labels</button>
-               </section>
-          </div>
+          <LabelPicker
+               v-if="isOpen"
+               class="modal"
+               :labels="labels"
+               @updateTask="$emit('updateTask',$event)"
+               @closeModal="closeModal"></LabelPicker>
      </div>
 </template>
 
 <script>
-import Edit from '../../assets/svg/Edit.svg'
+import LabelPicker from './LabelPicker.vue'
 
 export default {
      emits: ['updateTask'],
@@ -33,12 +26,19 @@ export default {
      data() {
           return {
                isOpen:false,
+               labels: [{working:'Working on it'}, {done:'Done'}, {stuck:'Stuck'}, {empty:''}]
           }
      },
      methods: {
           toggleModal(){
-               this.isOpen=!this.isOpen
-          }
+               this.isOpen = !this.isOpen
+          },
+          openModal() {
+               this.isOpen = true
+          },
+          closeModal() {
+               this.isOpen = false
+          },
      },
      computed: {
           statusClass() {
@@ -52,7 +52,7 @@ export default {
 
      },
      components: {
-          Edit
+          LabelPicker,
      },
 }
 </script>

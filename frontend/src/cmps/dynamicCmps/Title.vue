@@ -4,6 +4,7 @@
       type="text"
       v-model="title"
       name="task-title"
+      class="task-title-input"
       @input="$emit('updateTask', title)"
     />
   </div>

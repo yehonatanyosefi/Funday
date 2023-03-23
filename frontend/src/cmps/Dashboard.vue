@@ -1,5 +1,7 @@
 <template>
-
+<div>
+     Dashboard - Work in progress feature
+</div>
 </template>
 
 <script>

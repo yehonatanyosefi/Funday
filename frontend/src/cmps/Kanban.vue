@@ -1,5 +1,7 @@
 <template>
-
+<div>
+     Kanban - Work in progress feature
+</div>
 </template>
 
 <script>

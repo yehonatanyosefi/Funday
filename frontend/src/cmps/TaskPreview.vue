@@ -1,7 +1,13 @@
 <template>
 <section class="task-preview" v-if="cmpOrder?.length">
   <div class="task">
-    <input type="checkbox" title="Delete Task" @click="$emit('removeTask',task.id)" class="task-checkbox">
+    <input
+      type="checkbox"
+      title="Delete Task"
+      class="task-checkbox"
+      v-model="isModalOpen"
+      @click="openModal">
+      <!-- @click="$emit('removeTask',task.id)" -->
   </div>
   <div v-for="(cmp, idx) in cmpOrder" :key="idx" class="task">
         <component
@@ -9,10 +15,15 @@
           :info="task[cmp]"
           @updateTask="updateTask($event,cmp)"></component>
   </div>
+  <RemoveTaskModal
+    v-if="isModalOpen"
+    @closeModal="handleCloseModal"
+    @removeTask="handleRemoveTask"/>
 </section>
 </template>
 
 <script>
+import RemoveTaskModal from './util/RemoveTaskModal.vue';
 // import { Container, Draggable } from "vue3-smooth-dnd";
 import Title from './dynamicCmps/Title.vue'
 import Side from './dynamicCmps/Side.vue'
@@ -27,9 +38,13 @@ props: {
     task: Object,
     cmpOrder: Array,
   },
-  created() {},
+  created() {
+
+  },
   data() {
-    return {}
+    return {
+      isModalOpen: false,
+    }
   },
   methods: {
     updateTask(payload, cmp) {
@@ -39,6 +54,16 @@ props: {
     },
     capitalizeFirstLetter(str) {
       return str.charAt(0).toUpperCase() + str.slice(1)
+    },
+    openModal() {
+      this.isModalOpen = true
+    },
+    handleRemoveTask() {
+      this.isModalOpen = false
+      this.$emit('removeTask',this.task.id)
+    },
+    handleCloseModal() {
+      this.isModalOpen = false
     },
   },
   computed: {
@@ -54,6 +79,7 @@ props: {
     Status,
     Text,
     Priority,
+    RemoveTaskModal,
   },
 }
 </script>

@@ -1,0 +1,58 @@
+.remove-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+     .remove-modal-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+     }
+
+     .remove-modal-content {
+          position: relative;
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 5px;
+          width: 400px;
+          max-width: 90%;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+     }
+
+     .remove-modal-buttons {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 20px;
+     }
+
+     .yes-button {
+          background-color: $group-header-clr;
+          color: #fff;
+          padding: 10px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+     }
+
+     .close-button {
+          background-color: #ccc;
+          color: #333;
+          padding: 10px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+     }
+
+     .yes-button:hover,
+     .close-button:hover {
+          opacity: 0.8;
+     }
+}

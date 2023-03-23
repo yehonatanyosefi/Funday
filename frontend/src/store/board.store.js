@@ -47,14 +47,17 @@ export const boardStore = {
             if (!group.msgs) group.msgs = []
             group.msgs.push(msg)
         },
+        updateBoard(state, { updatedBoard }) {
+            state.board = updatedBoard
+            state.groups = updatedBoard.groups
+        }
     },
     actions: {
         async updateTask(context, { payload }) {
             try {
                 const { boardId, task, groupId } = payload
                 const updatedBoard = await boardService.update(boardId, 'task', task, groupId)
-                // context.commit({ type: 'updateTask', task })
-                context.dispatch({ type: 'loadGroups' })
+                context.commit({ type: 'updateBoard', updatedBoard })
                 return task
             } catch (err) {
                 console.log('taskStore: Error in updateTask', err)
@@ -63,20 +66,10 @@ export const boardStore = {
         },
         async removeTask(context, { ids }) {
             try {
-                await boardService.remove(ids, 'task')
-                // context.commit({ type: 'removeTask', task })
-                context.dispatch({ type: 'loadGroups' })
+                const updatedBoard = await boardService.remove(ids, 'task')
+                context.commit({ type: 'updateBoard', updatedBoard })
             } catch (err) {
                 console.log('taskStore: Error in removeTask', err)
-                throw err
-            }
-        },
-        async saveTask({ commit }, { boardId, groupId, task, activity }) {
-            try {
-                board = boardService.saveTask(boardId, groupId, task, activity)
-                // commit(ACTION)
-            } catch (err) {
-                console.log('taskStore: Error in save task', err)
                 throw err
             }
         },
@@ -87,6 +80,15 @@ export const boardStore = {
                 return task
             } catch (err) {
                 console.log('taskStore: Error in addTask', err)
+                throw err
+            }
+        },
+        async saveTask({ commit }, { boardId, groupId, task, activity }) {
+            try {
+                board = boardService.saveTask(boardId, groupId, task, activity)
+                // commit(ACTION)
+            } catch (err) {
+                console.log('taskStore: Error in save task', err)
                 throw err
             }
         },

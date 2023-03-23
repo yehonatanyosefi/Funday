@@ -69,10 +69,10 @@ export default {
 			try {
 				ids = {...ids,boardId:'b101'}
 				await this.$store.dispatch({type:'removeTask',ids})
-				// showSuccessMsg('Task removed')
+				showSuccessMsg('Task removed')
 			} catch (err) {
 				console.log(err)
-				// showErrorMsg('Cannot remove task')
+				showErrorMsg('Cannot remove task')
 			}
 		},
 		// async addTask() {

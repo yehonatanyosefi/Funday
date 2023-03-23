@@ -95,8 +95,7 @@ async function remove(ids, type) {
             const group = board.groups.splice(groupIdx, 1, tasks)[0]
             // board.groups[groupIdx].tasks.push(payload)
             board.groups[groupIdx] = group
-            await saveBoard(board)
-            return Promise.resolve()
+            return await saveBoard(board)
             break
         case 'groups':
             board = board.groups

@@ -1,7 +1,12 @@
 <template>
 <div class="text">
-     <!-- <input type="text" :value="info" name="text"> -->
-     {{info}}
+    <input
+      type="text"
+      v-model="title"
+      name="task-text"
+      class="task-text-input"
+      @input="$emit('updateTask', title)"
+    />
 </div>
 
 </template>
@@ -13,14 +18,14 @@ emits: ['updateTask'],
 props: {
      info: String,
 },
-created() {
-
-},
-data() {
-return {
-
-}
-},
+  created() {
+    this.title = this.info
+  },
+  data() {
+    return {
+      title: null,
+    }
+  },
 methods: {
 
 },

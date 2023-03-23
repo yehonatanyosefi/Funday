@@ -11,17 +11,6 @@
 @import 'basics/links';
 @import 'basics/forms';
 
-//Dynamic Components
-@import 'cmps/dynamicCmps/Date';
-@import 'cmps/dynamicCmps/Member';
-@import 'cmps/dynamicCmps/Priority';
-@import 'cmps/dynamicCmps/Side';
-@import 'cmps/dynamicCmps/Status';
-@import 'cmps/dynamicCmps/TaskTitle';
-@import 'cmps/dynamicCmps/Timeline';
-@import 'cmps/dynamicCmps/File';
-@import 'cmps/dynamicCmps/Text';
-
 // Components
 @import 'cmps/AppHeader';
 @import 'cmps/ReviewList';
@@ -40,6 +29,21 @@
 @import 'cmps/BoardFilter';
 @import 'cmps/Dashboard';
 @import 'cmps/Kanban';
+
+//Dynamic Components
+@import 'cmps/dynamicCmps/Date';
+@import 'cmps/dynamicCmps/Member';
+@import 'cmps/dynamicCmps/Priority';
+@import 'cmps/dynamicCmps/Side';
+@import 'cmps/dynamicCmps/Status';
+@import 'cmps/dynamicCmps/TaskTitle';
+@import 'cmps/dynamicCmps/Timeline';
+@import 'cmps/dynamicCmps/File';
+@import 'cmps/dynamicCmps/Text';
+
+// Util Components
+@import 'cmps/util/RemoveTaskModal.scss';
+
 
 //Views
 @import 'views/Chat';
