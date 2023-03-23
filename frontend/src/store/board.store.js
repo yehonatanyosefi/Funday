@@ -22,7 +22,7 @@ export const boardStore = {
     },
     addBoard(state, { board }) {
       state.board = board
-      const minBoard = {_id: board._id, title: board.title}
+      const minBoard = { _id: board._id, title: board.title }
       state.boardList.unshift(minBoard)
     },
     // setTasks(state, { tasks }) {
@@ -63,33 +63,26 @@ export const boardStore = {
     // },
   },
   actions: {
-    async saveTask({ commit, getters }, { task }) {
+    async saveTask(context, { payload }) {
       try {
-        const board = getters.board
-        const boardId = board._id
-        const groupId = board.groups[0].id
-        const updatedBoard = await boardService.save(
-          boardId,
-          'task',
-          task,
-          groupId
-        )
-        commit({ type: 'setBoard', board: updatedBoard })
+        const { boardId, task, groupId } = payload
+        const updatedBoard = await boardService.save(boardId, 'task', task, groupId)
+        context.commit({ type: 'setBoard', board: updatedBoard })
         return task
       } catch (err) {
         console.log('Store: Error in updateTask', err)
         throw err
       }
     },
-<<<<<<< HEAD
-    async removeTask(context, { ids }) {
-=======
-    async addTask({dispatch}) {
+    async addTask({ dispatch, getters }) {
       const task = boardService.getEmptyTask()
-      dispatch({type: 'saveTask', task})
+      const board = getters.board
+      const boardId = board._id
+      const groupId = board.groups[0].id
+      const payload = { boardId, task, groupId }
+      return dispatch({ type: 'saveTask', payload })
     },
-    async removeTask(context, {ids}) {
->>>>>>> 09876008466670ff672fd8b656eeb24a0220402c
+    async removeTask(context, { ids }) {
       try {
         const updatedBoard = await boardService.remove(ids, 'task')
         context.commit({ type: 'setBoard', board: updatedBoard })
@@ -125,8 +118,8 @@ export const boardStore = {
     async addBoard({ commit }) {
       try {
         const board = await boardService.getEmptyBoard()
-        const newBoard = await boardService.save(null,'board',board)
-        commit({ type: 'addBoard', board:newBoard })
+        const newBoard = await boardService.save(null, 'board', board)
+        commit({ type: 'addBoard', board: newBoard })
         return newBoard
       } catch {
         console.log('Store: Error in addBoard', err)
