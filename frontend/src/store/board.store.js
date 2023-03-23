@@ -17,7 +17,7 @@ export const boardStore = {
         addTask(state, { task }) {
             state.tasks.push(task)
         },
-        updateTask(state, { task }) {
+        saveTask(state, { task }) {
             const idx = state.tasks.findIndex(c => c._id === task._id)
             state.tasks.splice(idx, 1, task)
         },
@@ -53,10 +53,10 @@ export const boardStore = {
         }
     },
     actions: {
-        async updateTask(context, { payload }) {
+        async saveTask(context, { payload }) {
             try {
                 const { boardId, task, groupId } = payload
-                const updatedBoard = await boardService.update(boardId, 'task', task, groupId)
+                const updatedBoard = await boardService.save(boardId, 'task', task, groupId)
                 context.commit({ type: 'updateBoard', updatedBoard })
                 return task
             } catch (err) {
@@ -73,72 +73,6 @@ export const boardStore = {
                 throw err
             }
         },
-        async addTask(context, { task }) {
-            try {
-                task = await boardService.saveTask(task, 'task')
-                context.commit(getActionAddTask(task))
-                return task
-            } catch (err) {
-                console.log('taskStore: Error in addTask', err)
-                throw err
-            }
-        },
-        async saveTask({ commit }, { boardId, groupId, task, activity }) {
-            try {
-                board = boardService.saveTask(boardId, groupId, task, activity)
-                // commit(ACTION)
-            } catch (err) {
-                console.log('taskStore: Error in save task', err)
-                throw err
-            }
-        },
-        async loadTasks(context) {
-            try {
-                // const tasks = await boardService.queryTask()
-                // context.commit({ type: 'setTasks', tasks })
-            } catch (err) {
-                console.log('taskStore: Error in loadTasks', err)
-                throw err
-            }
-        },
-        async addTaskMsg(context, { taskId, txt }) {
-            try {
-                const msg = await boardService.addTaskMsg(taskId, txt)
-                context.commit({ type: 'addTaskMsg', taskId, msg })
-            } catch (err) {
-                console.log('taskStore: Error in addTaskMsg', err)
-                throw err
-            }
-        },
-        async saveGroup({ commit }, { boardId, groupId, group, activity }) {
-            try {
-                board = boardService.saveGroup(boardId, groupId, group, activity)
-                // commit(ACTION)
-            } catch (err) {
-                console.log('groupStore: Error in save group', err)
-                throw err
-            }
-        },
-        async addGroup(context, { group }) {
-            try {
-                group = await boardService.saveGroup(group)
-                context.commit(getActionAddGroup(group))
-                return group
-            } catch (err) {
-                console.log('groupStore: Error in addGroup', err)
-                throw err
-            }
-        },
-        async updateGroup(context, { group }) {
-            try {
-                group = await boardService.saveGroup(group)
-                context.commit(getActionUpdateGroup(group))
-                return group
-            } catch (err) {
-                console.log('groupStore: Error in updateGroup', err)
-                throw err
-            }
-        },
         async loadGroups(context) {
             try {
                 const groups = await boardService.query('groups')
@@ -148,15 +82,35 @@ export const boardStore = {
                 throw err
             }
         },
-        async removeGroup(context, { groupId }) {
-            try {
-                await boardService.removeGroup(groupId)
-                context.commit(getActionRemoveGroup(groupId))
-            } catch (err) {
-                console.log('groupStore: Error in removeGroup', err)
-                throw err
-            }
-        },
+        // async addGroup(context, { group }) {
+        //     try {
+        //         group = await boardService.saveGroup(group)
+        //         context.commit(getActionAddGroup(group))
+        //         return group
+        //     } catch (err) {
+        //         console.log('groupStore: Error in addGroup', err)
+        //         throw err
+        //     }
+        // },
+        // async updateGroup(context, { group }) {
+        //     try {
+        //         group = await boardService.saveGroup(group)
+        //         context.commit(getActionUpdateGroup(group))
+        //         return group
+        //     } catch (err) {
+        //         console.log('groupStore: Error in updateGroup', err)
+        //         throw err
+        //     }
+        // },
+        // async removeGroup(context, { groupId }) {
+        //     try {
+        //         await boardService.removeGroup(groupId)
+        //         context.commit(getActionRemoveGroup(groupId))
+        //     } catch (err) {
+        //         console.log('groupStore: Error in removeGroup', err)
+        //         throw err
+        //     }
+        // },
         // async addGroupMsg(context, { groupId, txt }) {
         //     try {
         //         const msg = await boardService.addGroupMsg(groupId, txt)

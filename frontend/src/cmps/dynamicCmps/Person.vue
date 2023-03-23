@@ -8,7 +8,7 @@
 
 <script>
 export default {
-emits: ['updateTask'],
+emits: ['saveTask'],
      name: 'Member',
 props: {
      info: Array,

@@ -8,9 +8,8 @@ const STORAGE_KEY = 'boardDB'
 export const boardService = {
     query,
     getById,
-    update,
+    save,
     remove,
-    addMsg,
     getEmptyBoard,
     getEmptyGroup,
     getEmptyTask,
@@ -24,20 +23,26 @@ function getById(boardId) {
     // return httpService.get(`boardId/${boardId}`)
 }
 
-async function update(boardId, type = 'task', payload, groupId = null) {
+async function save(boardId, type = 'task', payload, groupId = null) {
     let board = await getById(boardId)
     const groupIdx = board.groups.findIndex(group => group.id === groupId)
     switch (type) {
         case 'task':
             const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === payload.id)
-            const tasks = board.groups[groupIdx].tasks.splice(taskIdx, 1, payload)[0]
-            const group = board.groups.splice(groupIdx, 1, tasks)[0]
-            // board.groups[groupIdx].tasks.push(payload)
-            board.groups[groupIdx] = group
+            if (taskIdx > -1) {
+                const tasks = board.groups[groupIdx].tasks.splice(taskIdx, 1, payload)[0]
+                const group = board.groups.splice(groupIdx, 1, tasks)[0]
+                board.groups[groupIdx] = group
+            } else {
+                board.groups[groupIdx].tasks.push(payload)
+            }
             break
         case 'group':
-            board.groups[groupIdx] = payload
-            // board.groups.push(payload)
+            if (groupIdx > -1) {
+                board.groups[groupIdx] = payload
+            } else {
+                board.groups.push(payload)
+            }
             break
     }
     return await saveBoard(board)
@@ -108,53 +113,9 @@ async function remove(ids, type) {
     }
 }
 
-async function addMsg(taskId, txt) {
-    const savedMsg = await httpService.post(`task/${taskId}/msg`, { txt })
-    return savedMsg
-}
-
-async function saveGroup(group) {
-    var savedGroup
-    if (group._id) {
-        savedGroup = await storageService.put(STORAGE_KEY, group)
-        // savedGroup = await httpService.put(`group/${group._id}`, group)
-
-    } else {
-        // Later, owner is set by the backend
-        group.owner = userService.getLoggedinUser()
-        savedGroup = await storageService.post(STORAGE_KEY, group)
-        // savedGroup = await httpService.post('group', group)
-    }
-    return savedGroup
-}
-
-async function queryGroup(filterBy = { txt: '', price: 0 }) {
-    // return httpService.get(STORAGE_KEY, filterBy)
-    const board = await storageService.query(STORAGE_KEY)
-    let groups = board[0].groups
-    // if (filterBy.txt) {
-    //     const regex = new RegExp(filterBy.txt, 'i')
-    //     groups = groups.filter(group => regex.test(group.vendor) || regex.test(group.description))
-    // }
-    // if (filterBy.price) {
-    //     groups = groups.filter(group => group.price <= filterBy.price)
-    // }
-    return groups
-
-}
-function getGroupById(groupId) {
-    return storageService.get(STORAGE_KEY, groupId)
-    // return httpService.get(`group/${groupId}`)
-}
-
-async function removeGroup(groupId) {
-    await storageService.remove(STORAGE_KEY, groupId)
-    // return httpService.delete(`group/${groupId}`)
-}
-
 function getEmptyTask() {
     return {
-        id: '',
+        id: utilService.makeId(),
         title: '',
         status: '',
         priority: '',
@@ -190,7 +151,6 @@ function getEmptyGroup() {
 
 async function getEmptyBoard() {
     return {
-        _id: '',
         title: '',
         isStarred: false,
         archivedAt: '',

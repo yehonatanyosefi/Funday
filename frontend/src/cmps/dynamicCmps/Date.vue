@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  emits: ['updateTask'],
+  emits: ['saveTask'],
   name: 'Date',
   props: {
     info: Number,
@@ -28,7 +28,7 @@ export default {
   methods: {
     select() {
       const newVal = new Date(this.info).getTime()
-      this.$emit('updateTask', newVal)
+      this.$emit('saveTask', newVal)
     },
   },
   computed: {

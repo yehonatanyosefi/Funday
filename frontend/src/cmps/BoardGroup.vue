@@ -14,7 +14,7 @@
           <TaskPreview
             :task="task"
             :cmpOrder="cmpOrder"
-            @updateTask="$emit('updateTask',{task:$event,groupId:group.id})"
+            @saveTask="$emit('saveTask',{task:$event,groupId:group.id})"
             @removeTask="$emit('removeTask',{taskId:$event,groupId:group.id})"
             :class="isLastTask(idx, group.tasks.length)"></TaskPreview>
     </section>

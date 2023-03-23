@@ -4,30 +4,9 @@
 		<BoardGroup
 			:group="group"
 			:cmpOrder="cmpOrder"
-			@updateTask="updateTask"
+			@saveTask="saveTask"
 			@removeTask="removeTask"></BoardGroup>
 	</template>
-	<!-- <div class="container home">
-		<ul class="task-list">
-			<li v-for="task in tasks" :key="task._id">
-				<p>
-					{{ task.vendor }}
-				</p>
-				<p>${{ task.price?.toLocaleString() }}</p>
-				<button @click="removeTask(task._id)">x</button>
-				<button @click="updateTask(task)">Update</button>
-				<hr />
-				<button @click="addTaskMsg(task._id)">Add task msg</button>
-				<button @click="printTaskToConsole(task)">Print msgs to console</button>
-			</li>
-		</ul>
-		<hr />
-		<form @submit.prevent="addTask()">
-			<h2>Add task</h2>
-			<input type="text" v-model="taskToAdd.vendor" />
-			<button>Save</button>
-		</form>
-	</div> -->
 </section>
 </template>
 
@@ -55,10 +34,10 @@ export default {
 		this.$store.dispatch({ type: "loadGroups" })
 	},
 	methods: {
-		async updateTask(payload) {
+		async saveTask(payload) {
 			try {
 				const payloadToSave = {...payload,boardId:'b101'}
-				await this.$store.dispatch({type:'updateTask',payload:payloadToSave})
+				await this.$store.dispatch({type:'saveTask',payload:payloadToSave})
 				// showSuccessMsg('Task updated')
 			} catch (err) {
 				console.log(err)
@@ -83,15 +62,6 @@ export default {
 		// 	} catch (err) {
 		// 		console.log(err)
 		// 		showErrorMsg('Cannot add task')
-		// 	}
-		// },
-		// async addTaskMsg(taskId) {
-		// 	try {
-		// 		await this.$store.dispatch(getActionAddTaskMsg(taskId))
-		// 		showSuccessMsg('Task msg added')
-		// 	} catch (err) {
-		// 		console.log(err)
-		// 		showErrorMsg('Cannot add task msg')
 		// 	}
 		// },
 	},
