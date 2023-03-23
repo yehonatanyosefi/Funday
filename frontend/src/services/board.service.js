@@ -172,6 +172,7 @@ async function getEmptyBoard() {
     title: '',
     isStarred: false,
     archivedAt: '',
+    cmpOrder: ['title', 'date', 'person', 'status', 'text', 'priority'],
     createdBy: {
       _id: '',
       fullname: '',
