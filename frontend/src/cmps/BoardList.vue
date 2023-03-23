@@ -64,5 +64,10 @@ export default {
         Board,
         Delete
     },
+  computed: {},
+  components: {
+    Menu,
+    Board,
+  },
 }
 </script>

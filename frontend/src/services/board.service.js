@@ -11,6 +11,7 @@ export const boardService = {
   getById,
   save,
   remove,
+  updateBoard,
   getEmptyBoard,
   getEmptyGroup,
   getEmptyTask,
@@ -24,34 +25,37 @@ function getById(boardId) {
   // return httpService.get(`boardId/${boardId}`)
 }
 
-async function save(boardId=null, type = 'task', payload, groupId = null) {
-    let board = (type!=='board')? await getById(boardId) : payload
-    const groupIdx = (type!=='board')? board?.groups.findIndex((group) => group.id === groupId) : -1
-    switch (type) {
-        case 'task':
-            const taskIdx = board.groups[groupIdx].tasks.findIndex(
-                (task) => task.id === payload.id
-                )
-                if (taskIdx > -1) {
-                    const tasks = board.groups[groupIdx].tasks.splice(
-                        taskIdx,
-                        1,
+async function save(boardId = null, type = 'task', payload, groupId = null) {
+  let board = type !== 'board' ? await getById(boardId) : payload
+  const groupIdx =
+    type !== 'board'
+      ? board?.groups.findIndex((group) => group.id === groupId)
+      : -1
+  switch (type) {
+    case 'task':
+      const taskIdx = board.groups[groupIdx].tasks.findIndex(
+        (task) => task.id === payload.id
+      )
+      if (taskIdx > -1) {
+        const tasks = board.groups[groupIdx].tasks.splice(
+          taskIdx,
+          1,
           payload
-          )[0]
-          const group = board.groups.splice(groupIdx, 1, tasks)[0]
+        )[0]
+        const group = board.groups.splice(groupIdx, 1, tasks)[0]
         board.groups[groupIdx] = group
       } else {
         board.groups[groupIdx].tasks.push(payload)
       }
       break
-      case 'group':
+    case 'group':
       if (groupIdx > -1) {
-          board.groups[groupIdx] = payload
-        } else {
-            board.groups.push(payload)
-        }
-        break
-    }
+        board.groups[groupIdx] = payload
+      } else {
+        board.groups.push(payload)
+      }
+      break
+  }
   return await saveBoard(board)
   // board.activities.unshift(activity)
 }
@@ -68,6 +72,20 @@ async function saveBoard(board) {
     // savedTask = await httpService.post('task', task)
   }
   return savedBoard
+}
+
+async function updateBoard(boardId, payload) {
+  const {type, val} = payload
+  let board = await getById(boardId)
+  switch (type) {
+    case 'title':
+      board.title = val
+      break
+    case 'favorite':
+      board.isStarred = val
+      break
+  }
+  return saveBoard(board)
 }
 
 async function queryList(filterBy = {txt: '', price: 0}) {
@@ -183,7 +201,7 @@ async function getEmptyBoard() {
     style: {},
     labels: [],
     members: [],
-    groups:[ getEmptyGroup()],
+    groups: [getEmptyGroup()],
   }
 }
 
