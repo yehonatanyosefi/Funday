@@ -25,6 +25,9 @@ export const boardStore = {
       const minBoard = {_id: board._id, title: board.title}
       state.boardList.push(minBoard)
     },
+    deleteBoard(state, { boardId }){
+        state.boardList = state.boardList.filter(board => board._id !== boardId)
+    }
     // setTasks(state, { tasks }) {
     //     state.tasks = tasks
     // },
@@ -128,6 +131,16 @@ export const boardStore = {
         console.log('Store: Error in addBoard', err)
         throw err
       }
+    },
+    async deleteBoard(context, { boardId }) {
+        try {
+            await boardService.remove({boardId}, 'board')
+            context.commit({type:"deleteBoard",boardId})
+            context.dispatch({type:"loadBoardList"})
+        } catch (err) {
+            console.log('boardStore: Error in deleteBoard', err)
+            throw err
+        }
     },
     // async addGroup(context, { group }) {
     //     try {

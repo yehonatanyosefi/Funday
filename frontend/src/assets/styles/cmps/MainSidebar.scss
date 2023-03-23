@@ -1,76 +1,76 @@
 .divider {
-    margin: 0 8px;
-    height: 1px;
-    width: unset;
-    background-color: $clr-divider;
-    margin-bottom: 12px;
+  margin: 0 8px;
+  height: 1px;
+  width: unset;
+  background-color: $clr-divider;
+  margin-bottom: 12px;
 }
-.side-bars{
+.side-bars {
+  display: flex;
+  .sidebar {
     display: flex;
-    .sidebar {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      width: 66px;
-      background-color: $clr-small-side-bar;
-      
-      .mid-icons {
-        display: flex;
-        flex-grow: 1;
-        flex-direction: column;
-        padding-right: 6px;
-        // overflow-x: hidden;
-        // overflow-y: scroll;
-        // direction: rtl;
-        .inside-icons {
-          flex-grow: 1;
-          .svg-wrapper{
-            margin-inline: auto;
-          }
-          a{
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            outline: none;
-          }
-          .selected {
-            background-color: rgba(255, 255, 255, 0.2);
-            height: 36px;
-            width: 36px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 8px;
-            position: relative;
-            cursor: pointer;
-            outline: none;
-          }
-        }
-      }
-      img {
-        height: 40px;
-        width: 40px;
-        margin: 0 0 8px;
-        margin-inline: auto;
-        margin-top: 8px;
-        &.profile {
-          height: 44px;
-          width: 44px;
-          border: 2px solid #ffffff;
-          border-radius: 50%;
-        }
-      }
-      button {
-        background-color: $clr-small-side-bar;
-        cursor: not-allowed;
+    flex-direction: column;
+    height: 100%;
+    width: 66px;
+    background-color: $clr-small-side-bar;
 
-      }
-      .svg-icon {
-        &.InstalledProducts {
-          color: #6c6cff;
+    .mid-icons {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: column;
+      padding-right: 6px;
+      // overflow-x: hidden;
+      // overflow-y: scroll;
+      // direction: rtl;
+      .inside-icons {
+        flex-grow: 1;
+        .svg-wrapper {
+          margin-inline: auto;
+        }
+        a {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          outline: none;
+        }
+        .selected {
+          background-color: rgba(255, 255, 255, 0.2);
+          height: 36px;
+          width: 36px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 8px;
+          position: relative;
+          cursor: pointer;
+          outline: none;
         }
       }
     }
+    img {
+      height: 40px;
+      width: 40px;
+      margin: 0 0 8px;
+      margin-inline: auto;
+      margin-top: 8px;
+      &.profile {
+        height: 44px;
+        width: 44px;
+        border: 2px solid #ffffff;
+        border-radius: 50%;
+      }
+    }
+    button {
+      background-color: $clr-small-side-bar;
+      cursor: not-allowed;
+      color: #ffffff;
+    }
+    .svg-icon {
+      &.InstalledProducts {
+        color: #6c6cff;
+      }
+    }
+  }
 }
