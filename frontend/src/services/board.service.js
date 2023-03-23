@@ -162,7 +162,7 @@ function getEmptyGroup() {
     id: utilService.makeId(),
     title: 'Title',
     archivedAt: null,
-    tasks: [getEmptyTask(), getEmptyTask()],
+    tasks: [getEmptyTask(), getEmptyTask(), getEmptyTask()],
     style: {},
   }
 }

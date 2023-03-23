@@ -19,7 +19,7 @@ export default {
 	data() {
 		return {
 			taskToAdd: boardService.getEmptyTask(),
-			cmpOrder: ['title', 'date', 'person', 'status', 'text', 'priority'],
+			cmpOrder: null,
 		}
 	},
 	computed: {
@@ -28,6 +28,9 @@ export default {
 		},
 		board() {
         		return this.$store.getters.board
+		},
+		cmpOrder() {
+			return this.board.cmpOrder
 		},
 	},
 	created() {
