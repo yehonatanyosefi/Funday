@@ -25,12 +25,13 @@ export const boardStore = {
       const minBoard = {_id: board._id, title: board.title}
       state.boardList.push(minBoard)
     },
-    deleteBoard(state, { boardId }){
-      const idx = state.boardList.findIndex(board=> board._id===boardId)
+    deleteBoard(state, {boardId}) {
+      const idx = state.boardList.findIndex((board) => board._id === boardId)
       // // console.log('idx',idx)
-      state.boardList = state.boardList.filter(board => board._id !== boardId)
-        if (idx > -1 && state.boardList.length===1) state.board =state.boardList[idx-1]
-    }
+      state.boardList = state.boardList.filter((board) => board._id !== boardId)
+      if (idx > -1 && state.boardList.length === 1)
+        state.board = state.boardList[idx - 1]
+    },
     // setTasks(state, { tasks }) {
     //     state.tasks = tasks
     // },
@@ -93,6 +94,13 @@ export const boardStore = {
       const payload = {boardId, task, groupId}
       return dispatch({type: 'saveTask', payload})
     },
+    async addGroup({dispatch, getters, commit}) {
+      const group = boardService.getEmptyGroup()
+      const board = getters.board
+      const boardId = board._id
+      const updatedBoard = await boardService.save(boardId, 'group', group)
+      commit({type: 'setBoard', board: updatedBoard})
+    },
     async removeTask(context, {ids}) {
       try {
         const updatedBoard = await boardService.remove(ids, 'task')
@@ -137,19 +145,21 @@ export const boardStore = {
         throw err
       }
     },
-    async deleteBoard(context, { boardId }) {
-        try {
-          // // console.log('context.state.boardList',[JSON.parse(JSON.stringify(context.state.boardList))])
-          const boardListCopy=JSON.parse(JSON.stringify(context.state.boardList))
-          if (boardListCopy.length>1){
-            await boardService.remove({boardId}, 'board')
-            context.commit({type:"deleteBoard",boardId})
-            context.dispatch({type:"loadBoardList"})
-          }
-        } catch (err) {
-            // // console.log('boardStore: Error in deleteBoard', err)
-            throw err
+    async deleteBoard(context, {boardId}) {
+      try {
+        // // console.log('context.state.boardList',[JSON.parse(JSON.stringify(context.state.boardList))])
+        const boardListCopy = JSON.parse(
+          JSON.stringify(context.state.boardList)
+        )
+        if (boardListCopy.length > 1) {
+          await boardService.remove({boardId}, 'board')
+          context.commit({type: 'deleteBoard', boardId})
+          context.dispatch({type: 'loadBoardList'})
         }
+      } catch (err) {
+        // // console.log('boardStore: Error in deleteBoard', err)
+        throw err
+      }
     },
     async updateBoard({commit, getters, dispatch}, {payload}) {
       const boardId = getters.board._id

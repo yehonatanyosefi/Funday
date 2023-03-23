@@ -112,10 +112,10 @@ export default {
       this.view = viewName
     },
     addGroup() {
-      this.$emit('addGroup', false)
+      this.$store.dispatch({type: 'addGroup'})
     },
     setFilter(filter) {
-      this.$emit('setFilter', filter)
+      this.$store.dispatch({type: 'addTask'})
     },
     saveBoardTitle(ev) {
       this.isEditing = false
