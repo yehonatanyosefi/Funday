@@ -110,7 +110,6 @@ async function queryList(filterBy = {txt: '', price: 0}) {
 async function remove(ids, type) {
   const {boardId, groupId, taskId} = ids
   let board = await getById(boardId)
-  console.log('board',board)
   switch (type) {
     case 'task':
       const groupIdx = board.groups.findIndex((group) => group.id === groupId)
@@ -128,7 +127,6 @@ async function remove(ids, type) {
       return Promise.resolve()
       break
     case 'board':
-      console.log('boardId',boardId)
       return await storageService.remove(STORAGE_KEY, boardId)
       // return httpService.delete(`task/${taskId}`)
       break

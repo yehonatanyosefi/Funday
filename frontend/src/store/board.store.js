@@ -26,7 +26,10 @@ export const boardStore = {
       state.boardList.push(minBoard)
     },
     deleteBoard(state, { boardId }){
-        state.boardList = state.boardList.filter(board => board._id !== boardId)
+      const idx = state.boardList.findIndex(board=> board._id===boardId)
+      // // console.log('idx',idx)
+      state.boardList = state.boardList.filter(board => board._id !== boardId)
+        if (idx > -1 && state.boardList.length===1) state.board =state.boardList[idx-1]
     }
     // setTasks(state, { tasks }) {
     //     state.tasks = tasks
@@ -78,7 +81,7 @@ export const boardStore = {
         context.commit({type: 'setBoard', board: updatedBoard})
         return task
       } catch (err) {
-        console.log('Store: Error in updateTask', err)
+        // // console.log('Store: Error in updateTask', err)
         throw err
       }
     },
@@ -95,7 +98,7 @@ export const boardStore = {
         const updatedBoard = await boardService.remove(ids, 'task')
         context.commit({type: 'setBoard', board: updatedBoard})
       } catch (err) {
-        console.log('Store: Error in removeTask', err)
+        // // console.log('Store: Error in removeTask', err)
         throw err
       }
     },
@@ -105,7 +108,7 @@ export const boardStore = {
         context.commit({type: 'setBoard', board})
         return board
       } catch (err) {
-        console.log('Store: Error in getBoardById', err)
+        // // console.log('Store: Error in getBoardById', err)
       }
     },
     async getFirstBoard({dispatch, state}) {
@@ -119,7 +122,7 @@ export const boardStore = {
         context.commit({type: 'setBoardList', boardList})
         return boardList
       } catch (err) {
-        console.log('Store: Error in loadBoardList', err)
+        // // console.log('Store: Error in loadBoardList', err)
         throw err
       }
     },
@@ -130,17 +133,21 @@ export const boardStore = {
         commit({type: 'addBoard', board: newBoard})
         return newBoard
       } catch {
-        console.log('Store: Error in addBoard', err)
+        // // console.log('Store: Error in addBoard', err)
         throw err
       }
     },
     async deleteBoard(context, { boardId }) {
         try {
+          // // console.log('context.state.boardList',[JSON.parse(JSON.stringify(context.state.boardList))])
+          const boardListCopy=JSON.parse(JSON.stringify(context.state.boardList))
+          if (boardListCopy.length>1){
             await boardService.remove({boardId}, 'board')
             context.commit({type:"deleteBoard",boardId})
             context.dispatch({type:"loadBoardList"})
+          }
         } catch (err) {
-            console.log('boardStore: Error in deleteBoard', err)
+            // // console.log('boardStore: Error in deleteBoard', err)
             throw err
         }
     },
@@ -156,7 +163,7 @@ export const boardStore = {
     //         context.commit(getActionAddGroup(group))
     //         return group
     //     } catch (err) {
-    //         console.log('groupStore: Error in addGroup', err)
+    // // //         console.log('groupStore: Error in addGroup', err)
     //         throw err
     //     }
     // },
@@ -166,7 +173,7 @@ export const boardStore = {
     //         context.commit(getActionUpdateGroup(group))
     //         return group
     //     } catch (err) {
-    //         console.log('groupStore: Error in updateGroup', err)
+    // // //         console.log('groupStore: Error in updateGroup', err)
     //         throw err
     //     }
     // },
@@ -175,7 +182,7 @@ export const boardStore = {
     //         await boardService.removeGroup(groupId)
     //         context.commit(getActionRemoveGroup(groupId))
     //     } catch (err) {
-    //         console.log('groupStore: Error in removeGroup', err)
+    // // //         console.log('groupStore: Error in removeGroup', err)
     //         throw err
     //     }
     // },
@@ -184,7 +191,7 @@ export const boardStore = {
     //         const msg = await boardService.addGroupMsg(groupId, txt)
     //         context.commit({ type: 'addGroupMsg', groupId, msg })
     //     } catch (err) {
-    //         console.log('groupStore: Error in addGroupMsg', err)
+    // // //         console.log('groupStore: Error in addGroupMsg', err)
     //         throw err
     //     }
     // },
