@@ -1,22 +1,22 @@
 <template>
 <section class="board-details">
-    <!-- <Container orientation="vertical" @drop="onDrop">
-      <Draggable v-for="group in board.groups" :key="group.id"> -->
-		<template  v-for="group in board.groups" :key="group.id">	
+    <Container orientation="vertical" @drop="onDrop">
+      <Draggable v-for="group in board.groups" :key="group.id">
+		<!-- <template  v-for="group in board.groups" :key="group.id">	 -->
 			<BoardGroup
 				:group="group"
 				:cmpOrder="cmpOrder"
 				@saveTask="saveTask"
 				@removeTask="removeTask"
 				@updateGroup="updateGroup"></BoardGroup>
-		</template>
-      <!-- </Draggable>
-    </Container> -->
+		<!-- </template> -->
+      </Draggable>
+    </Container>
 </section>
 </template>
 
 <script>
-// import { Container, Draggable } from "vue3-smooth-dnd"
+import { Container, Draggable } from 'vue3-smooth-dnd'
 import BoardHeader from './BoardHeader.vue'
 import BoardGroup from './BoardGroup.vue'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
@@ -87,8 +87,8 @@ export default {
 	components: {
 		BoardHeader,
 		BoardGroup,
-		// Container,
-		// Draggable,
+		Container,
+		Draggable,
 	},
 }
 </script>
