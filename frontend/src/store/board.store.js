@@ -23,7 +23,7 @@ export const boardStore = {
     addBoard(state, { board }) {
       state.board = board
       const minBoard = {_id: board._id, title: board.title}
-      state.boardList.unshift(minBoard)
+      state.boardList.push(minBoard)
     },
     // setTasks(state, { tasks }) {
     //     state.tasks = tasks
@@ -81,15 +81,11 @@ export const boardStore = {
         throw err
       }
     },
-<<<<<<< HEAD
-    async removeTask(context, { ids }) {
-=======
     async addTask({dispatch}) {
       const task = boardService.getEmptyTask()
       dispatch({type: 'saveTask', task})
     },
     async removeTask(context, {ids}) {
->>>>>>> 09876008466670ff672fd8b656eeb24a0220402c
       try {
         const updatedBoard = await boardService.remove(ids, 'task')
         context.commit({ type: 'setBoard', board: updatedBoard })
