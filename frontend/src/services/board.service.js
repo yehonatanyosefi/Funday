@@ -1,7 +1,7 @@
-import {storageService} from './async-storage.service.js'
-import {httpService} from './http.service.js'
-import {utilService} from './util.service.js'
-import {userService} from './user.service.js'
+import { storageService } from './async-storage.service.js'
+import { httpService } from './http.service.js'
+import { utilService } from './util.service.js'
+import { userService } from './user.service.js'
 
 const STORAGE_KEY = 'boardDB'
 
@@ -75,7 +75,7 @@ async function saveBoard(board) {
 }
 
 async function updateBoard(boardId, payload) {
-  const {type, val} = payload
+  const { type, val } = payload
   let board = await getById(boardId)
   switch (type) {
     case 'title':
@@ -88,12 +88,21 @@ async function updateBoard(boardId, payload) {
   return saveBoard(board)
 }
 
-async function queryList(filterBy = {txt: '', price: 0}) {
+async function queryList(filterBy = { txt: '' }) {
   // return httpService.get(STORAGE_KEY, filterBy)
 
-  const boards = await storageService.query(STORAGE_KEY)
+  let boards = await storageService.query(STORAGE_KEY)
+  console.log('boards',boards)
+  if (filterBy.txt) {
+    let boardsCopy =JSON.parse(JSON.stringify(boards))
+    console.log('boardsCopy',boardsCopy)
+    console.log('filterBy.txt',filterBy.txt)
+    const regex = new RegExp(filterBy.txt, 'i')
+    boards = boardsCopy.filter((board) => regex.test(board.title))
+    console.log('boards rgx',boards)
+  }
   const boardList = boards.map((board) => {
-    return {_id: board._id, title: board.title}
+    return { _id: board._id, title: board.title }
   })
   // var tasks = await storageService.query(STORAGE_KEY)
   // if (filterBy.txt) {
@@ -108,7 +117,7 @@ async function queryList(filterBy = {txt: '', price: 0}) {
 }
 
 async function remove(ids, type) {
-  const {boardId, groupId, taskId} = ids
+  const { boardId, groupId, taskId } = ids
   let board = await getById(boardId)
   switch (type) {
     case 'task':
@@ -203,7 +212,7 @@ async function getEmptyBoard() {
   }
 }
 
-import jsonBoard from '../../data/board.json' assert {type: 'json'}
+import jsonBoard from '../../data/board.json' assert { type: 'json' }
 function _createDemoData() {
   const board = utilService.loadFromStorage(STORAGE_KEY)
   if (!board) {

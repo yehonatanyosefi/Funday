@@ -124,9 +124,10 @@ export const boardStore = {
       dispatch({type: 'getBoardById', boardId})
       return boardId
     },
-    async loadBoardList(context) {
+    async loadBoardList(context,{filterBy}) {
       try {
-        const boardList = await boardService.queryList()
+        const boardList = await boardService.queryList(filterBy)
+        console.log('boardList',boardList)
         context.commit({type: 'setBoardList', boardList})
         return boardList
       } catch (err) {
