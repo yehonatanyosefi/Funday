@@ -127,7 +127,7 @@ async function remove(ids, type) {
       return Promise.resolve()
       break
     case 'board':
-      return await storageService.remove(STORAGE_KEY, id)
+      return await storageService.remove(STORAGE_KEY, boardId)
       // return httpService.delete(`task/${taskId}`)
       break
   }
