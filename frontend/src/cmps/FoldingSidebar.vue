@@ -1,5 +1,5 @@
 <template>
-    <main class="folding-bar">
+    <main class="folding-bar" @click="onBlur">
         <div class="workspace">
             <span class="workspace-title flex ">Workspace
                 <Menu class="svg-icon" />
@@ -7,19 +7,24 @@
             <p class="main-workspace-title">Main workspace</p>
             <div class="btns flex column">
                 <button @click="addBoard">
-                    <Add class="svg-icon" /> <span class="optn" >Add</span>
+                    <Add class="svg-icon" /> <span class="optn">Add</span>
                 </button>
                 <button>
                     <Filter class="svg-icon" /> <span class="optn">Filters</span>
                 </button>
-                <button>
-                    <Search class="svg-icon" /> <span class="optn">Search</span>
-                </button>
+                <div class="searching" @click.stop="isSearching = true">
+                    <button>
+                        <Search class="svg-icon" /> <span class="optn" v-if="!isSearching">Search</span><input v-else
+                            v-model="filterBy.txt" type="search" placeholder="Search" 
+                            @input="search">
+                    </button>
+
+                </div>
             </div>
         </div>
 
         <div class="spacer"></div>
-        <BoardList :boardList="boardList"/>
+        <BoardList :boardList="boardList" />
     </main>
 </template>
 
@@ -36,26 +41,40 @@ import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 export default {
     props: {},
     created() {
-      
+
     },
     data() {
         return {
-        
+            isSearching: false,
+            filterBy: { txt: '' }
         }
     },
     methods: {
-        async addBoard(){ 
-               try {
-                    await this.$store.dispatch({ type: 'addBoard' })
-                    showSuccessMsg('Board added')
-               }
-               catch {
-                    showErrorMsg('Cannot save Board')
-               }
+        async addBoard() {
+            try {
+                await this.$store.dispatch({ type: 'addBoard' })
+                showSuccessMsg('Board added')
+            }
+            catch {
+                showErrorMsg('Cannot save Board')
+            }
+        },
+        async search() {
+            try {
+                await this.$store.dispatch({ type: 'loadBoardList', filterBy: this.filterBy })
+            }
+            catch {
+                throw new Error('Could not search')
+            }
+        },
+        onBlur(){
+            this.isSearching = false
+            this.filterBy.txt=''
+            this.search()
         }
     },
     computed: {
-        boardList(){
+        boardList() {
             return this.$store.getters.boardList
         }
     },
