@@ -13,7 +13,7 @@
           >
             {{ boardTitle }}
           </h1>
-          <Favorite v-if="board.isStarred" @click="favorite"></Favorite>
+          <Favorite v-if="!board.isStarred" @click="favorite"></Favorite>
           <FavoriteFull
             class="selected"
             v-else
