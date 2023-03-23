@@ -1,7 +1,7 @@
 <template>
     <main>
         <ul v-for="board in boardList" class="boards">
-            <li class="board-link"> 
+            <li class="board-link" @click="setBoard(board._id)"> 
                 <Board class="svg-icon" />
                 <span>{{ board.title }}</span> 
                 <Menu class="svg-icon small-menu" width="16 " height="16"/>
@@ -28,7 +28,9 @@ export default {
         }
     },
     methods: {
-    
+        setBoard(boardId){
+            this.$store.dispatch({type:'getBoardById',boardId})
+        }
     },
     computed: {
 

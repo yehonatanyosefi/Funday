@@ -1,7 +1,7 @@
-import {storageService} from './async-storage.service.js'
-import {httpService} from './http.service.js'
-import {utilService} from './util.service.js'
-import {userService} from './user.service.js'
+import { storageService } from './async-storage.service.js'
+import { httpService } from './http.service.js'
+import { utilService } from './util.service.js'
+import { userService } from './user.service.js'
 
 const STORAGE_KEY = 'boardDB'
 
@@ -24,34 +24,28 @@ function getById(boardId) {
   // return httpService.get(`boardId/${boardId}`)
 }
 
-async function save(boardId=null, type = 'task', payload, groupId = null) {
-    let board = (type!=='board')? await getById(boardId) : payload
-    const groupIdx = (type!=='board')? board?.groups.findIndex((group) => group.id === groupId) : -1
-    switch (type) {
-        case 'task':
-            const taskIdx = board.groups[groupIdx].tasks.findIndex(
-                (task) => task.id === payload.id
-                )
-                if (taskIdx > -1) {
-                    const tasks = board.groups[groupIdx].tasks.splice(
-                        taskIdx,
-                        1,
-          payload
-          )[0]
-          const group = board.groups.splice(groupIdx, 1, tasks)[0]
+async function save(boardId = null, type = 'task', payload, groupId = null) {
+  let board = (type !== 'board') ? await getById(boardId) : payload
+  const groupIdx = (type !== 'board') ? board?.groups.findIndex((group) => group.id === groupId) : -1
+  switch (type) {
+    case 'task':
+      const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === payload.id)
+      if (taskIdx > -1) {
+        const tasks = board.groups[groupIdx].tasks.splice(taskIdx, 1, payload)[0]
+        const group = board.groups.splice(groupIdx, 1, tasks)[0]
         board.groups[groupIdx] = group
       } else {
         board.groups[groupIdx].tasks.push(payload)
       }
       break
-      case 'group':
+    case 'group':
       if (groupIdx > -1) {
-          board.groups[groupIdx] = payload
-        } else {
-            board.groups.push(payload)
-        }
-        break
-    }
+        board.groups[groupIdx] = payload
+      } else {
+        board.groups.push(payload)
+      }
+      break
+  }
   return await saveBoard(board)
   // board.activities.unshift(activity)
 }
@@ -70,12 +64,12 @@ async function saveBoard(board) {
   return savedBoard
 }
 
-async function queryList(filterBy = {txt: '', price: 0}) {
+async function queryList(filterBy = { txt: '', price: 0 }) {
   // return httpService.get(STORAGE_KEY, filterBy)
 
   const boards = await storageService.query(STORAGE_KEY)
   const boardList = boards.map((board) => {
-    return {_id: board._id, title: board.title}
+    return { _id: board._id, title: board.title }
   })
   // var tasks = await storageService.query(STORAGE_KEY)
   // if (filterBy.txt) {
@@ -90,7 +84,7 @@ async function queryList(filterBy = {txt: '', price: 0}) {
 }
 
 async function remove(ids, type) {
-  const {boardId, groupId, taskId} = ids
+  const { boardId, groupId, taskId } = ids
   let board = await getById(boardId)
   switch (type) {
     case 'task':
@@ -181,7 +175,7 @@ async function getEmptyBoard() {
     style: {},
     labels: [],
     members: [],
-    groups:[ getEmptyGroup()],
+    groups: [getEmptyGroup()],
   }
 }
 

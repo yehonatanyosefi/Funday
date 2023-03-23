@@ -23,7 +23,7 @@ export const boardStore = {
     addBoard(state, {board}) {
       state.board = board
       const minBoard = {_id: board._id, title: board.title}
-      state.boardList.unshift(minBoard)
+      state.boardList.push(minBoard)
     },
     // setTasks(state, { tasks }) {
     //     state.tasks = tasks
@@ -63,27 +63,29 @@ export const boardStore = {
     // },
   },
   actions: {
-    async saveTask({commit, getters}, {task}) {
+    async saveTask(context, {payload}) {
       try {
-        const board = getters.board
-        const boardId = board._id
-        const groupId = board.groups[0].id
+        const {boardId, task, groupId} = payload
         const updatedBoard = await boardService.save(
           boardId,
           'task',
           task,
           groupId
         )
-        commit({type: 'setBoard', board: updatedBoard})
+        context.commit({type: 'setBoard', board: updatedBoard})
         return task
       } catch (err) {
         console.log('Store: Error in updateTask', err)
         throw err
       }
     },
-    async addTask({dispatch}) {
+    async addTask({dispatch, getters}) {
       const task = boardService.getEmptyTask()
-      dispatch({type: 'saveTask', task})
+      const board = getters.board
+      const boardId = board._id
+      const groupId = board.groups[0].id
+      const payload = {boardId, task, groupId}
+      return dispatch({type: 'saveTask', payload})
     },
     async removeTask(context, {ids}) {
       try {

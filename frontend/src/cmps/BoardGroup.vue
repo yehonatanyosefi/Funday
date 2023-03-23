@@ -1,6 +1,6 @@
 <template>
 <section class="board-group">
-    <h2 class="group-header">{{group.title}}</h2>
+    <h2 class="group-header"><input type="text" v-model="groupTitle" @input="updateGroupTitle"></h2>
     <div class="task-header">
         <section><div class="task">
             <input type="checkbox" class="task-checkbox" disabled>
@@ -32,11 +32,11 @@ props: {
     cmpOrder: Array,
 },
 created() {
-
+    this.groupTitle = this.group.title
 },
 data() {
 return {
-
+    groupTitle: null,
 }
 },
 methods: {
@@ -46,12 +46,19 @@ methods: {
     isLastTask(idx, length) {
         return idx === length - 1 ? 'last-task' : ''
     },
+    updateGroupTitle() {
+        const group = {...this.group, title: this.groupTitle}
+        const payload = {group, groupId: group.id}
+        this.$emit('updateGroup', payload)
+    }
 },
 computed: {
 
 },
 components: {
      TaskPreview,
+    //  Container,
+    //  Draggable,
 },
 }
 </script>

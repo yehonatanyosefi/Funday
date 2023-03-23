@@ -1,4 +1,5 @@
 $group-column-width: 140px;
+$group-row-height: 36px;
 @mixin board-columns() {
      grid-template-columns: 33px 360px repeat(auto-fit, $group-column-width);
 }
@@ -13,12 +14,12 @@ $group-column-width: 140px;
           color: inherit;
           border: none;
           border-radius: 0.25em;
+          outline: none;
           &:hover,&:focus {
                border: 1px solid $color-divider;
           }
           &:focus {
                background-color: white;
-               outline: none;
           }
      }
      input:not(:focus) {
