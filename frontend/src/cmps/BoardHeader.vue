@@ -115,12 +115,7 @@ export default {
     },
     addTask() {
       const task = boardService.getEmptyTask()
-      //TODO: remove this code!!!
-      const groupId = 'g101'
-      const boardId = 'b101'
-      //---------------
-      const payload = {boardId, task, groupId}
-      this.$store.dispatch({type: 'saveTask', payload})
+      this.$store.dispatch({type: 'saveTask', task})
     },
     setLastSeenUserImg(userId = '') {
       const users = this.getUsers
