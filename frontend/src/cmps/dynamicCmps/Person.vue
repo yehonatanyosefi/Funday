@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="profile-div">
     <template v-if="info?.length" v-for="(id, idx) in info" :key="idx">
       <img
         :src="user(id).imgUrl"
