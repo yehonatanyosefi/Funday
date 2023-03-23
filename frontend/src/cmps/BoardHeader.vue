@@ -111,7 +111,8 @@ export default {
       this.isEditing = false
       ev.target.blur()
       const val = ev.target.innerText
-      this.$emit('saveBoardTitle', val)
+      const payload = {type: 'title', val}
+      this.$store.dispatch({type: 'updateBoard', payload})
     },
     addTask() {
       this.$store.dispatch({type: 'addTask'})
@@ -138,12 +139,10 @@ export default {
   components: {BorderFilter, Invite},
   computed: {
     boardTitle() {
-      return 'Dev'
-      //  return this.$store.getters.board.title
+      return this.$store.getters.board.title
     },
     board() {
-      return {_id: 'b101'}
-      //  return this.$store.getters.board
+      return this.$store.getters.board
     },
 
     getUsers() {

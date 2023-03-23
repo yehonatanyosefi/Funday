@@ -131,6 +131,12 @@ export const boardStore = {
         throw err
       }
     },
+    async updateBoard({commit, getters, dispatch}, {payload}) {
+      const boardId = getters.board._id
+      const updatedBoard = await boardService.updateBoard(boardId, payload)
+      commit({type: 'setBoard', board: updatedBoard})
+      dispatch({type: 'loadBoardList'})
+    },
     // async addGroup(context, { group }) {
     //     try {
     //         group = await boardService.saveGroup(group)
