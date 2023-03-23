@@ -156,7 +156,7 @@ function getEmptyGroup() {
         id: utilService.makeId(),
         title: 'Title',
         archivedAt: null,
-        tasks: [getEmptyTask(), getEmptyTask(),],
+        tasks: [getEmptyTask(), getEmptyTask(), getEmptyTask(),],
         style: {}
     }
 }
@@ -166,6 +166,7 @@ async function getEmptyBoard() {
         title: '',
         isStarred: false,
         archivedAt: '',
+        cmpOrder: ['title', 'date', 'person', 'status', 'text', 'priority'],
         createdBy: {
             _id: '',
             fullname: '',
