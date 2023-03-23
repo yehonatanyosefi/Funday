@@ -13,7 +13,8 @@ export default {
   props: {},
   created() {},
   data() {
-    return {}
+    return {
+    }
   },
   methods: {},
   computed: {},
