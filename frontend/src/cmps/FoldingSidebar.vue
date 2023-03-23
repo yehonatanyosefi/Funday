@@ -6,8 +6,8 @@
             </span>
             <p class="main-workspace-title">Main workspace</p>
             <div class="btns flex column">
-                <button>
-                    <Add class="svg-icon" /> <span class="optn" @click="addBoard">Add</span>
+                <button @click="addBoard">
+                    <Add class="svg-icon" /> <span class="optn" >Add</span>
                 </button>
                 <button>
                     <Filter class="svg-icon" /> <span class="optn">Filters</span>
@@ -19,24 +19,7 @@
         </div>
 
         <div class="spacer"></div>
-        <BoardList />
-        <!-- <div class="boards">
-            <div class="board-link">
-                <Board class="svg-icon" />
-                <span>Dev</span>
-                <Menu class="svg-icon small-menu" width="16 " height="16"/>
-            </div>
-            <div class="board-link">
-                <Board class="svg-icon" /> 
-                <span>Finances</span>
-                <Menu class="svg-icon small-menu" width="16 " height="16"/>
-            </div>
-            <div class="board-link">
-                <Board class="svg-icon" /> 
-                <span>Sales & Marketing</span>
-                <Menu class="svg-icon small-menu" width="16 " height="16"/>
-            </div>
-        </div> -->
+        <BoardList :boardList="boardList"/>
     </main>
 </template>
 
@@ -46,15 +29,18 @@ import Add from '../assets/svg/Add.svg'
 import Filter from '../assets/svg/Filter.svg'
 import Search from '../assets/svg/Search.svg'
 import Board from '../assets/svg/Board.svg'
+import BoardList from './BoardList.vue'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
+
 
 export default {
     props: {},
     created() {
-        this.boardList= this.$store.getters.boardList
+      
     },
     data() {
         return {
-           boardList:null,
+        
         }
     },
     methods: {
@@ -69,14 +55,17 @@ export default {
         }
     },
     computed: {
-
+        boardList(){
+            return this.$store.getters.boardList
+        }
     },
     components: {
         Menu,
         Add,
         Filter,
         Search,
-        Board
+        Board,
+        BoardList,
     },
 }
 </script>
