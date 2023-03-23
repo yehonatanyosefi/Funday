@@ -2,10 +2,9 @@
   <section class="board-filter">
     <div class="add-new-btns">
       <button @click="addTask">New Task</button>
-      <span
-        @click="openModal('new-item-modal')"
-        class="add-new-group-btn"
-      ></span>
+      <span @click="openModal('new-item-modal')" class="add-new-group-btn"
+        ><OpenOptions class="svg-icon"
+      /></span>
     </div>
     <div
       class="search-tasks"
@@ -58,6 +57,7 @@
 import Search from '../assets/svg/Search.svg'
 import Person from '../assets/svg/Person.svg'
 import Filter from '../assets/svg/Filter.svg'
+import OpenOptions from '../assets/svg/OpenOptions.svg'
 export default {
   name: 'BoardFilter',
   props: {
@@ -113,6 +113,6 @@ export default {
       return window.innerWidth
     },
   },
-  components: {Search, Person, Filter},
+  components: {Search, Person, Filter, OpenOptions},
 }
 </script>
