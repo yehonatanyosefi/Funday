@@ -136,7 +136,7 @@ export default {
   components: {BorderFilter, Invite},
   computed: {
     boardTitle() {
-      return 'Sprint 4'
+      return 'Dev'
       //  return this.$store.getters.board.title
     },
     board() {
