@@ -23,7 +23,7 @@ export const boardStore = {
     addBoard(state, { board }) {
       state.board = board
       const minBoard = { _id: board._id, title: board.title }
-      state.boardList.unshift(minBoard)
+      state.boardList.push(minBoard)
     },
     // setTasks(state, { tasks }) {
     //     state.tasks = tasks
