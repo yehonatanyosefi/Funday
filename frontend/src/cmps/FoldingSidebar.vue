@@ -7,7 +7,7 @@
             <p class="main-workspace-title">Main workspace</p>
             <div class="btns flex column">
                 <button>
-                    <Add class="svg-icon" /> <span class="optn">Add</span>
+                    <Add class="svg-icon" /> <span class="optn" @click="addBoard">Add</span>
                 </button>
                 <button>
                     <Filter class="svg-icon" /> <span class="optn">Filters</span>
@@ -19,7 +19,8 @@
         </div>
 
         <div class="spacer"></div>
-        <div class="boards">
+        <BoardList />
+        <!-- <div class="boards">
             <div class="board-link">
                 <Board class="svg-icon" />
                 <span>Dev</span>
@@ -35,8 +36,7 @@
                 <span>Sales & Marketing</span>
                 <Menu class="svg-icon small-menu" width="16 " height="16"/>
             </div>
-
-        </div>
+        </div> -->
     </main>
 </template>
 
@@ -50,15 +50,23 @@ import Board from '../assets/svg/Board.svg'
 export default {
     props: {},
     created() {
-
+        this.boardList= this.$store.getters.boardList
     },
     data() {
         return {
-
+           boardList:null,
         }
     },
     methods: {
-
+        async addBoard(){ 
+               try {
+                    await this.$store.dispatch({ type: 'addBoard' })
+                    showSuccessMsg('Board added')
+               }
+               catch {
+                    showErrorMsg('Cannot save Board')
+               }
+        }
     },
     computed: {
 
