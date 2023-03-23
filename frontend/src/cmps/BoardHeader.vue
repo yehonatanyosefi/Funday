@@ -80,6 +80,8 @@
 <script>
 import Invite from '../assets/svg/Invite.svg'
 import BorderFilter from './BoardFilter.vue'
+
+import {boardService} from '../services/board.service'
 export default {
   name: 'board-header',
   emits: ['setFilter', 'addTask', 'addGroup', 'saveBoardTitle'],
@@ -112,7 +114,8 @@ export default {
       this.$emit('saveBoardTitle', val)
     },
     addTask() {
-      this.$emit('addTask')
+      const task = boardService.getEmptyTask()
+      this.$store.dispatch({type: 'saveTask', task})
     },
     setLastSeenUserImg(userId = '') {
       const users = this.getUsers
@@ -136,7 +139,7 @@ export default {
   components: {BorderFilter, Invite},
   computed: {
     boardTitle() {
-      return 'Sprint 4'
+      return 'Dev'
       //  return this.$store.getters.board.title
     },
     board() {

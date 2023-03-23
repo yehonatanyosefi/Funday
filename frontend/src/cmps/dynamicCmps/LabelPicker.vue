@@ -5,7 +5,7 @@
                v-for="(label,idx) in labels"
                :key="idx"
                :class="Object.keys(label)[0]"
-               @click="$emit('updateTask',Object.values(label)[0])">
+               @click="$emit('saveTask',Object.values(label)[0])">
                <p>{{Object.values(label)[0]}}</p>
           </div>
      </div>
@@ -20,7 +20,7 @@
 <script>
 import Edit from '../../assets/svg/Edit.svg'
 export default {
-     emits: ['updateTask','closeModal'],
+     emits: ['saveTask','closeModal'],
 props: {
      labels: Array,
 },

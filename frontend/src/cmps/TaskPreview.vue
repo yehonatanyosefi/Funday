@@ -7,13 +7,12 @@
       class="task-checkbox"
       v-model="isModalOpen"
       @click="openModal">
-      <!-- @click="$emit('removeTask',task.id)" -->
   </div>
   <div v-for="(cmp, idx) in cmpOrder" :key="idx" class="task">
         <component
           :is="capitalizeFirstLetter(cmp)"
           :info="task[cmp]"
-          @updateTask="updateTask($event,cmp)"></component>
+          @saveTask="saveTask($event,cmp)"></component>
   </div>
   <RemoveTaskModal
     v-if="isModalOpen"
@@ -33,7 +32,7 @@ import Status from './dynamicCmps/Status.vue'
 import Priority from './dynamicCmps/Priority.vue'
 import Text from './dynamicCmps/Text.vue'
 export default {
-  emits: ["updateTask", "removeTask"],
+  emits: ["saveTask", "removeTask"],
 props: {
     task: Object,
     cmpOrder: Array,
@@ -47,10 +46,10 @@ props: {
     }
   },
   methods: {
-    updateTask(payload, cmp) {
-       const taskToSave = JSON.parse(JSON.stringify(this.task))
+    saveTask(payload, cmp) {
+      const taskToSave = JSON.parse(JSON.stringify(this.task))
       taskToSave[cmp] = payload
-      this.$emit('updateTask', taskToSave)
+      this.$emit('saveTask', taskToSave)
     },
     capitalizeFirstLetter(str) {
       return str.charAt(0).toUpperCase() + str.slice(1)

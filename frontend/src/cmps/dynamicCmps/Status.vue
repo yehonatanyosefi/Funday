@@ -6,7 +6,7 @@
                v-if="isOpen"
                class="modal"
                :labels="labels"
-               @updateTask="$emit('updateTask',$event)"
+               @saveTask="$emit('saveTask',$event)"
                @closeModal="closeModal"></LabelPicker>
      </div>
 </template>
@@ -15,7 +15,7 @@
 import LabelPicker from './LabelPicker.vue'
 
 export default {
-     emits: ['updateTask'],
+     emits: ['saveTask'],
      name: 'Status',
      props: {
           info: String,

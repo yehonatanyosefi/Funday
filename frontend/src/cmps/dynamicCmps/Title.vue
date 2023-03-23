@@ -5,7 +5,7 @@
       v-model="title"
       name="task-title"
       class="task-title-input"
-      @input="$emit('updateTask', title)"
+      @input="$emit('saveTask', title)"
     />
   </div>
 </template>
@@ -16,7 +16,7 @@ export default {
   props: {
     info: String,
   },
-  emits: ['updateTask'],
+  emits: ['saveTask'],
   created() {
     this.title = this.info
   },

@@ -5,7 +5,7 @@
       v-model="title"
       name="task-text"
       class="task-text-input"
-      @input="$emit('updateTask', title)"
+      @input="$emit('saveTask', title)"
     />
 </div>
 
@@ -14,7 +14,7 @@
 <script>
 export default {
      name: 'Text',
-emits: ['updateTask'],
+emits: ['saveTask'],
 props: {
      info: String,
 },
