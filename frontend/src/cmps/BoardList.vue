@@ -22,20 +22,23 @@
                 <Draggable v-for="board in boardList"  :key="board._id">
                     <li class="board-link board-title" @click="setBoard(board._id)">
                         <Board class="svg-icon" />
-                        <span>{{ board.title }}</span>
+                        <span v-if="isRename && currBoardId !== board._id || !isRename">{{ board.title }}</span>
+                        <form v-else @submit.prevent="renameBoard()">
+                            <input  v-model="title" type="text" @click.stop>
+                        </form>
                         <Menu class="svg-icon small-menu" width="16 " height="16" @click.stop="toggleModal(board._id)" />
 
                         <div v-if="currBoardId === board._id" class="modal" v-click-outside.stop="closeModal" >
-                            <div @click="renameBoard(board._id)" class="modal-container">
+                            <div @click.stop="isRename=true " class="modal-container">
                                 <section class="wrapper">
                                     <Edit class="svg-icon" />
-                                    <span> Rename</span>
+                                    <span > Rename</span>
                                 </section>
                             </div>
                             <div @click="duplicateBoard(board._id)" class="modal-container">
                                 <section class="wrapper">
                                     <Duplicate class="svg-icon" />
-                                    <span>Duplicate</span>
+                                    <span >Duplicate</span>
                                 </section>
                             </div>
                             <div @click="deleteBoard(board._id)" class="modal-container">
@@ -76,6 +79,8 @@ export default {
         return {
             isOpen: false,
             currBoardId: '',
+            title:'',
+            isRename:false,
 
         }
     },
@@ -87,15 +92,16 @@ export default {
             this.$store.dispatch({ type: 'deleteBoard', boardId })
             this.currBoardId = ''
         },
+        async renameBoard(){
+            const payload= {val:this.title,type:'title'}
+            await this.$store.dispatch({ type: 'updateBoard', payload })
+            this.isRename=false
+        },
         toggleModal(boardId) {
             this.currBoardId = this.currBoardId === boardId ? '' : boardId
         },
-        openModal() {
-            this.isOpen = true
-        },
         closeModal() {
             this.currBoardId=''
-            // this.isOpen = false
         },
         onBoardDrop(dropPayload) {
             const { removedIndex, addedIndex } = dropPayload
