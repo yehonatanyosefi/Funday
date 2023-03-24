@@ -10,11 +10,11 @@ import Kanban from './cmps/Kanban.vue'
 import Dashboard from './cmps/Dashboard.vue'
 
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'Home',
-  //   component: Home
-  // },
+  {
+    path: '/',
+    name: 'Home',
+    component: Home,
+  },
   {
     path: '/board',
     name: 'BoardIndex',
