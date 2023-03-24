@@ -56,6 +56,8 @@ export default {
 			try {
 				ids = {...ids,boardId:'b101'}
 				await this.$store.dispatch({type:'removeTask',ids})
+				const groupIdx = this.board.groups.findIndex(group => group.id === ids.groupId)
+				if (!this.board.groups[groupIdx].tasks?.length) await this.$store.dispatch({type:'addTask',payload:ids.groupIdx})
 				showSuccessMsg('Task removed')
 			} catch (err) {
 				console.log(err)
@@ -75,6 +77,7 @@ export default {
 			try {
 				const payload = {groupId,boardId:this.board._id}
 				await this.$store.dispatch({type:'removeGroup',payload})
+				if (!this.board.groups.length)await this.$store.dispatch({type:'addGroup'})
 				showSuccessMsg('Group removed')
 			} catch (err) {
 				showErrorMsg('Cannot remove group')

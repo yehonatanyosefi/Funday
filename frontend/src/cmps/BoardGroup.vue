@@ -6,14 +6,14 @@
         @input="saveGroupTitle">
     </h2>
     <div class="task-header">
-        <section><div class="task">
+        <section>
             <input
                 type="checkbox"
                 title="Delete Task"
                 class="task-checkbox"
                 v-model="isModalOpen"
                 @click="openModal">
-        </div></section>
+        </section>
         <section v-for="(cmp, idx) in cmpOrder" :key="idx">
             <div v-if="cmp!=='title'" class="task">{{capitalizeFirstLetter(cmp)}}</div>
             <div v-else class="task">Task</div>
