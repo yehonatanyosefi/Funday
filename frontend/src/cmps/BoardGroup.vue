@@ -1,11 +1,17 @@
 <template>
 <section class="board-group">
+
     <h2 class="group-header">
+        <div class="menu-btn-container">
+            <Menu class="svg-icon menu-btn" width="20" height="20" @click="toggleMenuModal" />
+        </div>
         <input type="text"
-        v-model="groupTitle"
-        @input="saveGroupTitle">
+            :style="{'color': groupColor}"
+            v-model="groupTitle"
+            @input="saveGroupTitle">
     </h2>
     <div class="task-header">
+    <div class="group-preview-color" :style="{'backgroundColor': groupColor}"></div>
         <section>
             <input
                 type="checkbox"
@@ -20,41 +26,49 @@
         </section>
     </div>
         
-    <!-- <section class="group" v-for="(task,idx) in group.tasks" :key="task.id"> -->
     <Container orientation="vertical"
         class="group"
         @drop="onTaskDrop($event)"
-        :drop-placeholder="dropPlaceholderOptions"
         :get-child-payload="getCardPayload('task.id')">
-        <!-- @drag-start="onDragStart('drag start', $event)"
-        @drag-end="onDragEnd('drag end', $event)" -->
-            <!-- drag-class="card-ghost"
-            drop-class="card-ghost-drop" -->
+        <!-- :drop-placeholder="dropPlaceholderOptions" -->
       <Draggable v-for="(task,idx) in group.tasks" :key="task.id">
           <TaskPreview
             :task="task"
+            :groupColor="groupColor"
             :cmpOrder="cmpOrder"
             @saveTask="$emit('saveTask',{task:$event,groupId:group.id})"
-            @removeTask="$emit('removeTask',{taskId:$event,groupId:group.id})"
-            :class="isLastTask(idx, group.tasks.length)"></TaskPreview>
+            @removeTask="$emit('removeTask',{taskId:$event,groupId:group.id})"></TaskPreview>
       </Draggable>
     </Container>
-    <!-- <div>Add a task</div> -->
-    <!-- <div>Progress bar?</div> -->
+<section class="task-preview">
+  <div class="task">
+  <div class="task-preview-color last-task" 
+      :style="{'backgroundColor': groupColor}"></div>
+    <input
+      type="checkbox"
+      title="Delete Task"
+      class="task-checkbox" disabled>
+  </div>
+  <div v-for="(cmp, idx) in cmpOrder" :key="idx" class="task">
+        <input v-if="idx === 0" value="+ Add item" @focus="addTask">
+  </div>
+</section>
     
   <RemoveModal
     v-if="isModalOpen"
     @closeModal="handleCloseModal"
-    @remove="handleRemoveGroup">Group</RemoveModal>
+    @remove="handleRemoveGroup">group</RemoveModal>
 </section>
 </template>
 
 <script>
+import Menu from '../assets/svg/Menu.svg'
 import RemoveModal from './util/RemoveModal.vue';
 import { Container, Draggable } from "vue3-smooth-dnd";
 import TaskPreview from './TaskPreview.vue'
+import Title from './dynamicCmps/Title.vue'
 export default {
-emits: ['saveTask', 'removeTask', 'saveGroup','removeGroup','applyTaskDrag'],
+emits: ['saveTask', 'removeTask', 'saveGroup','removeGroup','applyTaskDrag', 'addTask'],
 props: {
     group: Object,
     cmpOrder: Array,
@@ -66,25 +80,22 @@ data() {
 return {
     groupTitle: null,
     isModalOpen: false,
-    //   upperDropPlaceholderOptions: {
-    //     className: 'cards-drop-preview',
+    isMenuModalOpen: false,
+    // dropPlaceholderOptions: {
+    //     className: 'drop-preview',
     //     animationDuration: '150',
     //     showOnTop: true
-    //   },
-      dropPlaceholderOptions: {
-        className: 'drop-preview',
-        animationDuration: '150',
-        showOnTop: true
-      }
+    // }
 }
 },
 methods: {
     capitalizeFirstLetter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
     },
-    isLastTask(idx, length) {
-        return idx === length - 1 ? 'last-task' : ''
-    },
+    //         :class="isLastTask(idx, group.tasks.length)"
+    // isLastTask(idx, length) {
+    //     return idx === length - 1 ? 'last-task' : ''
+    // },
     saveGroupTitle() {
         const group = {...this.group, title: this.groupTitle}
         const payload = {group, groupId: group.id}
@@ -111,8 +122,15 @@ methods: {
 	    const payload = {removedId, addedId,groupId: this.group.id}
         this.$emit('applyTaskDrag',payload)
     },
+    toggleMenuModal() { //placeholder for menu modal
+        this.isMenuModalOpen = !this.isMenuModalOpen
+        this.isModalOpen = true
+    },
     getCardPayload(ev) {
         // console.log('getCardPayload',ev)
+    },
+    addTask() {
+        this.$emit('addTask',this.group.id)
     },
     // onDragStart(name,{payload}) {
     //     console.log('onDragStart', payload)
@@ -122,13 +140,17 @@ methods: {
     // },
 },
 computed: {
-
+    groupColor() {
+        return this.group.style.color
+    },
 },
 components: {
      TaskPreview,
      Container,
      Draggable,
      RemoveModal,
+     Menu,
+     Title,
 },
 }
 </script>

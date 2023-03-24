@@ -187,7 +187,9 @@
 						}
 					}
 				],
-				"style": {}
+				"style": {
+					"color": "rgb(87, 155, 252)"
+				}
 			}
 		],
 		"activities": [
@@ -205,7 +207,6 @@
 					"title": "Replace Logo"
 				}
 			}
-		],
-		"cmpsOrder": ["status-picker", "member-picker", "date-picker"]
+		]
 	}
 ]

@@ -4,8 +4,13 @@ $lighten-status-amount: 7.5%;
      display: grid;
      grid-template-columns: 33px 367px repeat(6, $group-column-width);
      position: relative;
-          &:before {
-               content: '';
+          & .menu-btn-container {
+               justify-self: center;
+               align-self: center;
+               left: -35px;
+               top: 6.8px;
+          }
+          & .task-preview-color {
                position: absolute;
                top: 0;
                left: -6px;
@@ -13,13 +18,14 @@ $lighten-status-amount: 7.5%;
                height: 100%;
                background-color: $group-header-clr;
           }
-          &.last-task {
-               &:before {
-                    border-bottom-left-radius: 5px;
-               }
+          & .task-preview-color.last-task {
+               border-bottom-left-radius: 5px;
           }
      &:hover {
           background-color: $color-highlighted;
+          & .menu-btn-container {
+               opacity: 1;
+          }
      }
      .task:not(:first-of-type,:nth-of-type(2)) {
           width: $group-column-width;
@@ -43,12 +49,15 @@ $lighten-status-amount: 7.5%;
           display: flex;
           justify-content: center;
           align-items: center;
+          &:hover .menu-btn-container {
+                    opacity: 1;
+          }
           .profile-div {
                display: flex;
                justify-content: center;
                align-items: center;
           }
-          & div img{
+          & .profile-div img, .profile-div svg {
                margin-inline-end: -5px;
           }
           & .status,

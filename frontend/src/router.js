@@ -16,22 +16,22 @@ const routes = [
     component: Home,
   },
   {
-    path: '/board',
+    path: '/board/:boardId',
     name: 'BoardIndex',
     component: BoardIndex,
     children: [
       {
-        path: '/board',
+        path: '/board/:boardId',
         name: 'Board',
         component: BoardDetails,
       },
       {
-        path: '/board/kanban',
+        path: '/board/:boardId/kanban',
         name: 'BoardKanban',
         component: Kanban,
       },
       {
-        path: '/board/dashboard',
+        path: '/board/:boardId/dashboard',
         name: 'BoardDashboard',
         component: Dashboard,
       },

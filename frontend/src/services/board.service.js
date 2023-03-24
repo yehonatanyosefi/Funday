@@ -88,14 +88,10 @@ async function queryList(filterBy = { txt: '' }) {
   // return httpService.get(STORAGE_KEY, filterBy)
 
   let boards = await storageService.query(STORAGE_KEY)
-  console.log('boards', boards)
   if (filterBy.txt) {
     let boardsCopy = JSON.parse(JSON.stringify(boards))
-    console.log('boardsCopy', boardsCopy)
-    console.log('filterBy.txt', filterBy.txt)
     const regex = new RegExp(filterBy.txt, 'i')
     boards = boardsCopy.filter((board) => regex.test(board.title))
-    console.log('boards rgx', boards)
   }
   const boardList = boards.map((board) => {
     return { _id: board._id, title: board.title }
@@ -218,7 +214,7 @@ async function applyDrag(addedId, removedId, type, boardId, groupId) {
         (board) => board._id === removedId
       )
       if (addedBoardIdx !== -1 && removedBoardIdx !== -1) {
-        boards[addedBoardIdx]._id = removedIid
+        boards[addedBoardIdx]._id = removedId
         boards[removedBoardIdx]._id = addedId
         await saveBoard(boards[removedBoardIdx])
         await saveBoard(boards[addedBoardIdx])
@@ -275,16 +271,31 @@ function getEmptyGroup() {
     title: 'Title',
     archivedAt: null,
     tasks: [getEmptyTask(), getEmptyTask(), getEmptyTask()],
-    style: {},
+    style: {
+      color: getRndColor(),
+    },
   }
 }
 
-async function getEmptyBoard() {
+function getRndColor() {
+  const colors = [
+    '#037f4c', '#9cd326', '#cab641', '#ffcb00', '#ff642e', '#ffadad',
+    '#ff7575', '#bb3354', '#ff158a', '#faa1f1', '#a25ddc', '#784bd1',
+    '#7e3b8a', '#401694', '#5559df', '#225091', '#579bfc', '#4eccc6',
+    '#6cf', '#68a1bd', '#9aadbd', '#808080', '#333', '#7f5347', '#d974b0',
+    '#ad967a', '#a1e3f6', '#bd816e', '#2b76e5', '#175a63', '#bda8f9',
+    '#a9bee8', '#9d99b9', '#563e3e',
+  ]
+  const randomIdx = utilService.getRandomIntInclusive(0, colors.length - 1)
+  return colors[randomIdx]
+}
+
+function getEmptyBoard() {
   return {
     title: 'New Board',
     isStarred: false,
     archivedAt: '',
-    cmpOrder: ['title', 'date', 'person', 'status', 'text', 'priority'],
+    cmpOrder: ['title', 'date', 'person', 'status', 'text', 'priority', 'timeline'],
     createdBy: {
       _id: '',
       fullname: '',
@@ -293,7 +304,7 @@ async function getEmptyBoard() {
     style: {},
     labels: [],
     members: [],
-    groups: [getEmptyGroup()],
+    groups: [getEmptyGroup(), getEmptyGroup()],
   }
 }
 

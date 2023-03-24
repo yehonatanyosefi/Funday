@@ -9,10 +9,11 @@ $group-row-height: 36px;
 .board-details {
      // display: grid;
      // @include board-columns;
+     margin-inline-start: 47px;
      .task-title, .text {
           @include flex-center;
      }
-     input {
+     & input {
           font: inherit;
           color: inherit;
           border: inherit;
@@ -25,7 +26,10 @@ $group-row-height: 36px;
                background-color: white;
           }
      }
-     input:not(:focus) {
+     & input:not(:focus) {
           background-color: inherit;
+     }
+     & input[type="checkbox"] {
+          outline: none;
      }
 }

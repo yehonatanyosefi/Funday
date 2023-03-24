@@ -13,7 +13,6 @@
           <p class="divider"></p> 
           <button><Edit class="svg-icon" />Edit Labels</button>
      </section> -->
-      <!-- v-click-outside="closeModal" -->
 </div>
 </template>
 

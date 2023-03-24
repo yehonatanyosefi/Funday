@@ -1,4 +1,6 @@
 import { boardService } from '../services/board.service'
+import { router } from '../router'
+import { toRefs } from 'vue'
 
 export const boardStore = {
   state: {
@@ -19,11 +21,12 @@ export const boardStore = {
     },
     setBoard(state, { board }) {
       state.board = board
+      router.push(`/board/${board._id}`)
     },
     addBoard(state, { board }) {
-      state.board = board
       const minBoard = { _id: board._id, title: board.title }
-      state.boardList.push(minBoard)
+      state.boardList = [...state.boardList, minBoard]
+      state.board = board
     },
     deleteBoard(state, { boardId }) {
       const idx = state.boardList.findIndex((board) => board._id === boardId)
@@ -64,17 +67,17 @@ export const boardStore = {
     //     const idx = state.groups.findIndex(c => c._id === group._id)
     //     state.groups.splice(idx, 1, group)
     // },
+    // addGroupMsg(state, { groupId, msg }) {
+    //     const group = state.groups.find(group => group._id === groupId)
+    //     if (!group.msgs) group.msgs = []
+    //     group.msgs.push(msg)
+    // },
     removeGroup(state, { groupId }) {
       const groupIdx = state.board.groups.findIndex(
         (group) => group.id === groupId
       )
       state.board.groups.splice(groupIdx, 1)
     },
-    // addGroupMsg(state, { groupId, msg }) {
-    //     const group = state.groups.find(group => group._id === groupId)
-    //     if (!group.msgs) group.msgs = []
-    //     group.msgs.push(msg)
-    // },
   },
   actions: {
     async saveTask(context, { payload }) {
@@ -89,16 +92,16 @@ export const boardStore = {
         context.commit({ type: 'setBoard', board: updatedBoard })
         return task
       } catch (err) {
-        // // console.log('Store: Error in updateTask', err)
+        console.log('Store: Error in updateTask', err)
         throw err
       }
     },
-    async addTask({ dispatch, getters }) {
+    async addTask({ dispatch, getters }, { groupId }) {
       const task = boardService.getEmptyTask()
       const board = getters.board
       const boardId = board._id
-      const groupId = board.groups[0].id
-      const payload = { boardId, task, groupId }
+      const updatedGroupId = (!groupId) ? board.groups[0].id : groupId
+      const payload = { boardId, task, groupId: updatedGroupId }
       return dispatch({ type: 'saveTask', payload })
     },
     async removeTask(context, { ids }) {
@@ -153,15 +156,14 @@ export const boardStore = {
         console.log('Store: Error in getBoardById', err)
       }
     },
-    async getFirstBoard({ dispatch, state }) {
-      const boardId = state.boardList[0]._id
+    async getFirstBoard({ dispatch, state }, { params }) {
+      const boardId = (!params) ? state.boardList[0]._id : params
       dispatch({ type: 'getBoardById', boardId })
       return boardId
     },
     async loadBoardList(context, { filterBy }) {
       try {
         const boardList = await boardService.queryList(filterBy)
-        console.log('boardList', boardList)
         context.commit({ type: 'setBoardList', boardList })
         return boardList
       } catch (err) {
@@ -171,7 +173,7 @@ export const boardStore = {
     },
     async addBoard({ commit }) {
       try {
-        const board = await boardService.getEmptyBoard()
+        const board = boardService.getEmptyBoard()
         const newBoard = await boardService.save(null, 'board', board)
         commit({ type: 'addBoard', board: newBoard })
         return newBoard
