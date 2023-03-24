@@ -5,6 +5,7 @@ $group-header-clr: rgb(87, 155, 252);
      height: fit-content;
      width: fit-content;
      margin-inline-start: 33px;
+     margin-block-end: 50px;
      .task-checkbox {
           width: 16px;
           height: 16px;
@@ -17,7 +18,7 @@ $group-header-clr: rgb(87, 155, 252);
      }
      .task-header {
           display: grid;
-          grid-template-columns: 33px 367px repeat(5,$group-column-width);
+          grid-template-columns: 33px 367px repeat(6,$group-column-width);
           position: relative;
           
                &:before {

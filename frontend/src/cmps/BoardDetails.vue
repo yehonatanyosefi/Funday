@@ -1,15 +1,17 @@
 <template>
 <section class="board-details">
-    <Container orientation="vertical" @drop="onDrop">
+	<div v-if="!board?.groups?.length">No Groups Found</div>
+    <Container v-else orientation="vertical" 
+        @drop="onGroupDrop($event)">
       <Draggable v-for="group in board.groups" :key="group.id">
-		<!-- <template  v-for="group in board.groups" :key="group.id">	 -->
 			<BoardGroup
 				:group="group"
 				:cmpOrder="cmpOrder"
 				@saveTask="saveTask"
 				@removeTask="removeTask"
-				@updateGroup="updateGroup"></BoardGroup>
-		<!-- </template> -->
+				@saveGroup="saveGroup"
+				@removeGroup="removeGroup"
+				@applyTaskDrag="applyTaskDrag"></BoardGroup>
       </Draggable>
     </Container>
 </section>
@@ -55,13 +57,15 @@ export default {
 			try {
 				ids = {...ids,boardId:'b101'}
 				await this.$store.dispatch({type:'removeTask',ids})
+				const groupIdx = this.board.groups.findIndex(group => group.id === ids.groupId)
+				if (!this.board.groups[groupIdx].tasks?.length) await this.$store.dispatch({type:'addTask',payload:ids.groupIdx})
 				showSuccessMsg('Task removed')
 			} catch (err) {
 				console.log(err)
 				showErrorMsg('Cannot remove task')
 			}
 		},
-		async updateGroup(payload) {
+		async saveGroup(payload) {
 			try {
 				const payloadToSave = {...payload,boardId:this.board._id}
 				await this.$store.dispatch({type:'saveGroup',payload:payloadToSave})
@@ -70,8 +74,27 @@ export default {
 				// showErrorMsg('Cannot update task')
 			}
 		},
-		onDrop(ev) {
-			console.log(`ev:`,ev)
+		async removeGroup(groupId) {
+			try {
+				const payload = {groupId,boardId:this.board._id}
+				await this.$store.dispatch({type:'removeGroup',payload})
+				if (!this.board.groups.length)await this.$store.dispatch({type:'addGroup'})
+				showSuccessMsg('Group removed')
+			} catch (err) {
+				showErrorMsg('Cannot remove group')
+			}
+		},
+		onGroupDrop(dropPayload) {
+			const {removedIndex, addedIndex} = dropPayload
+			if (removedIndex === null && addedIndex === null) return
+			const removedId = this.board.groups.find((group,idx) => idx === removedIndex).id
+			const addedId = this.board.groups.find((group,idx) => idx === addedIndex).id
+			const payload = {removedId, addedId,boardId:this.board._id}
+			this.$store.dispatch({type:'applyGroupDrag',payload})
+		},
+		applyTaskDrag(groupPayload) {
+			const payload = {...groupPayload,boardId:this.board._id}
+			this.$store.dispatch({type:'applyTaskDrag',payload})
 		},
 		// async addTask() {
 		// 	try {

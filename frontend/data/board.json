@@ -4,7 +4,7 @@
 		"title": "Dev",
 		"isStarred": false,
 		"archivedAt": 1589983468418,
-		"cmpOrder": ["title", "date", "person", "status", "text", "priority"],
+		"cmpOrder": ["title", "date", "person", "status", "text", "priority", "timeline"],
 		"createdBy": {
 			"_id": "u101",
 			"fullname": "Abi Abambi",
