@@ -32,6 +32,10 @@ export const boardStore = {
       if (idx > -1 && state.boardList.length === 1)
         state.board = state.boardList[idx - 1]
     },
+    filterBoard(state, { txt }) {
+      const filteredBoard = boardService.filterByTxt(state.board, txt)
+      return filteredBoard
+    },
     // setTasks(state, { tasks }) {
     //     state.tasks = tasks
     // },
@@ -61,7 +65,9 @@ export const boardStore = {
     //     state.groups.splice(idx, 1, group)
     // },
     removeGroup(state, { groupId }) {
-      const groupIdx = state.board.groups.findIndex(group => group.id === groupId)
+      const groupIdx = state.board.groups.findIndex(
+        (group) => group.id === groupId
+      )
       state.board.groups.splice(groupIdx, 1)
     },
     // addGroupMsg(state, { groupId, msg }) {
@@ -115,7 +121,7 @@ export const boardStore = {
       try {
         const { groupId, boardId } = payload
         await boardService.remove({ boardId, groupId }, 'group')
-        context.commit({ type: "removeGroup", groupId })
+        context.commit({ type: 'removeGroup', groupId })
         return groupId
       } catch (err) {
         console.log('boardStore: Error in deleteBoard', err)
@@ -199,7 +205,13 @@ export const boardStore = {
     async applyTaskDrag(context, { payload }) {
       try {
         const { addedId, removedId, boardId, groupId } = payload
-        const updatedBoard = await boardService.applyDrag(addedId, removedId, 'task', boardId, groupId)
+        const updatedBoard = await boardService.applyDrag(
+          addedId,
+          removedId,
+          'task',
+          boardId,
+          groupId
+        )
         context.commit({ type: 'setBoard', board: updatedBoard })
         return true
       } catch (err) {
@@ -210,7 +222,12 @@ export const boardStore = {
     async applyGroupDrag(context, { payload }) {
       try {
         const { addedId, removedId, boardId } = payload
-        const updatedBoard = await boardService.applyDrag(addedId, removedId, 'group', boardId)
+        const updatedBoard = await boardService.applyDrag(
+          addedId,
+          removedId,
+          'group',
+          boardId
+        )
         context.commit({ type: 'setBoard', board: updatedBoard })
         return true
       } catch (err) {
@@ -221,7 +238,11 @@ export const boardStore = {
     async applyBoardDrag(context, { payload }) {
       try {
         const { addedId, removedId } = payload
-        const boardList = await boardService.applyDrag(addedId, removedId, 'board')
+        const boardList = await boardService.applyDrag(
+          addedId,
+          removedId,
+          'board'
+        )
         context.commit({ type: 'setBoardList', boardList })
         return true
       } catch (err) {

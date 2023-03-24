@@ -15,6 +15,7 @@ export const boardService = {
   getEmptyBoard,
   getEmptyGroup,
   getEmptyTask,
+  filterByTxt,
   applyDrag,
 }
 window.cs = boardService
@@ -34,7 +35,9 @@ async function save(boardId = null, type = 'task', payload, groupId = null) {
       : -1
   switch (type) {
     case 'task':
-      const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === payload.id)
+      const taskIdx = board.groups[groupIdx].tasks.findIndex(
+        (task) => task.id === payload.id
+      )
       if (taskIdx > -1) {
         board.groups[groupIdx].tasks.splice(taskIdx, 1, payload)[0]
       } else {
@@ -112,10 +115,15 @@ async function queryList(filterBy = { txt: '' }) {
 async function remove(ids, type) {
   const { boardId, groupId, taskId } = ids
   let board = await getById(boardId)
-  const groupIdx = type !== 'board' ? board.groups.findIndex((group) => group.id === groupId) : -1
+  const groupIdx =
+    type !== 'board'
+      ? board.groups.findIndex((group) => group.id === groupId)
+      : -1
   switch (type) {
     case 'task':
-      const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+      const taskIdx = board.groups[groupIdx].tasks.findIndex(
+        (task) => task.id === taskId
+      )
       const tasks = board.groups[groupIdx].tasks.splice(taskIdx, 1)[0]
       const group = board.groups.splice(groupIdx, 1, tasks)[0]
       board.groups[groupIdx] = group
@@ -132,6 +140,41 @@ async function remove(ids, type) {
   }
 }
 
+function filterByTxt(board, txt) {
+  txt = txt.trim()
+  if (!txt) return board
+  const regex = new RegExp(txt, 'ig')
+
+  board.groups = board.groups.reduce((groupArr, group) => {
+    const isGroupTitleMatch = regex.test(group.title)
+    if (isGroupTitleMatch) {
+      const isWord = !!group.title
+        .split(' ')
+        .find((word) => word.toLowerCase() === txt.toLowerCase())
+      group.title = group.title.replaceAll(
+        regex,
+        (match) =>
+          `<span class="highlight">${match}${isWord ? '&nbsp' : ''}</span>`
+      )
+    }
+
+    group.tasks = group.tasks.reduce((taskArr, task) => {
+      if (regex.test(task.title)) {
+        task.title = task.title.replaceAll(
+          regex,
+          (match) => `<span class="highlight">${match}</span>`
+        )
+        taskArr.push(task)
+      }
+      return taskArr
+    }, [])
+
+    if (group.tasks?.length || isGroupTitleMatch) groupArr.push(group)
+    return groupArr
+  }, [])
+  return board
+}
+
 async function applyDrag(addedId, removedId, type, boardId, groupId) {
   //arr, dragResult
   let board
@@ -139,19 +182,28 @@ async function applyDrag(addedId, removedId, type, boardId, groupId) {
     case 'task':
       board = await getById(boardId)
       const groupIdx = board.groups.findIndex((group) => group.id === groupId)
-      const addedIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === addedId)
-      const removedIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === removedId)
+      const addedIdx = board.groups[groupIdx].tasks.findIndex(
+        (task) => task.id === addedId
+      )
+      const removedIdx = board.groups[groupIdx].tasks.findIndex(
+        (task) => task.id === removedId
+      )
       if (addedIdx !== -1 && removedIdx !== -1) {
         const temp = board.groups[groupIdx].tasks[addedIdx]
-        board.groups[groupIdx].tasks[addedIdx] = board.groups[groupIdx].tasks[removedIdx]
+        board.groups[groupIdx].tasks[addedIdx] =
+          board.groups[groupIdx].tasks[removedIdx]
         board.groups[groupIdx].tasks[removedIdx] = temp
       }
       return await saveBoard(board)
       break
     case 'group':
       board = await getById(boardId)
-      const addedGroupIdx = board.groups.findIndex(group => group.id === addedId)
-      const removedGroupIdx = board.groups.findIndex(group => group.id === removedId)
+      const addedGroupIdx = board.groups.findIndex(
+        (group) => group.id === addedId
+      )
+      const removedGroupIdx = board.groups.findIndex(
+        (group) => group.id === removedId
+      )
       if (addedGroupIdx !== -1 && removedGroupIdx !== -1) {
         const temp = board.groups[addedGroupIdx]
         board.groups[addedGroupIdx] = board.groups[removedGroupIdx]
@@ -161,8 +213,10 @@ async function applyDrag(addedId, removedId, type, boardId, groupId) {
       break
     case 'board':
       const boards = await storageService.query(STORAGE_KEY)
-      const addedBoardIdx = boards.findIndex(board => board._id === addedId)
-      const removedBoardIdx = boards.findIndex(board => board._id === removedId)
+      const addedBoardIdx = boards.findIndex((board) => board._id === addedId)
+      const removedBoardIdx = boards.findIndex(
+        (board) => board._id === removedId
+      )
       if (addedBoardIdx !== -1 && removedBoardIdx !== -1) {
         boards[addedBoardIdx]._id = removedIid
         boards[removedBoardIdx]._id = addedId

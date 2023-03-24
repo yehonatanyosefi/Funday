@@ -92,22 +92,13 @@ export default {
       this.isSearchClicked = true
       document.querySelector('.search-tasks input').focus()
     },
-    // setFilter(key, val) {
-    //   let filter = JSON.parse(JSON.stringify(this.filter))
-    //   if (key === 'txt') this.isFiltering = !!val
-    //   if (key === 'group' || key === 'txt') filter[key] = val
-    //   else if (key === 'multi') filter = {...filter, ...val}
-    //   else {
-    //     if (!filter.tasks) filter.tasks = {}
-    //     filter.tasks[key] = val
-    //   }
-    //   this.$emit('setFilter', filter)
-    // },
-    // clearFilter() {
-    //   this.isFiltering = false
-    //   this.txt = ''
-    //   this.$emit('setFilter', 'txt', '')
-    // },
+
+    setFilter(txt) {},
+    clearFilter() {
+      this.isFiltering = false
+      this.txt = ''
+      this.$emit('setFilter', 'txt', '')
+    },
   },
   computed: {
     vw() {
