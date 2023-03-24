@@ -93,7 +93,9 @@ export default {
       document.querySelector('.search-tasks input').focus()
     },
 
-    setFilter(txt) {},
+    setFilter(type, txt) {
+      this.$emit('setFilter', txt)
+    },
     clearFilter() {
       this.isFiltering = false
       this.txt = ''

@@ -5,6 +5,7 @@ import { toRefs } from 'vue'
 export const boardStore = {
   state: {
     board: {},
+    rawBoard: {},
     boardList: [],
   },
   getters: {
@@ -21,23 +22,32 @@ export const boardStore = {
     },
     setBoard(state, { board }) {
       state.board = board
+      state.rawBoard = JSON.parse(JSON.stringify(state.board))
       router.push(`/board/${board._id}`)
     },
     addBoard(state, { board }) {
       const minBoard = { _id: board._id, title: board.title }
       state.boardList = [...state.boardList, minBoard]
       state.board = board
+      state.rawBoard = JSON.parse(JSON.stringify(state.board))
     },
+
     deleteBoard(state, { boardId }) {
       const idx = state.boardList.findIndex((board) => board._id === boardId)
       // // console.log('idx',idx)
       state.boardList = state.boardList.filter((board) => board._id !== boardId)
       if (idx > -1 && state.boardList.length === 1)
         state.board = state.boardList[idx - 1]
+      state.rawBoard = JSON.parse(JSON.stringify(state.board))
     },
     filterBoard(state, { txt }) {
-      const filteredBoard = boardService.filterByTxt(state.board, txt)
-      return filteredBoard
+      // if (txt === '') {
+      //   state.board = JSON.parse(JSON.stringify(state.rawBoard))
+      //   return
+      // }
+      // let boardCopy = JSON.parse(JSON.stringify(state.rawBoard))
+      // const filterBoard = boardService.filterByTxt(boardCopy, txt)
+      // state.board = filterBoard
     },
     // setTasks(state, { tasks }) {
     //     state.tasks = tasks
@@ -100,7 +110,7 @@ export const boardStore = {
       const task = boardService.getEmptyTask()
       const board = getters.board
       const boardId = board._id
-      const updatedGroupId = (!groupId) ? board.groups[0].id : groupId
+      const updatedGroupId = !groupId ? board.groups[0].id : groupId
       const payload = { boardId, task, groupId: updatedGroupId }
       return dispatch({ type: 'saveTask', payload })
     },
@@ -157,7 +167,7 @@ export const boardStore = {
       }
     },
     async getFirstBoard({ dispatch, state }, { params }) {
-      const boardId = (!params) ? state.boardList[0]._id : params
+      const boardId = !params ? state.boardList[0]._id : params
       dispatch({ type: 'getBoardById', boardId })
       return boardId
     },
