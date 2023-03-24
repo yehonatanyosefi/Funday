@@ -17,7 +17,7 @@ $group-header-clr: rgb(87, 155, 252);
      }
      .task-header {
           display: grid;
-          grid-template-columns: 33px 367px repeat(5,$group-column-width);
+          grid-template-columns: 33px 367px repeat(6,$group-column-width);
           position: relative;
           
                &:before {

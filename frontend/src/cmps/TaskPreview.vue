@@ -14,15 +14,15 @@
           :info="task[cmp]"
           @saveTask="saveTask($event,cmp)"></component>
   </div>
-  <RemoveTaskModal
+  <RemoveModal
     v-if="isModalOpen"
     @closeModal="handleCloseModal"
-    @removeTask="handleRemoveTask"/>
+    @removeTask="handleRemoveTask">Task</RemoveModal>
 </section>
 </template>
 
 <script>
-import RemoveTaskModal from './util/RemoveTaskModal.vue';
+import RemoveModal from './util/RemoveModal.vue';
 // import { Container, Draggable } from "vue3-smooth-dnd";
 import Title from './dynamicCmps/Title.vue'
 import Side from './dynamicCmps/Side.vue'
@@ -78,7 +78,7 @@ props: {
     Status,
     Text,
     Priority,
-    RemoveTaskModal,
+    RemoveModal,
   },
 }
 </script>

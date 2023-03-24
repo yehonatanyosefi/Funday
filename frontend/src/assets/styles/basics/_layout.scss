@@ -3,6 +3,7 @@
   padding: 10px;
 }
 .main-layout {
+    // overflow: hidden;
   margin: 0;
   height: 100vh;
   min-width: 100vw;
@@ -16,7 +17,6 @@
     grid-area: sidebar;
     height: 100%;
     width: 100%;
-    // overflow: hidden;
   }
 
   .header {
@@ -30,6 +30,8 @@
     grid-area: details;
     height: 100%;
     width: 100%;
+    overflow-y: hidden;
+    overflow-x: auto;
   }
 }
 .main-container {
