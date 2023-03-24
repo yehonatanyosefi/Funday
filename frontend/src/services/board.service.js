@@ -214,7 +214,7 @@ async function applyDrag(addedId, removedId, type, boardId, groupId) {
         (board) => board._id === removedId
       )
       if (addedBoardIdx !== -1 && removedBoardIdx !== -1) {
-        boards[addedBoardIdx]._id = removedIid
+        boards[addedBoardIdx]._id = removedId
         boards[removedBoardIdx]._id = addedId
         await saveBoard(boards[removedBoardIdx])
         await saveBoard(boards[addedBoardIdx])
@@ -275,7 +275,7 @@ function getEmptyGroup() {
   }
 }
 
-async function getEmptyBoard() {
+function getEmptyBoard() {
   return {
     title: 'New Board',
     isStarred: false,

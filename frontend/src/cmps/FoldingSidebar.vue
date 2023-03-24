@@ -6,7 +6,7 @@
             </span>
             <p class="main-workspace-title">Main workspace</p>
             <div class="btns flex column">
-                <button @click="addBoard">
+                <button @click.stop="addBoard">
                     <Add class="svg-icon" /> <span class="optn">Add</span>
                 </button>
                 <button>
@@ -15,8 +15,7 @@
                 <div class="searching" @click.stop="isSearching = true">
                     <button>
                         <Search class="svg-icon" /> <span class="optn" v-if="!isSearching">Search</span><input v-else
-                            v-model="filterBy.txt" type="search" placeholder="Search" 
-                            @input="search">
+                            v-model="filterBy.txt" type="search" placeholder="Search" @input="search">
                     </button>
 
                 </div>
@@ -53,6 +52,8 @@ export default {
         async addBoard() {
             try {
                 await this.$store.dispatch({ type: 'addBoard' })
+                // await this.$store.dispatch({ type: 'loadBoardList', filterBy: this.filterBy })
+
                 showSuccessMsg('Board added')
             }
             catch {
@@ -67,9 +68,9 @@ export default {
                 throw new Error('Could not search')
             }
         },
-        onBlur(){
+        onBlur() {
             this.isSearching = false
-            this.filterBy.txt=''
+            this.filterBy.txt = ''
             this.search()
         }
     },
