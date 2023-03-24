@@ -161,7 +161,6 @@ export const boardStore = {
     async loadBoardList(context, { filterBy }) {
       try {
         const boardList = await boardService.queryList(filterBy)
-        console.log('boardList', boardList)
         context.commit({ type: 'setBoardList', boardList })
         return boardList
       } catch (err) {

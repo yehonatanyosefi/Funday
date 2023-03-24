@@ -88,14 +88,10 @@ async function queryList(filterBy = { txt: '' }) {
   // return httpService.get(STORAGE_KEY, filterBy)
 
   let boards = await storageService.query(STORAGE_KEY)
-  console.log('boards', boards)
   if (filterBy.txt) {
     let boardsCopy = JSON.parse(JSON.stringify(boards))
-    console.log('boardsCopy', boardsCopy)
-    console.log('filterBy.txt', filterBy.txt)
     const regex = new RegExp(filterBy.txt, 'i')
     boards = boardsCopy.filter((board) => regex.test(board.title))
-    console.log('boards rgx', boards)
   }
   const boardList = boards.map((board) => {
     return { _id: board._id, title: board.title }
