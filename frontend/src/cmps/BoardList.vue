@@ -46,6 +46,7 @@ export default {
         },
         deleteBoard(boardId) {
             this.$store.dispatch({ type: 'deleteBoard', boardId })
+            this.currBoardId=''
         },
         toggleModal(boardId) {
             this.currBoardId = this.currBoardId=== boardId ? '': boardId
@@ -64,10 +65,5 @@ export default {
         Board,
         Delete
     },
-  computed: {},
-  components: {
-    Menu,
-    Board,
-  },
 }
 </script>

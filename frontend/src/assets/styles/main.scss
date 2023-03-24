@@ -42,9 +42,11 @@
 @import 'cmps/dynamicCmps/File';
 @import 'cmps/dynamicCmps/Text';
 
+//Dynamic Modals
+@import 'cmps/dynamicModal/MeneuModal';
+
 // Util Components
 @import 'cmps/util/RemoveTaskModal.scss';
-
 
 //Views
 @import 'views/Chat';

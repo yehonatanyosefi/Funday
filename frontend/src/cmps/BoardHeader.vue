@@ -2,16 +2,24 @@
   <section class="board-header-container">
     <section class="board-header">
       <section class="top-header">
-        <h1
-          :class="{editing: isEditing}"
-          @keydown.enter.prevent="saveBoardTitle"
-          @blur="saveBoardTitle"
-          contenteditable
-          @click="isEditing = true"
-          class="board-title"
-        >
-          {{ boardTitle }}
-        </h1>
+        <div>
+          <h1
+            :class="{editing: isEditing}"
+            @keydown.enter.prevent="saveBoardTitle"
+            @blur="saveBoardTitle"
+            contenteditable
+            @click="isEditing = true"
+            class="board-title"
+          >
+            {{ boardTitle }}
+          </h1>
+          <Favorite v-if="!board.isStarred" @click="favorite"></Favorite>
+          <FavoriteFull
+            class="selected"
+            v-else
+            @click="favorite"
+          ></FavoriteFull>
+        </div>
         <div class="board-title-right-container">
           <!-- <div v-if="getlastSeenUserImg" class="last-seen">
             Last seen <img :src="getlastSeenUserImg" alt="" />
@@ -79,6 +87,8 @@
 </template>
 <script>
 import Invite from '../assets/svg/Invite.svg'
+import Favorite from '../assets/svg/Favorite.svg'
+import FavoriteFull from '../assets/svg/FavoriteFull.svg'
 import BorderFilter from './BoardFilter.vue'
 
 import {boardService} from '../services/board.service'
@@ -102,16 +112,22 @@ export default {
       this.view = viewName
     },
     addGroup() {
-      this.$emit('addGroup', false)
+      this.$store.dispatch({type: 'addGroup'})
     },
     setFilter(filter) {
-      this.$emit('setFilter', filter)
+      this.$store.dispatch({type: 'addTask'})
     },
     saveBoardTitle(ev) {
       this.isEditing = false
       ev.target.blur()
       const val = ev.target.innerText
       const payload = {type: 'title', val}
+      this.$store.dispatch({type: 'updateBoard', payload})
+    },
+
+    favorite() {
+      const val = !this.board.isStarred
+      const payload = {type: 'favorite', val}
       this.$store.dispatch({type: 'updateBoard', payload})
     },
     addTask() {
@@ -136,7 +152,7 @@ export default {
       else this.view = 'table'
     },
   },
-  components: {BorderFilter, Invite},
+  components: {BorderFilter, Invite, Favorite, FavoriteFull},
   computed: {
     boardTitle() {
       return this.$store.getters.board.title
