@@ -21,7 +21,15 @@
     </div>
         
     <!-- <section class="group" v-for="(task,idx) in group.tasks" :key="task.id"> -->
-    <Container orientation="vertical" @drop="onDrop" class="group" >
+    <Container orientation="vertical"
+        class="group"
+        @drop="onTaskDrop($event)"
+        :drop-placeholder="dropPlaceholderOptions"
+        :get-child-payload="getCardPayload('task.id')">
+        <!-- @drag-start="onDragStart('drag start', $event)"
+        @drag-end="onDragEnd('drag end', $event)" -->
+            <!-- drag-class="card-ghost"
+            drop-class="card-ghost-drop" -->
       <Draggable v-for="(task,idx) in group.tasks" :key="task.id">
           <TaskPreview
             :task="task"
@@ -37,7 +45,7 @@
   <RemoveModal
     v-if="isModalOpen"
     @closeModal="handleCloseModal"
-    @removeGroup="handleRemoveGroup">Group</RemoveModal>
+    @remove="handleRemoveGroup">Group</RemoveModal>
 </section>
 </template>
 
@@ -46,7 +54,7 @@ import RemoveModal from './util/RemoveModal.vue';
 import { Container, Draggable } from "vue3-smooth-dnd";
 import TaskPreview from './TaskPreview.vue'
 export default {
-emits: ['saveTask', 'removeTask', 'saveGroup','removeGroup'],
+emits: ['saveTask', 'removeTask', 'saveGroup','removeGroup','applyTaskDrag'],
 props: {
     group: Object,
     cmpOrder: Array,
@@ -58,6 +66,16 @@ data() {
 return {
     groupTitle: null,
     isModalOpen: false,
+    //   upperDropPlaceholderOptions: {
+    //     className: 'cards-drop-preview',
+    //     animationDuration: '150',
+    //     showOnTop: true
+    //   },
+      dropPlaceholderOptions: {
+        className: 'drop-preview',
+        animationDuration: '150',
+        showOnTop: true
+      }
 }
 },
 methods: {
@@ -85,9 +103,23 @@ methods: {
     handleCloseModal() {
       this.isModalOpen = false
     },
-    onDrop() {
-        console.log('onDrop')
+    onTaskDrop(dropPayload) {
+        const {removedIndex, addedIndex} = dropPayload
+        if (removedIndex === null && addedIndex === null) return
+        const removedId = this.group.tasks.find((task,idx) => idx === removedIndex).id
+        const addedId = this.group.tasks.find((task,idx) => idx === addedIndex).id
+	    const payload = {removedId, addedId,groupId: this.group.id}
+        this.$emit('applyTaskDrag',payload)
     },
+    getCardPayload(ev) {
+        // console.log('getCardPayload',ev)
+    },
+    // onDragStart(name,{payload}) {
+    //     console.log('onDragStart', payload)
+    // },
+    // onDragEnd(name,{payload}) {
+    //     console.log('onDragEnd', payload)
+    // },
 },
 computed: {
 

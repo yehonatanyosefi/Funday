@@ -15,6 +15,7 @@ export const boardService = {
   getEmptyBoard,
   getEmptyGroup,
   getEmptyTask,
+  applyDrag,
 }
 window.cs = boardService
 
@@ -33,17 +34,9 @@ async function save(boardId = null, type = 'task', payload, groupId = null) {
       : -1
   switch (type) {
     case 'task':
-      const taskIdx = board.groups[groupIdx].tasks.findIndex(
-        (task) => task.id === payload.id
-      )
+      const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === payload.id)
       if (taskIdx > -1) {
-        const tasks = board.groups[groupIdx].tasks.splice(
-          taskIdx,
-          1,
-          payload
-        )[0]
-        const group = board.groups.splice(groupIdx, 1, tasks)[0]
-        board.groups[groupIdx] = group
+        board.groups[groupIdx].tasks.splice(taskIdx, 1, payload)[0]
       } else {
         board.groups[groupIdx].tasks.push(payload)
       }
@@ -92,14 +85,14 @@ async function queryList(filterBy = { txt: '' }) {
   // return httpService.get(STORAGE_KEY, filterBy)
 
   let boards = await storageService.query(STORAGE_KEY)
-  console.log('boards',boards)
+  console.log('boards', boards)
   if (filterBy.txt) {
-    let boardsCopy =JSON.parse(JSON.stringify(boards))
-    console.log('boardsCopy',boardsCopy)
-    console.log('filterBy.txt',filterBy.txt)
+    let boardsCopy = JSON.parse(JSON.stringify(boards))
+    console.log('boardsCopy', boardsCopy)
+    console.log('filterBy.txt', filterBy.txt)
     const regex = new RegExp(filterBy.txt, 'i')
     boards = boardsCopy.filter((board) => regex.test(board.title))
-    console.log('boards rgx',boards)
+    console.log('boards rgx', boards)
   }
   const boardList = boards.map((board) => {
     return { _id: board._id, title: board.title }
@@ -119,21 +112,18 @@ async function queryList(filterBy = { txt: '' }) {
 async function remove(ids, type) {
   const { boardId, groupId, taskId } = ids
   let board = await getById(boardId)
+  const groupIdx = type !== 'board' ? board.groups.findIndex((group) => group.id === groupId) : -1
   switch (type) {
     case 'task':
-      const groupIdx = board.groups.findIndex((group) => group.id === groupId)
-      const taskIdx = board.groups[groupIdx].tasks.findIndex(
-        (task) => task.id === taskId
-      )
+      const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
       const tasks = board.groups[groupIdx].tasks.splice(taskIdx, 1)[0]
       const group = board.groups.splice(groupIdx, 1, tasks)[0]
-      // board.groups[groupIdx].tasks.push(payload)
       board.groups[groupIdx] = group
       return await saveBoard(board)
       break
-    case 'groups':
-      board = board.groups
-      return Promise.resolve()
+    case 'group':
+      board.groups.splice(groupIdx, 1)
+      return await saveBoard(board)
       break
     case 'board':
       return await storageService.remove(STORAGE_KEY, boardId)
@@ -142,6 +132,47 @@ async function remove(ids, type) {
   }
 }
 
+async function applyDrag(addedId, removedId, type, boardId, groupId) {
+  //arr, dragResult
+  let board
+  switch (type) {
+    case 'task':
+      board = await getById(boardId)
+      const groupIdx = board.groups.findIndex((group) => group.id === groupId)
+      const addedIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === addedId)
+      const removedIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === removedId)
+      if (addedIdx !== -1 && removedIdx !== -1) {
+        const temp = board.groups[groupIdx].tasks[addedIdx]
+        board.groups[groupIdx].tasks[addedIdx] = board.groups[groupIdx].tasks[removedIdx]
+        board.groups[groupIdx].tasks[removedIdx] = temp
+      }
+      return await saveBoard(board)
+      break
+    case 'group':
+      board = await getById(boardId)
+      const addedGroupIdx = board.groups.findIndex(group => group.id === addedId)
+      const removedGroupIdx = board.groups.findIndex(group => group.id === removedId)
+      if (addedGroupIdx !== -1 && removedGroupIdx !== -1) {
+        const temp = board.groups[addedGroupIdx]
+        board.groups[addedGroupIdx] = board.groups[removedGroupIdx]
+        board.groups[removedGroupIdx] = temp
+      }
+      return await saveBoard(board)
+      break
+    case 'board':
+      const boards = await storageService.query(STORAGE_KEY)
+      const addedBoardIdx = boards.findIndex(board => board._id === addedId)
+      const removedBoardIdx = boards.findIndex(board => board._id === removedId)
+      if (addedBoardIdx !== -1 && removedBoardIdx !== -1) {
+        boards[addedBoardIdx]._id = removedIid
+        boards[removedBoardIdx]._id = addedId
+        await saveBoard(boards[removedBoardIdx])
+        await saveBoard(boards[addedBoardIdx])
+      }
+      return queryList()
+      break
+  }
+}
 // async function query(filterBy = { txt: '', price: 0 }) {
 //     // return httpService.get(STORAGE_KEY, filterBy)
 

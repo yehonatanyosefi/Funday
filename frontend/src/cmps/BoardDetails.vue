@@ -1,6 +1,7 @@
 <template>
 <section class="board-details">
-    <Container orientation="vertical" @drop="onDrop">
+    <Container orientation="vertical" 
+        @drop="onGroupDrop($event)">
       <Draggable v-for="group in board.groups" :key="group.id">
 			<BoardGroup
 				:group="group"
@@ -8,7 +9,8 @@
 				@saveTask="saveTask"
 				@removeTask="removeTask"
 				@saveGroup="saveGroup"
-				@removeGroup="removeGroup"></BoardGroup>
+				@removeGroup="removeGroup"
+				@applyTaskDrag="applyTaskDrag"></BoardGroup>
       </Draggable>
     </Container>
 </section>
@@ -69,49 +71,26 @@ export default {
 				// showErrorMsg('Cannot update task')
 			}
 		},
-		// async saveGroup(context, {payload}) {
-		// 	try {
-		// 	const {boardId, group, groupId} = payload
-		// 	const updatedBoard = await boardService.save(
-		// 		boardId,
-		// 		'group',
-		// 		group,
-		// 		groupId
-		// 	)
-		// 	context.commit({type: 'setBoard', board: updatedBoard})
-		// 	return task
-		// 	} catch (err) {
-		// 	console.log('Store: Error in updateTask', err)
-		// 	throw err
-		// 	}
-		// },
-		removeGroup(groupId) {
+		async removeGroup(groupId) {
 			try {
-				const payload = {groupId,boardId:'b101'}
-				this.$store.dispatch({type:'removeGroup',payload})
+				const payload = {groupId,boardId:this.board._id}
+				await this.$store.dispatch({type:'removeGroup',payload})
 				showSuccessMsg('Group removed')
 			} catch (err) {
 				showErrorMsg('Cannot remove group')
 			}
 		},
-		// async removeGroup(context, { payload }) {
-		//     try {
-		//         const { groupId, boardId } = payload
-		//         await boardService.remove(boardId, 'groups', groupId)
-		//         context.commit({type:"deleteBoard",boardId})
-		//         context.dispatch({type:"loadBoardList"})
-		//     } catch (err) {
-		//         console.log('boardStore: Error in deleteBoard', err)
-		//         throw err
-		//     }
-		// },
-		// service:
-		// 'group':
-		//     const groupIdx = board.groups.findIndex((group) => group.id === groupId)
-		//   board.groups.splice(groupIdx, 1)
-		//   return await saveBoard(board)
-		onDrop(ev) {
-			console.log(`ev:`,ev)
+		onGroupDrop(dropPayload) {
+			const {removedIndex, addedIndex} = dropPayload
+			if (removedIndex === null && addedIndex === null) return
+			const removedId = this.board.groups.find((group,idx) => idx === removedIndex).id
+			const addedId = this.board.groups.find((group,idx) => idx === addedIndex).id
+			const payload = {removedId, addedId,boardId:this.board._id}
+			this.$store.dispatch({type:'applyGroupDrag',payload})
+		},
+		applyTaskDrag(groupPayload) {
+			const payload = {...groupPayload,boardId:this.board._id}
+			this.$store.dispatch({type:'applyTaskDrag',payload})
 		},
 		// async addTask() {
 		// 	try {

@@ -18,7 +18,7 @@ export default {
       this.$emit('close-modal')
     },
     remove() {
-      this.$emit('removeTask')
+      this.$emit('remove')
     },
   },
 }
