@@ -207,7 +207,6 @@
 					"title": "Replace Logo"
 				}
 			}
-		],
-		"cmpsOrder": ["status-picker", "member-picker", "date-picker"]
+		]
 	}
 ]

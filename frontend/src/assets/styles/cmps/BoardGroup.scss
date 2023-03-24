@@ -33,7 +33,7 @@ $group-header-clr: rgb(87, 155, 252);
           width: 16px;
           height: 16px;
           color: black;
-          background-color: #fff;
+          // background-color: #fff;
           // border: 1px solid lightgray;
      }
      .group-header {
@@ -59,7 +59,7 @@ $group-header-clr: rgb(87, 155, 252);
                background-color: $group-header-clr;
                border-top-left-radius: 5px;
           }
-          & section:first-child {
+          & section:nth-child(2) {
                border: 1px solid $color-divider;
           }
           & section {

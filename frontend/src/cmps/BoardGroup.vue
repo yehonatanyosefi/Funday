@@ -68,7 +68,7 @@ import { Container, Draggable } from "vue3-smooth-dnd";
 import TaskPreview from './TaskPreview.vue'
 import Title from './dynamicCmps/Title.vue'
 export default {
-emits: ['saveTask', 'removeTask', 'saveGroup','removeGroup','applyTaskDrag'],
+emits: ['saveTask', 'removeTask', 'saveGroup','removeGroup','applyTaskDrag', 'addTask'],
 props: {
     group: Object,
     cmpOrder: Array,
@@ -122,8 +122,9 @@ methods: {
 	    const payload = {removedId, addedId,groupId: this.group.id}
         this.$emit('applyTaskDrag',payload)
     },
-    toggleMenuModal() {
+    toggleMenuModal() { //placeholder for menu modal
         this.isMenuModalOpen = !this.isMenuModalOpen
+        this.isModalOpen = true
     },
     getCardPayload(ev) {
         // console.log('getCardPayload',ev)

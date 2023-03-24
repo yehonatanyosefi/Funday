@@ -50,6 +50,7 @@ props: {
   data() {
     return {
       isModalOpen: false,
+      isMenuModalOpen: false,
     }
   },
   methods: {
@@ -71,8 +72,9 @@ props: {
     handleCloseModal() {
       this.isModalOpen = false
     },
-    toggleMenuModal() {
-
+    toggleMenuModal() { //placeholder for menu modal
+        this.isMenuModalOpen = !this.isMenuModalOpen
+        this.isModalOpen = true
     },
   },
   computed: {

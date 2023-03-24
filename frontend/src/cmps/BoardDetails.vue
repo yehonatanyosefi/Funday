@@ -56,7 +56,7 @@ export default {
 		},
 		async removeTask(ids) {
 			try {
-				ids = {...ids,boardId:'b101'}
+				ids = {...ids,boardId:this.board._id}
 				await this.$store.dispatch({type:'removeTask',ids})
 				const groupIdx = this.board.groups.findIndex(group => group.id === ids.groupId)
 				if (!this.board.groups[groupIdx].tasks?.length) await this.$store.dispatch({type:'addTask',payload:ids.groupIdx})

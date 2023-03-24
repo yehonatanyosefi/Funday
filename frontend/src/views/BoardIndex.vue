@@ -1,8 +1,10 @@
 <template>
   <main class="main-layout">
     <MainSidebar></MainSidebar>
-    <BoardHeader></BoardHeader>
-    <RouterView></RouterView>
+    <div class="container">
+      <BoardHeader></BoardHeader>
+      <RouterView></RouterView>
+    </div>
   </main>
 </template>
 
@@ -11,7 +13,10 @@ import MainSidebar from '../cmps/MainSidebar.vue'
 import BoardHeader from '../cmps/BoardHeader.vue'
 export default {
   props: {},
-  created() {},
+  async created() {
+    const params = this.$route.params.boardId
+		await this.$store.dispatch({ type: "getFirstBoard", params })
+  },
   data() {
     return {
     }
