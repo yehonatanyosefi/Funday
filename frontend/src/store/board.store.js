@@ -1,5 +1,6 @@
 import { boardService } from '../services/board.service'
-import {router} from '../router'
+import { router } from '../router'
+import { toRefs } from 'vue'
 
 export const boardStore = {
   state: {
@@ -66,17 +67,17 @@ export const boardStore = {
     //     const idx = state.groups.findIndex(c => c._id === group._id)
     //     state.groups.splice(idx, 1, group)
     // },
+    // addGroupMsg(state, { groupId, msg }) {
+    //     const group = state.groups.find(group => group._id === groupId)
+    //     if (!group.msgs) group.msgs = []
+    //     group.msgs.push(msg)
+    // },
     removeGroup(state, { groupId }) {
       const groupIdx = state.board.groups.findIndex(
         (group) => group.id === groupId
       )
       state.board.groups.splice(groupIdx, 1)
     },
-    // addGroupMsg(state, { groupId, msg }) {
-    //     const group = state.groups.find(group => group._id === groupId)
-    //     if (!group.msgs) group.msgs = []
-    //     group.msgs.push(msg)
-    // },
   },
   actions: {
     async saveTask(context, { payload }) {
@@ -91,7 +92,7 @@ export const boardStore = {
         context.commit({ type: 'setBoard', board: updatedBoard })
         return task
       } catch (err) {
-        // // console.log('Store: Error in updateTask', err)
+        console.log('Store: Error in updateTask', err)
         throw err
       }
     },
@@ -155,8 +156,8 @@ export const boardStore = {
         console.log('Store: Error in getBoardById', err)
       }
     },
-    async getFirstBoard({ dispatch, state }) {
-      const boardId = state.boardList[0]._id
+    async getFirstBoard({ dispatch, state }, { params }) {
+      const boardId = (!params) ? state.boardList[0]._id : params
       dispatch({ type: 'getBoardById', boardId })
       return boardId
     },

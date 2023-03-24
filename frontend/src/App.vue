@@ -20,7 +20,6 @@ export default {
 
   async created() {
 		await this.$store.dispatch({ type: "loadBoardList" })
-		await this.$store.dispatch({ type: "getFirstBoard" })
     const user = userService.getLoggedinUser()
     if (user)  store.commit({type: 'setLoggedinUser', user})
     await this.$store.dispatch({type: 'loadUsers'})
