@@ -1,8 +1,10 @@
 <template>
   <main class="main-layout">
     <MainSidebar></MainSidebar>
-    <BoardHeader></BoardHeader>
-    <RouterView></RouterView>
+    <div class="container">
+      <BoardHeader></BoardHeader>
+      <RouterView></RouterView>
+    </div>
   </main>
 </template>
 
