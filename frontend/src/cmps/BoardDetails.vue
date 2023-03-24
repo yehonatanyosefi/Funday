@@ -1,6 +1,7 @@
 <template>
 <section class="board-details">
-    <Container orientation="vertical" 
+	<div v-if="!board?.groups?.length">No Groups Found</div>
+    <Container v-else orientation="vertical" 
         @drop="onGroupDrop($event)">
       <Draggable v-for="group in board.groups" :key="group.id">
 			<BoardGroup
