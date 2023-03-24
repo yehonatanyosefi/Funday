@@ -23,15 +23,29 @@
                     <li class="board-link board-title" @click="setBoard(board._id)">
                         <Board class="svg-icon" />
                         <span>{{ board.title }}</span>
-                        <Menu class="svg-icon small-menu" width="16 " height="16" @click="toggleModal(board._id)" />
+                        <Menu class="svg-icon small-menu" width="16 " height="16" @click.stop="toggleModal(board._id)" />
 
-                        <div class="modal" v-if="currBoardId === board._id" @click="deleteBoard(board._id)">
-                            <div class="modal-container">
+                        <div v-if="currBoardId === board._id" class="modal" v-click-outside.stop="closeModal" >
+                            <div @click="renameBoard(board._id)" class="modal-container">
+                                <section class="wrapper">
+                                    <Edit class="svg-icon" />
+                                    <span> Rename</span>
+                                </section>
+                            </div>
+                            <div @click="duplicateBoard(board._id)" class="modal-container">
+                                <section class="wrapper">
+                                    <Duplicate class="svg-icon" />
+                                    <span>Duplicate</span>
+                                </section>
+                            </div>
+                            <div @click="deleteBoard(board._id)" class="modal-container">
                                 <section class="wrapper">
                                     <Delete class="svg-icon" />
                                     <span> Delete</span>
                                 </section>
                             </div>
+
+
                         </div>
 
                     </li>
@@ -46,6 +60,8 @@
 import Menu from '../assets/svg/Menu.svg'
 import Delete from '../assets/svg/Delete.svg'
 import Board from '../assets/svg/Board.svg'
+import Edit from '../assets/svg/Edit.svg'
+import Duplicate from '../assets/svg/Duplicate.svg'
 import { Container, Draggable } from 'vue3-smooth-dnd'
 
 export default {
@@ -78,7 +94,8 @@ export default {
             this.isOpen = true
         },
         closeModal() {
-            this.isOpen = false
+            this.currBoardId=''
+            // this.isOpen = false
         },
         onBoardDrop(dropPayload) {
             const { removedIndex, addedIndex } = dropPayload
@@ -95,6 +112,8 @@ export default {
         Menu,
         Board,
         Delete,
+        Edit,
+        Duplicate,
         Container,
         Draggable,
     },
