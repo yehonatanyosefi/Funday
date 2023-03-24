@@ -187,7 +187,9 @@
 						}
 					}
 				],
-				"style": {}
+				"style": {
+					"color": "rgb(87, 155, 252)"
+				}
 			}
 		],
 		"activities": [

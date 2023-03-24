@@ -11,7 +11,8 @@
 				@removeTask="removeTask"
 				@saveGroup="saveGroup"
 				@removeGroup="removeGroup"
-				@applyTaskDrag="applyTaskDrag"></BoardGroup>
+				@applyTaskDrag="applyTaskDrag"
+				@addTask="addTask"></BoardGroup>
       </Draggable>
     </Container>
 </section>
@@ -82,6 +83,13 @@ export default {
 				showSuccessMsg('Group removed')
 			} catch (err) {
 				showErrorMsg('Cannot remove group')
+			}
+		},
+		async addTask(groupId) {
+			try {
+				await this.$store.dispatch({type:'addTask',groupId})
+			} catch (err) {
+				showErrorMsg('Cannot add task')
 			}
 		},
 		onGroupDrop(dropPayload) {
