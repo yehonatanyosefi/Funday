@@ -15,7 +15,7 @@
           </router-link>
         </div>
 
-        <router-link :to="'/board/'">
+        <router-link :to="'/board/b101'">
           <button class="cta-btn">
             <span>Get started</span>
             <span>→</span>
@@ -40,7 +40,7 @@
           <span> What would you like to manage with Funday today? </span>
         </div>
         <nav>
-          <router-link :to="'/board/'">
+          <router-link :to="'/board/b101'">
             <button class="cta-btn big">
               <span>Get started</span>
               <span>→</span>
@@ -49,24 +49,6 @@
         </nav>
       </div>
     </section>
-    <!-- <video
-      class="cover-video"
-      src="../assets/stars.mp4"
-      autoplay=""
-      loop=""
-    ></video>
-
-    <h1 class="hero-title">Make it your new thing for working<br />and turn</h1>
-    <p class="hero-subtitle">
-      Monday into a Funday with the easiest workflow system ever.
-    </p>
-    <div class="home-nav-btns flex column center">
-      <router-link :to="'/board/' + board._id">
-        <button class="hero-btn">
-          <p>Have a look</p>
-        </button>
-      </router-link>
-    </div> -->
   </section>
 </template>
 
