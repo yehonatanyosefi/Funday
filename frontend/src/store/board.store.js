@@ -21,9 +21,9 @@ export const boardStore = {
       state.board = board
     },
     addBoard(state, { board }) {
-      state.board = board
       const minBoard = { _id: board._id, title: board.title }
-      state.boardList.push(minBoard)
+      state.boardList =[...state.boardList,minBoard]
+      state.board = board
     },
     deleteBoard(state, { boardId }) {
       const idx = state.boardList.findIndex((board) => board._id === boardId)
@@ -170,7 +170,7 @@ export const boardStore = {
     },
     async addBoard({ commit }) {
       try {
-        const board = await boardService.getEmptyBoard()
+        const board = boardService.getEmptyBoard()
         const newBoard = await boardService.save(null, 'board', board)
         commit({ type: 'addBoard', board: newBoard })
         return newBoard
