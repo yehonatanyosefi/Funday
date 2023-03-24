@@ -1,6 +1,11 @@
 <template>
 <section class="task-preview" v-if="cmpOrder?.length">
   <div class="task">
+  <div class="task-preview-color" 
+      :style="{'backgroundColor': groupColor}"></div>
+      <div class="menu-btn-container">
+        <Menu class="svg-icon menu-btn" width="20" height="20" @click="toggleMenuModal" />
+      </div>
     <input
       type="checkbox"
       title="Delete Task"
@@ -22,6 +27,7 @@
 </template>
 
 <script>
+import Menu from '../assets/svg/Menu.svg'
 import RemoveModal from './util/RemoveModal.vue';
 // import { Container, Draggable } from "vue3-smooth-dnd";
 import Title from './dynamicCmps/Title.vue'
@@ -36,6 +42,7 @@ export default {
 props: {
     task: Object,
     cmpOrder: Array,
+    groupColor: String,
   },
   created() {
 
@@ -64,6 +71,9 @@ props: {
     handleCloseModal() {
       this.isModalOpen = false
     },
+    toggleMenuModal() {
+
+    },
   },
   computed: {
     // tasks() {
@@ -79,6 +89,7 @@ props: {
     Text,
     Priority,
     RemoveModal,
+    Menu,
   },
 }
 </script>

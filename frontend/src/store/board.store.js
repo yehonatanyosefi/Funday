@@ -22,7 +22,7 @@ export const boardStore = {
     },
     addBoard(state, { board }) {
       const minBoard = { _id: board._id, title: board.title }
-      state.boardList =[...state.boardList,minBoard]
+      state.boardList = [...state.boardList, minBoard]
       state.board = board
     },
     deleteBoard(state, { boardId }) {
@@ -93,12 +93,12 @@ export const boardStore = {
         throw err
       }
     },
-    async addTask({ dispatch, getters }) {
+    async addTask({ dispatch, getters }, { groupId }) {
       const task = boardService.getEmptyTask()
       const board = getters.board
       const boardId = board._id
-      const groupId = board.groups[0].id
-      const payload = { boardId, task, groupId }
+      const updatedGroupId = (!groupId) ? board.groups[0].id : groupId
+      const payload = { boardId, task, groupId: updatedGroupId }
       return dispatch({ type: 'saveTask', payload })
     },
     async removeTask(context, { ids }) {
