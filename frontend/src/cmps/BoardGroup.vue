@@ -45,7 +45,7 @@
   <RemoveModal
     v-if="isModalOpen"
     @closeModal="handleCloseModal"
-    @remove="handleRemoveGroup">Group</RemoveModal>
+    @remove="handleRemoveGroup">group</RemoveModal>
 </section>
 </template>
 

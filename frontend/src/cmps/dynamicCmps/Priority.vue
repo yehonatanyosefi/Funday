@@ -6,7 +6,8 @@
           class="modal"
           :labels="labels"
           @saveTask="$emit('saveTask',$event)"
-          @closeModal="closeModal"></LabelPicker>
+          @closeModal="closeModal"
+          v-click-outside="closeModal"></LabelPicker>
 </div>
 
 </template>

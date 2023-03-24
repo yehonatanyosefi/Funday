@@ -29,11 +29,11 @@
 
      .remove-modal-buttons {
           display: flex;
-          justify-content: space-between;
+          justify-content: end;
           margin-top: 20px;
      }
 
-     .yes-button {
+     .delete-button {
           background-color: $group-header-clr;
           color: #fff;
           padding: 10px;
@@ -42,13 +42,21 @@
           cursor: pointer;
      }
 
-     .close-button {
-          background-color: #ccc;
+     .cancel-button {
+          background-color: white;
           color: #333;
           padding: 10px;
           border: none;
           border-radius: 5px;
           cursor: pointer;
+     }
+     .cancel-button:hover {
+          background-color: $color-btn-hover ;
+     }
+     & h3 {
+          font: inherit;
+          font-size: 18px;
+          color: inherit;
      }
 
      .yes-button:hover,

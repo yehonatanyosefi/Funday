@@ -17,7 +17,7 @@
   <RemoveModal
     v-if="isModalOpen"
     @closeModal="handleCloseModal"
-    @remove="handleRemoveTask">Task</RemoveModal>
+    @remove="handleRemoveTask">task</RemoveModal>
 </section>
 </template>
 

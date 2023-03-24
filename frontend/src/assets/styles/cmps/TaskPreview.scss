@@ -48,7 +48,7 @@ $lighten-status-amount: 7.5%;
                justify-content: center;
                align-items: center;
           }
-          & div img{
+          & .profile-div img, .profile-div svg {
                margin-inline-end: -5px;
           }
           & .status,

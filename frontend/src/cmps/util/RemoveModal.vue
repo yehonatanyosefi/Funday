@@ -2,10 +2,10 @@
   <div class="remove-modal">
     <div class="remove-modal-overlay" @click="close"></div>
     <div class="remove-modal-content">
-      <h3>Are you sure you want to delete this <slot></slot>?</h3>
+      <h3>Delete this <slot></slot>?</h3>
       <div class="remove-modal-buttons">
-        <button @click="remove" class="yes-button">Yes</button>
-        <button @click="close" class="close-button">Close</button>
+        <button @click="close" class="cancel-button">Cancel</button>
+        <button @click="remove" class="delete-button">Delete</button>
       </div>
     </div>
   </div>
