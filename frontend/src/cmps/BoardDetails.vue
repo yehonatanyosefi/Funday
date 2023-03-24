@@ -104,16 +104,6 @@ export default {
 			const payload = {...groupPayload,boardId:this.board._id}
 			this.$store.dispatch({type:'applyTaskDrag',payload})
 		},
-		// async addTask() {
-		// 	try {
-		// 		await this.$store.dispatch({ type: 'addTask', task: this.taskToAdd })
-		// 		showSuccessMsg('Task added')
-		// 		this.taskToAdd = boardService.getEmptyTask()
-		// 	} catch (err) {
-		// 		console.log(err)
-		// 		showErrorMsg('Cannot add task')
-		// 	}
-		// },
 	},
 	components: {
 		BoardHeader,

@@ -29,8 +29,8 @@
     <Container orientation="vertical"
         class="group"
         @drop="onTaskDrop($event)"
-        :drop-placeholder="dropPlaceholderOptions"
         :get-child-payload="getCardPayload('task.id')">
+        <!-- :drop-placeholder="dropPlaceholderOptions" -->
       <Draggable v-for="(task,idx) in group.tasks" :key="task.id">
           <TaskPreview
             :task="task"
@@ -81,14 +81,11 @@ return {
     groupTitle: null,
     isModalOpen: false,
     isMenuModalOpen: false,
-    addTask: {
-
-    },
-      dropPlaceholderOptions: {
-        className: 'drop-preview',
-        animationDuration: '150',
-        showOnTop: true
-      }
+    // dropPlaceholderOptions: {
+    //     className: 'drop-preview',
+    //     animationDuration: '150',
+    //     showOnTop: true
+    // }
 }
 },
 methods: {
