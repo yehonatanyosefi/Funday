@@ -36,7 +36,7 @@
         </div>
       </section>
       <section class="add-views">
-        <router-link :to="'/board/'">
+        <router-link :to="'/board/'+board._id">
           <button
             @click="changeView('table')"
             class="view-item"
@@ -46,7 +46,7 @@
           </button>
         </router-link>
         <span class="separator">|</span>
-        <router-link :to="'/board/kanban/'">
+        <router-link :to="'/board/'+board._id+'/kanban'">
           <button
             @click="changeView('kanban')"
             class="view-item"
@@ -56,7 +56,7 @@
           </button>
         </router-link>
         <span class="separator">|</span>
-        <router-link :to="'/board/dashboard/'">
+        <router-link :to="'/board/'+board._id+'/dashboard'">
           <button
             @click="changeView('dashboard')"
             class="view-item"

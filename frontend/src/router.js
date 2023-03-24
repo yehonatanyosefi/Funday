@@ -16,7 +16,7 @@ const routes = [
     component: Home
   },
   {
-    path: '/board/:boardId?',
+    path: '/board/:boardId',
     name: 'BoardIndex',
     component: BoardIndex,
     children: [
