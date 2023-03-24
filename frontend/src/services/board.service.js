@@ -284,7 +284,7 @@ async function getEmptyBoard() {
     title: 'New Board',
     isStarred: false,
     archivedAt: '',
-    cmpOrder: ['title', 'date', 'person', 'status', 'text', 'priority'],
+    cmpOrder: ['title', 'date', 'person', 'status', 'text', 'priority', 'timeline'],
     createdBy: {
       _id: '',
       fullname: '',
