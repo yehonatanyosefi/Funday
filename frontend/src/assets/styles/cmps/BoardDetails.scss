@@ -3,19 +3,19 @@ $group-row-height: 36px;
 @mixin board-columns() {
      grid-template-columns: 33px 360px repeat(auto-fit, $group-column-width);
 }
+.smooth-dnd-container.vertical>.smooth-dnd-draggable-wrapper {
+     overflow: visible;
+}
 .board-details {
      // display: grid;
      // @include board-columns;
-     .smooth-dnd-container.vertical>.smooth-dnd-draggable-wrapper {
-               overflow: visible;
-     }
      .task-title, .text {
           @include flex-center;
      }
      input {
           font: inherit;
           color: inherit;
-          border: none;
+          border: inherit;
           border-radius: 0.25em;
           outline: none;
           &:hover,&:focus {
