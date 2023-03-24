@@ -114,9 +114,7 @@ export default {
     addGroup() {
       this.$store.dispatch({type: 'addGroup'})
     },
-    setFilter(filter) {
-      this.$store.dispatch({type: 'addTask'})
-    },
+    setFilter(filter) {},
     saveBoardTitle(ev) {
       this.isEditing = false
       ev.target.blur()

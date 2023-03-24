@@ -32,6 +32,10 @@ export const boardStore = {
       if (idx > -1 && state.boardList.length === 1)
         state.board = state.boardList[idx - 1]
     },
+    filterBoard(state, {txt}) {
+      const filteredBoard = boardService.filterByTxt(state.board, txt)
+      return filteredBoard
+    },
     // setTasks(state, { tasks }) {
     //     state.tasks = tasks
     // },
@@ -124,10 +128,10 @@ export const boardStore = {
       dispatch({type: 'getBoardById', boardId})
       return boardId
     },
-    async loadBoardList(context,{filterBy}) {
+    async loadBoardList(context, {filterBy}) {
       try {
         const boardList = await boardService.queryList(filterBy)
-        console.log('boardList',boardList)
+        console.log('boardList', boardList)
         context.commit({type: 'setBoardList', boardList})
         return boardList
       } catch (err) {
@@ -168,6 +172,7 @@ export const boardStore = {
       commit({type: 'setBoard', board: updatedBoard})
       dispatch({type: 'loadBoardList'})
     },
+
     // async addGroup(context, { group }) {
     //     try {
     //         group = await boardService.saveGroup(group)

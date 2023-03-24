@@ -1,7 +1,7 @@
-import { storageService } from './async-storage.service.js'
-import { httpService } from './http.service.js'
-import { utilService } from './util.service.js'
-import { userService } from './user.service.js'
+import {storageService} from './async-storage.service.js'
+import {httpService} from './http.service.js'
+import {utilService} from './util.service.js'
+import {userService} from './user.service.js'
 
 const STORAGE_KEY = 'boardDB'
 
@@ -15,6 +15,7 @@ export const boardService = {
   getEmptyBoard,
   getEmptyGroup,
   getEmptyTask,
+  filterByTxt,
 }
 window.cs = boardService
 
@@ -75,7 +76,7 @@ async function saveBoard(board) {
 }
 
 async function updateBoard(boardId, payload) {
-  const { type, val } = payload
+  const {type, val} = payload
   let board = await getById(boardId)
   switch (type) {
     case 'title':
@@ -88,21 +89,21 @@ async function updateBoard(boardId, payload) {
   return saveBoard(board)
 }
 
-async function queryList(filterBy = { txt: '' }) {
+async function queryList(filterBy = {txt: ''}) {
   // return httpService.get(STORAGE_KEY, filterBy)
 
   let boards = await storageService.query(STORAGE_KEY)
-  console.log('boards',boards)
+  console.log('boards', boards)
   if (filterBy.txt) {
-    let boardsCopy =JSON.parse(JSON.stringify(boards))
-    console.log('boardsCopy',boardsCopy)
-    console.log('filterBy.txt',filterBy.txt)
+    let boardsCopy = JSON.parse(JSON.stringify(boards))
+    console.log('boardsCopy', boardsCopy)
+    console.log('filterBy.txt', filterBy.txt)
     const regex = new RegExp(filterBy.txt, 'i')
     boards = boardsCopy.filter((board) => regex.test(board.title))
-    console.log('boards rgx',boards)
+    console.log('boards rgx', boards)
   }
   const boardList = boards.map((board) => {
-    return { _id: board._id, title: board.title }
+    return {_id: board._id, title: board.title}
   })
   // var tasks = await storageService.query(STORAGE_KEY)
   // if (filterBy.txt) {
@@ -117,7 +118,7 @@ async function queryList(filterBy = { txt: '' }) {
 }
 
 async function remove(ids, type) {
-  const { boardId, groupId, taskId } = ids
+  const {boardId, groupId, taskId} = ids
   let board = await getById(boardId)
   switch (type) {
     case 'task':
@@ -140,6 +141,41 @@ async function remove(ids, type) {
       // return httpService.delete(`task/${taskId}`)
       break
   }
+}
+
+function filterByTxt(board, txt) {
+  txt = txt.trim()
+  if (!txt) return board
+  const regex = new RegExp(txt, 'ig')
+
+  board.groups = board.groups.reduce((groupArr, group) => {
+    const isGroupTitleMatch = regex.test(group.title)
+    if (isGroupTitleMatch) {
+      const isWord = !!group.title
+        .split(' ')
+        .find((word) => word.toLowerCase() === txt.toLowerCase())
+      group.title = group.title.replaceAll(
+        regex,
+        (match) =>
+          `<span class="highlight">${match}${isWord ? '&nbsp' : ''}</span>`
+      )
+    }
+
+    group.tasks = group.tasks.reduce((taskArr, task) => {
+      if (regex.test(task.title)) {
+        task.title = task.title.replaceAll(
+          regex,
+          (match) => `<span class="highlight">${match}</span>`
+        )
+        taskArr.push(task)
+      }
+      return taskArr
+    }, [])
+
+    if (group.tasks?.length || isGroupTitleMatch) groupArr.push(group)
+    return groupArr
+  }, [])
+  return board
 }
 
 // async function query(filterBy = { txt: '', price: 0 }) {
@@ -212,7 +248,7 @@ async function getEmptyBoard() {
   }
 }
 
-import jsonBoard from '../../data/board.json' assert { type: 'json' }
+import jsonBoard from '../../data/board.json' assert {type: 'json'}
 function _createDemoData() {
   const board = utilService.loadFromStorage(STORAGE_KEY)
   if (!board) {
