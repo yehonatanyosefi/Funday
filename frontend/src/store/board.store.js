@@ -1,4 +1,5 @@
 import { boardService } from '../services/board.service'
+import {router} from '../router'
 
 export const boardStore = {
   state: {
@@ -19,6 +20,7 @@ export const boardStore = {
     },
     setBoard(state, { board }) {
       state.board = board
+      router.push(`/board/${board._id}`)
     },
     addBoard(state, { board }) {
       const minBoard = { _id: board._id, title: board.title }
