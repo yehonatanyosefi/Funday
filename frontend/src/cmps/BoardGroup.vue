@@ -122,8 +122,9 @@ methods: {
 	    const payload = {removedId, addedId,groupId: this.group.id}
         this.$emit('applyTaskDrag',payload)
     },
-    toggleMenuModal() {
+    toggleMenuModal() { //placeholder for menu modal
         this.isMenuModalOpen = !this.isMenuModalOpen
+        this.isModalOpen = true
     },
     getCardPayload(ev) {
         // console.log('getCardPayload',ev)
