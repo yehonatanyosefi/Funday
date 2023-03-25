@@ -17,6 +17,7 @@ export const boardService = {
   getEmptyTask,
   filterByTxt,
   applyDrag,
+  saveBoard
 }
 window.cs = boardService
 
@@ -57,6 +58,7 @@ async function save(boardId = null, type = 'task', payload, groupId = null) {
 }
 
 async function saveBoard(board) {
+  console.log('hey')
   let savedBoard
   if (board._id) {
     savedBoard = await storageService.put(STORAGE_KEY, board)

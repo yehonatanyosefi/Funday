@@ -3,8 +3,11 @@ import { storageService } from './async-storage.service'
 import { store } from '../store'
 import { socketService, SOCKET_EVENT_USER_UPDATED, SOCKET_EMIT_USER_WATCH } from './socket.service'
 import { showSuccessMsg } from './event-bus.service'
+import { utilService } from './util.service.js'
+
 
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser'
+const STORAGE_KEY = 'userDB'
 
 export const userService = {
     login,
@@ -22,9 +25,13 @@ export const userService = {
 window.userService = userService
 
 
-import users from '../../data/user.json' assert {type: 'json'};
+import jsonUsers from '../../data/user.json' assert {type: 'json'};
 function getUsers() {
-    return users
+    const users = utilService.loadFromStorage(STORAGE_KEY)
+  if (!users) {
+    utilService.saveToStorage(STORAGE_KEY, jsonUsers)
+  }
+return users
     // return storageService.query('user')
     // return httpService.get(`user`)
 }
@@ -102,6 +109,7 @@ function saveLocalUser(user) {
 function getLoggedinUser() {
     return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
 }
+
 
 
 // ;(async ()=>{

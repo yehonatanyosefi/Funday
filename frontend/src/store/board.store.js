@@ -1,6 +1,7 @@
 import { boardService } from '../services/board.service'
 import { router } from '../router'
 import { toRefs } from 'vue'
+import { utilService } from '../services/util.service'
 
 export const boardStore = {
   state: {
@@ -203,6 +204,19 @@ export const boardStore = {
       const updatedBoard = await boardService.updateBoard(boardId, payload)
       commit({ type: 'setBoard', board: updatedBoard })
       dispatch({ type: 'loadBoardList' })
+    },
+    async duplicateBoard({ commit,dispatch }, { board }) {
+      //todo:ask eran if its ok here in store
+      const dupBoard= JSON.parse(JSON.stringify(board))
+      dupBoard.groups.forEach(group => {
+         group.id= utilService.makeId()
+         group.tasks.map(task => task.id= utilService.makeId())
+         return group
+      })
+      const savedBoard = await boardService.saveBoard(dupBoard) 
+      commit({ type: 'setBoard', board: savedBoard })
+      dispatch({ type: 'loadBoardList' })
+      return savedBoard
     },
     async applyTaskDrag(context, { payload }) {
       try {

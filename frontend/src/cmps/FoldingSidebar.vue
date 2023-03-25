@@ -1,5 +1,9 @@
 <template>
-    <main class="folding-bar" @click="onBlur">
+    <main class="folding-bar" @click="onBlur" :class="{folded: isFolded}">
+        
+        <div class="slide-btn" @click="foldBar">
+                <LeftArrow class="svg-icon" />  
+        </div>
         <div class="workspace">
             <span class="workspace-title flex ">Workspace
                 <Menu class="svg-icon" />
@@ -34,6 +38,7 @@ import Filter from '../assets/svg/Filter.svg'
 import Search from '../assets/svg/Search.svg'
 import Board from '../assets/svg/Board.svg'
 import BoardList from './BoardList.vue'
+import LeftArrow from '../assets/svg/LeftArrow.svg'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 
 
@@ -45,7 +50,8 @@ export default {
     data() {
         return {
             isSearching: false,
-            filterBy: { txt: '' }
+            filterBy: { txt: '' },
+            isFolded:false
         }
     },
     methods: {
@@ -72,6 +78,9 @@ export default {
             this.isSearching = false
             this.filterBy.txt = ''
             this.search()
+        },
+        foldBar(){
+            this.isFolded=!this.isFolded
         }
     },
     computed: {
@@ -86,6 +95,7 @@ export default {
         Search,
         Board,
         BoardList,
+        LeftArrow
     },
 }
 </script>
