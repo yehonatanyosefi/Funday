@@ -11,7 +11,7 @@
             @input="saveGroupTitle">
     </h2>
     <div class="task-header">
-    <div class="group-preview-color" :style="{'backgroundColor': groupColor}"></div>
+        <div class="group-preview-color" :style="{'backgroundColor': groupColor}"></div>
         <section>
             <input
                 type="checkbox"

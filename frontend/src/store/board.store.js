@@ -87,11 +87,12 @@ export const boardStore = {
 		},
 	},
 	actions: {
-		async saveTask(context, { payload }) {
+		async saveTask({ commit }, { payload }) {
 			try {
 				const { boardId, task, groupId } = payload
 				const updatedBoard = await boardService.save(boardId, 'task', task, groupId)
-				context.commit({ type: 'setBoard', board: updatedBoard })
+				commit({ type: 'setBoard', board: updatedBoard })
+				// commit({ type: 'setBoard', board: updatedBoard })
 				return task
 			} catch (err) {
 				console.log('Store: Error in updateTask', err)

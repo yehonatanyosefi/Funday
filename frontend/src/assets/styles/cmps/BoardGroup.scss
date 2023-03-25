@@ -58,7 +58,7 @@ $group-header-clr: rgb(87, 155, 252);
           display: flex;
           align-items: center;
           justify-content: start;
-
+          position: relative;
           &:hover .menu-btn-container {
                opacity: 1;
           }
