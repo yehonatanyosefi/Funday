@@ -16,11 +16,19 @@
     align-items: center;
     padding: 0 10px;
     margin-inline: 0px 11px;
+    &:focus-within,
+    &.rename {
+      margin-inline-end: 0;
+      padding-inline-end: 0;
+    }
     input {
       width: 183px;
       height: 23px;
       border: 1px solid;
       border-color: $primary-blue;
+      &:focus{
+        outline: $primary-blue;
+      }
     }
     .board-svg {
       margin-inline-start: 4px;
@@ -72,7 +80,6 @@
       opacity: 0;
       margin-inline-start: auto;
     }
-    
   }
 }
 span {
