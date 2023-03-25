@@ -10,6 +10,7 @@
 				@saveTask="saveTask"
 				@removeTask="removeTask"
 				@saveGroup="saveGroup"
+				@saveGroupTitle="saveGroupTitle"
 				@removeGroup="removeGroup"
 				@applyTaskDrag="applyTaskDrag"
 				@addTask="addTask"></BoardGroup>

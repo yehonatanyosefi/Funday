@@ -141,14 +141,14 @@ export const boardStore = {
         throw err
       }
     },
-    async saveGroupTitle(context, { payload }) {
+    async saveGroupTitle({ state, commit }, { payload }) {
       try {
         const { boardId, title, groupId } = payload
-        const group = context.state.board.groups.find((group) => group.id === groupId)
+        const group = JSON.parse(JSON.stringify(state.board.groups.find((group) => group.id === groupId)))
         if (!group) throw new Error('No group')
         group.title = title
         const updatedBoard = await boardService.save(boardId, 'group', group, groupId)
-        context.commit({ type: 'setBoard', board: updatedBoard })
+        commit({ type: 'setBoard', board: updatedBoard })
         return group
       } catch (err) {
         console.log('Store: Error in saveGroup', err)
