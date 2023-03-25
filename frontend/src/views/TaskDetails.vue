@@ -5,7 +5,7 @@
 		@mouseout="darken = false"
 		v-click-outside="close"
 	>
-		<span v-if="task" @click="close" class="close-modal-btn"></span>
+		<span v-if="task" @click="close" class="close-modal-btn"><Close></Close></span>
 		<h1 v-if="task" class="task-modal-title">{{ task.title }}</h1>
 		<div v-if="task" class="modal-btns">
 			<div @click="goTo('comments')" :class="{ selected: showComp === 'comments' }">
@@ -23,6 +23,7 @@
 				<button>Activity Log</button>
 			</div>
 		</div>
+
 		<section v-if="task && showComp === 'comments'" class="task-comments">
 			<form @submit.prevent="addComment">
 				<textarea
@@ -33,49 +34,45 @@
 				/>
 				<button class="add-comment-btn">Update</button>
 			</form>
-			<div
-				v-if="task.comments"
-				class="comment"
-				v-for="(comment, idx) in task.comments"
-				:key="comment.id"
-			>
+			<div v-if="task.comments" class="comment" v-for="comment in task.comments" :key="comment.id">
 				<div class="comment-profile">
 					<img v-if="comment.byMember.imgUrl" :src="comment.byMember.imgUrl" alt="" />
-					<div v-else class="guest-profile-pic">G</div>
+					<PersonRound v-else></PersonRound>
 					<p>{{ comment.byMember.fullname }}</p>
 				</div>
+
 				<div class="comment-options">
-					<span v-svg-icon="'time'"></span>
+					<Time></Time>
 					<p>3h</p>
-					<span v-svg-icon="'more'"></span>
+					<Menu></Menu>
 				</div>
 				<div class="comment-content">{{ comment.txt }}</div>
+
 				<div class="comment-reactions">
-					<div v-if="comment.likes?.length" class="likes">
+					<!--<div v-if="comment.likes?.length" class="likes">
 						<div class="liked-users" v-for="userId in comment.likes">
 							<img :src="getUserImg(userId)" alt="" />
 						</div>
 						<p>Liked</p>
-					</div>
+					</div> -->
 					<div class="seen-count">
-						<span v-svg-icon="'seen'"></span>
+						<Show></Show>
 						<p>1 Seen</p>
 					</div>
 				</div>
-				<div
-					class="comment-like"
-					@click.stop.prevent="likeComment(idx)"
-					:class="{ liked: comment?.likes?.includes(loggedinUser._id) }"
-				>
+				<!-- </div> -->
+
+				<div class="comment-like" @click.stop.prevent="likeComment(idx)">
 					<div>
-						<span v-if="comment?.likes?.includes(loggedinUser._id)" v-svg-icon="'filledLike'"></span>
-						<span v-else v-svg-icon="'like'"></span>
+						<!-- <span v-if="comment?.likes?.includes(loggedinUser._id)"></span>-->
+						<Like></Like>
 						<button>Like</button>
 					</div>
 				</div>
+
 				<div class="comment-reply">
 					<div>
-						<span v-svg-icon="'reply'"></span>
+						<Replay></Replay>
 						<button>Reply</button>
 					</div>
 				</div>
@@ -110,33 +107,34 @@
           <img-preview :imgUrls="imgUrls" @removeImg="removeImg" />
         </section>
       </section> -->
-		<!-- </section>
+		<!-- </section>-->
 
-    <section v-if="showComp === 'activities'" class="activity-log">
-      <div class="activities-list">
-        <div v-for="activity in getUserActivities" class="activity-item">
-          <div class="created-time">
-            <span v-svg-icon="'time'"></span>
-            <p>{{ getFormattedTime(activity.createdAt) }}</p>
-          </div>
-          <div class="user">
-            <img :src="activity.byUser.imgUrl" alt="" />
-            <p>{{ task.title }}</p>
-          </div>
-          <activity-cmp :activity="activity" />
-        </div>
-      </div>
-    </section>-->
+		<section v-if="showComp === 'activities'" class="activity-log">
+			<div class="activities-list">
+				<div v-for="activity in getUserActivities" class="activity-item">
+					<div class="created-time">
+						<Time></Time>
+						<p>{{ getFormattedTime(activity.createdAt) }}</p>
+					</div>
+					<div class="user">
+						<img :src="activity.byUser.imgUrl" alt="" />
+						<p>{{ task.title }}</p>
+					</div>
+					<activity-cmp :activity="activity" />
+				</div>
+			</div>
+		</section>
 	</section>
 </template>
 <script>
-// import { uploadImg } from '../services/img-upload.service'
-// import activityCmp from '../cmps/activity-cmp.vue'
-// import imgList from '../cmps/img-list.cmp.vue'
-// import { utilService } from '../services/util.service'
-// import imgPreview from '../cmps/img-preview.vue'
-
 import Home from '../assets/svg/Home.svg'
+import Close from '../assets/svg/Close.svg'
+import PersonRound from '../assets/svg/PersonRound.svg'
+import Time from '../assets/svg/Time.svg'
+import Menu from '../assets/svg/Menu.svg'
+import Show from '../assets/svg/Show.svg'
+import Like from '../assets/svg/Like.svg'
+import Replay from '../assets/svg/Replay.svg'
 
 export default {
 	name: 'task-details',
@@ -281,7 +279,9 @@ export default {
 			// }
 			this.board.groups.some(({ tasks }) =>
 				tasks.some((currTask) => {
-					if (currTask.id === taskId) this.task = JSON.parse(JSON.stringify(currTask))
+					if (currTask.id === taskId) {
+						this.task = JSON.parse(JSON.stringify(currTask))
+					}
 				})
 			)
 			//   await this.$store.dispatch({ type: 'loadActivities' })
@@ -291,6 +291,13 @@ export default {
 	},
 	components: {
 		Home,
+		Close,
+		PersonRound,
+		Time,
+		Menu,
+		Show,
+		Like,
+		Replay,
 		// imgList,
 		// activityCmp,
 		// imgPreview,
