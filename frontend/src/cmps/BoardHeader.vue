@@ -36,7 +36,7 @@
         </div>
       </section>
       <section class="add-views">
-        <router-link :to="'/board/' + board._id">
+        <router-link :to="'/board/' + board._id+'/main-table'">
           <button
             @click="changeView('table')"
             class="view-item"

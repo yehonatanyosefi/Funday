@@ -53,7 +53,6 @@ async function save(boardId = null, type = 'task', payload, groupId = null) {
 }
 
 async function saveBoard(board) {
-  console.log('hey')
   let savedBoard
   if (board._id) {
     savedBoard = await storageService.put(STORAGE_KEY, board)
@@ -173,28 +172,19 @@ async function applyDrag(addedId, removedId, type, boardId, groupId) {
     case 'task':
       board = await getById(boardId)
       const groupIdx = board.groups.findIndex((group) => group.id === groupId)
-      const addedIdx = board.groups[groupIdx].tasks.findIndex(
-        (task) => task.id === addedId
-      )
-      const removedIdx = board.groups[groupIdx].tasks.findIndex(
-        (task) => task.id === removedId
-      )
+      const addedIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === addedId)
+      const removedIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === removedId)
       if (addedIdx !== -1 && removedIdx !== -1) {
         const temp = board.groups[groupIdx].tasks[addedIdx]
-        board.groups[groupIdx].tasks[addedIdx] =
-          board.groups[groupIdx].tasks[removedIdx]
+        board.groups[groupIdx].tasks[addedIdx] = board.groups[groupIdx].tasks[removedIdx]
         board.groups[groupIdx].tasks[removedIdx] = temp
       }
       return await saveBoard(board)
       break
     case 'group':
       board = await getById(boardId)
-      const addedGroupIdx = board.groups.findIndex(
-        (group) => group.id === addedId
-      )
-      const removedGroupIdx = board.groups.findIndex(
-        (group) => group.id === removedId
-      )
+      const addedGroupIdx = board.groups.findIndex(group => group.id === addedId)
+      const removedGroupIdx = board.groups.findIndex(group => group.id === removedId)
       if (addedGroupIdx !== -1 && removedGroupIdx !== -1) {
         const temp = board.groups[addedGroupIdx]
         board.groups[addedGroupIdx] = board.groups[removedGroupIdx]

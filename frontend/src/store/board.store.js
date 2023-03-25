@@ -55,6 +55,19 @@ export const boardStore = {
 			const filterBoard = boardService.filterByTxt(boardCopy, txt)
 			state.filteredBoard = filterBoard
 		},
+		removeTask(state, { ids }) {
+			const { groupId, taskId } = ids
+			const groupIdx = state.board.groups.findIndex(group => group.id === groupId)
+			const taskIdx = state.board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+			state.board.groups[groupIdx].tasks.splice(taskIdx, 1)
+			state.filteredBoard.groups[groupIdx].tasks.splice(taskIdx, 1)
+		},
+		removeGroup(state, { groupId }) {
+			const groupIdx = state.board.groups.findIndex((group) => group.id === groupId)
+			state.board.groups.splice(groupIdx, 1)
+			state.board.groups.splice(groupIdx, 1)
+			state.filteredBoard.groups.splice(groupIdx, 1)
+		},
 		// saveTask({ board }, { payload }) {
 		// 	const { task, groupId } = payload
 		// 	const groupIdx = board.groups.findIndex(group => group.id === groupId)
@@ -64,11 +77,6 @@ export const boardStore = {
 		// 	} else {
 		// 		board.groups[groupIdx].tasks.push(task)
 		// 	}
-		// },
-		// removeTask({ state }, { ids }) {
-		// 	const { groupId, taskId } = ids
-		// 	const groupIdx = board.groups.findIndex(group => group.id === groupId)
-		// 	state.board.groups[groupIdx].tasks.filter(task => task._id !== taskId)
 		// },
 		// saveGroup(state, { groups }) {
 		// 	state.groups = groups
@@ -85,11 +93,6 @@ export const boardStore = {
 		//     if (!group.msgs) group.msgs = []
 		//     group.msgs.push(msg)
 		// },
-		removeGroup(state, { groupId }) {
-			const groupIdx = state.board.groups.findIndex((group) => group.id === groupId)
-			state.board.groups.splice(groupIdx, 1)
-			state.filteredBoard.groups.splice(groupIdx, 1)
-		},
 	},
 	actions: {
 		async saveTask({ dispatch }, { payload }) {

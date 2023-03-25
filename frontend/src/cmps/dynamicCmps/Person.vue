@@ -1,5 +1,5 @@
 <template>
-  <div class="profile-div" @click="toggleModal">
+  <div class="profile-div" @click="toggleModal" v-if="users">
     <template v-if="info?.length" v-for="(id, idx) in info" :key="idx">
       <img :src="user(id).imgUrl" :title="user(id).fullname" class="profile-picture" />
     </template>
@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     user(id) {
-      return this.users.find((user) => user._id === id)
+      return this.users?.find((user) => user._id === id)
     },
     toggleModal() {
       this.isOpen = !this.isOpen
@@ -85,7 +85,7 @@ export default {
       this.isOpen = false
     },
     search() {
-      this.filteredSuggestedUsers = this.userSuggested.filter(user=>user.fullname.toLowerCase().includes(this.searchTxt.toLowerCase()))
+      this.filteredSuggestedUsers = this.userSuggested?.filter(user=>user.fullname.toLowerCase().includes(this.searchTxt.toLowerCase()))
     }
   },
   computed: {
@@ -93,7 +93,7 @@ export default {
       return this.$store.getters.users
     },
     userSuggested() {
-      return this.users.filter(user => {
+      return this.users?.filter(user => {
         return !this.addedUsers.some(addedUser=>user._id===addedUser._id)
       })
     }
