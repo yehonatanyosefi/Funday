@@ -117,9 +117,7 @@ async function remove(ids, type) {
       : -1
   switch (type) {
     case 'task':
-      const taskIdx = board.groups[groupIdx].tasks.findIndex(
-        (task) => task.id === taskId
-      )
+      const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
       const tasks = board.groups[groupIdx].tasks.splice(taskIdx, 1)[0]
       const group = board.groups.splice(groupIdx, 1, tasks)[0]
       board.groups[groupIdx] = group
@@ -164,8 +162,6 @@ function filterByTxt(board, txt) {
       }
       return taskArr
     }, [])
-
-    console.log('Group', group.title, regex.test(group.title))
 
     if (group.tasks?.length || regex.test(group.title)) groupArr.push(group)
     return groupArr

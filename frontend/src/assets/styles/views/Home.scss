@@ -674,14 +674,14 @@
 
 #title {
   position: absolute;
-  top: 20%;
+  top: 30%;
   left: 0;
   right: 0;
   color: #fff;
   text-align: center;
   font-weight: 300;
   font-size: em(40px);
-  margin-top: -60px;
+  // margin-top: -60px; 
   padding-left: 10px;
 }
 #title div span:first-child {

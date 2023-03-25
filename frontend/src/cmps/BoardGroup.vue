@@ -49,9 +49,7 @@
       title="Delete Task"
       class="task-checkbox" disabled>
   </div>
-  <div v-for="(cmp, idx) in cmpOrder" :key="idx" class="task">
-        <input v-if="idx === 0" value="+ Add item" @focus="addTask">
-  </div>
+    <button @click="addTask" class="add-item">+ Add item</button>
 </section>
     
   <RemoveModal
@@ -97,9 +95,8 @@ methods: {
     //     return idx === length - 1 ? 'last-task' : ''
     // },
     saveGroupTitle() {
-        const group = {...this.group, title: this.groupTitle}
-        const payload = {group, groupId: group.id}
-        this.$emit('saveGroup', payload)
+        const payload = {title:this.groupTitle, groupId: group.id}
+        this.$emit('saveGroupTitle', payload)
     },
     removeGroup() {
         this.$emit('removeGroup', this.group.id)
