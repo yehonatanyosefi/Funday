@@ -1,6 +1,7 @@
 $group-header-clr: rgb(87, 155, 252);
 .board-group {
      display: grid;
+<<<<<<< HEAD
      border-radius: 3px;
      height: fit-content;
      width: fit-content;
@@ -64,10 +65,27 @@ $group-header-clr: rgb(87, 155, 252);
           }
           & section {
                height: $group-row-height;
+=======
+     grid-template-columns: 1fr;
+     border-radius: 3px;
+     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+     height: fit-content;
+     width: fit-content;
+     .task-header {
+          display: grid;
+          grid-template-columns: repeat(6, 1fr);
+          align-items: center;
+          background-color: white;
+          border: 1px solid lightgray;
+          border-radius: 3px;
+          section {
+               height: 100%;
+>>>>>>> 39bddd0 (added board groups and tasks with scss)
                width: 100%;
                display: flex;
                justify-content: center;
                align-items: center;
+<<<<<<< HEAD
                & .task {
                     cursor: grab;
                     display: flex;
@@ -80,6 +98,13 @@ $group-header-clr: rgb(87, 155, 252);
                     &:not(.status, .priority):hover {
                          background-color: $color-highlighted;
                     }
+=======
+               .task {
+                    width: 175px;
+                    height: 100%;
+                    padding: 10px;
+                    border: 1px solid lightgray;
+>>>>>>> 39bddd0 (added board groups and tasks with scss)
                }
           }
      }

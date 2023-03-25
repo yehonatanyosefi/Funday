@@ -1,5 +1,6 @@
 <template>
 <section class="board-group">
+<<<<<<< HEAD
 
     <h2 class="group-header">
         <div class="menu-btn-container">
@@ -48,6 +49,12 @@
       type="checkbox"
       title="Delete Task"
       class="task-checkbox" disabled>
+=======
+  <div class="task-header">
+      <section v-for="(cmp, idx) in cmpOrder" :key="idx">
+          <div class="task">{{Object.keys(cmp)[0]}} </div>
+      </section>
+>>>>>>> 39bddd0 (added board groups and tasks with scss)
   </div>
   <div v-for="(cmp, idx) in cmpOrder" :key="idx" class="task">
         <input v-if="idx === 0" value="+ Add item" @focus="addTask">
