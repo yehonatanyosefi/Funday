@@ -109,7 +109,7 @@
       </section> -->
 		<!-- </section>-->
 
-		<section v-if="showComp === 'activities'" class="activity-log">
+		<!-- <section v-if="showComp === 'activities'" class="activity-log">
 			<div class="activities-list">
 				<div v-for="activity in getUserActivities" class="activity-item">
 					<div class="created-time">
@@ -123,7 +123,7 @@
 					<activity-cmp :activity="activity" />
 				</div>
 			</div>
-		</section>
+		</section> -->
 	</section>
 </template>
 <script>
