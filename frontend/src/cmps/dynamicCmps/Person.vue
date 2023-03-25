@@ -16,13 +16,13 @@
         <div class="users-list">
 
           <div class="search-member">
-            <input type="search" placeholder="Search names, roles or teams" @click.stop>
+            <input type="search" @input="search" v-model="searchTxt" placeholder="Search names, roles or teams" @click.stop>
             <Search class="svg-icon" color="#676879" width="16px" height="16px" />
           </div>
   
           <ul class="clean-list">
             Suggested people
-            <li v-for="user in users" :key="user._id" class="flex" @click="addUser(user)">
+            <li v-for="user in filteredSuggestedUsers" :key="user._id" class="flex" @click="addUser(user)">
               <img class="profile-picture" :src=user.imgUrl>
               <div class="fullname">{{ user.fullname }}</div>
             </li>
@@ -48,12 +48,16 @@ export default {
   props: {
     info: Array,
   },
-  created() { },
+  created() {
+    this.addedUsers = this.info.map(userId => this.user(userId))
+    this.search()
+  },
   data() {
     return {
       isOpen: false,
       addedUsers: [],
-      isOpen:false,
+      searchTxt: '',
+      filteredSuggestedUsers: [],
     }
   },
   methods: {
@@ -64,23 +68,35 @@ export default {
       this.isOpen = !this.isOpen
     },
     addUser(user) {
-      console.log('user', user)
       if (this.addedUsers.some(addedUser=> addedUser._id===user._id)) return
       this.addedUsers.push(user)
+      const userIds = this.addedUsers.map(user=>user._id)
+      this.search()
+      this.$emit('saveTask', userIds)
       this.closeModal()
     },
     deleteAddedUser(user){
-      this.addedUsers.pop(user)
-    
+      this.addedUsers = this.addedUsers.filter(addedUser => addedUser._id !== user._id)
+      const userIds = this.addedUsers.map(user=>user._id)
+      this.search()
+      this.$emit('saveTask', userIds)
     },
     closeModal() {
-               this.isOpen = false
-          },
+      this.isOpen = false
+    },
+    search() {
+      this.filteredSuggestedUsers = this.userSuggested.filter(user=>user.fullname.toLowerCase().includes(this.searchTxt.toLowerCase()))
+    }
   },
   computed: {
     users() {
       return this.$store.getters.users
     },
+    userSuggested() {
+      return this.users.filter(user => {
+        return !this.addedUsers.some(addedUser=>user._id===addedUser._id)
+      })
+    }
   },
   components: {
     PersonRound,
