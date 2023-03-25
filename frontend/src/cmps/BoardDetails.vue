@@ -15,6 +15,7 @@
 				@addTask="addTask"></BoardGroup>
       </Draggable>
     </Container>
+    <RouterLink></RouterLink>
 </section>
 </template>
 
