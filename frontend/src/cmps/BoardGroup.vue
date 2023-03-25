@@ -61,8 +61,9 @@
 
 <script>
 import Menu from '../assets/svg/Menu.svg'
-import RemoveModal from './util/RemoveModal.vue';
-import { Container, Draggable } from "vue3-smooth-dnd";
+import RemoveModal from './util/RemoveModal.vue'
+// import MenuModal from './dynamicModals/MenuModal.vue'
+import { Container, Draggable } from "vue3-smooth-dnd"
 import TaskPreview from './TaskPreview.vue'
 import Title from './dynamicCmps/Title.vue'
 export default {
@@ -148,6 +149,7 @@ components: {
      RemoveModal,
      Menu,
      Title,
+    //  MenuModal,
 },
 }
 </script>
