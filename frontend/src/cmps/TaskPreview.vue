@@ -13,6 +13,12 @@
       v-model="isModalOpen"
       @click="openModal">
   </div>
+  <div class="task">
+    <Title :info="task.title" @saveTask="saveTask($event,'title')"></Title>
+    <RouterLink :to="'/board/'+boardId+'/main-table/task/'+task.id" class="task-details-icon">
+      <AddUpdate class="svg-icon add-update" width="24" height="24" />
+    </RouterLink>
+  </div>
   <div v-for="(cmp, idx) in cmpOrder" :key="idx" class="task">
         <component
           :is="capitalizeFirstLetter(cmp)"
@@ -27,6 +33,7 @@
 </template>
 
 <script>
+import AddUpdate from '../assets/svg/AddUpdate.svg'
 import Menu from '../assets/svg/Menu.svg'
 import RemoveModal from './util/RemoveModal.vue';
 // import { Container, Draggable } from "vue3-smooth-dnd";
@@ -45,7 +52,6 @@ props: {
     groupColor: String,
   },
   created() {
-
   },
   data() {
     return {
@@ -78,9 +84,9 @@ props: {
     },
   },
   computed: {
-    // tasks() {
-    //     return this.$store.getters.groups
-    // },
+    boardId() {
+      return this.$route.params.boardId
+    }
   },
   components: {
     Title,
@@ -92,6 +98,7 @@ props: {
     Priority,
     RemoveModal,
     Menu,
+    AddUpdate,
   },
 }
 </script>

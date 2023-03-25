@@ -4,7 +4,7 @@
 		"title": "Dev",
 		"isStarred": false,
 		"archivedAt": 1589983468418,
-		"cmpOrder": ["title", "date", "person", "status", "text", "priority", "timeline"],
+		"cmpOrder": ["date", "person", "status", "text", "priority", "timeline"],
 		"createdBy": {
 			"_id": "u101",
 			"fullname": "Abi Abambi",
@@ -212,7 +212,7 @@
 						},
 						"comments": [],
 						"date": 1679738180426,
-						"person": [],
+						"person": ["u103"],
 						"style": {
 							"bgColor": ""
 						},
@@ -235,7 +235,7 @@
 						},
 						"comments": [],
 						"date": 1679738180426,
-						"person": [],
+						"person": ["u102"],
 						"style": {
 							"bgColor": ""
 						},
@@ -258,7 +258,7 @@
 						},
 						"comments": [],
 						"date": 1679738180426,
-						"person": [],
+						"person": ["u101"],
 						"style": {
 							"bgColor": ""
 						},
@@ -281,7 +281,7 @@
 						},
 						"comments": [],
 						"date": 1679738203722,
-						"person": [],
+						"person": ["u101"],
 						"style": {
 							"bgColor": ""
 						},
@@ -313,7 +313,7 @@
 	},
 	{
 		"archivedAt": "",
-		"cmpOrder": ["title", "date", "person", "status", "text", "priority", "timeline"],
+		"cmpOrder": ["date", "person", "status", "text", "priority", "timeline"],
 		"createdBy": {
 			"_id": "",
 			"fullname": "",
@@ -322,7 +322,7 @@
 		"groups": [
 			{
 				"id": "H469fX",
-				"title": "Sales",
+				"title": "Accounting",
 				"archivedAt": null,
 				"tasks": [
 					{
@@ -339,7 +339,7 @@
 						},
 						"comments": [],
 						"date": 1679738240378,
-						"person": [],
+						"person": ["u101"],
 						"style": {
 							"bgColor": ""
 						},
@@ -362,7 +362,7 @@
 						},
 						"comments": [],
 						"date": 1679738240378,
-						"person": [],
+						"person": ["u102"],
 						"style": {
 							"bgColor": ""
 						},
@@ -379,7 +379,7 @@
 						"text": "",
 						"comments": [],
 						"date": 1679738240378,
-						"person": [],
+						"person": ["u104"],
 						"style": {
 							"bgColor": ""
 						},
@@ -394,17 +394,8 @@
 				}
 			},
 			{
-				"id": "IobNX9",
-				"title": "Sales",
-				"archivedAt": null,
-				"tasks": [],
-				"style": {
-					"color": "#ff158a"
-				}
-			},
-			{
 				"id": "tjrhNf",
-				"title": "Title",
+				"title": "Billing",
 				"archivedAt": null,
 				"tasks": [
 					{
@@ -421,7 +412,7 @@
 						},
 						"comments": [],
 						"date": 1679738311041,
-						"person": [],
+						"person": ["u104"],
 						"style": {
 							"bgColor": ""
 						},
@@ -444,7 +435,7 @@
 						},
 						"comments": [],
 						"date": 1679738311041,
-						"person": [],
+						"person": ["u101"],
 						"style": {
 							"bgColor": ""
 						},
@@ -461,161 +452,32 @@
 		],
 		"isStarred": false,
 		"labels": [],
-		"members": [],
+		"members": [
+			{
+				"_id": "u101",
+				"fullname": "Dor Toledano",
+				"imgUrl": "https://files.monday.com/euc1/photos/41054538/small/41054538-user_photo_2023_03_18_19_59_31.png?1679169572"
+			},
+			{
+				"_id": "u102",
+				"fullname": "Yael Bilu",
+				"imgUrl": "https://files.monday.com/euc1/photos/41055076/small/41055076-user_photo_2023_03_17_09_11_44.png?1679044305"
+			},
+			{
+				"_id": "u103",
+				"fullname": "Yehonatan Yosefi",
+				"imgUrl": "https://files.monday.com/euc1/photos/41040364/small/41040364-user_photo_2023_03_17_09_12_17.png?1679044337",
+				"mentions": []
+			},
+			{
+				"_id": "u104",
+				"fullname": "Eran Peled",
+				"imgUrl": "https://files.monday.com/euc1/photos/41061269/small/41061269-user_photo_2023_03_21_10_10_39.png?1679393439",
+				"mentions": []
+			}
+		],
 		"style": {},
 		"title": "Finance",
 		"_id": "scZlu"
-	},
-	{
-		"archivedAt": "",
-		"cmpOrder": ["title", "date", "person", "status", "text", "priority", "timeline"],
-		"createdBy": {
-			"_id": "",
-			"fullname": "",
-			"imgUrl": ""
-		},
-		"groups": [
-			{
-				"id": "7e5cD0",
-				"title": "Title",
-				"archivedAt": null,
-				"style": {
-					"color": "#bb3354"
-				},
-				"tasks": [
-					{
-						"id": "j3JbpG",
-						"title": "Send sales data to finances",
-						"status": "Done",
-						"priority": "High",
-						"text": "",
-						"byMember": {
-							"_id": "",
-							"username": "",
-							"fullname": "",
-							"imgUrl": ""
-						},
-						"comments": [],
-						"date": 1679738366118,
-						"person": [],
-						"style": {
-							"bgColor": ""
-						},
-						"timeline": {
-							"startDate": 1679738366118,
-							"dueDate": null
-						}
-					},
-					{
-						"id": "SqTQQS",
-						"title": "Branch out in online research",
-						"status": "Working on it",
-						"priority": "High",
-						"text": "",
-						"byMember": {
-							"_id": "",
-							"username": "",
-							"fullname": "",
-							"imgUrl": ""
-						},
-						"comments": [],
-						"date": 1679738366118,
-						"person": [],
-						"style": {
-							"bgColor": ""
-						},
-						"timeline": {
-							"startDate": 1679738366118,
-							"dueDate": null
-						}
-					},
-					{
-						"id": "K8hd9H",
-						"title": "Get higher conversion",
-						"status": "Working on it",
-						"priority": "Medium",
-						"text": "",
-						"byMember": {
-							"_id": "",
-							"username": "",
-							"fullname": "",
-							"imgUrl": ""
-						},
-						"comments": [],
-						"date": 1679738366118,
-						"person": [],
-						"style": {
-							"bgColor": ""
-						},
-						"timeline": {
-							"startDate": 1679738366118,
-							"dueDate": null
-						}
-					}
-				]
-			},
-			{
-				"id": "j57J6R",
-				"title": "Title",
-				"archivedAt": null,
-				"style": {
-					"color": "#ff158a"
-				},
-				"tasks": [
-					{
-						"id": "sKZs68",
-						"title": "Get higher conversion",
-						"status": "Working on it",
-						"priority": "Critical",
-						"text": "",
-						"byMember": {
-							"_id": "",
-							"username": "",
-							"fullname": "",
-							"imgUrl": ""
-						},
-						"comments": [],
-						"date": 1679738366118,
-						"person": [],
-						"style": {
-							"bgColor": ""
-						},
-						"timeline": {
-							"startDate": 1679738366118,
-							"dueDate": null
-						}
-					},
-					{
-						"id": "xkB4im",
-						"title": "Reach broader audiences research",
-						"status": "",
-						"priority": "Low",
-						"text": "",
-						"byMember": {
-							"_id": "",
-							"username": "",
-							"fullname": "",
-							"imgUrl": ""
-						},
-						"comments": [],
-						"date": 1679738366118,
-						"person": [],
-						"style": {
-							"bgColor": ""
-						},
-						"timeline": {
-							"startDate": 1679738366118,
-							"dueDate": null
-						}
-					}
-				]
-			}
-		],
-		"isStarred": false,
-		"labels": [],
-		"members": [],
-		"style": {},
-		"title": "Sales",
-		"_id": "IYfzE"
 	}
 ]
