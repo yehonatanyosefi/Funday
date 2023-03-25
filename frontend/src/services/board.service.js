@@ -29,15 +29,10 @@ function getById(boardId) {
 
 async function save(boardId = null, type = 'task', payload, groupId = null) {
   let board = type !== 'board' ? await getById(boardId) : payload
-  const groupIdx =
-    type !== 'board'
-      ? board?.groups.findIndex((group) => group.id === groupId)
-      : -1
+  const groupIdx = type !== 'board' ? board?.groups.findIndex(group => group.id === groupId) : -1
   switch (type) {
     case 'task':
-      const taskIdx = board.groups[groupIdx].tasks.findIndex(
-        (task) => task.id === payload.id
-      )
+      const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === payload.id)
       if (taskIdx > -1) {
         board.groups[groupIdx].tasks.splice(taskIdx, 1, payload)[0]
       } else {

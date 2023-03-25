@@ -37,7 +37,7 @@ export default {
 			return this.$store.getters.loggedinUser
 		},
 		board() {
-        		return this.$store.getters.board
+        		return this.$store.getters.filteredBoard
 		},
 		cmpOrder() {
 			return this.board.cmpOrder

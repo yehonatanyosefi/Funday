@@ -155,10 +155,10 @@ export default {
   components: { BorderFilter, Invite, Favorite, FavoriteFull },
   computed: {
     boardTitle() {
-      return this.$store.getters.board.title
+      return this.$store.getters.filteredBoard.title
     },
     board() {
-      return this.$store.getters.board
+      return this.$store.getters.filteredBoard
     },
 
     getUsers() {

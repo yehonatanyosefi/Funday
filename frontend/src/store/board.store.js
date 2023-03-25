@@ -5,12 +5,18 @@ import { toRefs } from 'vue'
 export const boardStore = {
 	state: {
 		board: {},
-		rawBoard: {},
+		filteredBoard: {},
 		boardList: [],
+		filterBy: {
+			txt: '',
+		},
 	},
 	getters: {
 		board({ board }) {
 			return board
+		},
+		filteredBoard({ filteredBoard }) {
+			return filteredBoard
 		},
 		boardList({ boardList }) {
 			return boardList
@@ -22,52 +28,48 @@ export const boardStore = {
 		},
 		setBoard(state, { board }) {
 			state.board = board
-			state.rawBoard = JSON.parse(JSON.stringify(state.board))
+			state.filteredBoard = JSON.parse(JSON.stringify(board))
 			router.push(`/board/${board._id}/main-table`)
 		},
 		addBoard(state, { board }) {
 			const minBoard = { _id: board._id, title: board.title }
 			state.boardList = [...state.boardList, minBoard]
 			state.board = board
-			state.rawBoard = JSON.parse(JSON.stringify(state.board))
+			state.filteredBoard = JSON.parse(JSON.stringify(state.board))
 		},
-
 		deleteBoard(state, { boardId }) {
 			const idx = state.boardList.findIndex((board) => board._id === boardId)
-			// // console.log('idx',idx)
 			state.boardList = state.boardList.filter((board) => board._id !== boardId)
 			if (idx > -1 && state.boardList.length === 1) state.board = state.boardList[idx - 1]
-			state.rawBoard = JSON.parse(JSON.stringify(state.board))
+			state.filteredBoard = JSON.parse(JSON.stringify(state.board))
 		},
 		filterBoard(state, { txt }) {
-			if (txt === '') {
-				state.board = JSON.parse(JSON.stringify(state.rawBoard))
+			state.filterBy.txt = txt
+			const boardCopy = JSON.parse(JSON.stringify(state.board))
+			if (state.filterBy.txt === '') {
+				state.filteredBoard = boardCopy
 				return
 			}
-			let boardCopy = JSON.parse(JSON.stringify(state.rawBoard))
 			const filterBoard = boardService.filterByTxt(boardCopy, txt)
-			state.board = filterBoard
+			state.filteredBoard = filterBoard
 		},
-		// setTasks(state, { tasks }) {
-		//     state.tasks = tasks
+		// saveTask({ board }, { payload }) {
+		// 	const { task, groupId } = payload
+		// 	const groupIdx = board.groups.findIndex(group => group.id === groupId)
+		// 	const taskIdx = board.groups[groupIdx].tasks.findIndex(task => task.id === task.id)
+		// 	if (taskIdx > -1) {
+		// 		board.groups[groupIdx].tasks.splice(taskIdx, 1, task)
+		// 	} else {
+		// 		board.groups[groupIdx].tasks.push(task)
+		// 	}
 		// },
-		// addTask(state, { task }) {
-		//     state.tasks.push(task)
+		// removeTask({ state }, { ids }) {
+		// 	const { groupId, taskId } = ids
+		// 	const groupIdx = board.groups.findIndex(group => group.id === groupId)
+		// 	state.board.groups[groupIdx].tasks.filter(task => task._id !== taskId)
 		// },
-		// saveTask(state, { task }) {
-		//     const idx = state.tasks.findIndex(c => c._id === task._id)
-		//     state.tasks.splice(idx, 1, task)
-		// },
-		// removeTask(state, { taskId }) {
-		//     state.tasks = state.tasks.filter(task => task._id !== taskId)
-		// },
-		// addTaskMsg(state, { taskId, msg }) {
-		//     const task = state.tasks.find(task => task._id === taskId)
-		//     if (!task.msgs) task.msgs = []
-		//     task.msgs.push(msg)
-		// },
-		// setGroups(state, { groups }) {
-		//     state.groups = groups
+		// saveGroup(state, { groups }) {
+		// 	state.groups = groups
 		// },
 		// addGroup(state, { group }) {
 		//     state.groups.push(group)
@@ -87,12 +89,13 @@ export const boardStore = {
 		},
 	},
 	actions: {
-		async saveTask({ commit }, { payload }) {
+		async saveTask({ commit, state }, { payload }) {
 			try {
 				const { boardId, task, groupId } = payload
 				const updatedBoard = await boardService.save(boardId, 'task', task, groupId)
 				commit({ type: 'setBoard', board: updatedBoard })
-				// commit({ type: 'setBoard', board: updatedBoard })
+				const filter = state.filterBy.txt
+				commit({ type: 'filterBoard', txt: filter })
 				return task
 			} catch (err) {
 				console.log('Store: Error in updateTask', err)
@@ -109,8 +112,8 @@ export const boardStore = {
 		},
 		async removeTask(context, { ids }) {
 			try {
-				const updatedBoard = await boardService.remove(ids, 'task')
-				context.commit({ type: 'setBoard', board: updatedBoard })
+				await boardService.remove(ids, 'task')
+				context.commit({ type: 'removeTask', ids })
 			} catch (err) {
 				console.log('Store: Error in removeTask', err)
 				throw err
@@ -118,10 +121,11 @@ export const boardStore = {
 		},
 		async addGroup({ dispatch, getters, commit }) {
 			const group = boardService.getEmptyGroup()
-			const board = getters.board
-			const boardId = board._id
+			const boardId = getters.board._id
 			const updatedBoard = await boardService.save(boardId, 'group', group)
 			commit({ type: 'setBoard', board: updatedBoard })
+			const filter = state.filterBy.txt
+			commit({ type: 'filterBoard', txt: filter })
 		},
 		async removeGroup(context, { payload }) {
 			try {
@@ -137,13 +141,13 @@ export const boardStore = {
 		async saveGroupTitle({ state, commit }, { payload }) {
 			try {
 				const { boardId, title, groupId } = payload
-				const group = JSON.parse(
-					JSON.stringify(state.board.groups.find((group) => group.id === groupId))
-				)
+				const group = JSON.parse(JSON.stringify(state.board.groups.find((group) => group.id === groupId)))
 				if (!group) throw new Error('No group')
 				group.title = title
 				const updatedBoard = await boardService.save(boardId, 'group', group, groupId)
 				commit({ type: 'setBoard', board: updatedBoard })
+				const filter = state.filterBy.txt
+				commit({ type: 'filterBoard', txt: filter })
 				return group
 			} catch (err) {
 				console.log('Store: Error in saveGroup', err)
@@ -155,6 +159,8 @@ export const boardStore = {
 				const { boardId, group, groupId } = payload
 				const updatedBoard = await boardService.save(boardId, 'group', group, groupId)
 				context.commit({ type: 'setBoard', board: updatedBoard })
+				const filter = state.filterBy.txt
+				commit({ type: 'filterBoard', txt: filter })
 				return group
 			} catch (err) {
 				console.log('Store: Error in saveGroup', err)
