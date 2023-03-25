@@ -19,26 +19,26 @@
         </ul> -->
         <ul class="boards">
             <Container orientation="vertical" @drop="onBoardDrop($event)">
-                <Draggable v-for="board in boardList"  :key="board._id">
+                <Draggable v-for="board in boardList" :key="board._id">
                     <li class="board-link board-title" @click="setBoard(board._id)">
                         <Board class="svg-icon" />
                         <span v-if="isRename && currBoardId !== board._id || !isRename">{{ board.title }}</span>
                         <form v-else @submit.prevent="renameBoard()">
-                            <input  v-model="title" type="text" @click.stop>
+                            <input v-model="title" type="text" @click.stop>
                         </form>
                         <Menu class="svg-icon small-menu" width="16 " height="16" @click.stop="toggleModal(board._id)" />
 
-                        <div v-if="currBoardId === board._id" class="modal" v-click-outside.stop="closeModal" >
-                            <div @click.stop="isRename=true " class="modal-container">
+                        <div v-if="currBoardId === board._id" class="modal" v-click-outside.stop="closeModal">
+                            <div @click.stop="isRename = true" class="modal-container">
                                 <section class="wrapper">
                                     <Edit class="svg-icon" />
-                                    <span > Rename</span>
+                                    <span> Rename</span>
                                 </section>
                             </div>
-                            <div @click="duplicateBoard(board._id)" class="modal-container">
+                            <div @click="duplicateBoard()" class="modal-container">
                                 <section class="wrapper">
                                     <Duplicate class="svg-icon" />
-                                    <span >Duplicate</span>
+                                    <span>Duplicate</span>
                                 </section>
                             </div>
                             <div @click="deleteBoard(board._id)" class="modal-container">
@@ -79,8 +79,8 @@ export default {
         return {
             isOpen: false,
             currBoardId: '',
-            title:'',
-            isRename:false,
+            title: '',
+            isRename: false,
 
         }
     },
@@ -92,16 +92,32 @@ export default {
             this.$store.dispatch({ type: 'deleteBoard', boardId })
             this.currBoardId = ''
         },
-        async renameBoard(){
-            const payload= {val:this.title,type:'title'}
-            await this.$store.dispatch({ type: 'updateBoard', payload })
-            this.isRename=false
+        async renameBoard() {
+            try {
+                const payload = { val: this.title, type: 'title' }
+                await this.$store.dispatch({ type: 'updateBoard', payload })
+                this.isRename = false
+            }
+            catch {
+                console.log(err)
+            }
+        },
+        async duplicateBoard() {
+            try {
+                let duplicatedBoard = JSON.parse(JSON.stringify(this.$store.getters.board))
+                delete duplicatedBoard._id
+                duplicatedBoard.title = 'Copy ' + duplicatedBoard.title
+                await  this.$store.dispatch({ type: 'saveBoard', duplicatedBoard })
+                // closeModal()
+            } catch (err) {
+                console.log('Cannot duplicate board')
+            }
         },
         toggleModal(boardId) {
             this.currBoardId = this.currBoardId === boardId ? '' : boardId
         },
         closeModal() {
-            this.currBoardId=''
+            this.currBoardId = ''
         },
         onBoardDrop(dropPayload) {
             const { removedIndex, addedIndex } = dropPayload

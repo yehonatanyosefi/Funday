@@ -4,7 +4,7 @@
       <section class="top-header">
         <div>
           <h1
-            :class="{editing: isEditing}"
+            :class="{ editing: isEditing }"
             @keydown.enter.prevent="saveBoardTitle"
             @blur="saveBoardTitle"
             contenteditable
@@ -36,31 +36,31 @@
         </div>
       </section>
       <section class="add-views">
-        <router-link :to="'/board/'+board._id">
+        <router-link :to="'/board/' + board._id">
           <button
             @click="changeView('table')"
             class="view-item"
-            :class="{selected: view === 'table'}"
+            :class="{ selected: view === 'table' }"
           >
             <p class="view-title">Main Table</p>
           </button>
         </router-link>
         <span class="separator">|</span>
-        <router-link :to="'/board/'+board._id+'/kanban'">
+        <router-link :to="'/board/' + board._id + '/kanban'">
           <button
             @click="changeView('kanban')"
             class="view-item"
-            :class="{selected: view === 'kanban'}"
+            :class="{ selected: view === 'kanban' }"
           >
             <p class="view-title">Kanban</p>
           </button>
         </router-link>
         <span class="separator">|</span>
-        <router-link :to="'/board/'+board._id+'/dashboard'">
+        <router-link :to="'/board/' + board._id + '/dashboard'">
           <button
             @click="changeView('dashboard')"
             class="view-item"
-            :class="{selected: view === 'dashboard'}"
+            :class="{ selected: view === 'dashboard' }"
           >
             <p class="view-title">Dashboard</p>
           </button>
@@ -91,7 +91,7 @@ import Favorite from '../assets/svg/Favorite.svg'
 import FavoriteFull from '../assets/svg/FavoriteFull.svg'
 import BorderFilter from './BoardFilter.vue'
 
-import {boardService} from '../services/board.service'
+import { boardService } from '../services/board.service'
 export default {
   name: 'board-header',
   emits: ['setFilter', 'addTask', 'addGroup', 'saveBoardTitle'],
@@ -112,24 +112,26 @@ export default {
       this.view = viewName
     },
     addGroup() {
-      this.$store.dispatch({type: 'addGroup'})
+      this.$store.dispatch({ type: 'addGroup' })
     },
-    setFilter(filter) {},
+    setFilter(filter) {
+      this.$store.commit({ type: 'filterBoard', txt: filter })
+    },
     saveBoardTitle(ev) {
       this.isEditing = false
       ev.target.blur()
       const val = ev.target.innerText
-      const payload = {type: 'title', val}
-      this.$store.dispatch({type: 'updateBoard', payload})
+      const payload = { type: 'title', val }
+      this.$store.dispatch({ type: 'updateBoard', payload })
     },
 
     favorite() {
       const val = !this.board.isStarred
-      const payload = {type: 'favorite', val}
-      this.$store.dispatch({type: 'updateBoard', payload})
+      const payload = { type: 'favorite', val }
+      this.$store.dispatch({ type: 'updateBoard', payload })
     },
     addTask() {
-      this.$store.dispatch({type: 'addTask'})
+      this.$store.dispatch({ type: 'addTask' })
     },
     setLastSeenUserImg(userId = '') {
       const users = this.getUsers
@@ -150,7 +152,7 @@ export default {
       else this.view = 'table'
     },
   },
-  components: {BorderFilter, Invite, Favorite, FavoriteFull},
+  components: { BorderFilter, Invite, Favorite, FavoriteFull },
   computed: {
     boardTitle() {
       return this.$store.getters.board.title

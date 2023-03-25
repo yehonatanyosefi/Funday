@@ -1,20 +1,20 @@
 <template @keydown.escape="showModal = false">
   <section class="board-filter">
     <div class="add-new-btns">
-      <button @click="addTask">New Task</button>
+      <button @click="addTask">New Item</button>
       <span @click="openModal('AddItemModal')" class="add-new-group-btn"
         ><OpenOptions class="svg-icon"
       /></span>
     </div>
     <div
       class="search-tasks"
-      :class="{'input-open': isSearchClicked, filtering: isFiltering}"
+      :class="{ 'input-open': isSearchClicked, filtering: isFiltering }"
       @click="searchClicked"
     >
       <Search class="svg-img"></Search>
       <input
         class="search-input"
-        :class="{open: isSearchClicked || isFiltering}"
+        :class="{ open: isSearchClicked || isFiltering }"
         type="text"
         placeholder="Search"
         @blur="isSearchClicked = false"
@@ -93,7 +93,9 @@ export default {
       document.querySelector('.search-tasks input').focus()
     },
 
-    setFilter(txt) {},
+    setFilter(type, txt) {
+      this.$emit('setFilter', txt)
+    },
     clearFilter() {
       this.isFiltering = false
       this.txt = ''
@@ -105,6 +107,6 @@ export default {
       return window.innerWidth
     },
   },
-  components: {Search, Person, Filter, OpenOptions, MenuModal},
+  components: { Search, Person, Filter, OpenOptions, MenuModal },
 }
 </script>
