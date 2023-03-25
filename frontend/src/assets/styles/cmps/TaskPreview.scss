@@ -42,15 +42,7 @@ $lighten-status-amount: 7.5%;
           width: 33px;
      }
 
-     .task:nth-of-type(2) {
-          width: 367px;
-
-          input {
-               width: 350px;
-               font: inherit;
-               color: inherit;
-          }
-     }
+     
 
      .task {
           cursor: pointer;
@@ -158,10 +150,30 @@ $lighten-status-amount: 7.5%;
      &:hover .task .status.done {
           background-color: lighten($color-done, $lighten-status-amount);
      }
-
-     // .task:not(.status,.priority) {
-     //      padding: 10px;
-     // }
+          .task-title {
+               width: 367px;
+               .task-title-input {
+                    width: 275px;
+                    font: inherit;
+                    color: inherit;
+               }
+          }
+          .task-details-icon {
+               width: 64px;
+               height: 100%;
+               @include flex-center;
+               border-inline-start: 1px solid $color-divider;
+               .add-update {
+                    &:hover {
+                         color: #0073ea;
+                    }
+                    width: 24px;
+                    height: 24px;
+                    cursor: pointer;
+                    color: $color-empty-label;
+                    font-size: 24px;
+               }
+          }
 }
 
 .task-preview:last-of-type {
