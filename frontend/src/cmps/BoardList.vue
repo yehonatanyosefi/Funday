@@ -3,7 +3,7 @@
         <ul class="boards">
             <Container orientation="vertical" @drop="onBoardDrop($event)">
                 <Draggable v-for="board in boardList" :key="board._id">
-                    <li class="board-link board-title" :class="{'selected-board':currBoardId===board._id, 'rename':currBoardId===board._id}" @click="setBoard(board._id)">
+                    <li class="board-link board-title" :class="{'selected-board':currBoardId===board._id, 'rename':currBoardId===board._id && isRename}" @click="setBoard(board._id)">
                         <Board class="svg-icon board-svg" height="19px" width="19px" />
                         <span v-if="isRename && currBoardId !== board._id || !isRename">{{ board.title }}</span>
                         <form v-else @submit.prevent="renameBoard()">
