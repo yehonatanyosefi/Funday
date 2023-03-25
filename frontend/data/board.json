@@ -190,6 +190,108 @@
 				"style": {
 					"color": "rgb(87, 155, 252)"
 				}
+			},
+			{
+				"archivedAt": null,
+				"id": "fKGkQk",
+				"style": {
+					"color": "#7f5347"
+				},
+				"tasks": [
+					{
+						"id": "wnPzMP",
+						"title": "Server https",
+						"status": "Done",
+						"priority": "Critical",
+						"text": "done, contacted",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738180426,
+						"person": [],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738180426,
+							"dueDate": null
+						}
+					},
+					{
+						"id": "IAr3PD",
+						"title": "connect to cloudinary",
+						"status": "Working on it",
+						"priority": "High",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738180426,
+						"person": [],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738180426,
+							"dueDate": null
+						}
+					},
+					{
+						"id": "4I1Ole",
+						"title": "Fix CRUD",
+						"status": "Done",
+						"priority": "Low",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738180426,
+						"person": [],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738180426,
+							"dueDate": null
+						}
+					},
+					{
+						"id": "hsyC7w",
+						"title": "Get CR from project manager",
+						"status": "Working on it",
+						"priority": "Low",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738203722,
+						"person": [],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738203722,
+							"dueDate": null
+						}
+					}
+				],
+				"title": "Title"
 			}
 		],
 		"activities": [
@@ -208,5 +310,312 @@
 				}
 			}
 		]
+	},
+	{
+		"archivedAt": "",
+		"cmpOrder": ["title", "date", "person", "status", "text", "priority", "timeline"],
+		"createdBy": {
+			"_id": "",
+			"fullname": "",
+			"imgUrl": ""
+		},
+		"groups": [
+			{
+				"id": "H469fX",
+				"title": "Title",
+				"archivedAt": null,
+				"tasks": [
+					{
+						"id": "LO85K2",
+						"title": "Get spreadsheets from marketing",
+						"status": "Done",
+						"priority": "High",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738240378,
+						"person": [],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738240378,
+							"dueDate": null
+						}
+					},
+					{
+						"id": "suOUVR",
+						"title": "Contact suppliers",
+						"status": "Working on it",
+						"priority": "High",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738240378,
+						"person": [],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738240378,
+							"dueDate": null
+						}
+					},
+					{
+						"id": "PnPwT5",
+						"title": "Get Invoices",
+						"status": "Stuck",
+						"priority": "Medium",
+						"text": "",
+						"comments": [],
+						"date": 1679738240378,
+						"person": [],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738240378,
+							"dueDate": null
+						}
+					}
+				],
+				"style": {
+					"color": "#bda8f9"
+				}
+			},
+			{
+				"id": "IobNX9",
+				"title": "Title",
+				"archivedAt": null,
+				"tasks": [],
+				"style": {
+					"color": "#ff158a"
+				}
+			},
+			{
+				"id": "tjrhNf",
+				"title": "Title",
+				"archivedAt": null,
+				"tasks": [
+					{
+						"id": "5iuwyJ",
+						"title": "Get all invoices",
+						"status": "Done",
+						"priority": "Critical",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738311041,
+						"person": [],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738311041,
+							"dueDate": null
+						}
+					},
+					{
+						"id": "atGoET",
+						"title": "Make sure HR gets them as well",
+						"status": "Working on it",
+						"priority": "High",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738311041,
+						"person": [],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738311041,
+							"dueDate": null
+						}
+					}
+				],
+				"style": {
+					"color": "#faa1f1"
+				}
+			}
+		],
+		"isStarred": false,
+		"labels": [],
+		"members": [],
+		"style": {},
+		"title": "Finance",
+		"_id": "scZlu"
+	},
+	{
+		"archivedAt": "",
+		"cmpOrder": ["title", "date", "person", "status", "text", "priority", "timeline"],
+		"createdBy": {
+			"_id": "",
+			"fullname": "",
+			"imgUrl": ""
+		},
+		"groups": [
+			{
+				"id": "7e5cD0",
+				"title": "Title",
+				"archivedAt": null,
+				"style": {
+					"color": "#bb3354"
+				},
+				"tasks": [
+					{
+						"id": "j3JbpG",
+						"title": "Send sales data to finances",
+						"status": "Done",
+						"priority": "High",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738366118,
+						"person": [],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738366118,
+							"dueDate": null
+						}
+					},
+					{
+						"id": "SqTQQS",
+						"title": "Branch out in online research",
+						"status": "Working on it",
+						"priority": "High",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738366118,
+						"person": [],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738366118,
+							"dueDate": null
+						}
+					},
+					{
+						"id": "K8hd9H",
+						"title": "Get higher conversion",
+						"status": "Working on it",
+						"priority": "Medium",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738366118,
+						"person": [],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738366118,
+							"dueDate": null
+						}
+					}
+				]
+			},
+			{
+				"id": "j57J6R",
+				"title": "Title",
+				"archivedAt": null,
+				"style": {
+					"color": "#ff158a"
+				},
+				"tasks": [
+					{
+						"id": "sKZs68",
+						"title": "Get higher conversion",
+						"status": "Working on it",
+						"priority": "Critical",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738366118,
+						"person": [],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738366118,
+							"dueDate": null
+						}
+					},
+					{
+						"id": "xkB4im",
+						"title": "Reach broader audiences research",
+						"status": "",
+						"priority": "Low",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738366118,
+						"person": [],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738366118,
+							"dueDate": null
+						}
+					}
+				]
+			}
+		],
+		"isStarred": false,
+		"labels": [],
+		"members": [],
+		"style": {},
+		"title": "Sales",
+		"_id": "IYfzE"
 	}
 ]
