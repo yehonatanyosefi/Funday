@@ -10,10 +10,7 @@ $group-row-height: 36px;
 }
 
 .board-details {
-     // display: grid;
-     // @include board-columns;
      margin-inline-start: 47px;
-
      .task-title,
      .text {
           @include flex-center;

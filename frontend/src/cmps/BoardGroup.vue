@@ -40,7 +40,7 @@
             @removeTask="$emit('removeTask',{taskId:$event,groupId:group.id})"></TaskPreview>
       </Draggable>
     </Container>
-<section class="task-preview">
+<section class="task-preview add-task">
   <div class="task">
   <div class="task-preview-color last-task" 
       :style="{'backgroundColor': groupColor}"></div>
