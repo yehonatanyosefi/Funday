@@ -53,6 +53,9 @@
 </section>
     <div class="progress-bar">
         <div class="progress-column" v-for="(cmp,idx) in cmpOrder" :key="idx+50">
+            <template v-if="Object.keys(progressObj).includes(cmp)">
+                <ProgressBar :group="group" :cmp="cmp" :progressObj="progressObj"></ProgressBar>
+            </template>
         </div>
     </div>
 
@@ -64,6 +67,7 @@
 </template>
 
 <script>
+import ProgressBar from './dynamicCmps/ProgressBar.vue'
 import Menu from '../assets/svg/Menu.svg'
 import RemoveModal from './util/RemoveModal.vue'
 // import MenuModal from './dynamicModals/MenuModal.vue'
@@ -84,6 +88,16 @@ return {
     groupTitle: null,
     isModalOpen: false,
     isMenuModalOpen: false,
+    progressObj: {
+        status: {
+            colors: ['#00c875', '#fdab3d', '#e2445c','#c4c4c4'],
+            words: ['Done', 'Working on it', 'Stuck',''],
+        },
+        priority: {
+            colors: ['#333333', '#401694', '#5559df','#579bfc','#c4c4c4'],
+            words: ['Critical', 'High', 'Medium','Low',''],
+        }
+    }
     // dropPlaceholderOptions: {
     //     className: 'drop-preview',
     //     animationDuration: '150',
@@ -149,6 +163,7 @@ components: {
      RemoveModal,
      Menu,
      Title,
+     ProgressBar,
     //  MenuModal,
 },
 }
