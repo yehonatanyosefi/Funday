@@ -105,7 +105,8 @@ export const boardStore = {
 		},
 		async addTask({ dispatch, getters }, { groupId }) {
 			const task = boardService.getEmptyTask()
-			const boardId = getters.board._id
+			const board = getters.board
+			const boardId = board._id
 			const updatedGroupId = !groupId ? board.groups[0].id : groupId
 			const payload = { boardId, task, groupId: updatedGroupId }
 			return dispatch({ type: 'saveTask', payload })
@@ -254,20 +255,20 @@ export const boardStore = {
 				throw err
 			}
 		},
-		async duplicateBoard({ commit,dispatch }, { board }) {
+		async duplicateBoard({ commit, dispatch }, { board }) {
 
-			const dupBoard= JSON.parse(JSON.stringify(board))
+			const dupBoard = JSON.parse(JSON.stringify(board))
 			dupBoard.groups.forEach(group => {
-			   group.id= utilService.makeId()
-			   group.tasks.map(task => task.id= utilService.makeId())
-			   return group
+				group.id = utilService.makeId()
+				group.tasks.map(task => task.id = utilService.makeId())
+				return group
 			})
-			const savedBoard = await boardService.saveBoard(dupBoard) 
-			console.log('savedBoard',savedBoard)
+			const savedBoard = await boardService.saveBoard(dupBoard)
+			console.log('savedBoard', savedBoard)
 			dispatch({ type: 'setAndFilterBoard', board: savedBoard })
 			dispatch({ type: 'loadBoardList' })
 			return savedBoard
-		  },
+		},
 		// async addGroupMsg(context, { groupId, txt }) {
 		//     try {
 		//         const msg = await boardService.addGroupMsg(groupId, txt)
