@@ -1,6 +1,4 @@
-$lighten-priority-amount: 15%;
-$lighten-status-amount: 7.5%;
-$color-focused-within: #cce5ff;
+
 .task-preview {
      display: grid;
      grid-template-columns: 33px 367px repeat(6, $group-column-width);
@@ -180,5 +178,5 @@ $color-focused-within: #cce5ff;
 .task-preview.add-task {
      border-block-end: 1px solid $color-divider;
      border-inline-end: 1px solid $color-divider;
-     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+     box-shadow: $small-shadow;
 }
