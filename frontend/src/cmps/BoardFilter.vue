@@ -94,7 +94,8 @@ export default {
     },
 
     setFilter(type, txt) {
-      this.$emit('setFilter', txt)
+      const filterBy = { txt }
+      this.$emit('setFilter', filterBy)
     },
     clearFilter() {
       this.isFiltering = false

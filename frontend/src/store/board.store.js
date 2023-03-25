@@ -28,7 +28,6 @@ export const boardStore = {
 		},
 		setBoard(state, { board }) {
 			state.board = board
-			state.filteredBoard = JSON.parse(JSON.stringify(board))
 			router.push(`/board/${board._id}/main-table`)
 		},
 		addBoard(state, { board }) {
@@ -43,10 +42,12 @@ export const boardStore = {
 			if (idx > -1 && state.boardList.length === 1) state.board = state.boardList[idx - 1]
 			state.filteredBoard = JSON.parse(JSON.stringify(state.board))
 		},
-		filterBoard(state, { txt }) {
-			state.filterBy.txt = txt
+		filterBoard(state, { filterBy }) {
+			let filter = (!filterBy) ? state.filterBy : filterBy
+			state.filterBy = filter
 			const boardCopy = JSON.parse(JSON.stringify(state.board))
-			if (state.filterBy.txt === '') {
+			const txt = filterBy.txt
+			if (txt === '') {
 				state.filteredBoard = boardCopy
 				return
 			}
@@ -89,13 +90,11 @@ export const boardStore = {
 		},
 	},
 	actions: {
-		async saveTask({ commit, state }, { payload }) {
+		async saveTask({ dispatch }, { payload }) {
 			try {
 				const { boardId, task, groupId } = payload
 				const updatedBoard = await boardService.save(boardId, 'task', task, groupId)
-				commit({ type: 'setBoard', board: updatedBoard })
-				const filter = state.filterBy.txt
-				commit({ type: 'filterBoard', txt: filter })
+				dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
 				return task
 			} catch (err) {
 				console.log('Store: Error in updateTask', err)
@@ -104,50 +103,45 @@ export const boardStore = {
 		},
 		async addTask({ dispatch, getters }, { groupId }) {
 			const task = boardService.getEmptyTask()
-			const board = getters.board
-			const boardId = board._id
+			const boardId = getters.board._id
 			const updatedGroupId = !groupId ? board.groups[0].id : groupId
 			const payload = { boardId, task, groupId: updatedGroupId }
 			return dispatch({ type: 'saveTask', payload })
 		},
-		async removeTask(context, { ids }) {
+		async removeTask({ commit }, { ids }) {
 			try {
 				await boardService.remove(ids, 'task')
-				context.commit({ type: 'removeTask', ids })
+				commit({ type: 'removeTask', ids })
 			} catch (err) {
 				console.log('Store: Error in removeTask', err)
 				throw err
 			}
 		},
-		async addGroup({ dispatch, getters, commit }) {
+		async addGroup({ dispatch, getters }) {
 			const group = boardService.getEmptyGroup()
 			const boardId = getters.board._id
 			const updatedBoard = await boardService.save(boardId, 'group', group)
-			commit({ type: 'setBoard', board: updatedBoard })
-			const filter = state.filterBy.txt
-			commit({ type: 'filterBoard', txt: filter })
+			dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
 		},
-		async removeGroup(context, { payload }) {
+		async removeGroup({ commit }, { payload }) {
 			try {
 				const { groupId, boardId } = payload
 				await boardService.remove({ boardId, groupId }, 'group')
-				context.commit({ type: 'removeGroup', groupId })
+				commit({ type: 'removeGroup', groupId })
 				return groupId
 			} catch (err) {
 				console.log('boardStore: Error in deleteBoard', err)
 				throw err
 			}
 		},
-		async saveGroupTitle({ state, commit }, { payload }) {
+		async saveGroupTitle({ state, dispatch }, { payload }) {
 			try {
 				const { boardId, title, groupId } = payload
 				const group = JSON.parse(JSON.stringify(state.board.groups.find((group) => group.id === groupId)))
 				if (!group) throw new Error('No group')
 				group.title = title
 				const updatedBoard = await boardService.save(boardId, 'group', group, groupId)
-				commit({ type: 'setBoard', board: updatedBoard })
-				const filter = state.filterBy.txt
-				commit({ type: 'filterBoard', txt: filter })
+				dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
 				return group
 			} catch (err) {
 				console.log('Store: Error in saveGroup', err)
@@ -158,19 +152,22 @@ export const boardStore = {
 			try {
 				const { boardId, group, groupId } = payload
 				const updatedBoard = await boardService.save(boardId, 'group', group, groupId)
-				context.commit({ type: 'setBoard', board: updatedBoard })
-				const filter = state.filterBy.txt
-				commit({ type: 'filterBoard', txt: filter })
+				dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
 				return group
 			} catch (err) {
 				console.log('Store: Error in saveGroup', err)
 				throw err
 			}
 		},
-		async getBoardById(context, { boardId }) {
+		setAndFilterBoard({ commit, state }, { board }) {
+			commit({ type: 'setBoard', board })
+			const filterBy = state.filterBy
+			commit({ type: 'filterBoard', filterBy })
+		},
+		async getBoardById({ dispatch }, { boardId }) {
 			try {
 				const board = await boardService.getById(boardId)
-				context.commit({ type: 'setBoard', board })
+				dispatch({ type: 'setAndFilterBoard', board })
 				return board
 			} catch (err) {
 				console.log('Store: Error in getBoardById', err)
@@ -222,22 +219,22 @@ export const boardStore = {
 			commit({ type: 'setBoard', board: updatedBoard })
 			dispatch({ type: 'loadBoardList' })
 		},
-		async applyTaskDrag(context, { payload }) {
+		async applyTaskDrag({ dispatch }, { payload }) {
 			try {
 				const { addedId, removedId, boardId, groupId } = payload
 				const updatedBoard = await boardService.applyDrag(addedId, removedId, 'task', boardId, groupId)
-				context.commit({ type: 'setBoard', board: updatedBoard })
+				dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
 				return true
 			} catch (err) {
 				console.log('Store: Error in apply task drag', err)
 				throw err
 			}
 		},
-		async applyGroupDrag(context, { payload }) {
+		async applyGroupDrag({ dispatch }, { payload }) {
 			try {
 				const { addedId, removedId, boardId } = payload
 				const updatedBoard = await boardService.applyDrag(addedId, removedId, 'group', boardId)
-				context.commit({ type: 'setBoard', board: updatedBoard })
+				dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
 				return true
 			} catch (err) {
 				console.log('Store: Error in apply group drag', err)

@@ -114,8 +114,8 @@ export default {
     addGroup() {
       this.$store.dispatch({ type: 'addGroup' })
     },
-    setFilter(filter) {
-      this.$store.commit({ type: 'filterBoard', txt: filter })
+    setFilter(filterBy) {
+      this.$store.commit({ type: 'filterBoard', filterBy })
     },
     saveBoardTitle(ev) {
       this.isEditing = false
