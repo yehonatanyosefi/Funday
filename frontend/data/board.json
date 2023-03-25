@@ -4,7 +4,7 @@
 		"title": "Dev",
 		"isStarred": false,
 		"archivedAt": 1589983468418,
-		"cmpOrder": ["title", "date", "person", "status", "text", "priority", "timeline"],
+		"cmpOrder": ["date", "person", "status", "text", "priority", "timeline"],
 		"createdBy": {
 			"_id": "u101",
 			"fullname": "Abi Abambi",
@@ -50,7 +50,7 @@
 		"groups": [
 			{
 				"id": "g101",
-				"title": "FrontEnd",
+				"title": "Frontend",
 				"archivedAt": null,
 				"tasks": [
 					{
@@ -67,7 +67,7 @@
 								"byMember": {
 									"_id": "u101",
 									"fullname": "Dor Toledano",
-									"imgUrl": "http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg"
+									"imgUrl": "https://files.monday.com/euc1/photos/41054538/small/41054538-user_photo_2023_03_18_19_59_31.png?1679169572"
 								}
 							},
 							{
@@ -190,6 +190,108 @@
 				"style": {
 					"color": "rgb(87, 155, 252)"
 				}
+			},
+			{
+				"archivedAt": null,
+				"id": "fKGkQk",
+				"style": {
+					"color": "#7f5347"
+				},
+				"tasks": [
+					{
+						"id": "wnPzMP",
+						"title": "Server https",
+						"status": "Done",
+						"priority": "Critical",
+						"text": "done, contacted",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738180426,
+						"person": ["u103"],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738180426,
+							"dueDate": null
+						}
+					},
+					{
+						"id": "IAr3PD",
+						"title": "connect to cloudinary",
+						"status": "Working on it",
+						"priority": "High",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738180426,
+						"person": ["u102"],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738180426,
+							"dueDate": null
+						}
+					},
+					{
+						"id": "4I1Ole",
+						"title": "Fix CRUD",
+						"status": "Done",
+						"priority": "Low",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738180426,
+						"person": ["u101"],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738180426,
+							"dueDate": null
+						}
+					},
+					{
+						"id": "hsyC7w",
+						"title": "Get CR from project manager",
+						"status": "Working on it",
+						"priority": "Low",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738203722,
+						"person": ["u101"],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738203722,
+							"dueDate": null
+						}
+					}
+				],
+				"title": "Backend"
 			}
 		],
 		"activities": [
@@ -208,5 +310,174 @@
 				}
 			}
 		]
+	},
+	{
+		"archivedAt": "",
+		"cmpOrder": ["date", "person", "status", "text", "priority", "timeline"],
+		"createdBy": {
+			"_id": "",
+			"fullname": "",
+			"imgUrl": ""
+		},
+		"groups": [
+			{
+				"id": "H469fX",
+				"title": "Accounting",
+				"archivedAt": null,
+				"tasks": [
+					{
+						"id": "LO85K2",
+						"title": "Get spreadsheets from marketing",
+						"status": "Done",
+						"priority": "High",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738240378,
+						"person": ["u101"],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738240378,
+							"dueDate": null
+						}
+					},
+					{
+						"id": "suOUVR",
+						"title": "Contact suppliers",
+						"status": "Working on it",
+						"priority": "High",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738240378,
+						"person": ["u102"],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738240378,
+							"dueDate": null
+						}
+					},
+					{
+						"id": "PnPwT5",
+						"title": "Get Invoices",
+						"status": "Stuck",
+						"priority": "Medium",
+						"text": "",
+						"comments": [],
+						"date": 1679738240378,
+						"person": ["u104"],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738240378,
+							"dueDate": null
+						}
+					}
+				],
+				"style": {
+					"color": "#bda8f9"
+				}
+			},
+			{
+				"id": "tjrhNf",
+				"title": "Billing",
+				"archivedAt": null,
+				"tasks": [
+					{
+						"id": "5iuwyJ",
+						"title": "Get all invoices",
+						"status": "Done",
+						"priority": "Critical",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738311041,
+						"person": ["u104"],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738311041,
+							"dueDate": null
+						}
+					},
+					{
+						"id": "atGoET",
+						"title": "Make sure HR gets them as well",
+						"status": "Working on it",
+						"priority": "High",
+						"text": "",
+						"byMember": {
+							"_id": "",
+							"username": "",
+							"fullname": "",
+							"imgUrl": ""
+						},
+						"comments": [],
+						"date": 1679738311041,
+						"person": ["u101"],
+						"style": {
+							"bgColor": ""
+						},
+						"timeline": {
+							"startDate": 1679738311041,
+							"dueDate": null
+						}
+					}
+				],
+				"style": {
+					"color": "#faa1f1"
+				}
+			}
+		],
+		"isStarred": false,
+		"labels": [],
+		"members": [
+			{
+				"_id": "u101",
+				"fullname": "Dor Toledano",
+				"imgUrl": "https://files.monday.com/euc1/photos/41054538/small/41054538-user_photo_2023_03_18_19_59_31.png?1679169572"
+			},
+			{
+				"_id": "u102",
+				"fullname": "Yael Bilu",
+				"imgUrl": "https://files.monday.com/euc1/photos/41055076/small/41055076-user_photo_2023_03_17_09_11_44.png?1679044305"
+			},
+			{
+				"_id": "u103",
+				"fullname": "Yehonatan Yosefi",
+				"imgUrl": "https://files.monday.com/euc1/photos/41040364/small/41040364-user_photo_2023_03_17_09_12_17.png?1679044337",
+				"mentions": []
+			},
+			{
+				"_id": "u104",
+				"fullname": "Eran Peled",
+				"imgUrl": "https://files.monday.com/euc1/photos/41061269/small/41061269-user_photo_2023_03_21_10_10_39.png?1679393439",
+				"mentions": []
+			}
+		],
+		"style": {},
+		"title": "Finance",
+		"_id": "scZlu"
 	}
 ]

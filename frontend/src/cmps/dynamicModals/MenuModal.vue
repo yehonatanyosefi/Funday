@@ -10,6 +10,7 @@
 
 <script>
 import AddItemModal from './AddItemModal.vue'
+import RenameDeleteModal from './RenameDeleteModal.vue'
 export default {
   name: 'menu-modal',
   emits: ['closeModal', 'addTask', 'addGroup'],
@@ -34,6 +35,7 @@ export default {
   },
   components: {
     AddItemModal,
+    RenameDeleteModal,
   },
 }
 </script>

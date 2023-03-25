@@ -11,7 +11,7 @@
             @input="saveGroupTitle">
     </h2>
     <div class="task-header">
-    <div class="group-preview-color" :style="{'backgroundColor': groupColor}"></div>
+        <div class="group-preview-color" :style="{'backgroundColor': groupColor}"></div>
         <section>
             <input
                 type="checkbox"
@@ -20,9 +20,9 @@
                 v-model="isModalOpen"
                 @click="openModal">
         </section>
+            <section><div class="task">Task</div></section>
         <section v-for="(cmp, idx) in cmpOrder" :key="idx">
-            <div v-if="cmp!=='title'" class="task">{{capitalizeFirstLetter(cmp)}}</div>
-            <div v-else class="task">Task</div>
+            <div  class="task">{{capitalizeFirstLetter(cmp)}}</div>
         </section>
     </div>
         
@@ -40,7 +40,7 @@
             @removeTask="$emit('removeTask',{taskId:$event,groupId:group.id})"></TaskPreview>
       </Draggable>
     </Container>
-<section class="task-preview">
+<section class="task-preview add-task">
   <div class="task">
   <div class="task-preview-color last-task" 
       :style="{'backgroundColor': groupColor}"></div>
@@ -49,9 +49,7 @@
       title="Delete Task"
       class="task-checkbox" disabled>
   </div>
-  <div v-for="(cmp, idx) in cmpOrder" :key="idx" class="task">
-        <input v-if="idx === 0" value="+ Add item" @focus="addTask">
-  </div>
+    <button @click="addTask" class="add-item">+ Add item</button>
 </section>
     
   <RemoveModal
@@ -63,12 +61,13 @@
 
 <script>
 import Menu from '../assets/svg/Menu.svg'
-import RemoveModal from './util/RemoveModal.vue';
-import { Container, Draggable } from "vue3-smooth-dnd";
+import RemoveModal from './util/RemoveModal.vue'
+// import MenuModal from './dynamicModals/MenuModal.vue'
+import { Container, Draggable } from "vue3-smooth-dnd"
 import TaskPreview from './TaskPreview.vue'
 import Title from './dynamicCmps/Title.vue'
 export default {
-emits: ['saveTask', 'removeTask', 'saveGroup','removeGroup','applyTaskDrag', 'addTask'],
+emits: ['saveTask', 'removeTask', 'saveGroup','removeGroup','applyTaskDrag', 'addTask','saveGroupTitle'],
 props: {
     group: Object,
     cmpOrder: Array,
@@ -92,14 +91,9 @@ methods: {
     capitalizeFirstLetter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
     },
-    //         :class="isLastTask(idx, group.tasks.length)"
-    // isLastTask(idx, length) {
-    //     return idx === length - 1 ? 'last-task' : ''
-    // },
     saveGroupTitle() {
-        const group = {...this.group, title: this.groupTitle}
-        const payload = {group, groupId: group.id}
-        this.$emit('saveGroup', payload)
+        const payload = {title:this.groupTitle, groupId: this.group.id}
+        this.$emit('saveGroupTitle', payload)
     },
     removeGroup() {
         this.$emit('removeGroup', this.group.id)
@@ -151,6 +145,7 @@ components: {
      RemoveModal,
      Menu,
      Title,
+    //  MenuModal,
 },
 }
 </script>

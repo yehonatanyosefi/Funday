@@ -10,11 +10,13 @@
 				@saveTask="saveTask"
 				@removeTask="removeTask"
 				@saveGroup="saveGroup"
+				@saveGroupTitle="saveGroupTitle"
 				@removeGroup="removeGroup"
 				@applyTaskDrag="applyTaskDrag"
 				@addTask="addTask"></BoardGroup>
       </Draggable>
     </Container>
+      <RouterView></RouterView>
 </section>
 </template>
 
@@ -35,7 +37,7 @@ export default {
 			return this.$store.getters.loggedinUser
 		},
 		board() {
-        		return this.$store.getters.board
+        		return this.$store.getters.filteredBoard
 		},
 		cmpOrder() {
 			return this.board.cmpOrder
@@ -64,6 +66,15 @@ export default {
 			} catch (err) {
 				console.log(err)
 				showErrorMsg('Cannot remove task')
+			}
+		},
+		async saveGroupTitle(payload) { //this is the change
+			try {
+				const payloadToSave = {...payload,boardId:this.board._id}
+				await this.$store.dispatch({type:'saveGroupTitle',payload:payloadToSave})
+				// showSuccessMsg('Task updated')
+			} catch (err) {
+				// showErrorMsg('Cannot update task')
 			}
 		},
 		async saveGroup(payload) {
