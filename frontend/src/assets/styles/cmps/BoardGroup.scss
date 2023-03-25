@@ -8,7 +8,10 @@ $group-header-clr: rgb(87, 155, 252);
      // margin-inline-start: 16px;
      // margin-inline-start: 47px;
      margin-block-end: 50px;
-
+     .add-item {
+          background-color: inherit;
+          align-self: start;
+     }
      .menu-btn-container-wrapper {
           position: relative;
      }

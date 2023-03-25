@@ -49,9 +49,7 @@
       title="Delete Task"
       class="task-checkbox" disabled>
   </div>
-  <div v-for="(cmp, idx) in cmpOrder" :key="idx" class="task">
-        <input v-if="idx === 0" value="+ Add item" @focus="addTask">
-  </div>
+    <button @click="addTask" class="add-item">+ Add item</button>
 </section>
     
   <RemoveModal
