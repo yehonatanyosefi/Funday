@@ -40,6 +40,10 @@ export default {
 	methods: {
 		change() {
 			console.log(this.value)
+			const startDate = new Date(this.value[0]).getTime()
+			const dueDate = new Date(this.value[1]).getTime()
+			const timeline = { startDate, dueDate }
+			this.$emit('saveTask', timeline)
 		},
 		formattedDate(dateToFormat) {
 			const date = new Date(dateToFormat)
@@ -62,13 +66,15 @@ export default {
 			return `${month} ${day}`
 		},
 		omouseover() {
-			console.log('omouseover')
-
 			if (!this.isSet) this.text = 'setDate'
 		},
 		mouseleave() {
-			console.log('mouseleave')
 			if (!this.isSet) this.text = '-'
+			else {
+				const startDate = this.formattedDate(this.info.startDate)
+				const dutDate = this.formattedDate(this.info.dutDate)
+				this.text = `${startDate} - ${dutDate}`
+			}
 		},
 	},
 	computed: {
@@ -77,16 +83,12 @@ export default {
 		},
 		display() {
 			return this.text
-			// if (!this.isSet) return '-'
-			// const startDate = this.formattedDate(this.info.startDate)
-			// const dutDate = this.formattedDate(this.info.dutDate)
-			// return `${startDate} - ${dutDate}`
 		},
 	},
 	components: {},
 	created() {
 		console.log('info', this.info)
-		if (!this.info.startDate) this.isSet = false
+		if (!this.info?.startDate) this.isSet = false
 		this.value = [
 			new Date(this.info?.startDate),
 			new Date(this.info?.dueDate || this.info?.startDate || Date.now()),
