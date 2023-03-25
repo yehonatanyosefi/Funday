@@ -51,7 +51,11 @@
   </div>
     <button @click="addTask" class="add-item">+ Add item</button>
 </section>
-    
+    <div class="progress-bar">
+        <div class="progress-column" v-for="(cmp,idx) in cmpOrder" :key="idx+50">
+        </div>
+    </div>
+
   <RemoveModal
     v-if="isModalOpen"
     @closeModal="handleCloseModal"

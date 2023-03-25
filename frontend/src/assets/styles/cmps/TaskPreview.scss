@@ -1,6 +1,6 @@
 $lighten-priority-amount: 15%;
 $lighten-status-amount: 7.5%;
-
+$color-focused-within: #cce5ff;
 .task-preview {
      display: grid;
      grid-template-columns: 33px 367px repeat(6, $group-column-width);
@@ -168,6 +168,9 @@ $lighten-status-amount: 7.5%;
                color: $color-empty-label;
                font-size: 24px;
           }
+     }
+     &:focus-within {
+          background-color: $color-focused-within;
      }
 }
 

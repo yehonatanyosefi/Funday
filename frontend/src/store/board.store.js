@@ -87,6 +87,7 @@ export const boardStore = {
 		removeGroup(state, { groupId }) {
 			const groupIdx = state.board.groups.findIndex((group) => group.id === groupId)
 			state.board.groups.splice(groupIdx, 1)
+			state.filteredBoard.groups.splice(groupIdx, 1)
 		},
 	},
 	actions: {

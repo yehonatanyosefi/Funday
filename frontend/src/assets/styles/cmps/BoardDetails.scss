@@ -1,10 +1,6 @@
 $group-column-width: 140px;
 $group-row-height: 36px;
 
-@mixin board-columns() {
-     grid-template-columns: 33px 360px repeat(auto-fit, $group-column-width);
-}
-
 .smooth-dnd-container.vertical>.smooth-dnd-draggable-wrapper {
      overflow: visible;
 }
