@@ -20,9 +20,9 @@
                 v-model="isModalOpen"
                 @click="openModal">
         </section>
+            <section><div class="task">Task</div></section>
         <section v-for="(cmp, idx) in cmpOrder" :key="idx">
-            <div v-if="cmp!=='title'" class="task">{{capitalizeFirstLetter(cmp)}}</div>
-            <div v-else class="task">Task</div>
+            <div  class="task">{{capitalizeFirstLetter(cmp)}}</div>
         </section>
     </div>
         
@@ -91,10 +91,6 @@ methods: {
     capitalizeFirstLetter(str) {
         return str.charAt(0).toUpperCase() + str.slice(1);
     },
-    //         :class="isLastTask(idx, group.tasks.length)"
-    // isLastTask(idx, length) {
-    //     return idx === length - 1 ? 'last-task' : ''
-    // },
     saveGroupTitle() {
         const payload = {title:this.groupTitle, groupId: this.group.id}
         this.$emit('saveGroupTitle', payload)

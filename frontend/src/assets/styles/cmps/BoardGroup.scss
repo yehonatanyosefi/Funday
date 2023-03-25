@@ -10,11 +10,13 @@ $group-header-clr: rgb(87, 155, 252);
      margin-block-end: 50px;
      .add-item {
           background-color: inherit;
+          margin-inline-start: 18px;
           text-align: start;
           font: inherit;
           padding: 0;
           outline: none;
           border-radius: 0.3em;
+          width: 275px;
           &:hover {
                box-shadow: 0px 0px 0px 0.5px #d0d4e4;
           }
