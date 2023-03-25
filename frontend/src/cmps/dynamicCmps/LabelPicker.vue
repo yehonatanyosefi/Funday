@@ -1,6 +1,6 @@
 <template>
 <div>
-     <div class="modal-container">
+     <div class="modal-container" >
           <div
                v-for="(label,idx) in labels"
                :key="idx"

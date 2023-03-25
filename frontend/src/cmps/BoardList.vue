@@ -1,22 +1,5 @@
 <template>
     <main>
-        <!-- <ul v-for="board in boardList" class="boards" :key="board._id">
-            <li class="board-link board-title" @click="setBoard(board._id)">
-                <Board class="svg-icon" />
-                <span>{{ board.title }}</span>
-                <Menu class="svg-icon small-menu" width="16 " height="16" @click="toggleModal(board._id)" />
-
-                <div class="modal" v-if="currBoardId === board._id" @click="deleteBoard(board._id)">
-                    <div class="modal-container">
-                        <section class="wrapper">
-                            <Delete class="svg-icon" />
-                            <span> Delete</span>
-                        </section>
-                    </div>
-                </div>
-
-            </li>
-        </ul> -->
         <ul class="boards">
             <Container orientation="vertical" @drop="onBoardDrop($event)">
                 <Draggable v-for="board in boardList" :key="board._id">
@@ -28,20 +11,21 @@
                         </form>
                         <Menu class="svg-icon small-menu" width="16 " height="16" @click.stop="toggleModal(board._id)" />
 
-                        <div v-if="currBoardId === board._id" class="modal" v-click-outside.stop="closeModal">
-                            <div @click.stop="isRename = true" class="modal-container">
+                        <div v-if="isModalOpen && currBoardId === board._id" class="modal"  v-click-outside.stop="closeModal">
+
+                            <div @click.stop="toggleRename(board._id)" class="modal-container">
                                 <section class="wrapper">
                                     <Edit class="svg-icon" />
                                     <span> Rename</span>
                                 </section>
                             </div>
-                            <div @click="duplicateBoard()" class="modal-container">
+                            <div @click="duplicateBoard" class="modal-container">
                                 <section class="wrapper">
                                     <Duplicate class="svg-icon" />
                                     <span>Duplicate</span>
                                 </section>
                             </div>
-                            <div @click="deleteBoard(board._id)" class="modal-container">
+                            <div @click.stop="deleteBoard(board._id)" class="modal-container">
                                 <section class="wrapper">
                                     <Delete class="svg-icon" />
                                     <span> Delete</span>
@@ -77,10 +61,10 @@ export default {
     },
     data() {
         return {
-            isOpen: false,
             currBoardId: '',
             title: '',
             isRename: false,
+            isModalOpen: false,
 
         }
     },
@@ -91,6 +75,12 @@ export default {
         deleteBoard(boardId) {
             this.$store.dispatch({ type: 'deleteBoard', boardId })
             this.currBoardId = ''
+            this.closeModal()
+        },
+        toggleRename(boardId){
+            this.title=this.boardList.find(listItem=>listItem._id===boardId).title
+            this.isRename = true
+            this.closeModal()
         },
         async renameBoard() {
             try {
@@ -107,17 +97,21 @@ export default {
                 let duplicatedBoard = JSON.parse(JSON.stringify(this.$store.getters.board))
                 delete duplicatedBoard._id
                 duplicatedBoard.title = 'Copy ' + duplicatedBoard.title
-                await  this.$store.dispatch({ type: 'saveBoard', duplicatedBoard })
-                // closeModal()
+                await this.$store.dispatch({ type: 'duplicateBoard', board: duplicatedBoard })
+                this.closeModal()
+
             } catch (err) {
                 console.log('Cannot duplicate board')
             }
         },
         toggleModal(boardId) {
-            this.currBoardId = this.currBoardId === boardId ? '' : boardId
+            this.currBoardId = boardId
+            // this.currBoardId = this.currBoardId === boardId ? '' : boardId
+            this.isModalOpen = true
         },
         closeModal() {
-            this.currBoardId = ''
+            this.isModalOpen = false
+            // this.currBoardId = ''
         },
         onBoardDrop(dropPayload) {
             const { removedIndex, addedIndex } = dropPayload

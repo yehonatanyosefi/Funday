@@ -4,6 +4,7 @@
                <img src="../assets/funday.png" alt="">
                <!-- <div class="monday-style-divider surface-divider bottom monday-style-divider--horizontal"></div> -->
                <div class="divider"></div>
+               <div class="triangle"></div>
                <div class="mid-icons flex column">
                     <div class="inside-icons flex column">
                          <div class="svg-wrapper selected">

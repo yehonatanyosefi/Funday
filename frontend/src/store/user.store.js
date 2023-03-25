@@ -11,7 +11,9 @@ export const userStore = {
         watchedUser: null
     },
     getters: {
-        users({ users }) { return users },
+        users({ users }) { 
+            return users 
+        },
         loggedinUser({ loggedinUser }) { return loggedinUser },
         watchedUser({ watchedUser }) { return watchedUser }
     },
