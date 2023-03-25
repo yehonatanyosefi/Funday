@@ -8,6 +8,7 @@ import LoginSignup from './views/LoginSignup.vue'
 import UserDetails from './views/UserDetails.vue'
 import Kanban from './cmps/Kanban.vue'
 import Dashboard from './cmps/Dashboard.vue'
+import TaskDetails from './views/TaskDetails.vue'
 
 const routes = [
   {
@@ -21,17 +22,24 @@ const routes = [
     component: BoardIndex,
     children: [
       {
-        path: '/board/:boardId',
+        path: 'main-table',
         name: 'Board',
         component: BoardDetails,
+        children: [
+          {
+            path: 'task/:taskId',
+            name: 'TaskDetails',
+            component: TaskDetails,
+          },
+        ],
       },
       {
-        path: '/board/:boardId/kanban',
+        path: 'kanban',
         name: 'BoardKanban',
         component: Kanban,
       },
       {
-        path: '/board/:boardId/dashboard',
+        path: 'dashboard',
         name: 'BoardDashboard',
         component: Dashboard,
       },
