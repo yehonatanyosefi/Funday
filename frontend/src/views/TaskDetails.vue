@@ -155,7 +155,6 @@ export default {
 		}
 	},
 	async created() {
-		console.log('123')
 		this.loadTask()
 		// await this.$store.dispatch({ type: 'loadUsers' })
 		// socketService.on('task-saved', (savedTask) => {
