@@ -15,7 +15,7 @@
           </router-link>
         </div>
 
-        <router-link :to="'/board/b101'">
+        <router-link :to="'/board/b101/main-table'">
           <button class="cta-btn">
             <span>Get started</span>
             <span>→</span>
@@ -40,7 +40,7 @@
           <span> What would you like to manage with Funday today? </span>
         </div>
         <nav>
-          <router-link :to="'/board/b101'">
+          <router-link :to="'/board/b101/main-table'">
             <button class="cta-btn big">
               <span>Get started</span>
               <span>→</span>
