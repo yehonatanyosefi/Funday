@@ -291,7 +291,7 @@
 						}
 					}
 				],
-				"title": "Title"
+				"title": "Backend"
 			}
 		],
 		"activities": [
@@ -322,7 +322,7 @@
 		"groups": [
 			{
 				"id": "H469fX",
-				"title": "Title",
+				"title": "Sales",
 				"archivedAt": null,
 				"tasks": [
 					{
@@ -395,7 +395,7 @@
 			},
 			{
 				"id": "IobNX9",
-				"title": "Title",
+				"title": "Sales",
 				"archivedAt": null,
 				"tasks": [],
 				"style": {

@@ -66,7 +66,7 @@ import { Container, Draggable } from "vue3-smooth-dnd";
 import TaskPreview from './TaskPreview.vue'
 import Title from './dynamicCmps/Title.vue'
 export default {
-emits: ['saveTask', 'removeTask', 'saveGroup','removeGroup','applyTaskDrag', 'addTask'],
+emits: ['saveTask', 'removeTask', 'saveGroup','removeGroup','applyTaskDrag', 'addTask','saveGroupTitle'],
 props: {
     group: Object,
     cmpOrder: Array,
@@ -95,7 +95,7 @@ methods: {
     //     return idx === length - 1 ? 'last-task' : ''
     // },
     saveGroupTitle() {
-        const payload = {title:this.groupTitle, groupId: group.id}
+        const payload = {title:this.groupTitle, groupId: this.group.id}
         this.$emit('saveGroupTitle', payload)
     },
     removeGroup() {
