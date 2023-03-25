@@ -107,13 +107,14 @@ export const boardStore = {
 			return dispatch({ type: 'saveTask', payload })
 		},
 		async removeTask(context, { ids }) {
-			try {
-				const updatedBoard = await boardService.remove(ids, 'task')
-				context.commit({ type: 'setBoard', board: updatedBoard })
-			} catch (err) {
-				console.log('Store: Error in removeTask', err)
-				throw err
-			}
+			router.push('/board/' + context.getters.board._id + '/main-table/task/' + ids.taskId)
+			// try {
+			// 	const updatedBoard = await boardService.remove(ids, 'task')
+			// 	context.commit({ type: 'setBoard', board: updatedBoard })
+			// } catch (err) {
+			// 	console.log('Store: Error in removeTask', err)
+			// 	throw err
+			// }
 		},
 		async addGroup({ dispatch, getters, commit }) {
 			const group = boardService.getEmptyGroup()
