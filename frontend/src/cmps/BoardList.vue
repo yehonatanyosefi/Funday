@@ -13,13 +13,13 @@
 
                         <div v-if="isModalOpen && currBoardId === board._id" class="modal"  v-click-outside.stop="closeModal">
 
-                            <div @click.stop="toggleRename" class="modal-container">
+                            <div @click.stop="toggleRename(board._id)" class="modal-container">
                                 <section class="wrapper">
                                     <Edit class="svg-icon" />
                                     <span> Rename</span>
                                 </section>
                             </div>
-                            <div @click.stop="duplicateBoard" class="modal-container">
+                            <div @click="duplicateBoard" class="modal-container">
                                 <section class="wrapper">
                                     <Duplicate class="svg-icon" />
                                     <span>Duplicate</span>
@@ -77,7 +77,8 @@ export default {
             this.currBoardId = ''
             this.closeModal()
         },
-        toggleRename(){
+        toggleRename(boardId){
+            this.title=this.boardList.find(listItem=>listItem._id===boardId).title
             this.isRename = true
             this.closeModal()
         },
