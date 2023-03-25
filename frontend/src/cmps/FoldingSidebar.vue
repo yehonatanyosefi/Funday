@@ -8,7 +8,10 @@
             <span class="workspace-title flex ">Workspace
                 <Menu class="svg-icon" />
             </span>
-            <p class="main-workspace-title">Main workspace</p>
+            <p class="main-workspace-title">
+                <img src="../assets/M-home.png" alt="">
+                <div class="title">Main workspace</div> 
+            </p>
             <div class="btns flex column">
                 <button @click.stop="addBoard">
                     <Add class="svg-icon" /> <span class="optn">Add</span>
