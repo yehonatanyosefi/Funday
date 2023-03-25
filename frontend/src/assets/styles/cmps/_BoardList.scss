@@ -68,11 +68,20 @@
       padding: 4.81px;
       margin: 0 2px;
     }
-    &:hover {
+    &:not(.selected-board):hover {
       background-color: #dcdfec;
       border-radius: 4px;
       .small-menu {
         opacity: 1;
+      }
+    }
+    &.selected-board:hover {
+      .small-menu {
+        opacity: 1;
+        &:hover {
+          background-color: #dcdfec;
+          border-radius: 4px;
+        }
       }
     }
 
