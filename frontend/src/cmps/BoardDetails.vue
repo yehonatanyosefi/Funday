@@ -66,6 +66,15 @@ export default {
 				showErrorMsg('Cannot remove task')
 			}
 		},
+		async saveGroupTitle(payload) {
+			try {
+				const payloadToSave = {...payload,boardId:this.board._id}
+				await this.$store.dispatch({type:'saveGroupTitle',payload:payloadToSave})
+				// showSuccessMsg('Task updated')
+			} catch (err) {
+				// showErrorMsg('Cannot update task')
+			}
+		},
 		async saveGroup(payload) {
 			try {
 				const payloadToSave = {...payload,boardId:this.board._id}

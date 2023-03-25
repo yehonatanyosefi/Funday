@@ -41,13 +41,13 @@ export const boardStore = {
       state.rawBoard = JSON.parse(JSON.stringify(state.board))
     },
     filterBoard(state, { txt }) {
-      // if (txt === '') {
-      //   state.board = JSON.parse(JSON.stringify(state.rawBoard))
-      //   return
-      // }
-      // let boardCopy = JSON.parse(JSON.stringify(state.rawBoard))
-      // const filterBoard = boardService.filterByTxt(boardCopy, txt)
-      // state.board = filterBoard
+      if (txt === '') {
+        state.board = JSON.parse(JSON.stringify(state.rawBoard))
+        return
+      }
+      let boardCopy = JSON.parse(JSON.stringify(state.rawBoard))
+      const filterBoard = boardService.filterByTxt(boardCopy, txt)
+      state.board = filterBoard
     },
     // setTasks(state, { tasks }) {
     //     state.tasks = tasks
@@ -141,15 +141,24 @@ export const boardStore = {
         throw err
       }
     },
+    async saveGroupTitle(context, { payload }) {
+      try {
+        const { boardId, title, groupId } = payload
+        const group = context.state.board.groups.find((group) => group.id === groupId)
+        if (!group) throw new Error('No group')
+        group.title = title
+        const updatedBoard = await boardService.save(boardId, 'group', group, groupId)
+        context.commit({ type: 'setBoard', board: updatedBoard })
+        return group
+      } catch (err) {
+        console.log('Store: Error in saveGroup', err)
+        throw err
+      }
+    },
     async saveGroup(context, { payload }) {
       try {
         const { boardId, group, groupId } = payload
-        const updatedBoard = await boardService.save(
-          boardId,
-          'group',
-          group,
-          groupId
-        )
+        const updatedBoard = await boardService.save(boardId, 'group', group, groupId)
         context.commit({ type: 'setBoard', board: updatedBoard })
         return group
       } catch (err) {
