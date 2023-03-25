@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
 <section class="task-preview" v-if="cmpOrder?.length">
   <div class="task">
   <div class="task-preview-color" 
@@ -13,11 +12,6 @@
       class="task-checkbox"
       v-model="isModalOpen"
       @click="openModal">
-=======
-<section class="task-preview">
-  <div v-for="(cmp, idx) in cmpOrder" :key="idx" class="task">
-        <component :is="Object.values(cmp)[0]" :info="task[Object.keys(cmp)[0]]"></component>
->>>>>>> 39bddd0 (added board groups and tasks with scss)
   </div>
   <div v-for="(cmp, idx) in cmpOrder" :key="idx" class="task">
         <component

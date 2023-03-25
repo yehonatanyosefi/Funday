@@ -1,16 +1,18 @@
 $group-header-clr: rgb(87, 155, 252);
+
 .board-group {
      display: grid;
-<<<<<<< HEAD
      border-radius: 3px;
      height: fit-content;
      width: fit-content;
      // margin-inline-start: 16px;
      // margin-inline-start: 47px;
      margin-block-end: 50px;
+
      .menu-btn-container-wrapper {
           position: relative;
      }
+
      & .menu-btn-container {
           position: absolute;
           top: 0;
@@ -21,15 +23,18 @@ $group-header-clr: rgb(87, 155, 252);
           height: 20px;
           border-radius: 0.3em;
           cursor: pointer;
+
           &:hover {
                background-color: $color-highlighted;
                color: black;
           }
+
           & .menu-btn {
                color: $color-txt-primary;
                border: none;
           }
      }
+
      .task-checkbox {
           width: 16px;
           height: 16px;
@@ -37,21 +42,25 @@ $group-header-clr: rgb(87, 155, 252);
           // background-color: #fff;
           // border: 1px solid lightgray;
      }
+
      .group-header {
           color: $group-header-clr;
           font-size: 18px;
           display: flex;
           align-items: center;
           justify-content: start;
+
           &:hover .menu-btn-container {
                opacity: 1;
           }
      }
+
      .task-header {
           display: grid;
-          grid-template-columns: 33px 367px repeat(6,$group-column-width);
+          grid-template-columns: 33px 367px repeat(6, $group-column-width);
           position: relative;
-          & .group-preview-color{
+
+          & .group-preview-color {
                position: absolute;
                top: 0;
                left: -6px;
@@ -60,32 +69,18 @@ $group-header-clr: rgb(87, 155, 252);
                background-color: $group-header-clr;
                border-top-left-radius: 5px;
           }
+
           & section:nth-child(2) {
                border: 1px solid $color-divider;
           }
+
           & section {
                height: $group-row-height;
-=======
-     grid-template-columns: 1fr;
-     border-radius: 3px;
-     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-     height: fit-content;
-     width: fit-content;
-     .task-header {
-          display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          align-items: center;
-          background-color: white;
-          border: 1px solid lightgray;
-          border-radius: 3px;
-          section {
-               height: 100%;
->>>>>>> 39bddd0 (added board groups and tasks with scss)
                width: 100%;
                display: flex;
                justify-content: center;
                align-items: center;
-<<<<<<< HEAD
+
                & .task {
                     cursor: grab;
                     display: flex;
@@ -95,16 +90,10 @@ $group-header-clr: rgb(87, 155, 252);
                     height: 100%;
                     padding: 10px;
                     border: 1px solid $color-divider;
+
                     &:not(.status, .priority):hover {
                          background-color: $color-highlighted;
                     }
-=======
-               .task {
-                    width: 175px;
-                    height: 100%;
-                    padding: 10px;
-                    border: 1px solid lightgray;
->>>>>>> 39bddd0 (added board groups and tasks with scss)
                }
           }
      }
