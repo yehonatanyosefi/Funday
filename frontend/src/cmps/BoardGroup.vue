@@ -34,7 +34,7 @@
       <Draggable v-for="(task,idx) in group.tasks" :key="task.id">
           <TaskPreview
             :task="task"
-            :groupColor="groupColor"
+            :groupColor="group.style.color"
             :cmpOrder="cmpOrder"
             @saveTask="$emit('saveTask',{task:$event,groupId:group.id})"
             @removeTask="$emit('removeTask',{taskId:$event,groupId:group.id})"></TaskPreview>
@@ -56,6 +56,11 @@
             <template v-if="Object.keys(progressObj).includes(cmp)">
                 <ProgressBar :group="group" :cmp="cmp" :progressObj="progressObj"></ProgressBar>
             </template>
+            <Timeline
+                v-if="cmp==='timeline' && timelineProgress"
+                :groupColor="group.style.color"
+                :info="timelineProgress"
+                :isProgressBar="true"></Timeline>
         </div>
     </div>
 
@@ -74,6 +79,7 @@ import RemoveModal from './util/RemoveModal.vue'
 import { Container, Draggable } from "vue3-smooth-dnd"
 import TaskPreview from './TaskPreview.vue'
 import Title from './dynamicCmps/Title.vue'
+import Timeline from './dynamicCmps/Timeline.vue'
 export default {
 emits: ['saveTask', 'removeTask', 'saveGroup','removeGroup','applyTaskDrag', 'addTask','saveGroupTitle'],
 props: {
@@ -82,6 +88,10 @@ props: {
 },
 created() {
     this.groupTitle = this.group.title
+    this.timelineProgress = {
+        startDate: Math.min(...this.group.tasks.filter(task=>typeof task.timeline.startDate === 'number' && task.timeline.startDate > 0).map(task => task.timeline.startDate)),
+        dueDate: Math.max(...this.group.tasks.filter(task=>typeof task.timeline.dueDate === 'number' && task.timeline.dueDate > 0).map(task => task.timeline.dueDate)),
+    }
 },
 data() {
 return {
@@ -97,7 +107,8 @@ return {
             colors: ['#333333', '#401694', '#5559df','#579bfc','#c4c4c4'],
             words: ['Critical', 'High', 'Medium','Low',''],
         }
-    }
+    },
+    timelineProgress: {},
     // dropPlaceholderOptions: {
     //     className: 'drop-preview',
     //     animationDuration: '150',
@@ -164,6 +175,7 @@ components: {
      Menu,
      Title,
      ProgressBar,
+     Timeline,
     //  MenuModal,
 },
 }

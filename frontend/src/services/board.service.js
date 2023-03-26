@@ -309,7 +309,6 @@ function getEmptyBoard() {
     isStarred: false,
     archivedAt: '',
     cmpOrder: [
-      'title',
       'date',
       'person',
       'status',

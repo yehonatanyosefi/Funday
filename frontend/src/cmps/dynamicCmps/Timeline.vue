@@ -1,6 +1,10 @@
 <template>
-	<div class="start-end-date-container">
+	<div class="start-end-date-container" 
+			@mouseover="onMouseover"
+			@mouseout="mouseout"
+			style="{cursor: 'pointer'}">
 		<el-date-picker
+			:disabled="isProgressBar"
 			class="start-end-date"
 			v-model="value"
 			type="daterange"
@@ -11,14 +15,14 @@
 			@change="change"
 			:style="dateStyles"
 		/>
-		<button
-			class="timeline-progress"
-			:class="{ 'date-not-set': !isSet }"
-			@mouseover="omouseover"
-			@mouseleave="mouseleave"
-		>
-			{{ display }}
-		</button>
+		<div class="timeline-progress"
+			:style="{backgroundColor: timelineBgc}">
+			<button v-if="this.info?.dueDate" :style="btnStyle">
+			</button>
+			<div class="timeline-text">
+			{{ textDisplay }}
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -28,18 +32,24 @@ export default {
 	emits: ['saveTask'],
 	props: {
 		info: Object,
+		groupColor: String,
+		isProgressBar: {type:Boolean, default: false},
 	},
 	data() {
 		return {
 			value: [],
 			size: 'small',
-			isSet: false,
-			text: '',
+			mouseOver: false,
 		}
+	},
+	created() {
+		this.value = [
+			new Date(this.info?.startDate),
+			new Date(this.info?.dueDate || this.info?.startDate || Date.now()),
+		]
 	},
 	methods: {
 		change() {
-			console.log(this.value)
 			const startDate = new Date(this.value[0]).getTime()
 			const dueDate = new Date(this.value[1]).getTime()
 			const timeline = { startDate, dueDate }
@@ -48,6 +58,10 @@ export default {
 		formattedDate(dateToFormat) {
 			const date = new Date(dateToFormat)
 			const day = date.getDate()
+			const month = this.formatMonth(date)
+			return `${month} ${day}`
+		},
+		formatMonth(date) {
 			const monthNames = [
 				'Jan',
 				'Feb',
@@ -62,38 +76,62 @@ export default {
 				'Nov',
 				'Dec',
 			]
-			const month = monthNames[date.getMonth()]
-			return `${month} ${day}`
+			return monthNames[date.getMonth()]
 		},
-		omouseover() {
-			if (!this.isSet) this.text = 'setDate'
+		onMouseover() {
+			this.mouseOver = true
 		},
-		mouseleave() {
-			if (!this.isSet) this.text = '-'
-			else {
-				const startDate = this.formattedDate(this.info.startDate)
-				const dutDate = this.formattedDate(this.info.dutDate)
-				this.text = `${startDate} - ${dutDate}`
-			}
+		mouseout() {
+			this.mouseOver = false
 		},
 	},
 	computed: {
+		btnStyle() {
+			const bgc = (this.info?.dueDate) ? this.groupColor : 'inherit'
+			const width = this.progressDate/100*130
+			let radius = '0px'
+			if (width >= 120) {
+				radius =  '555px'
+			}
+			return { backgroundColor: bgc, width: width+'px',borderBottomRightRadius: radius,
+        			borderTopRightRadius: radius, borderBottomLeftRadius: '555px',
+        			borderTopLeftRadius: '555px'}
+		},
 		dateStyles() {
-			return { width: '130px', height: '100%' }
+			return { width: '130px', height: '100%', cursor: 'pointer' }
 		},
-		display() {
-			return this.text
+		timelineBgc() {
+			if (this.info?.dueDate) {
+				return '#333333'
+			}
 		},
+		textDisplay() {
+			if (!this.info?.dueDate && !this.mouseOver) return '-'
+			if (!this.info?.dueDate && this.mouseOver) return 'Set Date'
+			if (this.mouseOver) return this.calculatedDate
+			const startDate = this.formattedDate(this.info.startDate)
+			const dueDate = this.formattedDate(this.info.dueDate)
+			return `${startDate} - ${dueDate}`
+		},
+		progressDate() {
+			const percentage = (this.daysPassed / this.totalDays) * 100;
+      		const percentageDisplay = percentage.toFixed(2)
+			if (percentageDisplay > 100) return 100
+			if (percentageDisplay < 0) return 0
+			return percentageDisplay
+		},
+		daysPassed() {
+			return Math.floor((new Date() - new Date(this.info?.startDate)) / (1000*60*60*24))
+		},
+		totalDays() {
+			return Math.ceil((new Date(this.info?.dueDate) - new Date(this.info?.startDate)) / (1000*60*60*24))
+		},
+		calculatedDate() {
+			const days = this.totalDays
+			if (days > 31) return Math.round(days/30) + 'm'
+			return days+'d'
+		}
 	},
 	components: {},
-	created() {
-		console.log('info', this.info)
-		if (!this.info?.startDate) this.isSet = false
-		this.value = [
-			new Date(this.info?.startDate),
-			new Date(this.info?.dueDate || this.info?.startDate || Date.now()),
-		]
-		console.log('value', this.value)
-	},
 }
 </script>

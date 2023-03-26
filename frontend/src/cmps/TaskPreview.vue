@@ -23,6 +23,7 @@
 			<component
 				:is="capitalizeFirstLetter(cmp)"
 				:info="task[cmp]"
+				:groupColor="groupColor"
 				@saveTask="saveTask($event, cmp)"
 			></component>
 		</div>
