@@ -1,5 +1,6 @@
 <template>
 <div>
+     <div class="triangle"></div>
      <div class="modal-container" >
           <div
                v-for="(label,idx) in labels"

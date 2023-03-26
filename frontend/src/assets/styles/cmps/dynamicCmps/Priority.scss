@@ -1,3 +1,17 @@
 .priority .modal {
-	top: 720%;
+	// top: 720%;
+	top: 114%;
+	.triangle{
+		border-style: solid;
+		border-width: 8px 6px 8px 0;
+		position: absolute;
+		transition: opacity 0.1s ease-in-out;
+		border-color: transparent #ffffff transparent transparent;
+		height: 16px;
+		width: 6px;
+		background-color: transparent;
+		rotate: 90deg;
+		top: -4%;
+		right: 50%;
+	}
 }
