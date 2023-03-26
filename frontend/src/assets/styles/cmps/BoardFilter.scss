@@ -1,188 +1,190 @@
 .board-filter {
-  display: flex;
-  position: relative;
-  padding: 1rem 0;
+	display: flex;
+	position: relative;
+	padding: 1rem 0;
+	color: $color-txt-primary;
+	font-family: pop-light;
 
-  > * {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	> * {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 
-    button {
-      background-color: transparent;
-      padding: 0;
-      padding-right: 10px;
-      font-size: rem(14px);
-      color: $color-txt-primary;
-      cursor: pointer;
-    }
+		button {
+			background-color: transparent;
+			padding: 0;
+			padding-right: 10px;
+			font-size: rem(14px);
+			color: $color-txt-primary;
+			cursor: pointer;
+		}
 
-    svg {
-      fill: $color-txt-primary;
-    }
+		svg {
+			fill: $color-txt-primary;
+		}
 
-    &:not(.regular-modal) {
-      &:hover {
-        background-color: $color-btn-hover;
-        border-radius: 4px;
-      }
-    }
-  }
+		&:not(.regular-modal) {
+			&:hover {
+				background-color: $color-btn-hover;
+				border-radius: 4px;
+			}
+		}
+	}
 
-  .add-new-btns {
-    background-color: $primary-blue;
-    cursor: pointer;
-    margin-right: 14px;
-    border-radius: 4px;
+	.add-new-btns {
+		background-color: $primary-blue;
+		cursor: pointer;
+		margin-right: 14px;
+		border-radius: 4px;
 
-    button {
-      color: white;
-      padding: 0;
-      height: 100%;
-      width: 75px;
-      border-radius: 0.2em;
+		button {
+			color: white;
+			padding: 0;
+			height: 100%;
+			width: 75px;
+			border-radius: 0.2em;
 
-      &:hover {
-        background-color: (darken($primary-blue, 8%));
-      }
-    }
+			&:hover {
+				background-color: (darken($primary-blue, 8%));
+			}
+		}
 
-    .add-new-group-btn {
-      height: 100%;
-      border-top-right-radius: 0.2em;
-      border-bottom-right-radius: 0.2em;
-      width: 28px;
-      border-left: 1px solid (darken($primary-blue, 8%));
+		.add-new-group-btn {
+			height: 100%;
+			border-top-right-radius: 0.2em;
+			border-bottom-right-radius: 0.2em;
+			width: 28px;
+			border-left: 1px solid (darken($primary-blue, 8%));
 
-      &:hover {
-        background-color: (darken($primary-blue, 8%));
-      }
-    }
+			&:hover {
+				background-color: (darken($primary-blue, 8%));
+			}
+		}
 
-    svg {
-      fill: white;
-    }
+		svg {
+			fill: white;
+		}
 
-    &:hover {
-      background-color: ($primary-blue);
-    }
-  }
+		&:hover {
+			background-color: ($primary-blue);
+		}
+	}
 
-  .search-tasks {
-    position: relative;
-    cursor: pointer;
-    margin-right: 7px;
+	.search-tasks {
+		position: relative;
+		cursor: pointer;
+		margin-right: 7px;
 
-    &.input-open {
-      outline: 1px solid $primary-blue;
-      border-radius: 0.1em;
-    }
+		&.input-open {
+			outline: 1px solid $primary-blue;
+			border-radius: 0.1em;
+		}
 
-    &.filtering {
-      background-color: $color-highlight_blue;
-    }
+		&.filtering {
+			background-color: $color-highlight_blue;
+		}
 
-    input {
-      border: none;
-      &::placeholder {
-        color: $color-txt-primary;
-      }
+		input {
+			border: none;
+			&::placeholder {
+				color: $color-txt-primary;
+			}
 
-      background-color: transparent;
-      width: 60px;
-      transition: width 0.4s;
-      height: 100%;
-      cursor: pointer;
-      outline: none;
+			background-color: transparent;
+			width: 60px;
+			transition: width 0.4s;
+			height: 100%;
+			cursor: pointer;
+			outline: none;
 
-      &.open {
-        width: 190px;
-        cursor: text;
-      }
-    }
+			&.open {
+				width: 190px;
+				cursor: text;
+			}
+		}
 
-    svg {
-      margin-left: 5px;
-    }
-  }
+		svg {
+			margin-left: 5px;
+		}
+	}
 
-  .person-attach {
-    position: relative;
-    margin-right: 14px;
+	.person-attach {
+		position: relative;
+		margin-right: 14px;
 
-    .title-modal {
-      width: 135px;
-    }
+		.title-modal {
+			width: 135px;
+		}
 
-    button {
-      padding-left: 4px;
-    }
+		button {
+			padding-left: 4px;
+		}
 
-    cursor: pointer;
+		cursor: pointer;
 
-    svg {
-      margin-left: 5px;
-    }
-  }
+		svg {
+			margin-left: 5px;
+		}
+	}
 
-  .filter {
-    cursor: pointer;
-    margin-right: 16px;
+	.filter {
+		cursor: pointer;
+		margin-right: 16px;
 
-    button {
-      padding-left: 2px;
-    }
-  }
+		button {
+			padding-left: 2px;
+		}
+	}
 
-  .sort {
-    cursor: pointer;
-  }
+	.sort {
+		cursor: pointer;
+	}
 
-  .search-tasks {
-    position: relative;
-    cursor: pointer;
+	.search-tasks {
+		position: relative;
+		cursor: pointer;
 
-    &.input-open {
-      outline: 1px solid $primary-blue;
-    }
+		&.input-open {
+			outline: 1px solid $primary-blue;
+		}
 
-    &.filtering {
-      background-color: $color-highlight_blue;
-    }
+		&.filtering {
+			background-color: $color-highlight_blue;
+		}
 
-    .cancel {
-      position: absolute;
-      right: 8px;
+		.cancel {
+			position: absolute;
+			right: 8px;
 
-      svg {
-        fill: $primary-blue;
-        scale: 0.8;
-      }
-    }
+			svg {
+				fill: $primary-blue;
+				scale: 0.8;
+			}
+		}
 
-    input {
-      &::placeholder {
-        color: $color-txt-primary;
-      }
+		input {
+			&::placeholder {
+				color: $color-txt-primary;
+			}
 
-      background-color: transparent;
-      width: 60px;
-      transition: width 0.4s;
-      height: 100%;
-      cursor: pointer;
+			background-color: transparent;
+			width: 60px;
+			transition: width 0.4s;
+			height: 100%;
+			cursor: pointer;
 
-      &.open {
-        width: 190px;
-        cursor: text;
-      }
-    }
+			&.open {
+				width: 190px;
+				cursor: text;
+			}
+		}
 
-    svg {
-      margin-left: 5px;
-    }
-  }
+		svg {
+			margin-left: 5px;
+		}
+	}
 
-  @include for-mobile-layout {
-    display: block;
-  }
+	@include for-mobile-layout {
+		display: block;
+	}
 }

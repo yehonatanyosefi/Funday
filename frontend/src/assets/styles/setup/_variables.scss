@@ -33,19 +33,20 @@ $color-empty-blue: rgb(0, 134, 192);
 
 //PRIORITY COLORS
 .Critical {
-  background-color: $color-critical;
+	background-color: $color-critical;
 }
 .High {
-  background-color: $color-high;
+	background-color: $color-high;
 }
 .Medium {
-  background-color: $color-medium;
+	background-color: $color-medium;
 }
 .Low {
-  background-color: $color-low;
+	background-color: $color-low;
 }
 
 // UI COLORS
+$color-snow_white: #ffffff;
 $color-txt-primary: #323338;
 $color-divider: #d0d4e4;
 $color-this-month: #579bfc;
@@ -70,10 +71,9 @@ $group-row-height: 36px;
 // Common colors
 $brdr-clr: #c3c6d4;
 
-$colors-list: #037f4c #9cd326 #cab641 #ffcb00 #ff642e #ffadad #ff7575 #bb3354
-  #ff158a #faa1f1 #a25ddc #784bd1 #7e3b8a #401694 #5559df #225091 #579bfc
-  #4eccc6 #6cf #68a1bd #9aadbd #808080 #333 #7f5347 #d974b0 #ad967a #a1e3f6
-  #bd816e #2b76e5 #175a63 #bda8f9 #a9bee8 #9d99b9 #563e3e;
+$colors-list: #037f4c #9cd326 #cab641 #ffcb00 #ff642e #ffadad #ff7575 #bb3354 #ff158a #faa1f1 #a25ddc
+	#784bd1 #7e3b8a #401694 #5559df #225091 #579bfc #4eccc6 #6cf #68a1bd #9aadbd #808080 #333 #7f5347
+	#d974b0 #ad967a #a1e3f6 #bd816e #2b76e5 #175a63 #bda8f9 #a9bee8 #9d99b9 #563e3e;
 
 // @each $current-color in $colors-list {
 //      $i: index($colors-list, $current-color);
