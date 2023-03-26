@@ -3,6 +3,29 @@
 }
 .status,
 .priority {
+	// &:hover::after {
+	// 	content: "+";
+	// 	position: absolute;
+	// 	right: 0;
+	// 	top: 0;
+	// 	translate: -50% -50%;
+	// 	color: $group-header-clr;
+	// 	width: 5px;
+	// 	height: 5px;
+	// }
+	&:hover .folding-corner {
+		position: absolute;
+		right: 0;
+		top: 0;
+		transition: border-width .3s ease .2s;
+		background-color: #f4f5f8;
+		border-bottom: 10px solid rgba(0, 0, 0, .4);
+		border-right: 10px solid transparent;
+		&:hover {
+			border-bottom: 15px solid rgba(0, 0, 0, .4);
+			border-right: 15px solid transparent;
+		}
+	}
 	position: relative;
 	& .modal {
 		//   display: flex;
