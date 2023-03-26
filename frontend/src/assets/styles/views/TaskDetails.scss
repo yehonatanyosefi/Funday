@@ -579,9 +579,10 @@
 }
 
 .black-screen {
-	position: fixed;
-	width: 100%;
+	position: absolute;
+	inset: 0;
 	height: 100%;
+	width: 100%;
 	background-color: $color-surface;
 	z-index: 10000;
 	opacity: 0;
