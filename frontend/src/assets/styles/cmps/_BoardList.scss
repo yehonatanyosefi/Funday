@@ -21,12 +21,18 @@
       margin-inline-end: 0;
       padding-inline-end: 0;
     }
+    span {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
     input {
       width: 183px;
       height: 23px;
       border: 1px solid;
       border-color: $primary-blue;
-      &:focus{
+      &:focus {
         outline: $primary-blue;
       }
     }

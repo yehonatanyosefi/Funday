@@ -85,6 +85,7 @@
             line-height: 22px;
             color: #323338;
             border: none;
+            border-color: $primary-blue;
             &:hover,
             &:focus {
               box-shadow: none;
@@ -97,6 +98,13 @@
           li {
             color: #323338;
             padding: 8px;
+            align-items: center;
+            height: em(40px);
+
+            &:hover{
+              background-color: #dcdfec;
+              border-radius: 4px;
+            }
             .fullname {
               padding: 0 8px;
               margin: 0;
