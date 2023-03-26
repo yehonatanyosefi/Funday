@@ -40,7 +40,7 @@ methods: {
           return doneWidth
      },
      title(idx) {
-          return this.widths[idx]/123*100+'% '+this.words[idx]
+          return Math.round(this.widths[idx]/123*100)+'% '+this.words[idx]
      },
 },
 computed: {
