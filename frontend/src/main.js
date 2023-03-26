@@ -8,10 +8,11 @@ import 'element-plus/theme-chalk/index.css'
 import './assets/styles/main.scss'
 import App from './App.vue'
 
-import {clickOutsideDirective} from './directives'
+import {clickOutsideDirective } from './directives'
 
 const app = createApp(App)
-app.directive('click-outside', clickOutsideDirective)
+app.directive('click-outside', clickOutsideDirective) 
+
 
 app.use(router)
 app.use(store)
