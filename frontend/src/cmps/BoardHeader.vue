@@ -1,8 +1,8 @@
 <template>
-	<section class="board-header-container">
+	<section v-if="board" class="board-header-container">
 		<section class="board-header">
 			<section class="top-header">
-				<div>
+				<div class="board-title-left-container">
 					<h1
 						:class="{ editing: isEditing }"
 						@keydown.enter.prevent="saveBoardTitle"
@@ -22,7 +22,7 @@
           </div> -->
 					<div class="invite">
 						<Invite class="svg-icon" />
-						Invite
+						Invite/{{ membersCount }}
 						<a :href="getBoardUrl" target="_blank" rel="noopener noreferrer"></a>
 					</div>
 				</div>
@@ -34,7 +34,7 @@
 						<p class="view-title">Main Table</p>
 					</button>
 				</router-link>
-				<span class="separator">|</span>
+				<span class="separator"></span>
 				<router-link :to="'/board/' + board._id + '/kanban'">
 					<button
 						@click="changeView('kanban')"
@@ -44,7 +44,7 @@
 						<p class="view-title">Kanban</p>
 					</button>
 				</router-link>
-				<span class="separator">|</span>
+				<span class="separator"></span>
 				<router-link :to="'/board/' + board._id + '/dashboard'">
 					<button
 						@click="changeView('dashboard')"
@@ -147,9 +147,12 @@ export default {
 			return this.$store.getters.filteredBoard.title
 		},
 		board() {
-			return this.$store.getters.filteredBoard
+			const board = this.$store.getters.filteredBoard
+			return board
 		},
-
+		membersCount() {
+			return this.board?.members.length || 1
+		},
 		getUsers() {
 			return this.$store.getters.users
 		},
