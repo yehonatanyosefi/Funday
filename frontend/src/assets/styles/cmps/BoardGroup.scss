@@ -5,6 +5,10 @@
      height: fit-content;
      width: fit-content;
      margin-block-end: 50px;
+     .drop-preview {
+          border: 1px dashed $color-divider;
+          z-index: 1;
+     }
      .add-item {
           background-color: inherit;
           margin-inline-start: 18px;
@@ -55,7 +59,27 @@
           align-items: center;
           justify-content: start;
           position: relative;
+          text-overflow: ellipsis;
+          input {
+               width: 100px;
+               &:focus {
+                    width: 450px;
+                    box-shadow: 0px 0px 0px 0.5px $group-header-clr;
+               }
+          }
           &:hover .menu-btn-container {
+               opacity: 1;
+          }
+          .task-count {
+               padding-inline-start: 6px;
+               opacity: 0;
+               @include flex-center;
+               font-family: ROBOTO-reg;
+               font-size: 14px;
+               color: $color-txt-primary;
+               transition: opacity 0.2s ease-in-out;
+          }
+          &:hover .task-count {
                opacity: 1;
           }
      }
@@ -68,6 +92,8 @@
           border-end-start-radius: 7px;
           border-inline-end: 1px solid $color-divider;
           box-shadow: $small-shadow;
+          z-index: 2;
+          background-color: white;
           .progress-column:not(:last-child) {
                border-inline-end: 1px solid $color-divider;
           }
