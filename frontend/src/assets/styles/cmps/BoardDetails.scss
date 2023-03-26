@@ -18,7 +18,7 @@
           border-radius: 0.25em;
           outline: none;
           text-overflow: ellipsis;
-
+          padding: 0px 4px;
           &:hover {
                box-shadow: 0px 0px 0px 0.5px $color-divider;
           }
