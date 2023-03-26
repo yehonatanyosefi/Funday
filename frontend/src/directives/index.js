@@ -23,3 +23,4 @@ export const clickOutsideDirective = {
     document.removeEventListener('click', el.clickOutside)
   },
 }
+

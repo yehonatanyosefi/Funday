@@ -1,4 +1,5 @@
 <template>
+	<div class="black-screen" :class="{ show: darken }"></div>
 	<section
 		class="task-details-container"
 		@mouseover="darken = true"

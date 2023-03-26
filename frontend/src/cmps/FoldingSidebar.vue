@@ -22,7 +22,7 @@
                 <div class="searching" @click.stop="isSearching = true">
                     <button>
                         <Search class="svg-icon" /> <span class="optn" v-if="!isSearching">Search</span>
-                        <input v-else v-model="filterBy.txt" type="search" placeholder="Search" @input="search">
+                        <input v-focus v-else v-model="filterBy.txt" type="search" placeholder="Search" @input="search">
                     </button>
 
                 </div>
@@ -100,5 +100,12 @@ export default {
         BoardList,
         LeftArrow
     },
+    directives: {
+    focus: {
+      mounted(el) {
+        el.focus();
+      }
+    }
+  }
 }
 </script>

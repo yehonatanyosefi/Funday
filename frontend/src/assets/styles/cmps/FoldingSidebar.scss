@@ -74,26 +74,35 @@
         border: none;
         width: 100%;
         background-color: transparent;
-        outline: none;
+        outline: 1px $primary-blue;
+        padding-inline-start: 10px;
+        // line-height: em(32px);
+
+        &::placeholder{
+          color:#323338;
+        }
+
       }
       button {
+        border-radius: 4px;
+
+        &:focus-within{
+          outline: 1px solid $primary-blue;
+        }
         box-sizing: border-box;
         cursor: pointer;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: start;
-        // padding-left: 6px;
         background-color: transparent;
         margin: 0;
-        line-height: em(32px);
+        // line-height: em(26.7px);
         .optn {
           margin: 0 8px;
         }
         &:hover {
           background-color: #dcdfec;
-          border-radius: 4px;
-          // border: 1px solid transparent;
         }
       }
     }

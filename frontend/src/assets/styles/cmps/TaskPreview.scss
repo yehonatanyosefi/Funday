@@ -1,193 +1,199 @@
-
 .task-preview {
-     display: grid;
-     grid-template-columns: 33px 367px repeat(6, $group-column-width);
-     position: relative;
-     .menu-btn-container {
-          justify-self: center;
-          align-self: center;
-          left: -35px;
-          top: 6.8px;
-     }
-     .task-preview-color {
-          position: absolute;
-          top: 0;
-          left: -6px;
-          width: 6px;
-          height: 102%;
-          background-color: $group-header-clr;
-     }
-     .task-preview-color.last-task {
-          border-bottom-left-radius: 5px;
-     }
+  display: grid;
+  grid-template-columns: 33px 367px repeat(6, $group-column-width);
+  position: relative;
+  .menu-btn-container {
+    justify-self: center;
+    align-self: center;
+    left: -35px;
+    top: 6.8px;
+  }
+  .task-preview-color {
+    position: absolute;
+    top: 0;
+    left: -6px;
+    width: 6px;
+    height: 102%;
+    background-color: $group-header-clr;
+  }
+  .task-preview-color.last-task {
+    border-bottom-left-radius: 5px;
+  }
 
-     &:hover {
-          background-color: $color-highlighted;
-          & .menu-btn-container {
-               opacity: 1;
-          }
-     }
-     .task {
-          &:not(:first-of-type, :nth-of-type(2)) {
-               width: $group-column-width;
-          }
-          &:first-of-type {
-               width: 33px;
-          }
-          &:focus-within {
-               border: 1px solid $group-header-clr;
-          }
-          cursor: pointer;
-          // border: 1px solid $color-divider;
-          // border-inline-start: 1px solid $color-divider;
-          border-inline-end: 1px solid $color-divider;
-          height: $group-row-height;
-          display: flex;
-          justify-content: center;
-          align-items: center;
+  &:hover {
+    background-color: $color-highlighted;
+    & .menu-btn-container {
+      opacity: 1;
+    }
+  }
+  .task {
+    &:not(:first-of-type, :nth-of-type(2)) {
+      width: $group-column-width;
+    }
+    &:first-of-type {
+      width: 33px;
+    }
+    &:focus-within {
+      border: 1px solid $group-header-clr;
+    }
+    cursor: pointer;
+    // border: 1px solid $color-divider;
+    // border-inline-start: 1px solid $color-divider;
+    border-inline-end: 1px solid $color-divider;
+    height: $group-row-height;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-          &:hover .menu-btn-container {
-               opacity: 1;
-          }
+    &:hover .menu-btn-container {
+      opacity: 1;
+    }
 
-          .profile-div {
-               display: flex;
-               justify-content: center;
-               align-items: center;
-          }
+    .profile-div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-          .profile-div img,
-          .profile-div svg {
-               margin-inline-end: -6px;
-          }
+    .profile-div img,
+    .profile-div svg {
+      margin-inline-end: -6px;
+    }
 
-          .status,
-          .priority {
-               padding: 10px;
-               width: 100%;
-               height: 100%;
-               display: flex;
-               justify-content: center;
-               align-items: center;
-               color: white;
-          }
+    .status,
+    .priority {
+      padding: 10px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+    }
 
-          .priority {
-               background-color: $color-empty-label;
+    .priority {
+      background-color: $color-empty-label;
 
-               &.Critical {
-                    background-color: $color-critical;
-               }
+      align-items: flex-end;
+      gap: 2px;
 
-               &.High {
-                    background-color: $color-high;
-               }
+      span{
+          height: 17px;
+      }
 
-               &.Medium {
-                    background-color: $color-medium;
-               }
+      &.Critical {
+        background-color: $color-critical;
+      }
 
-               &.Low {
-                    background-color: $color-low;
-               }
-          }
+      &.High {
+        background-color: $color-high;
+      }
 
-          .status {
-               &.empty {
-                    background-color: $color-empty-label;
-               }
+      &.Medium {
+        background-color: $color-medium;
+      }
 
-               &.working {
-                    background-color: $color-working-on-it;
-               }
+      &.Low {
+        background-color: $color-low;
+      }
+    }
 
-               &.stuck {
-                    background-color: $color-stuck;
-               }
+    .status {
+      &.empty {
+        background-color: $color-empty-label;
+      }
 
-               &.done {
-                    background-color: $color-done;
-               }
-          }
-     }
+      &.working {
+        background-color: $color-working-on-it;
+      }
 
-     &:hover .task .priority,
-     &:hover .task .status.empty {
-          background-color: lighten($color-empty-label, $lighten-status-amount);
-     }
+      &.stuck {
+        background-color: $color-stuck;
+      }
 
-     &:hover .task .priority.Critical {
-          background-color: lighten($color-critical, $lighten-priority-amount);
-     }
+      &.done {
+        background-color: $color-done;
+      }
+    }
+  }
 
-     &:hover .task .priority.High {
-          background-color: lighten($color-high, $lighten-priority-amount);
-     }
+  &:hover .task .priority,
+  &:hover .task .status.empty {
+    background-color: lighten($color-empty-label, $lighten-status-amount);
+  }
 
-     &:hover .task .priority.Medium {
-          background-color: lighten($color-medium, $lighten-priority-amount);
-     }
+  &:hover .task .priority.Critical {
+    background-color: lighten($color-critical, $lighten-priority-amount);
+  }
 
-     &:hover .task .priority.Low {
-          background-color: lighten($color-low, $lighten-priority-amount);
-     }
+  &:hover .task .priority.High {
+    background-color: lighten($color-high, $lighten-priority-amount);
+  }
 
-     &:hover .task .status.working {
-          background-color: lighten($color-working-on-it, $lighten-status-amount);
-     }
+  &:hover .task .priority.Medium {
+    background-color: lighten($color-medium, $lighten-priority-amount);
+  }
 
-     &:hover .task .status.stuck {
-          background-color: lighten($color-stuck, $lighten-status-amount);
-     }
+  &:hover .task .priority.Low {
+    background-color: lighten($color-low, $lighten-priority-amount);
+  }
 
-     &:hover .task .status.done {
-          background-color: lighten($color-done, $lighten-status-amount);
-     }
-     .task-title {
-          width: 367px;
-          .task-title-input {
-               width: 275px;
-               font: inherit;
-               color: inherit;
-          }
-     }
-     .task-details-icon {
-          width: 64px;
-          height: 100%;
-          @include flex-center;
-          border-inline-start: 1px solid $color-divider;
-          .add-update {
-               &:hover {
-                    color: #0073ea;
-               }
-               width: 24px;
-               height: 24px;
-               cursor: pointer;
-               color: $color-empty-label;
-               font-size: 24px;
-          }
-     }
-     &:focus-within:not(.add-task) {
-          input[type="checkbox"] {
-               // &::before {
-                    // content: "";
-                    // position: absolute;
-                    // left: 0;
-                    // top: 0;
-                    // translate: -50% -50%;
-                    // width: 16px;
-                    // height: 16px;
-               // }
-               background-color: $color-focused-within !important;
-          }
-          background-color: $color-focused-within;
-     }
+  &:hover .task .status.working {
+    background-color: lighten($color-working-on-it, $lighten-status-amount);
+  }
+
+  &:hover .task .status.stuck {
+    background-color: lighten($color-stuck, $lighten-status-amount);
+  }
+
+  &:hover .task .status.done {
+    background-color: lighten($color-done, $lighten-status-amount);
+  }
+  .task-title {
+    width: 367px;
+    .task-title-input {
+      width: 275px;
+      font: inherit;
+      color: inherit;
+    }
+  }
+  .task-details-icon {
+    width: 64px;
+    height: 100%;
+    @include flex-center;
+    border-inline-start: 1px solid $color-divider;
+    .add-update {
+      &:hover {
+        color: #0073ea;
+      }
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      color: $color-empty-label;
+      font-size: 24px;
+    }
+  }
+  &:focus-within:not(.add-task) {
+    input[type='checkbox'] {
+      // &::before {
+      // content: "";
+      // position: absolute;
+      // left: 0;
+      // top: 0;
+      // translate: -50% -50%;
+      // width: 16px;
+      // height: 16px;
+      // }
+      background-color: $color-focused-within !important;
+    }
+    background-color: $color-focused-within;
+  }
 }
 .task-preview {
-     box-shadow: 0 1px 1px $color-divider;
+  box-shadow: 0 1px 1px $color-divider;
 }
-.task-preview.add-task { 
-     border-block-end: 1px solid $color-divider;
-     border-inline-end: 1px solid $color-divider;
-     box-shadow: $small-shadow;
+.task-preview.add-task {
+  border-block-end: 1px solid $color-divider;
+  border-inline-end: 1px solid $color-divider;
+  box-shadow: $small-shadow;
 }
