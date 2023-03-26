@@ -114,10 +114,11 @@ export const boardStore = {
 			const payload = { boardId, task, groupId: updatedGroupId }
 			return dispatch({ type: 'saveTask', payload })
 		},
-		async removeTask({ commit }, { ids }) {
+		async removeTask({ commit, dispatch }, { ids }) {
 			try {
-				await boardService.remove(ids, 'task')
-				commit({ type: 'removeTask', ids })
+				const updatedBoard = await boardService.remove(ids, 'task')
+				dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
+				// commit({ type: 'removeTask', ids })
 			} catch (err) {
 				console.log('Store: Error in removeTask', err)
 				throw err
@@ -129,11 +130,12 @@ export const boardStore = {
 			const updatedBoard = await boardService.save(boardId, 'group', group)
 			dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
 		},
-		async removeGroup({ commit }, { payload }) {
+		async removeGroup({ commit, dispatch }, { payload }) {
 			try {
 				const { groupId, boardId } = payload
-				await boardService.remove({ boardId, groupId }, 'group')
-				commit({ type: 'removeGroup', groupId })
+				const updatedBoard = await boardService.remove({ boardId, groupId }, 'group')
+				dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
+				// commit({ type: 'removeGroup', groupId })
 				return groupId
 			} catch (err) {
 				console.log('boardStore: Error in deleteBoard', err)
