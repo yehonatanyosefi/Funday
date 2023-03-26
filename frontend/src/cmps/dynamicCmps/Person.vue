@@ -21,7 +21,7 @@
         <div class="users-list">
 
           <div class="search-member">
-            <input type="search" @input="search" v-model="searchTxt" placeholder="Search names, roles or teams" @click.stop>
+            <input type="search" v-focus @input="search" v-model="searchTxt" placeholder="Search names" @click.stop>
             <Search class="svg-icon" color="#676879" width="16px" height="16px" />
           </div>
   
@@ -110,5 +110,12 @@ export default {
     AddedUserList,
     Add,
   },
+  directives: {
+    focus: {
+      mounted(el) {
+        el.focus();
+      }
+    }
+  }
 }
 </script>
