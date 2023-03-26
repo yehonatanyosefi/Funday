@@ -174,18 +174,22 @@ export default {
 			return timelineProgress
 		},
 		startDate() {
-			return Math.min(
+			const startDate = Math.min(
 				...this.group.tasks
 					.filter((task) => typeof task.timeline?.startDate === 'number' && task.timeline.startDate > 0)
 					.map((task) => task.timeline.startDate)
 			)
+			if (startDate < 0) return null
+			return startDate
 		},
 		dueDate() {
-			return Math.max(
+			const dueDate = Math.max(
 				...this.group.tasks
 					.filter((task) => typeof task.timeline?.dueDate === 'number' && task.timeline.dueDate > 0)
 					.map((task) => task.timeline.dueDate)
 			)
+			if (dueDate < 0) return null
+			return dueDate
 		},
 	},
 	components: {
