@@ -1,11 +1,12 @@
 <template>
 	<section class="board-group">
-		<h2 class="group-header">
+		<h4 class="group-header">
 			<div class="menu-btn-container">
 				<Menu class="svg-icon menu-btn" width="20" height="20" @click="toggleMenuModal" />
 			</div>
 			<input type="text" :style="{ color: groupColor }" v-model="groupTitle" @input="saveGroupTitle" />
-		</h2>
+			<div class="task-count">{{group.tasks.length}} tasks</div>
+		</h4>
 		<div class="task-header">
 			<div class="group-preview-color" :style="{ backgroundColor: groupColor }"></div>
 			<section>
@@ -27,9 +28,9 @@
 			orientation="vertical"
 			class="group"
 			@drop="onTaskDrop($event)"
+			:drop-placeholder="dropPlaceholderOptions"
 			:get-child-payload="getCardPayload('task.id')"
 		>
-			<!-- :drop-placeholder="dropPlaceholderOptions" -->
 			<Draggable v-for="(task, idx) in group.tasks" :key="task.id">
 				<TaskPreview
 					:task="task"
@@ -108,11 +109,11 @@ export default {
 					words: ['Critical', 'High', 'Medium', 'Low', ''],
 				},
 			},
-			// dropPlaceholderOptions: {
-			//     className: 'drop-preview',
-			//     animationDuration: '150',
-			//     showOnTop: true
-			// }
+			dropPlaceholderOptions: {
+			    className: 'drop-preview',
+			    animationDuration: '150',
+			    showOnTop: true
+			}
 		}
 	},
 	methods: {
