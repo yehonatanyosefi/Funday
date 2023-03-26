@@ -5,7 +5,7 @@
 				<Menu class="svg-icon menu-btn" width="20" height="20" @click="toggleMenuModal" />
 			</div>
 			<input type="text" :style="{ color: groupColor }" v-model="groupTitle" @input="saveGroupTitle" />
-			<div class="task-count">{{group.tasks.length}} tasks</div>
+			<div class="task-count">{{group.tasks.length}} Tasks</div>
 		</h4>
 		<div class="task-header">
 			<div class="group-preview-color" :style="{ backgroundColor: groupColor }"></div>

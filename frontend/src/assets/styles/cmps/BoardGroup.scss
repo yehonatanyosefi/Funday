@@ -55,7 +55,9 @@
      .group-header {
           color: $group-header-clr;
           font-size: 18px;
-          @include flex-center;
+          display: flex;
+          align-items: center;
+          justify-content: start;
           position: relative;
           text-overflow: ellipsis;
           input {
@@ -69,10 +71,11 @@
                opacity: 1;
           }
           .task-count {
+               padding-inline-start: 6px;
                opacity: 0;
                @include flex-center;
                font-family: ROBOTO-reg;
-               font-size: 12px;
+               font-size: 14px;
                color: $color-txt-primary;
                transition: opacity 0.2s ease-in-out;
           }
