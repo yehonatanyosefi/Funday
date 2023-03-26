@@ -1,6 +1,8 @@
 <template>
 <div class="priority" :class="info" @click="toggleModal" >
-     {{info}}
+     <span>{{info}}</span>
+     <Alert v-if="info==='Critical'" class="svg-icon " height="15px" width="15px" />
+     <!-- <span>⚠️️</span> -->
      <div class="folding-corner"></div>
      <LabelPicker
           v-if="isOpen"
@@ -11,10 +13,15 @@
           v-click-outside="closeModal"></LabelPicker>
 </div>
 
+
+
 </template>
 
 <script>
 import LabelPicker from './LabelPicker.vue'
+import Alert from '../../assets/svg/Alert.svg'
+
+
 export default {
 emits: ['saveTask'],
      name: 'Priority',
@@ -45,6 +52,7 @@ computed: {
 },
 components: {
      LabelPicker,
+     Alert,
 },
 }
 </script>
