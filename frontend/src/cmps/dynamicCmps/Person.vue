@@ -1,7 +1,12 @@
 <template>
   <div class="profile-div" @click="toggleModal" v-if="users">
-    <template v-if="info?.length" v-for="(id, idx) in info" :key="idx">
+    <Add class="add-users"></Add>
+    <template v-if="info?.length > 0 && info?.length < 3" v-for="(id, idx) in info" :key="idx">
       <img :src="user(id).imgUrl" :title="user(id).fullname" class="profile-picture" />
+    </template>
+    <template v-else-if="info.length > 2">
+      <img :src="user(info[0]).imgUrl" :title="user(info[0]).fullname" class="profile-picture" />
+      <div class="more-users">+{{info?.length-1}}</div>
     </template>
     <!-- <PersonRound class="svg-icon" /> -->
     <img v-else class="default-img" src="https://cdn.monday.com/icons/dapulse-person-column.svg" title="" alt=""
@@ -40,6 +45,7 @@
 import PersonRound from '../../assets/svg/PersonRound.svg'
 import Search from '../../assets/svg/Search.svg'
 import AddedUserList from '../AddedUserList.vue'
+import Add from '../../assets/svg/Add.svg'
 
 
 export default {
@@ -101,7 +107,8 @@ export default {
   components: {
     PersonRound,
     Search,
-    AddedUserList
+    AddedUserList,
+    Add,
   },
 }
 </script>

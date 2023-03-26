@@ -14,7 +14,7 @@
           top: 0;
           left: -6px;
           width: 6px;
-          height: 100%;
+          height: 102%;
           background-color: $group-header-clr;
      }
      .task-preview-color.last-task {
@@ -27,16 +27,16 @@
                opacity: 1;
           }
      }
-
-     .task:not(:first-of-type, :nth-of-type(2)) {
-          width: $group-column-width;
-     }
-
-     .task:first-of-type {
-          width: 33px;
-     }
-
      .task {
+          &:not(:first-of-type, :nth-of-type(2)) {
+               width: $group-column-width;
+          }
+          &:first-of-type {
+               width: 33px;
+          }
+          &:focus-within {
+               border: 1px solid $group-header-clr;
+          }
           cursor: pointer;
           // border: 1px solid $color-divider;
           // border-inline-start: 1px solid $color-divider;
@@ -58,7 +58,7 @@
 
           .profile-div img,
           .profile-div svg {
-               margin-inline-end: -5px;
+               margin-inline-end: -6px;
           }
 
           .status,
@@ -168,14 +168,25 @@
           }
      }
      &:focus-within:not(.add-task) {
+          input[type="checkbox"] {
+               // &::before {
+                    // content: "";
+                    // position: absolute;
+                    // left: 0;
+                    // top: 0;
+                    // translate: -50% -50%;
+                    // width: 16px;
+                    // height: 16px;
+               // }
+               background-color: $color-focused-within !important;
+          }
           background-color: $color-focused-within;
      }
 }
-
 .task-preview {
      box-shadow: 0 1px 1px $color-divider;
 }
-.task-preview.add-task {
+.task-preview.add-task { 
      border-block-end: 1px solid $color-divider;
      border-inline-end: 1px solid $color-divider;
      box-shadow: $small-shadow;

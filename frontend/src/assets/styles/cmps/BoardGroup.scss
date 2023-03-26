@@ -68,6 +68,8 @@
           border-end-start-radius: 7px;
           border-inline-end: 1px solid $color-divider;
           box-shadow: $small-shadow;
+          z-index: 2;
+          background-color: white;
           .progress-column:not(:last-child) {
                border-inline-end: 1px solid $color-divider;
           }

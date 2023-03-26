@@ -1,7 +1,7 @@
 <template>
      <div class="status" :class="statusClass" @click="toggleModal">
           {{ info }}
-          <!-- <div class="folding-corner"><div class="fold"></div></div> -->
+          <div class="folding-corner"></div>
           <LabelPicker
                v-if="isOpen"
                class="modal"

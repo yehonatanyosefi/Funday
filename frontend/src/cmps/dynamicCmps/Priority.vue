@@ -1,6 +1,7 @@
 <template>
 <div class="priority" :class="info" @click="toggleModal" >
      {{info}}
+     <div class="folding-corner"></div>
      <LabelPicker
           v-if="isOpen"
           class="modal"
