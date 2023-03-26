@@ -92,18 +92,6 @@ export default {
 	},
 	created() {
 		this.groupTitle = this.group.title
-		this.timelineProgress = {
-			startDate: Math.min(
-				...this.group.tasks
-					.filter((task) => typeof task.timeline?.startDate === 'number' && task.timeline.startDate > 0)
-					.map((task) => task.timeline.startDate)
-			),
-			dueDate: Math.max(
-				...this.group.tasks
-					.filter((task) => typeof task.timeline?.dueDate === 'number' && task.timeline.dueDate > 0)
-					.map((task) => task.timeline.dueDate)
-			),
-		}
 	},
 	data() {
 		return {
@@ -120,7 +108,6 @@ export default {
 					words: ['Critical', 'High', 'Medium', 'Low', ''],
 				},
 			},
-			timelineProgress: {},
 			// dropPlaceholderOptions: {
 			//     className: 'drop-preview',
 			//     animationDuration: '150',
@@ -178,6 +165,27 @@ export default {
 	computed: {
 		groupColor() {
 			return this.group.style.color
+		},
+		timelineProgress() {
+			const timelineProgress = {
+				startDate: this.startDate,
+				dueDate: this.dueDate
+			}
+			return timelineProgress
+		},
+		startDate() {
+			return Math.min(
+				...this.group.tasks
+					.filter((task) => typeof task.timeline?.startDate === 'number' && task.timeline.startDate > 0)
+					.map((task) => task.timeline.startDate)
+			)
+		},
+		dueDate() {
+			return Math.max(
+				...this.group.tasks
+					.filter((task) => typeof task.timeline?.dueDate === 'number' && task.timeline.dueDate > 0)
+					.map((task) => task.timeline.dueDate)
+			)
 		},
 	},
 	components: {

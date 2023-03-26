@@ -43,6 +43,7 @@ export default {
 		}
 	},
 	created() {
+		if (this.info?.dueDate === -Infinity) this.info.dueDate = null
 		this.value = [
 			new Date(this.info?.startDate),
 			new Date(this.info?.dueDate || this.info?.startDate || Date.now()),
