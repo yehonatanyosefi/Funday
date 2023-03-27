@@ -12,6 +12,7 @@
 						@click.stop="openColorPicker"
 						:style="{ backgroundColor: groupColor }"></div>
 					<input
+						class="board-input"
 						name="groupTitleInput"
 						id="groupTitleInput"
 						ref="groupTitleInput"
@@ -73,7 +74,7 @@
 				v-model="addTaskTitle"
 				@blur="addTask"
 				@keyup.enter="addTask"
-				class="add-task-input"
+				class="board-input add-task-input"
 				placeholder="+ Add task">
 		</section>
 		<div class="progress-bar">
