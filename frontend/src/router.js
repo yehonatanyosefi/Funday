@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 import Home from './views/Home.vue'
-import Chat from './views/Chat.vue'
+// import Chat from './views/Chat.vue'
 import BoardIndex from './views/BoardIndex.vue'
 import BoardDetails from './cmps/BoardDetails.vue'
 import LoginSignup from './views/LoginSignup.vue'
@@ -45,11 +45,11 @@ const routes = [
       },
     ],
   },
-  {
-    path: '/chat',
-    name: 'Chat',
-    component: Chat,
-  },
+  // {
+  //   path: '/chat',
+  //   name: 'Chat',
+  //   component: Chat,
+  // },
   {
     path: '/login',
     name: 'LoginSignup',
@@ -59,6 +59,11 @@ const routes = [
     path: '/user/:id',
     name: 'UserDetails',
     component: UserDetails,
+  },
+  {
+    path: '/login',
+    name: 'LoginSignup',
+    component: LoginSignup,
   },
 ]
 
