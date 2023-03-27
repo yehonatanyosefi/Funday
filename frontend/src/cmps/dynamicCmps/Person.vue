@@ -1,6 +1,6 @@
 <template>
   <div class="profile-div" @click="toggleModal" v-if="users">
-    <Add class="add-users"></Add>
+    <PlusSolid class="svg-icon add-users"></PlusSolid>
     <template v-if="info?.length > 0 && info?.length < 3" v-for="(id, idx) in info" :key="idx">
       <img :src="user(id).imgUrl" :title="user(id).fullname" class="profile-picture" />
     </template>
@@ -45,7 +45,7 @@
 import PersonRound from '../../assets/svg/PersonRound.svg'
 import Search from '../../assets/svg/Search.svg'
 import AddedUserList from '../AddedUserList.vue'
-import Add from '../../assets/svg/Add.svg'
+import PlusSolid from '../../assets/svg/PlusSolid.svg'
 
 
 export default {
@@ -108,7 +108,7 @@ export default {
     PersonRound,
     Search,
     AddedUserList,
-    Add,
+    PlusSolid,
   },
   directives: {
     focus: {
