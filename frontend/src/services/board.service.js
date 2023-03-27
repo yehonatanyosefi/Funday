@@ -77,22 +77,35 @@ async function updateBoard(boardId, payload) {
 		case 'favorite':
 			board.isStarred = val
 			break
+		case 'createdBy':
+			board.createdBy= val
+			board.members.push(val)
+			break
 	}
 	return saveBoard(board)
 }
 
-async function queryList(filterBy = { txt: '' }) {
+async function queryList(filterBy = { txt: '', userId:''}) {
 	// return httpService.get(STORAGE_KEY, filterBy)
-
-	let boards = await storageService.query(STORAGE_KEY)
-	if (filterBy.txt) {
+	try{
+		let boards = await storageService.query(STORAGE_KEY)
 		let boardsCopy = JSON.parse(JSON.stringify(boards))
-		const regex = new RegExp(filterBy.txt, 'i')
-		boards = boardsCopy.filter((board) => regex.test(board.title))
+		if (filterBy.txt) {
+			const regex = new RegExp(filterBy.txt, 'i')
+			boards = boardsCopy.filter((board) => regex.test(board.title))
+		}
+	
+		if (filterBy.userId){
+			boards = boardsCopy.filter(board => board.members.some(member => member._id===filterBy.userId))
+		}
+		const boardList = boards.map((board) => {
+			return { _id: board._id, title: board.title }
+		})
+		return boardList
 	}
-	const boardList = boards.map((board) => {
-		return { _id: board._id, title: board.title }
-	})
+	catch(err){
+		console.log('queryList erroe:'+err)
+	}
 	// var tasks = await storageService.query(STORAGE_KEY)
 	// if (filterBy.txt) {
 	//     const regex = new RegExp(filterBy.txt, 'i')
@@ -102,7 +115,6 @@ async function queryList(filterBy = { txt: '' }) {
 	//     tasks = tasks.filter(task => task.price <= filterBy.price)
 	// }
 	// return tasks
-	return boardList
 }
 
 async function remove(ids, type) {

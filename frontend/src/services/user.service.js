@@ -69,7 +69,7 @@ async function update({ _id, score }) {
 
 
 async function login(userCred) {
-    const users = await storageService.query('user')
+    const users = await storageService.query(STORAGE_KEY)
     const user = users.find(user => user.username === userCred.username)
     // const user = await httpService.post('auth/login', userCred)
     if (user) {
@@ -78,16 +78,16 @@ async function login(userCred) {
     }
 }
 async function signup(userCred) {
-    userCred.score = 10000
     if (!userCred.imgUrl) userCred.imgUrl = 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png'
-    const user = await storageService.post('user', userCred)
+    userCred.mentions=[]
+    const user = await storageService.post(STORAGE_KEY, userCred)
     // const user = await httpService.post('auth/signup', userCred)
     // socketService.login(user._id)
     return saveLocalUser(user)
 }
 async function logout() {
     sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
-    socketService.logout()
+    // socketService.logout()
     // return await httpService.post('auth/logout')
 }
 
@@ -101,7 +101,7 @@ async function changeScore(by) {
 
 
 function saveLocalUser(user) {
-    user = { _id: user._id, fullname: user.fullname, imgUrl: user.imgUrl, score: user.score }
+    user = { _id: user._id, fullname: user.fullname, username: user.username, imgUrl: user.imgUrl, mentions: user.mentions }
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
     return user
 }
