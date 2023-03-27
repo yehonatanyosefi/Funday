@@ -151,7 +151,7 @@
                     border-block-start: 1px solid $color-divider;
                     border-inline-end: 1px solid $color-divider;
                     border-block-end: 1px solid $color-divider;
-                    &:not(.status, .priority):hover {
+                    &:not(.status, .priority, .label, .label span):hover {
                          background-color: $color-highlighted;
                     }
                }
