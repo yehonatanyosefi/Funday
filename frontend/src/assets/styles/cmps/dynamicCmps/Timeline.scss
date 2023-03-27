@@ -6,7 +6,7 @@
 		box-shadow: unset !important;
 		background-color: inherit;
 		z-index: 2;
-		*:not(button,.timeline-progress) {
+		*:not(button, .timeline-progress) {
 			opacity: 0;
 		}
 	}
@@ -14,7 +14,9 @@
 		color: white;
 		text-align: center;
 	}
-	.timeline-progress, button, .timeline-text {
+	.timeline-progress,
+	button,
+	.timeline-text {
 		position: absolute;
 		width: 100%;
 		height: 100%;
@@ -23,6 +25,9 @@
 		left: 0;
 		top: 0;
 		border-radius: 555px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 	.timeline-progress {
 		background-color: lightgray;
