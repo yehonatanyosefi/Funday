@@ -14,7 +14,7 @@ export default {
 	components: { BarChart, DoughnutChart },
 	data() {
 		return {
-			statusLabels: ['Done', 'Stuck', 'Working on it', 'Empty'],
+			statusLabels: ['Done', 'Working on it', 'Stuck', 'Empty'],
 			priorityLabels: ['Critical', 'High', 'Medium', 'Low', 'Empty'],
 			options: {
 				plugins: {
