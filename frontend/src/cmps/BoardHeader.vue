@@ -30,8 +30,10 @@
 			<section class="add-views">
 				<router-link :to="'/board/' + board._id + '/main-table'">
 					<button @click="changeView('table')" class="view-item" :class="{ selected: view === 'table' }">
-						<Home></Home>
-						<p class="view-title">Main Table</p>
+						<div class="content">
+							<Home></Home>
+							<p class="view-title">Main Table</p>
+						</div>
 					</button>
 				</router-link>
 				<span class="separator"></span>
@@ -41,7 +43,9 @@
 						class="view-item"
 						:class="{ selected: view === 'kanban' }"
 					>
-						<p class="view-title">Kanban</p>
+						<div class="content">
+							<p class="view-title">Kanban</p>
+						</div>
 					</button>
 				</router-link>
 				<span class="separator"></span>
@@ -51,7 +55,9 @@
 						class="view-item"
 						:class="{ selected: view === 'dashboard' }"
 					>
-						<p class="view-title">Dashboard</p>
+						<div class="content">
+							<p class="view-title">Dashboard</p>
+						</div>
 					</button>
 				</router-link>
 			</section>
@@ -151,7 +157,7 @@ export default {
 			return board
 		},
 		membersCount() {
-			return this.board?.members.length || 1
+			return this.board?.members?.length || 1
 		},
 		getUsers() {
 			return this.$store.getters.users

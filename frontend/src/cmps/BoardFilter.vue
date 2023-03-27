@@ -1,7 +1,7 @@
 <template @keydown.escape="showModal = false">
 	<section class="board-filter">
 		<div class="add-new-btns">
-			<button @click="addTask">New Item</button>
+			<button @click="addTask">New Task</button>
 			<span @click="openModal('AddItemModal')" class="add-new-group-btn"
 				><OpenOptions class="svg-icon"
 			/></span>
