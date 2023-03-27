@@ -2,6 +2,7 @@ import { boardService } from '../services/board.service'
 import { router } from '../router'
 import { toRefs } from 'vue'
 import { utilService } from '../services/util.service'
+import { useFavicon } from '@vueuse/core'
 
 export const boardStore = {
 	state: {
@@ -10,6 +11,7 @@ export const boardStore = {
 		boardList: [],
 		filterBy: {
 			txt: '',
+			member: '',
 		},
 	},
 	getters: {
@@ -21,6 +23,9 @@ export const boardStore = {
 		},
 		boardList({ boardList }) {
 			return boardList
+		},
+		filterBy({ filterBy }) {
+			return filterBy
 		},
 	},
 	mutations: {
@@ -44,21 +49,27 @@ export const boardStore = {
 			state.filteredBoard = JSON.parse(JSON.stringify(state.board))
 		},
 		filterBoard(state, { filterBy }) {
-			let filter = (!filterBy) ? state.filterBy : filterBy
-			state.filterBy = filter
-			const boardCopy = JSON.parse(JSON.stringify(state.board))
-			const txt = filterBy.txt
-			if (txt === '') {
-				state.filteredBoard = boardCopy
-				return
+			let filter = !filterBy ? state.filterBy : filterBy
+			const { member, txt } = filterBy
+			if (txt) {
+				state.filterBy.txt = txt
 			}
-			const filterBoard = boardService.filterByTxt(boardCopy, txt)
+			if (member) {
+				state.filterBy.member = member
+			}
+			let filterBoard = JSON.parse(JSON.stringify(state.board))
+			if (state.filterBy.txt !== '') {
+				filterBoard = boardService.filterByTxt(filterBoard, state.filterBy.txt)
+			}
+			if (state.filterBy.member) {
+				filterBoard = boardService.filterByMember(filterBoard, state.filterBy.member)
+			}
 			state.filteredBoard = filterBoard
 		},
 		removeTask(state, { ids }) {
 			const { groupId, taskId } = ids
-			const groupIdx = state.board.groups.findIndex(group => group.id === groupId)
-			const taskIdx = state.board.groups[groupIdx].tasks.findIndex(task => task.id === taskId)
+			const groupIdx = state.board.groups.findIndex((group) => group.id === groupId)
+			const taskIdx = state.board.groups[groupIdx].tasks.findIndex((task) => task.id === taskId)
 			state.board.groups[groupIdx].tasks.splice(taskIdx, 1)
 			state.filteredBoard.groups[groupIdx].tasks.splice(taskIdx, 1)
 		},
@@ -147,7 +158,9 @@ export const boardStore = {
 		async saveGroupAtt({ state, dispatch }, { payload }) {
 			try {
 				const { attName, boardId, att, groupId } = payload
-				const group = JSON.parse(JSON.stringify(state.board.groups.find((group) => group.id === groupId)))
+				const group = JSON.parse(
+					JSON.stringify(state.board.groups.find((group) => group.id === groupId))
+				)
 				if (!group) throw new Error('No group')
 				if (attName === 'style') group.style.color = att
 				else group[attName] = att
@@ -264,11 +277,10 @@ export const boardStore = {
 			}
 		},
 		async duplicateBoard({ commit, dispatch }, { board }) {
-
 			const dupBoard = JSON.parse(JSON.stringify(board))
-			dupBoard.groups.forEach(group => {
+			dupBoard.groups.forEach((group) => {
 				group.id = utilService.makeId()
-				group.tasks.map(task => task.id = utilService.makeId())
+				group.tasks.map((task) => (task.id = utilService.makeId()))
 				return group
 			})
 			const savedBoard = await boardService.saveBoard(dupBoard)

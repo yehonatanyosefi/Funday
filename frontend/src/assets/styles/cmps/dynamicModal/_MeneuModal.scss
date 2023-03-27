@@ -10,6 +10,7 @@
 		background: $color-snow_white;
 		box-shadow: 0 4px 17px 6px rgb(0 0 0 / 10%);
 	}
+
 	&.AddItemModal-style {
 		position: absolute;
 		top: 55px;
@@ -18,6 +19,15 @@
 		&:hover {
 			border-radius: 8px;
 			background-color: $color-snow_white;
+		}
+	}
+	&.MemberFilter-style {
+		position: absolute;
+		top: 55px;
+		// left: 75px;
+		translate: 50% 0;
+		p {
+			margin: 0;
 		}
 	}
 
@@ -85,6 +95,57 @@
 		}
 	}
 
+	.MemberFilter {
+		position: relative;
+		max-width: 404px;
+		min-width: 220px;
+		max-height: 550px;
+		padding: 16px;
+		border-radius: 8px;
+
+		.title {
+			font-family: Figtree-reg;
+			font-size: rem(15px);
+			height: 32px;
+			cursor: default;
+		}
+
+		.subtitle {
+			font-size: rem(14px);
+			margin-bottom: 16px;
+			cursor: default;
+		}
+
+		.modal-group {
+			align-items: flex-start;
+		}
+
+		.filter-user {
+			cursor: pointer;
+			// margin-top: 5px;
+			width: 40px;
+			height: 40px;
+			border-radius: 2em;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			&.selected {
+				background-color: $color-btn-active;
+			}
+
+			img {
+				width: 30px;
+				height: 30px;
+			}
+		}
+	}
+
+	.modal-group {
+		position: sticky;
+		left: 36px;
+	}
+
 	.right-sec {
 		display: flex;
 		align-items: center;
@@ -129,7 +190,7 @@
 
 			p {
 				font-size: 13px;
-				font-family: roboto-light;
+				font-family: Figtree-reg;
 				padding-bottom: 6px;
 				color: $clr-divider;
 				height: 30%;
