@@ -19,10 +19,10 @@ import UserMsg from './cmps/UserMsg.vue'
 export default {
 
   async created() {
-		await this.$store.dispatch({ type: "loadBoardList" })
     const user = userService.getLoggedinUser()
     if (user)  store.commit({type: 'setLoggedinUser', user})
     await this.$store.dispatch({type: 'loadUsers'})
+		await this.$store.dispatch({ type: "loadBoardList" })
   },
   components: {
     AppHeader,

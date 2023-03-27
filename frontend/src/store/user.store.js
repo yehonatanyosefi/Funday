@@ -1,12 +1,15 @@
 import { userService } from '../services/user.service'
 import { socketService, SOCKET_EMIT_USER_WATCH, SOCKET_EVENT_USER_UPDATED } from '../services/socket.service'
+import { utilService } from '../services/util.service'
 
 // var localLoggedinUser = null
 // if (sessionStorage.user) localLoggedinUser = JSON.parse(sessionStorage.user || null)
 
 export const userStore = {
     state: {
-        loggedinUser: null,
+        loggedinUser:null,
+        demoUser: {fullname: "Dor Toledano",imgUrl: "https://files.monday.com/euc1/photos/41054538/small/41054538-user_photo_2023_03_18_19_59_31.png?1679169572",
+            mentions: [],password: "123",username: "dortoledano210@gmail.com", _id: "u101"},
         users: [],
         watchedUser: null
     },
@@ -14,13 +17,14 @@ export const userStore = {
         users({ users }) { 
             return users 
         },
-        loggedinUser({ loggedinUser }) { return loggedinUser },
+        loggedinUser({ loggedinUser,demoUser }) { return loggedinUser || demoUser},
         watchedUser({ watchedUser }) { return watchedUser }
     },
     mutations: {
         setLoggedinUser(state, { user }) {
             // Yaron: needed this workaround as for score not reactive from birth
             state.loggedinUser = (user)? {...user} : null
+            console.log('state.loggedinUser',state.loggedinUser)
         },
         setWatchedUser(state, { user }) {
             state.watchedUser = user
@@ -38,7 +42,8 @@ export const userStore = {
     actions: {
         async login({ commit }, { userCred }) {
             try {
-                const user = await userService.login(userCred)
+                let user = await userService.login(userCred)
+                user= JSON.parse(JSON.stringify(user))
                 commit({ type: 'setLoggedinUser', user })
                 return user
             } catch (err) {
@@ -48,8 +53,11 @@ export const userStore = {
         },
         async signup({ commit }, { userCred }) {
             try {
-                const user = await userService.signup(userCred)
+                const cred= JSON.parse(JSON.stringify(userCred))
+                // console.log('cred',cred)
+                const user = await userService.signup(cred)
                 commit({ type: 'setLoggedinUser', user })
+               
                 return user
             } catch (err) {
                 console.log('userStore: Error in signup', err)
@@ -117,6 +125,7 @@ export const userStore = {
         setWatchedUser({commit}, payload) {
             commit(payload)
         },       
+            
 
     }
 }

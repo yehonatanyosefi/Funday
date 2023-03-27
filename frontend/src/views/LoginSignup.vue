@@ -14,10 +14,10 @@
 
       <form v-if="isSignin" @submit.prevent="doSignup">
         <h2>Set up your account</h2>
-        <input v-model="signupCred.fullname" placeholder="name@company.com" />
+        <input v-model="signupCred.username" placeholder="name@company.com" />
         <label id="text" for="">
           Full name
-          <input type="text" v-model="signupCred.username" placeholder="e.g. Jane Doe" />
+          <input type="text" v-model="signupCred.fullname" placeholder="e.g. Jane Doe" />
         </label>
         <label for="">
           Password
@@ -108,17 +108,19 @@ export default {
           this.msg = 'User not found'
           return
         }
-        const boards = await this.$store.dispatch({ type: "getUserBoards", userId: user._id }) || []
-        let firstBoard = boards[0]
-        if (!firstBoard) {
-          firstBoard = await this.$store.dispatch({ type: "addBoard" })
-          firstBoard.createdBy = {
-            "_id": user._id,
-            "fullname": user.fullname,
-            "imgUrl": user.imgUrl
-          }
-
-        }
+        const firstBoard=await this.$store.dispatch({ type: "getUserBoardList" })
+        // const boards = await this.$store.dispatch({ type: "loadBoardList", filterBy: {userId:user._id} }) || []
+        // let firstBoard = boards[0]
+        // console.log('firstBoard',firstBoard)
+        // if (!firstBoard) {
+        //   firstBoard = await this.$store.dispatch({ type: "addBoard" })
+        //   payload={type:'createdBy',val:{
+        //     "_id": user._id,
+        //     "fullname": user.fullname,
+        //     "imgUrl": user.imgUrl
+        //   }}
+        //   await this.$store.dispatch({ type: "updateBoard", payload})
+        // }
         this.$router.push(`/board/${firstBoard._id}/main-table`)
       } catch (err) {
         console.log(err)
@@ -133,9 +135,10 @@ export default {
         this.msg = 'Please fill up the form'
         return
       }
+      // console.log('this.signupCred',this.signupCred)
       await this.$store.dispatch({ type: 'signup', userCred: this.signupCred })
-      this.$router.push('/')
-
+      const firstBoard=await this.$store.dispatch({ type: "getUserBoardList" })
+      this.$router.push(`/board/${firstBoard._id}/main-table`)
     },
     loadUsers() {
       this.$store.dispatch({ type: "loadUsers" })
