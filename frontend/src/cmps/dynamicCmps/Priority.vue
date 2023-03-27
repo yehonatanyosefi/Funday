@@ -49,7 +49,6 @@ export default {
 		},
 		closeModal() {
 			this.isOpen = false
-			console.log(`this.isOpen:`, this.isOpen)
 		},
 	},
 	computed: {},
