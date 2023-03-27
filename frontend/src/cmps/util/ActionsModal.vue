@@ -13,12 +13,12 @@
           <Duplicate></Duplicate>
           Duplicate
      </div>
-     <div class="action-item">
+     <div class="action-item"  @click="$emit('openRemoveModal'),$emit('closeActionsModal')">
           <Delete></Delete>
           Delete
      </div>
      <div class="exit-actions">
-          X
+          <div @click="$emit('closeActionsModal')">X</div>
      </div>
 </div>
 </template>
@@ -27,6 +27,10 @@
 import Delete from '../../assets/svg/Delete.svg'
 import Duplicate from '../../assets/svg/Duplicate.svg'
 export default {
+     emits: [
+          'closeActionsModal',
+          'openRemoveModal',
+     ],
 props: {
 numOfActions: { type:Number, default:1 },
 

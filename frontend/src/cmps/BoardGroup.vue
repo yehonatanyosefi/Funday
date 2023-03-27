@@ -85,10 +85,14 @@
 					:isProgressBar="true"></Timeline>
 			</div>
 		</div>
-		<ActionsModal v-if="isActionsModalOpen"></ActionsModal>
+		<ActionsModal
+			v-if="isActionsModalOpen"
+			@closeActionsModal="closeActionsModal"
+			@openRemoveModal="openRemoveModal"
+			></ActionsModal>
 		<RemoveModal
-			v-if="isModalOpen"
-			@closeModal="handleCloseModal"
+			v-if="isRemoveModalOpen"
+			@closeModal="closeRemoveModal"
 			@remove="handleRemoveGroup">group</RemoveModal>
 	</section>
 </template>
@@ -127,7 +131,7 @@ export default {
 			openColorPickerModal: false,
 			addTaskTitle: '',
 			groupTitle: null,
-			isModalOpen: false,
+			isRemoveModalOpen: false,
 			isMenuModalOpen: false,
 			hideSetTimeout: null,
 			progressObj: {
@@ -164,15 +168,15 @@ export default {
 		removeGroup() {
 			this.$emit('removeGroup', this.group.id)
 		},
-		openModal() {
-			this.isModalOpen = true
+		openRemoveModal() {
+			this.isRemoveModalOpen = true
 		},
 		handleRemoveGroup() {
-			this.isModalOpen = false
+			this.isRemoveModalOpen = false
 			this.$emit('removeGroup', this.group.id)
 		},
-		handleCloseModal() {
-			this.isModalOpen = false
+		closeRemoveModal() {
+			this.isRemoveModalOpen = false
 		},
 		onTaskDrop(dropPayload) {
 			const { removedIndex, addedIndex } = dropPayload
@@ -185,7 +189,7 @@ export default {
 		toggleMenuModal() {
 			//placeholder for menu modal
 			this.isMenuModalOpen = !this.isMenuModalOpen
-			this.isModalOpen = true
+			this.isRemoveModalOpen = true
 		},
 		getCardPayload(ev) {
 			// console.log('getCardPayload',ev)
