@@ -18,6 +18,7 @@
 .status,
 .priority {
 	@include flex-center;
+	background-color: #fff !important;
 	.label {
 		span {
 			@include flex-center
