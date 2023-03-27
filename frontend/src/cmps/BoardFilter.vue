@@ -19,11 +19,11 @@
 				placeholder="Search"
 				@blur="isSearchClicked = false"
 				v-model="txt"
-				@input="setFilter('txt', txt)"
+				@input="setFilter({ txt })"
 			/>
 		</div>
 		<div
-			@click="openModal('filter-person-modal')"
+			@click="openModal('MemberFilter')"
 			@mouseover="showTitleModal = true"
 			@mouseout="showTitleModal = false"
 			class="person-attach"
@@ -47,6 +47,7 @@
 			:cmp="modalName"
 			@addGroup="addGroup"
 			@addTask="addTask"
+			@setFilter="setFilter"
 		/>
 	</section>
 </template>
@@ -93,8 +94,7 @@ export default {
 			document.querySelector('.search-tasks input').focus()
 		},
 
-		setFilter(type, txt) {
-			const filterBy = { txt }
+		setFilter(filterBy) {
 			this.$emit('setFilter', filterBy)
 		},
 		clearFilter() {

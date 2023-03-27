@@ -74,7 +74,7 @@ export default {
 
     methods: {
         setBoard(boardId) {
-            this.$store.dispatch({ type: 'setBoardById', boardId })
+            this.$store.dispatch({ type: 'getBoardById', boardId })
         },
         deleteBoard(boardId) {
             this.$store.dispatch({ type: 'deleteBoard', boardId })

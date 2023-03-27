@@ -15,18 +15,18 @@
       position: relative;
       font-size: 12px;
       @include flex-center;
-      // border: 2px solid #f5f6f8;
+      // border: 2px solid $color-highlighted;
   }
   .add-users {
     opacity: 0;
     position: absolute;
     top: 3px;
-    background-color: #0073ea;
+    background-color: $primary-blue;
     font-size: 12px;
     padding: 2px;
     margin: 0px -6px;
     path {
-      fill: #ffffff;
+      fill: $color-snow_white;
       // color: rgb(255, 255, 255);
     }
     border-radius: 50%;
@@ -44,7 +44,7 @@
     width: 30px;
     height: 30px;
     border: 2px solid;
-    border-color: #f5f6f8;
+    border-color: $color-highlighted;
     border-radius: 50%;
   }
   .modal {
@@ -78,7 +78,7 @@
               height: 22px;
               width: fit-content;
               margin: 4px;
-              background: #e5f4ff;
+              background: $apps-feature-preview-color;
               img {
                 height: 22px;
                 width: 22px;
@@ -107,13 +107,13 @@
         .search-member {
           width: 320px;
           height: 32px;
-          border: 1px solid #c3c6d4;
+          border: 1px solid $brdr-clr;
           display: flex;
           align-items: center;
           border-radius: 4px;
           padding: 8px 24px 8px 16px;
           &:hover {
-            border-color: #323338;
+            border-color: $color-txt-primary;
           }
 
           input {
@@ -121,7 +121,7 @@
             height: 100%;
             outline: 0;
             line-height: 22px;
-            color: #323338;
+            color: $color-txt-primary;
             border: none;
             border-color: $primary-blue;
             &:hover,
@@ -132,15 +132,15 @@
         }
         ul {
           padding: 8px 0 0;
-          color: #676879;
+          color: $clr-divider;
           li {
-            color: #323338;
+            color: $color-txt-primary;
             padding: 8px;
             align-items: center;
             height: em(40px);
 
             &:hover{
-              background-color: #dcdfec;
+              background-color: $color-btn-hover;
               border-radius: 4px;
             }
             .fullname {

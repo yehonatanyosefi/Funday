@@ -48,7 +48,7 @@
     .modal-container {
       margin-inline: 8px;
       &:hover {
-        background-color: #dcdfec;
+        background-color: $color-btn-hover;
         border-radius: 4px;
       }
       &:first-child {
@@ -63,9 +63,9 @@
         align-items: center;
         padding: 0 8px;
         width: em(235px);
-        color: #676879;
+        color: $clr-divider;
         span {
-          color: #323338;
+          color: $color-txt-primary;
         }
       }
     }
@@ -75,7 +75,7 @@
       margin: 0 2px;
     }
     &:not(.selected-board):hover {
-      background-color: #dcdfec;
+      background-color: $color-btn-hover;
       border-radius: 4px;
       .small-menu {
         opacity: 1;
@@ -85,7 +85,7 @@
       .small-menu {
         opacity: 1;
         &:hover {
-          background-color: #dcdfec;
+          background-color: $color-btn-hover;
           border-radius: 4px;
         }
       }
@@ -99,17 +99,17 @@
 }
 span {
   &.workspace-title {
-    color: #676879;
+    color: $clr-divider;
     justify-content: space-between;
     // padding-block-end: 4px;
     padding: 0 5px 7px 0;
   }
 }
 button {
-  color: #323338;
+  color: $color-txt-primary;
 }
 
 .selected-board {
-  background-color: #cce5ff;
+  background-color: $color-highlight_blue;
   border-radius: 4px;
 }
