@@ -117,7 +117,7 @@ export const boardStore = {
 				throw err
 			}
 		},
-		async addTask({ dispatch, getters }, { payload }) {
+		async addTask({ dispatch, getters }, { payload = { groupId: null, title: null } }) {
 			const { groupId, title } = payload
 			const task = boardService.getEmptyTask()
 			if (title) task.title = title
