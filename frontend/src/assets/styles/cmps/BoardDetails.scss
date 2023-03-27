@@ -1,4 +1,5 @@
 
+$input-padding-board-details: 4px;
 
 .smooth-dnd-container.vertical>.smooth-dnd-draggable-wrapper {
      overflow: visible;
@@ -18,14 +19,31 @@
           border-radius: 0.25em;
           outline: none;
           text-overflow: ellipsis;
-          padding: 0px 4px;
+          padding-inline-start: $input-padding-board-details;
+          padding-inline-end: $input-padding-board-details;
+
           &:hover {
                box-shadow: 0px 0px 0px 0.5px $color-divider;
           }
           
           &:focus {
                background-color: white;
-               box-shadow: 0px 0px 0px 0.5px $group-header-clr;
+               box-shadow: 0px 0px 0px 0.5px $group-header-clr !important;
+          }
+          &.add-task-input {
+               height: 22.4px;
+               align-self: center;
+               background-color: inherit;
+               margin-inline-start: 10px;
+               padding-inline-start: 12px;
+               text-align: start;
+               font: inherit;
+               border: none;
+               border-radius: 0.3em;
+               width: 338px;
+               &:hover {
+                    box-shadow: 0px 0px 0px 0.5px black;
+               }
           }
      }
 

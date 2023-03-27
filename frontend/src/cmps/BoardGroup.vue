@@ -4,7 +4,31 @@
 			<div class="menu-btn-container">
 				<Menu class="svg-icon menu-btn" width="20" height="20" @click="toggleMenuModal" />
 			</div>
-			<input type="text" :style="{ color: groupColor }" v-model="groupTitle" @input="saveGroupTitle" />
+			<div
+				class="group-title-input"
+				tabindex="0"
+      			ref="groupTitleInputDiv"
+				@click="focusGroupTitle">
+				<div
+					v-if="isCircleShown"
+					class="color-circle"
+					@click.stop="openColorPicker"
+					:style="{ backgroundColor: groupColor }"></div>
+				<input
+					ref="groupTitleInput"
+					v-model="groupTitle"
+					:style="{ color: groupColor }"
+					type="text"
+					@input="saveGroupTitle"
+					@blur="hideCircle"
+					@focus="showCircle" />
+				<ColorPicker
+					@click.stop
+					v-if="openColorPickerModal"
+					v-click-outside="closeColorPicker"
+					@closeColorPicker="closeColorPicker"
+					@chooseColor="chooseGroupColor"></ColorPicker>
+			</div>
 			<div class="task-count">{{group.tasks.length}} Tasks</div>
 		</h4>
 		<div class="task-header">
@@ -41,12 +65,20 @@
 				></TaskPreview>
 			</Draggable>
 		</Container>
-		<section class="task-preview add-task">
+		<section class="task-preview add-task"
+			@mouseover="mouseOverAddTask = true"
+			@mouseout="mouseOverAddTask = false">
 			<div class="task">
-				<div class="task-preview-color last-task" :style="{ backgroundColor: groupColor }"></div>
-				<input type="checkbox" title="Delete Task" class="task-checkbox" disabled />
+				<div class="task-preview-color last-task" :style="{ backgroundColor: addTaskColor }"></div>
+				<input type="checkbox" class="task-checkbox" disabled />
 			</div>
-			<button @click="addTask" class="add-item">+ Add item</button>
+			<input
+				v-model="addTaskTitle"
+				@focus="mouseOverAddTask = true"
+				@blur="addTask"
+				@keyup.enter="addTask"
+				class="add-task-input"
+				placeholder="+ Add task">
 		</section>
 		<div class="progress-bar">
 			<div class="progress-column" v-for="(cmp, idx) in cmpOrder" :key="idx + 50">
@@ -57,14 +89,14 @@
 					v-if="cmp === 'timeline' && timelineProgress"
 					:groupColor="group.style.color"
 					:info="timelineProgress"
-					:isProgressBar="true"
-				></Timeline>
+					:isProgressBar="true"></Timeline>
 			</div>
 		</div>
 
-		<RemoveModal v-if="isModalOpen" @closeModal="handleCloseModal" @remove="handleRemoveGroup"
-			>group</RemoveModal
-		>
+		<RemoveModal
+			v-if="isModalOpen"
+			@closeModal="handleCloseModal"
+			@remove="handleRemoveGroup">group</RemoveModal>
 	</section>
 </template>
 
@@ -77,6 +109,7 @@ import { Container, Draggable } from 'vue3-smooth-dnd'
 import TaskPreview from './TaskPreview.vue'
 import Title from './dynamicCmps/Title.vue'
 import Timeline from './dynamicCmps/Timeline.vue'
+import ColorPicker from './util/ColorPicker.vue'
 export default {
 	emits: [
 		'saveTask',
@@ -85,7 +118,7 @@ export default {
 		'removeGroup',
 		'applyTaskDrag',
 		'addTask',
-		'saveGroupTitle',
+		'saveGroupAtt',
 	],
 	props: {
 		group: Object,
@@ -96,6 +129,10 @@ export default {
 	},
 	data() {
 		return {
+			isCircleShown: false,
+			openColorPickerModal: false,
+			mouseOverAddTask: false,
+			addTaskTitle: '',
 			groupTitle: null,
 			isModalOpen: false,
 			isMenuModalOpen: false,
@@ -113,7 +150,7 @@ export default {
 			    className: 'drop-preview',
 			    animationDuration: '150',
 			    showOnTop: true
-			}
+			},
 		}
 	},
 	methods: {
@@ -121,8 +158,14 @@ export default {
 			return str.charAt(0).toUpperCase() + str.slice(1)
 		},
 		saveGroupTitle() {
-			const payload = { title: this.groupTitle, groupId: this.group.id }
-			this.$emit('saveGroupTitle', payload)
+			const payload = { attName:'title', att: this.groupTitle, groupId: this.group.id }
+			this.$emit('saveGroupAtt', payload)
+		},
+		chooseGroupColor(color) {
+			// const style = {color} //TODO fix store
+			const payload = { attName:'style', att: color, groupId: this.group.id }
+			this.isCircleShown = false
+			this.$emit('saveGroupAtt', payload)
 		},
 		removeGroup() {
 			this.$emit('removeGroup', this.group.id)
@@ -154,7 +197,60 @@ export default {
 			// console.log('getCardPayload',ev)
 		},
 		addTask() {
-			this.$emit('addTask', this.group.id)
+			this.mouseOverAddTask = false
+			const title = this.addTaskTitle
+			if (!title) return
+			const payload = { title, groupId: this.group.id }
+			this.$emit('addTask', payload)
+			this.addTaskTitle = ''
+		},
+		hex2(c) {
+			c = Math.round(c);
+			if (c < 0) c = 0;
+			if (c > 255) c = 255;
+
+			var s = c.toString(16);
+			if (s.length < 2) s = "0" + s;
+
+			return s;
+		},
+		color(r, g, b) {
+			return "#" + this.hex2(r) + this.hex2(g) + this.hex2(b)
+		},
+		lighten(col, light) {
+			var r = parseInt(col.substr(1, 2), 16)
+			var g = parseInt(col.substr(3, 2), 16)
+			var b = parseInt(col.substr(5, 2), 16)
+			if (light < 0) {
+				r = (1 + light) * r;
+				g = (1 + light) * g
+				b = (1 + light) * b
+			} else {
+				r = (1 - light) * r + light * 255
+				g = (1 - light) * g + light * 255
+				b = (1 - light) * b + light * 255
+			}
+			return this.color(r, g, b)
+		},
+		openColorPicker() {
+			this.openColorPickerModal = true
+		},
+		closeColorPicker() {
+			this.openColorPickerModal = false
+			this.isCircleShown = false
+		},
+		hideCircle() {
+			setTimeout(()=>{
+				if (this.openColorPickerModal) return
+				this.isCircleShown = false
+			},70)
+		},
+		showCircle() {
+			this.isCircleShown = true
+		},
+		focusGroupTitle() {
+      		// this.$refs.groupTitleInputDiv.focus()
+      		// this.$refs.groupTitleInput.focus()
 		},
 		// onDragStart(name,{payload}) {
 		//     console.log('onDragStart', payload)
@@ -164,6 +260,10 @@ export default {
 		// },
 	},
 	computed: {
+		addTaskColor() {
+			if (this.mouseOverAddTask) return this.group.style.color
+			return this.lighten(this.group.style.color, 0.35)
+		},
 		groupColor() {
 			return this.group.style.color
 		},
@@ -202,6 +302,7 @@ export default {
 		Title,
 		ProgressBar,
 		Timeline,
+		ColorPicker,
 		//  MenuModal,
 	},
 }
