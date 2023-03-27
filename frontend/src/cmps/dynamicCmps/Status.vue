@@ -1,7 +1,9 @@
 <template>
-     <div class="status" :class="statusClass" @click="toggleModal">
+<div class="status">
+     <div class="label" :class="statusClass" @click="toggleModal">
           {{ info }}
           <div class="folding-corner"></div>
+     </div>
           <LabelPicker
                v-if="isOpen"
                class="modal"
@@ -9,7 +11,7 @@
                @saveTask="$emit('saveTask',$event)"
                @closeModal="closeModal"
                v-click-outside="closeModal"></LabelPicker>
-     </div>
+</div>
 </template>
 
 <script>

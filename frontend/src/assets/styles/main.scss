@@ -36,7 +36,7 @@
 @import 'cmps/dynamicCmps/Priority';
 @import 'cmps/dynamicCmps/Side';
 @import 'cmps/dynamicCmps/Status';
-@import 'cmps/dynamicCmps/TaskTitle';
+@import 'cmps/dynamicCmps/Title';
 @import 'cmps/dynamicCmps/Timeline';
 @import 'cmps/dynamicCmps/File';
 @import 'cmps/dynamicCmps/Text';
@@ -46,7 +46,9 @@
 @import 'cmps/dynamicModal/MeneuModal';
 
 // Util Components
-@import 'cmps/util/RemoveTaskModal.scss';
+@import 'cmps/util/RemoveModal.scss';
+@import 'cmps/util/ColorPicker.scss';
+@import 'cmps/util/ActionsModal.scss';
 
 //Views
 @import 'views/Chat';

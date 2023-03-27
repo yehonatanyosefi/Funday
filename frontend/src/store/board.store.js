@@ -106,13 +106,15 @@ export const boardStore = {
 				throw err
 			}
 		},
-		async addTask({ dispatch, getters }, { groupId }) {
+		async addTask({ dispatch, getters }, { payload }) {
+			const { groupId, title } = payload
 			const task = boardService.getEmptyTask()
+			if (title) task.title = title
 			const board = getters.board
 			const boardId = board._id
 			const updatedGroupId = !groupId ? board.groups[0].id : groupId
-			const payload = { boardId, task, groupId: updatedGroupId }
-			return dispatch({ type: 'saveTask', payload })
+			const newPayload = { boardId, task, groupId: updatedGroupId }
+			return dispatch({ type: 'saveTask', payload: newPayload })
 		},
 		async removeTask({ commit, dispatch }, { ids }) {
 			try {
@@ -142,12 +144,13 @@ export const boardStore = {
 				throw err
 			}
 		},
-		async saveGroupTitle({ state, dispatch }, { payload }) {
+		async saveGroupAtt({ state, dispatch }, { payload }) {
 			try {
-				const { boardId, title, groupId } = payload
+				const { attName, boardId, att, groupId } = payload
 				const group = JSON.parse(JSON.stringify(state.board.groups.find((group) => group.id === groupId)))
 				if (!group) throw new Error('No group')
-				group.title = title
+				if (attName === 'style') group.style.color = att
+				else group[attName] = att
 				const updatedBoard = await boardService.save(boardId, 'group', group, groupId)
 				dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
 				return group

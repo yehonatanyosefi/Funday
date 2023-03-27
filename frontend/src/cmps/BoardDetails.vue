@@ -2,7 +2,8 @@
 <section class="board-details">
 	<div v-if="!board?.groups?.length">No Groups Found</div>
     <Container v-else orientation="vertical" 
-        @drop="onGroupDrop($event)">
+		:drop-placeholder="dropPlaceholderOptions"
+        	@drop="onGroupDrop($event)">
       <Draggable v-for="group in board.groups" :key="group.id">
 			<BoardGroup
 				:group="group"
@@ -10,7 +11,7 @@
 				@saveTask="saveTask"
 				@removeTask="removeTask"
 				@saveGroup="saveGroup"
-				@saveGroupTitle="saveGroupTitle"
+				@saveGroupAtt="saveGroupAtt"
 				@removeGroup="removeGroup"
 				@applyTaskDrag="applyTaskDrag"
 				@addTask="addTask"></BoardGroup>
@@ -30,6 +31,11 @@ export default {
 	data() {
 		return {
 			taskToAdd: boardService.getEmptyTask(),
+			dropPlaceholderOptions: {
+			    className: 'drop-preview',
+			    animationDuration: '150',
+			    showOnTop: true
+			},
 		}
 	},
 	computed: {
@@ -68,10 +74,10 @@ export default {
 				showErrorMsg('Cannot remove task')
 			}
 		},
-		async saveGroupTitle(payload) { //this is the change
+		async saveGroupAtt(payload) {
 			try {
 				const payloadToSave = {...payload,boardId:this.board._id}
-				await this.$store.dispatch({type:'saveGroupTitle',payload:payloadToSave})
+				await this.$store.dispatch({type:'saveGroupAtt',payload:payloadToSave})
 				// showSuccessMsg('Task updated')
 			} catch (err) {
 				// showErrorMsg('Cannot update task')
@@ -96,9 +102,9 @@ export default {
 				showErrorMsg('Cannot remove group')
 			}
 		},
-		async addTask(groupId) {
+		async addTask(payload) {
 			try {
-				await this.$store.dispatch({type:'addTask',groupId})
+				await this.$store.dispatch({type:'addTask',payload})
 			} catch (err) {
 				showErrorMsg('Cannot add task')
 			}

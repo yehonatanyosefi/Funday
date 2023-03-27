@@ -4,7 +4,7 @@
       type="text"
       v-model="title"
       name="task-title"
-      class="task-title-input"
+      class="board-input task-title-input"
       @input="$emit('saveTask', title)"
     />
   </div>
