@@ -3,15 +3,15 @@
         <ul class="boards">
             <Container orientation="vertical" @drop="onBoardDrop($event)">
                 <Draggable v-for="board in boardList" :key="board._id">
-                    <li class="board-link board-title" :class="{'selected-board':currBoardId===board._id, 'rename':editedBoardId===board._id && isRename}" @click="setBoard(board._id)">
+                    <li class="board-link board-title" :class="{'selected-board':currBoardId===board._id, 'rename':currBoardId===board._id && isRename}" @click="setBoard(board._id)">
                         <Board class="svg-icon board-svg" height="19px" width="19px" />
-                        <span v-if="isRename && editedBoardId !== board._id || !isRename">{{ board.title }}</span>
+                        <span v-if="isRename && currBoardId !== board._id || !isRename">{{ board.title }}</span>
                         <form v-else @submit.prevent="renameBoard()">
                             <input v-model="title" type="text" @click.stop>
                         </form>
                         <Menu class="svg-icon small-menu" width="16 " height="16" @click.stop="toggleModal(board._id)" />
 
-                        <div v-if="isModalOpen && editedBoardId === board._id" class="modal"  v-click-outside.stop="closeModal">
+                        <div v-if="isModalOpen && currBoardId === board._id" class="modal"  v-click-outside.stop="closeModal">
 
                             <div @click.stop="toggleRename(board._id)" class="modal-container">
                                 <section class="wrapper">
@@ -44,12 +44,12 @@
 </template>
 
 <script>
-import Menu from '../assets/svg/Menu.svg'
-import Delete from '../assets/svg/Delete.svg'
-import Board from '../assets/svg/Board.svg'
-import Edit from '../assets/svg/Edit.svg'
-import Duplicate from '../assets/svg/Duplicate.svg'
-import { Container, Draggable } from 'vue3-smooth-dnd'
+import Menu from "../assets/svg/Menu.svg";
+import Delete from "../assets/svg/Delete.svg";
+import Board from "../assets/svg/Board.svg";
+import Edit from "../assets/svg/Edit.svg";
+import Duplicate from "../assets/svg/Duplicate.svg";
+import { Container, Draggable } from "vue3-smooth-dnd";
 
 export default {
 
@@ -61,7 +61,7 @@ export default {
     },
     data() {
         return {
-            editedBoardId:'',
+            
             title: '',
             isRename: false,
             isModalOpen: false,
@@ -85,7 +85,7 @@ export default {
         },
         async renameBoard() {
             try {
-                const payload = { val: this.title, type: 'title' , editedBoardId: this.editedBoardId}
+                const payload = { val: this.title, type: 'title' }
                 await this.$store.dispatch({ type: 'updateBoard', payload })
                 this.isRename = false
             }
@@ -106,7 +106,7 @@ export default {
             }
         },
         toggleModal(boardId) {
-            this.editedBoardId = boardId
+            this.currBoardId = boardId
             // this.currBoardId = this.currBoardId === boardId ? '' : boardId
             this.isModalOpen = true
         },
