@@ -1,8 +1,14 @@
 <template>
-	<div class="start-end-date-container" 
-			@mouseover="onMouseover"
-			@mouseout="mouseout"
-			style="{cursor: 'pointer'}">
+	<div
+		class="start-end-date-container"
+		@mouseover="onMouseover"
+		@mouseout="mouseout"
+		style="
+			 {
+				cursor: 'pointer';
+			}
+		"
+	>
 		<el-date-picker
 			:disabled="isProgressBar"
 			class="start-end-date"
@@ -15,12 +21,10 @@
 			@change="change"
 			:style="dateStyles"
 		/>
-		<div class="timeline-progress"
-			:style="{backgroundColor: timelineBgc}">
-			<button v-if="this.info?.dueDate" :style="btnStyle">
-			</button>
+		<div class="timeline-progress" :style="{ backgroundColor: timelineBgc }">
+			<button v-if="this.info?.dueDate" :style="btnStyle"></button>
 			<div class="timeline-text">
-			{{ textDisplay }}
+				{{ textDisplay }}
 			</div>
 		</div>
 	</div>
@@ -33,7 +37,7 @@ export default {
 	props: {
 		info: Object,
 		groupColor: String,
-		isProgressBar: {type:Boolean, default: false},
+		isProgressBar: { type: Boolean, default: false },
 	},
 	data() {
 		return {
@@ -88,18 +92,23 @@ export default {
 	},
 	computed: {
 		btnStyle() {
-			const bgc = (this.info?.dueDate) ? this.groupColor : 'inherit'
-			const width = this.progressDate/100*130
+			const bgc = this.info?.dueDate ? this.groupColor : 'inherit'
+			const width = (this.progressDate / 100) * 120
 			let radius = '0px'
-			if (width >= 120) {
-				radius =  '555px'
+			if (width >= 110) {
+				radius = '555px'
 			}
-			return { backgroundColor: bgc, width: width+'px',borderBottomRightRadius: radius,
-        			borderTopRightRadius: radius, borderBottomLeftRadius: '555px',
-        			borderTopLeftRadius: '555px'}
+			return {
+				backgroundColor: bgc,
+				width: width + 'px',
+				borderBottomRightRadius: radius,
+				borderTopRightRadius: radius,
+				borderBottomLeftRadius: '555px',
+				borderTopLeftRadius: '555px',
+			}
 		},
 		dateStyles() {
-			return { width: '130px', height: '100%', cursor: 'pointer' }
+			return { width: '120px', height: '100%', cursor: 'pointer' }
 		},
 		timelineBgc() {
 			if (this.info?.dueDate) {
@@ -115,23 +124,25 @@ export default {
 			return `${startDate} - ${dueDate}`
 		},
 		progressDate() {
-			const percentage = (this.daysPassed / this.totalDays) * 100;
-      		const percentageDisplay = percentage.toFixed(2)
+			const percentage = (this.daysPassed / this.totalDays) * 100
+			const percentageDisplay = percentage.toFixed(2)
 			if (percentageDisplay > 100) return 100
 			if (percentageDisplay < 0) return 0
 			return percentageDisplay
 		},
 		daysPassed() {
-			return Math.floor((new Date() - new Date(this.info?.startDate)) / (1000*60*60*24))
+			return Math.floor((new Date() - new Date(this.info?.startDate)) / (1000 * 60 * 60 * 24))
 		},
 		totalDays() {
-			return Math.ceil((new Date(this.info?.dueDate) - new Date(this.info?.startDate)) / (1000*60*60*24))
+			return Math.ceil(
+				(new Date(this.info?.dueDate) - new Date(this.info?.startDate)) / (1000 * 60 * 60 * 24)
+			)
 		},
 		calculatedDate() {
 			const days = this.totalDays
-			if (days > 31) return Math.round(days/30) + 'm'
-			return days+'d'
-		}
+			if (days > 31) return Math.round(days / 30) + 'm'
+			return days + 'd'
+		},
 	},
 	components: {},
 }
