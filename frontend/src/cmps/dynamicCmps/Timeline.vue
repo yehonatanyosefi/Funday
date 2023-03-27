@@ -61,6 +61,7 @@ export default {
 			this.$emit('saveTask', timeline)
 		},
 		formattedDate(dateToFormat) {
+			if (isNaN(dateToFormat)) return '-'
 			const date = new Date(dateToFormat)
 			const day = date.getDate()
 			const month = this.formatMonth(date)
@@ -128,6 +129,7 @@ export default {
 			const percentageDisplay = percentage.toFixed(2)
 			if (percentageDisplay > 100) return 100
 			if (percentageDisplay < 0) return 0
+			if (isNaN(percentageDisplay)) percentageDisplay = 100
 			return percentageDisplay
 		},
 		daysPassed() {
