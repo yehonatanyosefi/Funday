@@ -225,9 +225,10 @@ export const boardStore = {
 			}
 		},
 		async updateBoard({ commit, getters, dispatch }, { payload }) {
-			const boardId = getters.board._id
+			const {editedBoardId} = payload
+			const boardId = editedBoardId || getters.board._id
 			const updatedBoard = await boardService.updateBoard(boardId, payload)
-			dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
+			if (boardId===getters.board._id) dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
 			dispatch({ type: 'loadBoardList' })
 		},
 		async applyTaskDrag({ dispatch }, { payload }) {
