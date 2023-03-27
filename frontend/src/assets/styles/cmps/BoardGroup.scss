@@ -81,6 +81,9 @@
                border-radius: 50%;
                margin-inline-start: 10px;
                cursor: pointer;
+               &:hover {
+                    opacity: 0.65;
+               }
           }
      }
      .progress-bar {

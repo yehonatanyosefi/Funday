@@ -136,6 +136,7 @@ export default {
 			groupTitle: null,
 			isModalOpen: false,
 			isMenuModalOpen: false,
+			hideSetTimeout: null,
 			progressObj: {
 				status: {
 					colors: ['#00c875', '#fdab3d', '#e2445c', '#c4c4c4'],
@@ -240,10 +241,11 @@ export default {
 			this.isCircleShown = false
 		},
 		hideCircle() {
-			setTimeout(()=>{
+			clearTimeout(this.hideSetTimeout)
+			this.hideSetTimeout = setTimeout(()=>{
 				if (this.openColorPickerModal) return
 				this.isCircleShown = false
-			},70)
+			},100)
 		},
 		showCircle() {
 			this.isCircleShown = true
@@ -261,8 +263,9 @@ export default {
 	},
 	computed: {
 		addTaskColor() {
-			if (this.mouseOverAddTask) return this.group.style.color
-			return this.lighten(this.group.style.color, 0.35)
+			return this.group.style.color
+			// if (this.mouseOverAddTask) return this.group.style.color
+			// return this.lighten(this.group.style.color, 0.35)
 		},
 		groupColor() {
 			return this.group.style.color

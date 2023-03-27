@@ -18,11 +18,15 @@
   }
   .task-preview-color.last-task {
     border-bottom-left-radius: 5px;
+    opacity: 0.65;
   }
 
   &:hover {
     background-color: $color-highlighted;
     & .menu-btn-container {
+      opacity: 1;
+    }
+    .task-preview-color.last-task {
       opacity: 1;
     }
   }
