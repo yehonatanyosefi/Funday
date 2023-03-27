@@ -5,19 +5,22 @@
 				<Menu class="svg-icon menu-btn" width="20" height="20" @click="toggleMenuModal" />
 			</div>
 			<div class="group-title-input">
-				<div
-					v-if="isCircleShown"
-					class="color-circle"
-					@click.stop="openColorPicker"
-					:style="{ backgroundColor: groupColor }"></div>
-				<input
-					ref="groupTitleInput"
-					v-model="groupTitle"
-					:style="{ color: groupColor }"
-					type="text"
-					@input="saveGroupTitle"
-					@blur="hideCircle"
-					@focus="showCircle" />
+				<label for="groupTitleInput" v-click-outside="hideCircle">
+					<div
+						v-if="isCircleShown"
+						class="color-circle"
+						@click.stop="openColorPicker"
+						:style="{ backgroundColor: groupColor }"></div>
+					<input
+						name="groupTitleInput"
+						id="groupTitleInput"
+						ref="groupTitleInput"
+						v-model="groupTitle"
+						:style="{ color: groupColor }"
+						type="text"
+						@input="saveGroupTitle"
+						@focus="showCircle" />
+				</label>
 				<ColorPicker
 					@click.stop
 					v-if="openColorPickerModal"
@@ -209,11 +212,8 @@ export default {
 			this.isCircleShown = false
 		},
 		hideCircle() {
-			clearTimeout(this.hideSetTimeout)
-			this.hideSetTimeout = setTimeout(()=>{
-				if (this.openColorPickerModal) return
-				this.isCircleShown = false
-			},100)
+			if (this.openColorPickerModal) return
+			this.isCircleShown = false
 		},
 		showCircle() {
 			this.isCircleShown = true

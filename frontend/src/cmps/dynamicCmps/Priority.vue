@@ -1,9 +1,12 @@
 <template>
 <div class="priority" :class="info" @click="toggleModal" >
+     <div class="label">
+
      <span>{{info}}</span>
-     <Alert v-if="info==='Critical'" class="svg-icon " height="15px" width="15px" />
+     <Alert v-if="info==='Critical'" class="svg-icon critical-alert-svg" height="15px" width="15px" />
      <!-- <span>⚠️️</span> -->
      <div class="folding-corner"></div>
+     </div>
      <LabelPicker
           v-if="isOpen"
           class="modal"
