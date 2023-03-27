@@ -3,6 +3,7 @@
 	position: absolute;
 	height: fit-content;
 	width: fit-content;
+
 	//need to set position and other prefs. at children cmp
 	> * {
 		z-index: 10000;
@@ -11,7 +12,7 @@
 	}
 	&.AddItemModal-style {
 		position: absolute;
-		top: 42px;
+		top: 55px;
 		left: 75px;
 
 		&:hover {
@@ -44,10 +45,19 @@
 	}
 
 	.AddItemModal {
-		width: fit-content;
+		width: 220px;
 		top: 44px;
 		left: 75px;
 		border-radius: 8px;
+
+		.item-title {
+			align-items: center;
+			gap: 0.5rem;
+
+			svg {
+				width: 16px;
+			}
+		}
 
 		.modal-group {
 			padding: 8px;

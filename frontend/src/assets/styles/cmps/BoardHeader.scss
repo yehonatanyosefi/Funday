@@ -1,7 +1,7 @@
 .board-header-container {
 	display: grid;
 	padding-right: 30px;
-	padding-left: 36px;
+	padding-left: 40px;
 	padding-top: 16px;
 
 	div {
@@ -24,31 +24,40 @@
 			align-items: center;
 			height: 42px;
 
-			.board-title {
-				font-size: rem(32px);
+			.board-title-left-container {
 				display: flex;
-				justify-content: flex-start;
-				align-items: center;
-				position: relative;
-				padding: 0.5rem 0;
-				border-radius: 0.1em;
-				transition: padding 0.4s;
-				height: 100%;
-				text-align: start;
-				margin: 0;
-
-				&:hover {
-					outline: 1px solid var(--ui-border-color);
-				}
-
-				&:focus {
-					outline: 1px solid var(--color-basic_blue);
-				}
-
-				&.editing {
-					width: 50vw;
+				gap: 1.25rem;
+				.board-title {
+					font-size: rem(23px);
+					display: flex;
+					justify-content: flex-start;
+					align-items: center;
+					position: relative;
+					padding: 0.5rem;
+					border-radius: 0.1em;
+					transition: padding 0.4s;
+					height: 100%;
 					text-align: start;
-					// padding-right: 200px;
+					margin: 0;
+					font-family: pop-medium;
+					text-overflow: ellipsis;
+					line-height: rem(40px);
+					letter-spacing: -0.2;
+					margin-left: -6px;
+
+					&:hover {
+						outline: 1px solid $brdr-clr;
+					}
+
+					&:focus {
+						outline: 1px solid $primary-blue;
+					}
+
+					&.editing {
+						width: 50vw;
+						text-align: start;
+						// padding-right: 200px;
+					}
 				}
 			}
 
@@ -81,6 +90,7 @@
 				.invite {
 					position: relative;
 					cursor: pointer;
+					border: 1px solid $brdr-clr;
 
 					a {
 						visibility: hiden;
@@ -99,19 +109,26 @@
 
 		.add-views {
 			display: flex;
-			align-items: flex-end;
+			align-items: flex-start;
 			border-bottom: 1px solid $brdr-clr;
-			margin-top: 10px;
+			margin-top: 12px;
 			color: $color-txt-primary;
 			font-family: Figtree-reg;
+
+			& > :first-child :first-child :first-child {
+				padding-left: 0;
+			}
 
 			svg {
 				width: 16px;
 				padding-bottom: 2px;
+				margin-left: 8px;
 			}
 
 			.separator {
-				color: $brdr-clr;
+				border-left: 1px solid $brdr-clr;
+				height: 20px;
+				margin-top: 10px;
 			}
 
 			.view-item {
@@ -120,13 +137,35 @@
 				background-color: transparent;
 				margin: 0;
 				gap: rem(2px);
+				padding-bottom: 10px;
+				padding: 10px;
+				gap: 0.6rem;
+				height: rem(36px);
+				padding: 0;
+				// padding-right: 14px;
+				// padding-left: 14px;
 
-				height: 36px;
 				// width: 110px;
 
 				&.selected {
 					box-shadow: inset 0px -2px 0px 0px #0373ea;
 				}
+				.content {
+					padding-right: 14px;
+					padding-left: 14px;
+				}
+				.content:hover {
+					width: 100%;
+					background-color: $color-btn-hover;
+					border-top-left-radius: 4px;
+					border-top-right-radius: 4px;
+					height: rem(30px);
+				}
+
+				// &:hover {
+				// 	background-color: $color-btn-hover;
+				// 	border-radius: 4px;
+				// }
 			}
 
 			a {
