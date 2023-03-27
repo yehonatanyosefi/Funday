@@ -11,7 +11,7 @@ export const boardStore = {
 		boardList: [],
 		filterBy: {
 			txt: '',
-			member: '',
+			member: null,
 		},
 	},
 	getters: {
@@ -34,6 +34,7 @@ export const boardStore = {
 		},
 		setBoard(state, { board }) {
 			state.board = board
+			state.filterBy = { txt: '', member: null }
 			router.push(`/board/${board._id}/main-table`)
 		},
 		addBoard(state, { board }) {
@@ -50,21 +51,19 @@ export const boardStore = {
 		},
 		filterBoard(state, { filterBy }) {
 			let filter = !filterBy ? state.filterBy : filterBy
-			const { member, txt } = filterBy
-			if (txt) {
-				state.filterBy.txt = txt
-			}
-			if (member) {
-				state.filterBy.member = member
-			}
+
+			filter.txt = filterBy.txt || ''
+			filter.member = filterBy.member || null
+
 			let filterBoard = JSON.parse(JSON.stringify(state.board))
-			if (state.filterBy.txt !== '') {
-				filterBoard = boardService.filterByTxt(filterBoard, state.filterBy.txt)
+			if (filter.txt !== '') {
+				filterBoard = boardService.filterByTxt(filterBoard, filter.txt)
 			}
-			if (state.filterBy.member) {
-				filterBoard = boardService.filterByMember(filterBoard, state.filterBy.member)
+			if (filter.member) {
+				filterBoard = boardService.filterByMember(filterBoard, filter.member)
 			}
 			state.filteredBoard = filterBoard
+			state.filterBy = filter
 		},
 		removeTask(state, { ids }) {
 			const { groupId, taskId } = ids

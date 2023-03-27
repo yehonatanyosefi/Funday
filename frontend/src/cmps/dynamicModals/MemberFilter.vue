@@ -10,9 +10,9 @@
 			<div class="modal-item flex align-center">
 				<div
 					v-for="user in users"
-					@click="togglePersonFilter(user._id)"
+					@click="togglePersonFilter(user)"
 					:title="user.fullname"
-					:class="{ selected: filter?.member._id === user._id }"
+					:class="{ selected: filter?.member?._id === user._id }"
 					class="filter-user"
 					:key="user._id"
 				>
@@ -44,7 +44,6 @@ export default {
 
 		users() {
 			const users = this.$store.getters.board.members || []
-			console.log('members', users)
 			return users
 		},
 
