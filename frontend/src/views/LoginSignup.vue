@@ -2,62 +2,59 @@
   <div class="login-signup">
     <header>
       <div class="left-container">
-          <a href="/">
-            <img class="logo" src="/src/assets/funday.png" alt="" />
-            <h1>Funday</h1>
-          </a>
-        </div>
+        <a href="/">
+          <img class="logo" src="/src/assets/funday.png" alt="" />
+          <h1>Funday</h1>
+        </a>
+      </div>
     </header>
-   
-      <div class="login-area">
-        <h1 class="login-header">{{isSignin ? 'Welcome to monday.com' : 'Log in to your account'}} </h1>
 
-        <form  v-if="isSignin" @submit.prevent="doSignup">
-          <h2>Set up your account</h2>
-          <input  v-model="signupCred.fullname" placeholder="name@company.com" />
-          <label id="text" for="">
-            Full name
-            <input type="text" v-model="signupCred.username" placeholder="e.g. Jane Doe" />
-          </label>
-          <label  for="">
-            Password
-            <input type="password" v-model="signupCred.password" placeholder="Enter at least 8 characters" />
-          </label>
-          <ImgUploader @uploaded="onUploaded" />
-          <button>Signup</button>
-          <div class="pre-signup"><span>Already have an account?</span><button @click="isSignin=!isSignin" type="button" class="pre-signup-btn" >Log in</button></div>
-        </form>
+    <div class="login-area">
+      <h1 class="login-header">{{ isSignin ? 'Welcome to Funday.com' : 'Log in to your account' }} </h1>
 
-        <form v-else @submit.prevent="doLogin">
-          <!-- <select v-model="loginCred.username">
+      <form v-if="isSignin" @submit.prevent="doSignup">
+        <h2>Set up your account</h2>
+        <input v-model="signupCred.fullname" placeholder="name@company.com" />
+        <label id="text" for="">
+          Full name
+          <input type="text" v-model="signupCred.username" placeholder="e.g. Jane Doe" />
+        </label>
+        <label for="">
+          Password
+          <input type="password" v-model="signupCred.password" placeholder="Enter at least 8 characters" />
+        </label>
+        <ImgUploader @uploaded="onUploaded" />
+        <button>Signup</button>
+        <div class="pre-signup"><span>Already have an account?</span><button @click="isSignin = !isSignin" type="button"
+            class="pre-signup-btn">Log in</button></div>
+      </form>
+
+      <form v-else @submit.prevent="doLogin">
+        <!-- <select v-model="loginCred.username">
             <option value="">Select User</option>
             <option v-for="user in users" :key="user._id" :value="user.username">{{ user.fullname }}</option>
           </select> -->
-          <label id="mail-label" for="mail">
-            Enter your work email address
-            <input id="mail" type="email" v-model="loginCred.username" placeholder="Example@company.com" />
-          </label>
+        <label id="mail-label" for="mail">
+          Enter your work email address
+          <input id="mail" type="email" v-model="loginCred.username" placeholder="Example@company.com" />
+        </label>
 
-          
-          <input
-          type="text"
-          v-model="loginCred.password"
-          placeholder="Password"
-          />
-          <button>
-            <div class="login-btn">
-              <p>Login</p> 
-              <Next class="svg-icon " />
-            </div>
-          </button>
-          
-        <div class="pre-signup"><span>Don't have an account yet?</span><button @click="isSignin=!isSignin" type="button" class="pre-signup-btn" >Sign up</button></div>
-        
-        </form>
+        <input type="text" v-model="loginCred.password" placeholder="Password" />
+        <button>
+          <div class="login-btn">
+            <p>Login</p>
+            <Next class="svg-icon " />
+          </div>
+        </button>
 
-       
-      </div>
-      <!-- <hr />
+        <div class="pre-signup"><span>Don't have an account yet?</span><button @click="isSignin = !isSignin" type="button"
+            class="pre-signup-btn">Sign up</button></div>
+
+      </form>
+
+
+    </div>
+    <!-- <hr />
       <details>
         <summary>
           Admin Section
@@ -70,8 +67,6 @@
         </ul>
       </details> -->
   </div>
-  
-  
 </template>
 
 <script>
@@ -85,9 +80,9 @@ export default {
     return {
       msg: '',
       loginCred: { username: '', password: '' },
-      signupCred: { username: '', password: '', fullname: '', imgUrl : '' },
-      isSignin:false,
-      
+      signupCred: { username: '', password: '', fullname: '', imgUrl: '' },
+      isSignin: false,
+
     }
   },
   computed: {
@@ -108,8 +103,23 @@ export default {
         return
       }
       try {
-        await this.$store.dispatch({ type: "login", userCred: this.loginCred })
-        this.$router.push('/')
+        const user = await this.$store.dispatch({ type: "login", userCred: this.loginCred })
+        if (!user) {
+          this.msg = 'User not found'
+          return
+        }
+        const boards = await this.$store.dispatch({ type: "getUserBoards", userId: user._id }) || []
+        let firstBoard = boards[0]
+        if (!firstBoard) {
+          firstBoard = await this.$store.dispatch({ type: "addBoard" })
+          firstBoard.createdBy = {
+            "_id": user._id,
+            "fullname": user.fullname,
+            "imgUrl": user.imgUrl
+          }
+
+        }
+        this.$router.push(`/board/${firstBoard._id}/main-table`)
       } catch (err) {
         console.log(err)
         this.msg = 'Failed to login'
