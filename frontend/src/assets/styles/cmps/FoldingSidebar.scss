@@ -62,6 +62,7 @@
       border-color: #676879;
       font-size: 16px;
       margin-block-end: em(20px);
+      font-family: Figtree600;
       .title {
         padding: 0 2px;
       }
@@ -75,20 +76,21 @@
         width: 100%;
         background-color: transparent;
         outline: 1px $primary-blue;
-        padding-inline-start: 10px;
-        // line-height: em(32px);
+        padding-inline-start: 8px;
+        flex:1;
 
         &::placeholder{
           color:#323338;
         }
 
       }
-      button {
-        border-radius: 4px;
-
-        &:focus-within{
+      .searching button{
+        &:focus-within {
           outline: 1px solid $primary-blue;
         }
+      }
+      button {
+        border-radius: 4px;
         box-sizing: border-box;
         cursor: pointer;
         width: 100%;
