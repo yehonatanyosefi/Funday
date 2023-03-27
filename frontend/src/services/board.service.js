@@ -175,7 +175,8 @@ function filterByTxt(board, txt) {
 	return board
 }
 
-function filterByMember(board, memberId) {
+function filterByMember(board, member) {
+	const memberId = member._id
 	board.groups = board.groups.reduce((groupArr, group) => {
 		group.tasks = group.tasks.reduce((taskArr, task) => {
 			if (task.person.includes(memberId)) {

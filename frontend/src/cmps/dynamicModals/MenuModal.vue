@@ -10,7 +10,7 @@ import MemberFilter from './MemberFilter.vue'
 import RenameDeleteModal from './RenameDeleteModal.vue'
 export default {
 	name: 'menu-modal',
-	emits: ['closeModal', 'addTask', 'addGroup'],
+	emits: ['closeModal', 'addTask', 'addGroup', 'setFilter'],
 	props: {
 		cmp: {
 			type: String,
