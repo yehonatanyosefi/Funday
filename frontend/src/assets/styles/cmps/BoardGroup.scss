@@ -1,21 +1,55 @@
+$table-grids: 400px repeat(6, $group-column-width);
 .drop-preview {
      border: 1px dashed $color-divider;
      z-index: 1;
 }
 
+.task-sticky {
+     position: sticky;
+     left: 45px;
+     z-index: 1;
+}
+.group-header-container {
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100vw;
+     height: 100%;
+     background-color: #fff;
+}
 .board-group {
      display: grid;
      border-radius: 3px;
      height: fit-content;
      width: fit-content;
      margin-block-end: 50px;
-     .menu-btn-container-wrapper {
-          position: relative;
+     .menu-btn-wrapper {
+          position: absolute;
+          top: -10px;
+          left: -35px;
+          width: 36px;
+          height: 46px;
+          background-color: #fff;
+          z-index: 3;
+          // position: relative;
      }
+     .menu-btn-wrapper-task {
+          position: absolute;
+          top: 0px;
+          height: 38px;
+          left: -48px;
+           width: 42px;
+          background-color: #fff;
+          // z-index: 3;
+          // position: relative;
+     }
+          .add-task .menu-btn-wrapper-task {
+               height: 44px;
+          }
      .menu-btn-container {
           position: absolute;
-          top: 0;
-          left: -35px;
+          top: 10px;
+          left: 0px;
           opacity: 0;
           @include flex-center;
           width: 20px;
@@ -38,19 +72,27 @@
           height: 16px;
           color: black;
      }
+     .group-header-container {
+          padding-block-start: 10px;
+          top: 150px;
+          width: 1239px;
+          position: sticky;
+          z-index: 2;
+     }
      .group-header {
+          position: sticky;
+          width: fit-content;
+          left: 45px;
+          z-index: 2;
+          background-color: #fff;
           color: $group-header-clr;
           font-size: 18px;
           display: flex;
           align-items: center;
           justify-content: start;
           text-overflow: ellipsis;
-          position: sticky;
-          z-index: 3;
-          top: 0;
-          left: 0;
-          input {
-               margin-inline-start: 30px;
+          .group-title-input {
+               margin-inline-start: 1.5px;
                width: fit-content;
                max-width: 331px;
                &:focus {
@@ -90,7 +132,7 @@
           }
      }
      .progress-bar {
-          margin-inline-start: 400px;
+          margin-inline-start: 399px;
           @include flex-center;
           border-inline-start: 1px solid $color-divider;
           border-block-end: 1px solid $color-divider;
@@ -118,10 +160,21 @@
           }
           position: relative;
      }
+          .task-checkbox-container {
+               @include flex-center;
+               width: 38px;
+               border-inline-start: 1px solid $color-divider;
+               border-inline-end: 1px solid $color-divider;
+               width: 100%;
+               height: 100%;
+          }
      .task-header {
+          position: sticky;
+          top: 185px;
+          z-index: 3;
+          background-color: #fff;
           display: grid;
-          grid-template-columns: 33px 367px repeat(6, $group-column-width);
-          position: relative;
+          grid-template-columns: $table-grids;
           .group-preview-color {
                position: absolute;
                top: 0;
@@ -131,10 +184,10 @@
                background-color: $group-header-clr;
                border-top-left-radius: 5px;
           }
-          section:nth-child(2) {
-               border: 1px solid $color-divider;
-          }
-          section {
+          // section:nth-child(2) {
+          //      border: 1px solid $color-divider;
+          // }
+          .task-container {
                height: $group-row-height;
                width: 100%;
                display: flex;
@@ -147,14 +200,18 @@
                     align-items: center;
                     width: 100%;
                     height: 100%;
-                    padding: 10px;
                     border-block-start: 1px solid $color-divider;
                     border-inline-end: 1px solid $color-divider;
                     border-block-end: 1px solid $color-divider;
-                    &:not(.status, .priority, .label, .label span):hover {
+                    &:hover {
                          background-color: $color-highlighted;
                     }
                }
+          }
+          .task-title-group.task-sticky .task {
+               display: grid;
+               grid-template-columns: 32.5px 1fr;
+               background-color: #fff;
           }
      }
 }
