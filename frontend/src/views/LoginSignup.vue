@@ -1,65 +1,93 @@
 <template>
-  <div class="container about">
-    <p>{{ msg }}</p>
+  <div class="login-signup">
+    <header>
+      <div class="left-container">
+          <a href="/">
+            <img class="logo" src="/src/assets/funday.png" alt="" />
+            <h1>Funday</h1>
+          </a>
+        </div>
+    </header>
+   
+      <div class="login-area">
+        <h1 class="login-header">{{isSignin ? 'Welcome to monday.com' : 'Log in to your account'}} </h1>
 
-    <div v-if="loggedinUser">
-      <h3>
-        Loggedin User:
-        {{ loggedinUser.fullname }}
-        <button @click="doLogout">Logout</button>
-      </h3>
-    </div>
-    <div v-else>
-      <h2>Login</h2>
-      <form @submit.prevent="doLogin">
-        <select v-model="loginCred.username">
-          <option value="">Select User</option>
-          <option v-for="user in users" :key="user._id" :value="user.username">{{ user.fullname }}</option>
-        </select>
-        <!-- <input type="text" v-model="loginCred.username" placeholder="User name" />
-        <input
+        <form  v-if="isSignin" @submit.prevent="doSignup">
+          <h2>Set up your account</h2>
+          <input  v-model="signupCred.fullname" placeholder="name@company.com" />
+          <label id="text" for="">
+            Full name
+            <input type="text" v-model="signupCred.username" placeholder="e.g. Jane Doe" />
+          </label>
+          <label  for="">
+            Password
+            <input type="password" v-model="signupCred.password" placeholder="Enter at least 8 characters" />
+          </label>
+          <ImgUploader @uploaded="onUploaded" />
+          <button>Signup</button>
+          <div class="pre-signup"><span>Already have an account?</span><button @click="isSignin=!isSignin" type="button" class="pre-signup-btn" >Log in</button></div>
+        </form>
+
+        <form v-else @submit.prevent="doLogin">
+          <!-- <select v-model="loginCred.username">
+            <option value="">Select User</option>
+            <option v-for="user in users" :key="user._id" :value="user.username">{{ user.fullname }}</option>
+          </select> -->
+          <label id="mail-label" for="mail">
+            Enter your work email address
+            <input id="mail" type="email" v-model="loginCred.username" placeholder="Example@company.com" />
+          </label>
+
+          
+          <input
           type="text"
           v-model="loginCred.password"
           placeholder="Password"
-        /> -->
-        <button>Login</button>
-      </form>
-      <p class="mute">user1 or admin, pass:123 </p>
-      <form @submit.prevent="doSignup">
-        <h2>Signup</h2>
-        <input type="text" v-model="signupCred.fullname" placeholder="Your full name" />
-        <input type="text" v-model="signupCred.username" placeholder="Username" />
-        <input type="password" v-model="signupCred.password" placeholder="Password" />
-        <ImgUploader @uploaded="onUploaded" />
-        <button>Signup</button>
-      </form>
-    </div>
-    <hr />
-    <details>
-      <summary>
-        Admin Section
-      </summary>
-      <ul>
-        <li v-for="user in users" :key="user._id">
-          <pre>{{ user }}</pre>
-          <button @click="removeUser(user._id)">x</button>
-        </li>
-      </ul>
-    </details>
+          />
+          <button>
+            <div class="login-btn">
+              <p>Login</p> 
+              <Next class="svg-icon " />
+            </div>
+          </button>
+          
+        <div class="pre-signup"><span>Don't have an account yet?</span><button @click="isSignin=!isSignin" type="button" class="pre-signup-btn" >Sign up</button></div>
+        
+        </form>
+
+       
+      </div>
+      <!-- <hr />
+      <details>
+        <summary>
+          Admin Section
+        </summary>
+        <ul>
+          <li v-for="user in users" :key="user._id">
+            <pre>{{ user }}</pre>
+            <button @click="removeUser(user._id)">x</button>
+          </li>
+        </ul>
+      </details> -->
   </div>
+  
+  
 </template>
 
 <script>
 
 import ImgUploader from '../cmps/ImgUploader.vue'
+import Next from '../assets/svg/Next.svg'
 
 export default {
   name: 'login-signup',
   data() {
     return {
       msg: '',
-      loginCred: { username: 'user1', password: '123' },
+      loginCred: { username: '', password: '' },
       signupCred: { username: '', password: '', fullname: '', imgUrl : '' },
+      isSignin:false,
+      
     }
   },
   computed: {
@@ -111,12 +139,14 @@ export default {
       }
     },
     onUploaded(imgUrl) {
+      // console.log('imgUrl',imgUrl)
       this.signupCred.imgUrl = imgUrl
     }
 
   },
   components: {
-    ImgUploader
+    ImgUploader,
+    Next
   }
 }
 </script>

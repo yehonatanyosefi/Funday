@@ -37,7 +37,7 @@
             position: absolute;
             transition: opacity .1s ease-in-out;
             opacity: 0;
-            border-color: transparent #f6f7fb transparent transparent;
+            border-color: transparent $color-riverstone_gray transparent transparent;
             opacity: 1;
             height: 16px;
             width: 6px;
@@ -75,18 +75,18 @@
       &.profile {
         height: 44px;
         width: 44px;
-        border: 2px solid #ffffff;
+        border: 2px solid $color-snow_white;
         border-radius: 50%;
       }
     }
     button {
       background-color: $clr-small-side-bar;
       cursor: not-allowed;
-      color: #ffffff;
+      color: $color-snow_white;
     }
     .svg-icon {
       &.InstalledProducts {
-        color: #6c6cff;
+        color: $side-bar-svg-purple;
       }
     }
   }

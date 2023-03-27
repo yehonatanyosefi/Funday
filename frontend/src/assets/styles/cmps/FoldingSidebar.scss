@@ -1,6 +1,6 @@
 .spacer {
   border-bottom: 1px solid;
-  border-color: #d0d4e4;
+  border-color: $layout-border-color;
   margin: 0 20px;
 }
 
@@ -17,9 +17,9 @@
 // }
 
 .folding-bar {
-  color: #323338;
+  color: $color-txt-primary;
   width: 255px;
-  background-color: #f6f7fb;
+  background-color: $color-riverstone_gray;
   font-family: ROBOTO-reg;
   position: relative;
   transition: 100ms ease;
@@ -41,7 +41,7 @@
   flex-direction: column;
   flex-grow: 0;
   flex-shrink: 0;
-  border-bottom: 1px solid #e1e1e1;
+  // border-bottom: 1px solid #e1e1e1;
   border-bottom: none;
   flex-shrink: 1;
   flex-grow: 1;
@@ -59,7 +59,7 @@
       border-radius: 4px;
       margin-right: 4px;
       border: 1px solid;
-      border-color: #676879;
+      border-color: $clr-divider;
       font-size: 16px;
       margin-block-end: em(20px);
       font-family: Figtree600;
@@ -80,7 +80,7 @@
         flex:1;
 
         &::placeholder{
-          color:#323338;
+          color:$color-txt-primary;
         }
 
       }
@@ -104,7 +104,7 @@
           margin: 0 8px;
         }
         &:hover {
-          background-color: #dcdfec;
+          background-color: $color-btn-hover;
         }
       }
     }
@@ -113,8 +113,8 @@
 
 .slide-btn {
   border: 1px solid;
-  border-color: #c3c6d4;
-  background-color: #ffffff;
+  border-color: $brdr-clr;
+  background-color: $color-snow_white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -130,7 +130,7 @@
   &:hover {
     background-color: $primary-blue;
     border-color: $primary-blue;
-    color: #ffffff;
+    color: $color-snow_white;
   }
   svg:focus {
     outline: none;
@@ -143,10 +143,10 @@
 
 .folded {
   width: 30px;
-  box-shadow: 0px 12px 13px -7px #f6f7fb;
+  box-shadow: 0px 12px 13px -7px $color-riverstone_gray;
   z-index: 6;
   border-right: 1px solid;
-  border-color: #d0d4e4;
+  border-color: $layout-border-color;
   position: relative;
 
   & > *:not(.slide-btn, .triangle) {
