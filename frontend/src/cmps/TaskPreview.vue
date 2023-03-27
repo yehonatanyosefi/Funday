@@ -1,19 +1,21 @@
 <template>
 	<section class="task-preview" v-if="cmpOrder?.length">
-		<div class="task">
+		<div class="task-sticky task task-title-container" :class="{ 'first-task-sticky': idx === 0 }">
 			<div class="task-preview-color" :style="{ backgroundColor: groupColor }"></div>
-			<div class="menu-btn-container">
-				<Menu class="svg-icon menu-btn" width="20" height="20" @click="toggleMenuModal" />
+			<div class="menu-btn-wrapper-task">
+				<div class="menu-btn-container">
+					<Menu class="svg-icon menu-btn" width="20" height="20" @click="toggleMenuModal" />
+				</div>
 			</div>
-			<input
-				type="checkbox"
-				title="Delete Task"
-				class="task-checkbox"
-				v-model="isModalOpen"
-				@click="openModal"
-			/>
-		</div>
-		<div class="task">
+			<div class="task-checkbox-container">
+				<input
+					type="checkbox"
+					title="Delete Task"
+					class="task-checkbox"
+					v-model="isModalOpen"
+					@click="openModal"
+				/>
+			</div>
 			<Title :info="task.title" @saveTask="saveTask($event, 'title')"></Title>
 			<RouterLink :to="'/board/' + boardId + '/main-table/task/' + task.id" class="task-details-icon">
 				<AddUpdate class="svg-icon add-update" width="24" height="24" />
@@ -37,7 +39,7 @@
 import AddUpdate from '../assets/svg/AddUpdate.svg'
 import Menu from '../assets/svg/Menu.svg'
 import RemoveModal from './util/RemoveModal.vue'
-// import { Container, Draggable } from "vue3-smooth-dnd";
+// import { Container, Draggable } from "vue3-smooth-dnd"
 import Title from './dynamicCmps/Title.vue'
 import Side from './dynamicCmps/Side.vue'
 import Person from './dynamicCmps/Person.vue'
@@ -52,6 +54,7 @@ export default {
 		task: Object,
 		cmpOrder: Array,
 		groupColor: String,
+		idx: Number,
 	},
 	created() {},
 	data() {

@@ -1,49 +1,60 @@
 <template>
 	<section class="board-group">
-		<h4 class="group-header">
-			<div class="menu-btn-container">
-				<Menu class="svg-icon menu-btn" width="20" height="20" @click="toggleMenuModal" />
-			</div>
-			<div class="group-title-input">
-				<label for="groupTitleInput" v-click-outside="hideCircle">
-					<div
-						v-if="isCircleShown"
-						class="color-circle"
-						@click.stop="openColorPicker"
-						:style="{ backgroundColor: groupColor }"></div>
-					<input
-						class="board-input"
-						name="groupTitleInput"
-						id="groupTitleInput"
-						ref="groupTitleInput"
-						v-model="groupTitle"
-						:style="{ color: groupColor }"
-						type="text"
-						@input="saveGroupTitle"
-						@focus="showCircle" />
-				</label>
-				<ColorPicker
-					@click.stop
-					v-if="openColorPickerModal"
-					v-click-outside="closeColorPicker"
-					@closeColorPicker="closeColorPicker"
-					@chooseColor="chooseGroupColor"></ColorPicker>
-			</div>
-			<div class="task-count">{{group.tasks.length}} Tasks</div>
-		</h4>
+		<div class="group-header-container">
+			<h4 class="group-header">
+				<div class="menu-btn-wrapper">
+					<div class="menu-btn-container">
+						<Menu class="svg-icon menu-btn" width="20" height="20" @click="toggleMenuModal" />
+					</div>
+				</div>
+				<div class="group-title-input">
+					<label for="groupTitleInput" v-click-outside="hideCircle">
+						<div
+							v-if="isCircleShown"
+							class="color-circle"
+							@click.stop="openColorPicker"
+							:style="{ backgroundColor: groupColor }"
+						></div>
+						<input
+							class="board-input group-title-input"
+							name="groupTitleInput"
+							id="groupTitleInput"
+							ref="groupTitleInput"
+							v-model="groupTitle"
+							:style="{ color: groupColor }"
+							type="text"
+							@input="saveGroupTitle"
+							@focus="showCircle"
+						/>
+					</label>
+					<ColorPicker
+						@click.stop
+						v-if="openColorPickerModal"
+						v-click-outside="closeColorPicker"
+						@closeColorPicker="closeColorPicker"
+						@chooseColor="chooseGroupColor"
+					></ColorPicker>
+				</div>
+				<div class="task-count">{{ group.tasks.length }} Tasks</div>
+			</h4>
+		</div>
 		<div class="task-header">
-			<div class="group-preview-color" :style="{ backgroundColor: groupColor }"></div>
-			<section>
-				<input
-					type="checkbox"
-					title="Delete Task"
-					class="task-checkbox"
-					v-model="isActionsModalOpen"
-				/>
-					<!-- @click="openActionsModal" -->
-			</section>
-			<section><div class="task">Task</div></section>
-			<section v-for="(cmp, idx) in cmpOrder" :key="idx">
+			<div class="task-title-group task-sticky task-container">
+				<div class="menu-btn-wrapper-task"></div>
+				<div class="task">
+					<div class="group-preview-color" :style="{ backgroundColor: groupColor }"></div>
+					<div class="task-checkbox-container">
+						<input
+							type="checkbox"
+							title="Delete Task"
+							class="task-checkbox"
+							v-model="isActionsModalOpen"
+						/>
+					</div>
+					<section class="task-title">Task</section>
+				</div>
+			</div>
+			<section class="task-container" v-for="(cmp, idx) in cmpOrder" :key="idx">
 				<div class="task">{{ capitalizeFirstLetter(cmp) }}</div>
 			</section>
 		</div>
@@ -57,6 +68,7 @@
 		>
 			<Draggable v-for="(task, idx) in group.tasks" :key="task.id">
 				<TaskPreview
+					:idx="idx"
 					:task="task"
 					:groupColor="group.style.color"
 					:cmpOrder="cmpOrder"
@@ -65,17 +77,23 @@
 				></TaskPreview>
 			</Draggable>
 		</Container>
+
 		<section class="task-preview add-task">
-			<div class="task">
-				<div class="task-preview-color last-task" :style="{ backgroundColor: groupColor }"></div>
-				<input type="checkbox" class="task-checkbox" disabled />
+			<div class="task-sticky task task-title-container add-task-container">
+				<div class="menu-btn-wrapper-task"></div>
+				<div class="task-checkbox-container">
+					<div class="task-preview-color last-task" :style="{ backgroundColor: groupColor }"></div>
+					<!-- :style="borderStyle" -->
+					<input type="checkbox" class="task-checkbox" disabled />
+				</div>
+				<input
+					v-model="addTaskTitle"
+					@blur="addTask"
+					@keyup.enter="addTask"
+					class="board-input add-task-input"
+					placeholder="+ Add task"
+				/>
 			</div>
-			<input
-				v-model="addTaskTitle"
-				@blur="addTask"
-				@keyup.enter="addTask"
-				class="board-input add-task-input"
-				placeholder="+ Add task">
 		</section>
 		<div class="progress-bar">
 			<div class="progress-column" v-for="(cmp, idx) in cmpOrder" :key="idx + 50">
@@ -86,18 +104,18 @@
 					v-if="cmp === 'timeline' && timelineProgress"
 					:groupColor="group.style.color"
 					:info="timelineProgress"
-					:isProgressBar="true"></Timeline>
+					:isProgressBar="true"
+				></Timeline>
 			</div>
 		</div>
 		<ActionsModal
 			v-if="isActionsModalOpen"
 			@closeActionsModal="closeActionsModal"
 			@openRemoveModal="openRemoveModal"
-			></ActionsModal>
-		<RemoveModal
-			v-if="isRemoveModalOpen"
-			@closeModal="closeRemoveModal"
-			@remove="handleRemoveGroup">group</RemoveModal>
+		></ActionsModal>
+		<RemoveModal v-if="isRemoveModalOpen" @closeModal="closeRemoveModal" @remove="handleRemoveGroup"
+			>group</RemoveModal
+		>
 	</section>
 </template>
 
@@ -140,18 +158,18 @@ export default {
 			hideSetTimeout: null,
 			progressObj: {
 				status: {
-					colors: ['#00c875', '#fdab3d', '#e2445c', '#c4c4c4'],
 					words: ['Done', 'Working on it', 'Stuck', ''],
+					colors: ['#00c875', '#fdab3d', '#e2445c', '#c4c4c4'],
 				},
 				priority: {
-					colors: ['#333333', '#401694', '#5559df', '#579bfc', '#c4c4c4'],
 					words: ['Critical', 'High', 'Medium', 'Low', ''],
+					colors: ['#333333', '#401694', '#5559df', '#579bfc', '#c4c4c4'],
 				},
 			},
 			dropPlaceholderOptions: {
-			    className: 'drop-preview',
-			    animationDuration: '150',
-			    showOnTop: true
+				className: 'drop-preview',
+				animationDuration: '150',
+				showOnTop: true,
 			},
 		}
 	},
@@ -160,12 +178,16 @@ export default {
 			return str.charAt(0).toUpperCase() + str.slice(1)
 		},
 		saveGroupTitle() {
-			const payload = { attName:'title', att: this.groupTitle, groupId: this.group.id }
+			const payload = {
+				attName: 'title',
+				att: this.groupTitle,
+				groupId: this.group.id,
+			}
 			this.$emit('saveGroupAtt', payload)
 		},
 		chooseGroupColor(color) {
 			// const style = {color} //TODO fix store
-			const payload = { attName:'style', att: color, groupId: this.group.id }
+			const payload = { attName: 'style', att: color, groupId: this.group.id }
 			this.isCircleShown = false
 			this.$emit('saveGroupAtt', payload)
 		},
@@ -236,10 +258,14 @@ export default {
 		groupColor() {
 			return this.group.style.color
 		},
+		borderStyle() {
+			//TODO opacity
+			return { borderInlineStart: `6px solid ${this.groupColor}` }
+		},
 		timelineProgress() {
 			const timelineProgress = {
 				startDate: this.startDate,
-				dueDate: this.dueDate
+				dueDate: this.dueDate,
 			}
 			return timelineProgress
 		},
