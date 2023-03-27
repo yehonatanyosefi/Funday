@@ -34,9 +34,9 @@
 					type="checkbox"
 					title="Delete Task"
 					class="task-checkbox"
-					v-model="isModalOpen"
-					@click="openModal"
+					v-model="isActionsModalOpen"
 				/>
+					<!-- @click="openActionsModal" -->
 			</section>
 			<section><div class="task">Task</div></section>
 			<section v-for="(cmp, idx) in cmpOrder" :key="idx">
@@ -85,7 +85,7 @@
 					:isProgressBar="true"></Timeline>
 			</div>
 		</div>
-		<ActionsModal></ActionsModal>
+		<ActionsModal v-if="isActionsModalOpen"></ActionsModal>
 		<RemoveModal
 			v-if="isModalOpen"
 			@closeModal="handleCloseModal"
@@ -122,6 +122,7 @@ export default {
 	},
 	data() {
 		return {
+			isActionsModalOpen: false,
 			isCircleShown: false,
 			openColorPickerModal: false,
 			addTaskTitle: '',
@@ -212,6 +213,12 @@ export default {
 		},
 		showCircle() {
 			this.isCircleShown = true
+		},
+		openActionsModal() {
+			this.isActionsModalOpen = true
+		},
+		closeActionsModal() {
+			this.isActionsModalOpen = false
 		},
 		// onDragStart(name,{payload}) {
 		//     console.log('onDragStart', payload)
