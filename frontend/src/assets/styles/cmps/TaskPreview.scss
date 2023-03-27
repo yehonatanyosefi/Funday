@@ -120,39 +120,10 @@
       }
     }
   }
-
-  &:hover .task .priority,
-  &:hover .task .status.empty {
-    background-color: lighten($color-empty-label, $lighten-status-amount);
+  &:hover .task :is(.priority,.status) {
+    opacity: 0.75;
   }
-
-  &:hover .task .priority.Critical {
-    background-color: lighten($color-critical, $lighten-priority-amount);
-  }
-
-  &:hover .task .priority.High {
-    background-color: lighten($color-high, $lighten-priority-amount);
-  }
-
-  &:hover .task .priority.Medium {
-    background-color: lighten($color-medium, $lighten-priority-amount);
-  }
-
-  &:hover .task .priority.Low {
-    background-color: lighten($color-low, $lighten-priority-amount);
-  }
-
-  &:hover .task .status.working {
-    background-color: lighten($color-working-on-it, $lighten-status-amount);
-  }
-
-  &:hover .task .status.stuck {
-    background-color: lighten($color-stuck, $lighten-status-amount);
-  }
-
-  &:hover .task .status.done {
-    background-color: lighten($color-done, $lighten-status-amount);
-  }
+  
   .task-title {
     width: 367px;
     .task-title-input {

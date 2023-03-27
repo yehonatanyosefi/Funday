@@ -4,11 +4,7 @@
 			<div class="menu-btn-container">
 				<Menu class="svg-icon menu-btn" width="20" height="20" @click="toggleMenuModal" />
 			</div>
-			<div
-				class="group-title-input"
-				tabindex="0"
-      			ref="groupTitleInputDiv"
-				@click="focusGroupTitle">
+			<div class="group-title-input">
 				<div
 					v-if="isCircleShown"
 					class="color-circle"
@@ -65,16 +61,13 @@
 				></TaskPreview>
 			</Draggable>
 		</Container>
-		<section class="task-preview add-task"
-			@mouseover="mouseOverAddTask = true"
-			@mouseout="mouseOverAddTask = false">
+		<section class="task-preview add-task">
 			<div class="task">
-				<div class="task-preview-color last-task" :style="{ backgroundColor: addTaskColor }"></div>
+				<div class="task-preview-color last-task" :style="{ backgroundColor: groupColor }"></div>
 				<input type="checkbox" class="task-checkbox" disabled />
 			</div>
 			<input
 				v-model="addTaskTitle"
-				@focus="mouseOverAddTask = true"
 				@blur="addTask"
 				@keyup.enter="addTask"
 				class="add-task-input"
@@ -92,7 +85,7 @@
 					:isProgressBar="true"></Timeline>
 			</div>
 		</div>
-
+		<ActionsModal></ActionsModal>
 		<RemoveModal
 			v-if="isModalOpen"
 			@closeModal="handleCloseModal"
@@ -104,12 +97,12 @@
 import ProgressBar from './dynamicCmps/ProgressBar.vue'
 import Menu from '../assets/svg/Menu.svg'
 import RemoveModal from './util/RemoveModal.vue'
-// import MenuModal from './dynamicModals/MenuModal.vue'
 import { Container, Draggable } from 'vue3-smooth-dnd'
 import TaskPreview from './TaskPreview.vue'
 import Title from './dynamicCmps/Title.vue'
 import Timeline from './dynamicCmps/Timeline.vue'
 import ColorPicker from './util/ColorPicker.vue'
+import ActionsModal from './util/ActionsModal.vue'
 export default {
 	emits: [
 		'saveTask',
@@ -131,7 +124,6 @@ export default {
 		return {
 			isCircleShown: false,
 			openColorPickerModal: false,
-			mouseOverAddTask: false,
 			addTaskTitle: '',
 			groupTitle: null,
 			isModalOpen: false,
@@ -198,40 +190,11 @@ export default {
 			// console.log('getCardPayload',ev)
 		},
 		addTask() {
-			this.mouseOverAddTask = false
 			const title = this.addTaskTitle
 			if (!title) return
 			const payload = { title, groupId: this.group.id }
 			this.$emit('addTask', payload)
 			this.addTaskTitle = ''
-		},
-		hex2(c) {
-			c = Math.round(c);
-			if (c < 0) c = 0;
-			if (c > 255) c = 255;
-
-			var s = c.toString(16);
-			if (s.length < 2) s = "0" + s;
-
-			return s;
-		},
-		color(r, g, b) {
-			return "#" + this.hex2(r) + this.hex2(g) + this.hex2(b)
-		},
-		lighten(col, light) {
-			var r = parseInt(col.substr(1, 2), 16)
-			var g = parseInt(col.substr(3, 2), 16)
-			var b = parseInt(col.substr(5, 2), 16)
-			if (light < 0) {
-				r = (1 + light) * r;
-				g = (1 + light) * g
-				b = (1 + light) * b
-			} else {
-				r = (1 - light) * r + light * 255
-				g = (1 - light) * g + light * 255
-				b = (1 - light) * b + light * 255
-			}
-			return this.color(r, g, b)
 		},
 		openColorPicker() {
 			this.openColorPickerModal = true
@@ -250,10 +213,6 @@ export default {
 		showCircle() {
 			this.isCircleShown = true
 		},
-		focusGroupTitle() {
-      		// this.$refs.groupTitleInputDiv.focus()
-      		// this.$refs.groupTitleInput.focus()
-		},
 		// onDragStart(name,{payload}) {
 		//     console.log('onDragStart', payload)
 		// },
@@ -262,11 +221,6 @@ export default {
 		// },
 	},
 	computed: {
-		addTaskColor() {
-			return this.group.style.color
-			// if (this.mouseOverAddTask) return this.group.style.color
-			// return this.lighten(this.group.style.color, 0.35)
-		},
 		groupColor() {
 			return this.group.style.color
 		},
@@ -306,6 +260,7 @@ export default {
 		ProgressBar,
 		Timeline,
 		ColorPicker,
+		ActionsModal,
 		//  MenuModal,
 	},
 }
