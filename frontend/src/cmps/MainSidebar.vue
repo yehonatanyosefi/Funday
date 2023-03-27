@@ -1,9 +1,12 @@
 <template>
 	<section class="side-bars">
 		<section class="sidebar">
-			<!-- <router-link :to="'/'"> -->
-			<img src="../assets/funday.png" alt="" />
-			<!-- </router-link> -->
+			<div class="logo-img">
+				<router-link :to="'/'">
+					<img src="../assets/funday.png" alt="" />
+				</router-link>
+
+			</div>
 			<!-- <div class="monday-style-divider surface-divider bottom monday-style-divider--horizontal"></div> -->
 			<div class="divider"></div>
 			<!-- <div class="triangle"></div> -->
@@ -17,7 +20,7 @@
 						</a>
 					</div>
 
-					<button disabbled>
+					<button  @click="hey">
 						<Notifications class="svg-icon" />
 					</button>
 					<button disabbled>
@@ -48,12 +51,9 @@
 			<button disabbled>
 				<InstalledProducts class="svg-icon InstalledProducts" />
 			</button>
-			<img
-				src="https://files.monday.com/euc1/photos/41054538/thumb/41054538-user_photo_2023_03_18_19_59_31.png?1679169572"
-				class="profile"
-				title="Dor Toledano"
-				alt="Dor Toledano"
-			/>
+			<!-- :src="loggedinUser.imgUrl" v-if="loggedinUser"-->
+			<!-- src="https://files.monday.com/euc1/photos/41054538/thumb/41054538-user_photo_2023_03_18_19_59_31.png?1679169572" -->
+			<img  src="https://files.monday.com/euc1/photos/41054538/thumb/41054538-user_photo_2023_03_18_19_59_31.png?1679169572" class="profile" title="Dor Toledano" alt="Dor Toledano" />
 		</section>
 		<FoldingSideBar />
 	</section>
@@ -75,13 +75,23 @@ import FoldingSideBar from '../cmps/FoldingSidebar.vue'
 
 export default {
 	props: {},
-	created() {},
+	created() {
+	},
 	data() {
 		return {
 			isSelected: false,
 		}
 	},
-	methods: {},
+	computed: {
+		loggedinUser() {
+			return this.$store.getters.loggedinUser
+		},
+	},
+	methods: {
+		hey(){
+			console.log('loggedinUser',this.loggedinUser)
+		}
+	},
 	computed: {},
 	components: {
 		WorkManagement,
