@@ -21,6 +21,9 @@
 				></BoardGroup>
 			</Draggable>
 		</Container>
+		<button @click="addGroup" class="add-group-btn">
+			<Plus class="add-new-group-plus"></Plus> Add new group
+		</button>
 		<RouterView></RouterView>
 	</section>
 </template>
@@ -29,6 +32,7 @@
 import { Container, Draggable } from 'vue3-smooth-dnd'
 import BoardHeader from './BoardHeader.vue'
 import BoardGroup from './BoardGroup.vue'
+import Plus from '../assets/svg/plus.svg'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { boardService } from '../services/board.service.local'
 export default {
@@ -126,12 +130,16 @@ export default {
 			const payload = { ...groupPayload, boardId: this.board._id }
 			this.$store.dispatch({ type: 'applyTaskDrag', payload })
 		},
+		addGroup() {
+			this.$store.dispatch({ type: 'addGroup' })
+		},
 	},
 	components: {
 		BoardHeader,
 		BoardGroup,
 		Container,
 		Draggable,
+		Plus,
 	},
 }
 </script>
