@@ -6,7 +6,6 @@ $input-padding-board-details: 4px;
 }
 
 .board-details {
-     margin-inline-start: 47px;
      .task-title,
      .text {
           @include flex-center;

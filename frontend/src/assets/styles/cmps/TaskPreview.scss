@@ -1,5 +1,5 @@
 
-.task-preview {
+.board-group .task-preview {
   display: grid;
   grid-template-columns: $table-grids;
   position: relative;
@@ -207,3 +207,6 @@
   border-inline-end: 1px solid $color-divider;
   box-shadow: $small-shadow;
 }
+// .animated .task-preview {
+//   border: 1px solid red;
+// }

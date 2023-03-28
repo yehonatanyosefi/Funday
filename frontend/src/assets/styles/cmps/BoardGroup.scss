@@ -3,7 +3,9 @@ $table-grids: 400px repeat(6, $group-column-width);
      border: 1px dashed $color-divider;
      z-index: 1;
 }
-
+.task {
+     // background-color: #fff;
+}
 .task-sticky {
      position: sticky;
      left: 45px;
@@ -18,6 +20,7 @@ $table-grids: 400px repeat(6, $group-column-width);
      background-color: #fff;
 }
 .board-group {
+     margin-inline-start: 47px;
      display: grid;
      border-radius: 3px;
      height: fit-content;
@@ -77,13 +80,13 @@ $table-grids: 400px repeat(6, $group-column-width);
           top: 150px;
           width: 1239px;
           position: sticky;
-          z-index: 2;
+          z-index: 4;
      }
      .group-header {
           position: sticky;
           width: fit-content;
           left: 45px;
-          z-index: 2;
+          z-index: 3;
           background-color: #fff;
           color: $group-header-clr;
           font-size: 18px;

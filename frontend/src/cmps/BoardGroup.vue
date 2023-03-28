@@ -19,7 +19,7 @@
 							class="board-input group-title-input"
 							name="groupTitleInput"
 							id="groupTitleInput"
-							ref="groupTitleInput"
+							:ref="'groupTitleInput' + group.id"
 							v-model="groupTitle"
 							:style="{ color: groupColor }"
 							type="text"
@@ -171,6 +171,11 @@ export default {
 				animationDuration: '150',
 				showOnTop: true,
 			},
+			upperDropPlaceholderOptions: {
+				className: 'cards-drop-preview',
+				animationDuration: '150',
+				showOnTop: true,
+			},
 		}
 	},
 	methods: {
@@ -186,8 +191,8 @@ export default {
 			this.$emit('saveGroupAtt', payload)
 		},
 		chooseGroupColor(color) {
-			// const style = {color} //TODO fix store
-			const payload = { attName: 'style', att: color, groupId: this.group.id }
+			const style = { color }
+			const payload = { attName: 'style', att: style, groupId: this.group.id }
 			this.isCircleShown = false
 			this.$emit('saveGroupAtt', payload)
 		},
@@ -205,8 +210,9 @@ export default {
 			this.isRemoveModalOpen = false
 		},
 		onTaskDrop(dropPayload) {
-			const { removedIndex, addedIndex } = dropPayload
-			if (removedIndex === null && addedIndex === null) return
+			const removedIndex = dropPayload.removedIndex || null
+			const addedIndex = dropPayload.addedIndex || null
+			if (!removedIndex || !addedIndex) return
 			const removedId = this.group.tasks.find((task, idx) => idx === removedIndex).id
 			const addedId = this.group.tasks.find((task, idx) => idx === addedIndex).id
 			const payload = { removedId, addedId, groupId: this.group.id }
