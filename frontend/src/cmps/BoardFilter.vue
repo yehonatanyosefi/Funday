@@ -73,7 +73,7 @@ import MenuModal from '../cmps/dynamicModals/MenuModal.vue'
 export default {
 	name: 'BoardFilter',
 	props: {},
-	emits: ['setFilter', 'addTask', 'addGroup'],
+	emits: ['setFilter', 'addTask', 'addGroup', 'advanceFilter'],
 	data() {
 		return {
 			showModal: false,
