@@ -31,6 +31,7 @@ export const boardStore = {
 	mutations: {
 		setBoardList(state, { boardList }) {
 			state.boardList = boardList
+			console.log('boardList from store',boardList)
 		},
 		setBoard(state, { board }) {
 			state.board = board
@@ -46,7 +47,9 @@ export const boardStore = {
 		deleteBoard(state, { boardId }) {
 			const idx = state.boardList.findIndex((board) => board._id === boardId)
 			state.boardList = state.boardList.filter((board) => board._id !== boardId)
-			if (idx > -1 && state.boardList.length === 1) state.board = state.boardList[idx - 1]
+			console.log('state.boardList',state.boardList)
+			if (idx > -1 && state.boardList.length === 1) state.board = state.boardList[state.boardList.length-1]
+			console.log('state.board',state.board)
 			state.filteredBoard = JSON.parse(JSON.stringify(state.board))
 		},
 
@@ -305,6 +308,7 @@ export const boardStore = {
 		async getUserBoardList({ commit, dispatch, getters }) {
 			const user = JSON.parse(JSON.stringify(getters.loggedinUser))
 			const boards = (await dispatch({ type: 'loadBoardList', filterBy: { userId: user._id } })) || []
+			console.log('boards',boards)
 			let firstBoard = boards[0] || null
 			if (!firstBoard) {
 				firstBoard = await dispatch({ type: 'addBoard' })
@@ -320,7 +324,8 @@ export const boardStore = {
 				firstBoard = await dispatch({ type: 'updateBoard', payload })
 				return firstBoard
 			}
-			commit({ type: 'setBoardList', boards })
+			console.log('boards from getUserBoardList',boards)
+			commit({ type: 'setBoardList', boardList:boards })
 			return firstBoard
 		},
 

@@ -53,11 +53,11 @@
 			</button>
 			<!-- :src="loggedinUser.imgUrl" v-if="loggedinUser"-->
 			<!-- src="https://files.monday.com/euc1/photos/41054538/thumb/41054538-user_photo_2023_03_18_19_59_31.png?1679169572" -->
-			<img :src="loggedinUser.imgUrl" v-if="loggedinUser" class="profile" title="Dor Toledano" alt="Dor Toledano" />
+			<img @click="toggleModal" :src="loggedinUser.imgUrl" v-if="loggedinUser" class="profile" :title="loggedinUser.fullname" alt="Dor Toledano" />
 
 			<div v-if="isModalOpen" class="modal" v-click-outside.stop="closeModal">
 				<div @click.stop="doLogout" class="modal-container">
-					<section class="wrapper">
+					<section class="wrapper" @click.stop="doLogout">
 						<LogOut class="svg-icon" width="20px" height="20px" />
 						<span> Logout</span>
 					</section>
@@ -92,8 +92,8 @@ export default {
 	data() {
 		return {
 			isSelected: false,
-			loggedinUser: null,
-			isModalOpen: true
+			loggedinUpser: null,
+			isModalOpen: false
 		}
 	},
 	computed: {
@@ -107,6 +107,22 @@ export default {
 			console.log('loggedinUser', this.loggedinUser)
 			console.log(this.$store.getters.users)
 
+		},
+		toggleModal(){
+			this.isModalOpen=!this.isModalOpen
+		},
+		closeModal(){
+			this.isModalOpen=false
+		},
+		async doLogout(){
+			try{
+				console.log('Logging Out');
+				await this.$store.dispatch({ type: 'logout' })
+				this.$router.push(`/login`)
+			}
+			catch(err){
+				console.log('Could not logout error:',err)
+			}
 		}
 	},
 	computed: {},

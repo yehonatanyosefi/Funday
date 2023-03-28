@@ -1,11 +1,11 @@
 <template>
-    <main class="folding-bar" @click="onBlur" :class="{ folded: isFolded, hoverOpen: isHoverOpen }" @mouseout="mouseOutFold">
+    <main class="folding-bar" @click="onBlur" :class="{ folded: isFolded }" >
 
-        <div class="slide-btn" @click.stop="foldBar" @mouseover.stop="btnHover = true" @mouseout.stop="btnHover = false">
+        <div class="slide-btn" @click.stop="foldBar">
             <LeftArrow class="svg-icon" />
         </div>
 
-        <div @mouseover="mouseOverUnfold" >
+        <div >
 
             <div class="workspace">
                 <span class="workspace-title flex ">Workspace
@@ -33,7 +33,8 @@
             </div>
 
             <div class="spacer"></div>
-            <BoardList :boardList="boardList" />
+            <BoardList  />
+            <!-- :boardList="boardList" -->
         </div>
     </main>
 </template>

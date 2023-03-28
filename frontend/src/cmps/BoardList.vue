@@ -56,9 +56,9 @@ import { Container, Draggable } from 'vue3-smooth-dnd'
 
 export default {
 
-    props: {
-        boardList: Array
-    }, //[{_id,title},{_id,title}]
+    // props: {
+    //     boardList: Array
+    // }, //[{_id,title},{_id,title}]
     created() {
 
     },
@@ -131,6 +131,10 @@ export default {
 
         currBoardId() {
             return this.$store.getters.board._id
+        },
+        boardList(){
+            console.log('this.$store.getters.boardList',this.$store.getters.boardList)
+            return this.$store.getters.boardList
         }
     },
     components: {
