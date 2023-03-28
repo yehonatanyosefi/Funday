@@ -167,8 +167,7 @@ export const boardStore = {
 					JSON.stringify(state.board.groups.find((group) => group.id === groupId))
 				)
 				if (!group) throw new Error('No group')
-				if (attName === 'style') group.style.color = att
-				else group[attName] = att
+				group[attName] = att
 				const updatedBoard = await boardService.save(boardId, 'group', group, groupId)
 				dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
 				return group

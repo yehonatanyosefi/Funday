@@ -56,7 +56,6 @@ export default {
 		groupColor: String,
 		idx: Number,
 	},
-	created() {},
 	data() {
 		return {
 			isModalOpen: false,
