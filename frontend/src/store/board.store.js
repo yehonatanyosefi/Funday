@@ -39,7 +39,7 @@ export const boardStore = {
 		},
 		addBoard(state, { board }) {
 			const minBoard = { _id: board._id, title: board.title }
-			state.boardList.push(minBoard) 
+			state.boardList.push(minBoard)
 			state.board = board
 			state.filteredBoard = JSON.parse(JSON.stringify(state.board))
 		},
@@ -49,6 +49,11 @@ export const boardStore = {
 			if (idx > -1 && state.boardList.length === 1) state.board = state.boardList[idx - 1]
 			state.filteredBoard = JSON.parse(JSON.stringify(state.board))
 		},
+
+		resetFilters(state) {
+			state.filterBy = { txt: '', member: null }
+		},
+
 		filterBoard(state, { filterBy }) {
 			let filter = !filterBy ? state.filterBy : filterBy
 
@@ -142,6 +147,7 @@ export const boardStore = {
 			const updatedBoard = await boardService.save(boardId, 'group', group)
 			dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
 		},
+
 		async removeGroup({ commit, dispatch }, { payload }) {
 			try {
 				const { groupId, boardId } = payload
@@ -182,14 +188,17 @@ export const boardStore = {
 				throw err
 			}
 		},
+
 		setAndFilterBoard({ commit, state }, { board }) {
 			commit({ type: 'setBoard', board })
 			const filterBy = state.filterBy
 			commit({ type: 'filterBoard', filterBy })
 		},
-		async getBoardById({ dispatch }, { boardId }) {
+
+		async getBoardById({ dispatch, commit }, { boardId }) {
 			try {
 				const board = await boardService.getById(boardId)
+				commit({ type: 'resetFilters', board })
 				dispatch({ type: 'setAndFilterBoard', board })
 				return board
 			} catch (err) {
@@ -201,10 +210,9 @@ export const boardStore = {
 			dispatch({ type: 'getBoardById', boardId })
 			return boardId
 		},
-		async loadBoardList(context, { filterBy={txt:''} }) {
+		async loadBoardList(context, { filterBy = { txt: '' } }) {
 			try {
 				filterBy.userId = context.getters.loggedinUser._id
-				console.log('filterBy',filterBy)
 				const boardList = await boardService.queryList(filterBy)
 				context.commit({ type: 'setBoardList', boardList })
 				return boardList
@@ -219,7 +227,7 @@ export const boardStore = {
 				const newBoard = await boardService.save(null, 'board', board)
 				commit({ type: 'addBoard', board: newBoard })
 				return newBoard
-			} catch (err){
+			} catch (err) {
 				console.log('Store: Error in addBoard', err)
 				throw err
 			}
@@ -239,12 +247,12 @@ export const boardStore = {
 			}
 		},
 		async updateBoard({ commit, getters, dispatch }, { payload }) {
-			const {newBoardId}= payload
-            const userId = JSON.parse(JSON.stringify(getters.loggedinUser))._id
+			const { newBoardId } = payload
+			const userId = JSON.parse(JSON.stringify(getters.loggedinUser))._id
 			const boardId = newBoardId || getters.board._id
 			const updatedBoard = await boardService.updateBoard(boardId, payload)
 			dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
-			dispatch({ type: 'loadBoardList' ,filterBy:{userId}})
+			dispatch({ type: 'loadBoardList', filterBy: { userId } })
 			return updatedBoard
 		},
 		async applyTaskDrag({ dispatch }, { payload }) {
@@ -293,25 +301,29 @@ export const boardStore = {
 			dispatch({ type: 'loadBoardList' })
 			return savedBoard
 		},
-		async getUserBoardList({ commit,dispatch,getters}) {
-            const user = JSON.parse(JSON.stringify(getters.loggedinUser))
-            const boards = await dispatch({ type: "loadBoardList", filterBy: {userId:user._id} }) || []
-            let firstBoard = boards[0] || null
-            if (!firstBoard) {
-				firstBoard = await dispatch({ type: "addBoard" })
-				console.log('firstBoard',firstBoard)
-                const payload={type:'createdBy',val:{
-					"_id": user._id,
-                    "fullname": user.fullname,
-                    "imgUrl": user.imgUrl
-                }}
-                firstBoard = await dispatch({ type: "updateBoard", payload})
+
+		async getUserBoardList({ commit, dispatch, getters }) {
+			const user = JSON.parse(JSON.stringify(getters.loggedinUser))
+			const boards = (await dispatch({ type: 'loadBoardList', filterBy: { userId: user._id } })) || []
+			let firstBoard = boards[0] || null
+			if (!firstBoard) {
+				firstBoard = await dispatch({ type: 'addBoard' })
+				console.log('firstBoard', firstBoard)
+				const payload = {
+					type: 'createdBy',
+					val: {
+						_id: user._id,
+						fullname: user.fullname,
+						imgUrl: user.imgUrl,
+					},
+				}
+				firstBoard = await dispatch({ type: 'updateBoard', payload })
 				return firstBoard
-            }
-			commit({type:'setBoardList',boards})
-            return firstBoard
-        },  
-		
+			}
+			commit({ type: 'setBoardList', boards })
+			return firstBoard
+		},
+
 		// async addGroupMsg(context, { groupId, txt }) {
 		//     try {
 		//         const msg = await boardService.addGroupMsg(groupId, txt)
