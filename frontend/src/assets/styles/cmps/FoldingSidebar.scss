@@ -77,14 +77,13 @@
         background-color: transparent;
         outline: 1px $primary-blue;
         padding-inline-start: 8px;
-        flex:1;
+        flex: 1;
 
-        &::placeholder{
-          color:$color-txt-primary;
+        &::placeholder {
+          color: $color-txt-primary;
         }
-
       }
-      .searching button{
+      .searching button {
         &:focus-within {
           outline: 1px solid $primary-blue;
         }
@@ -165,6 +164,22 @@
     right: unset;
   }
 }
+
+.folding-bar.hoverOpen {
+  position: absolute !important;
+  top: 0;
+  left: 66px;
+  height: 100%;
+  transition: 0.3s;
+  color: $color-txt-primary;
+  width: 255px;
+  background-color: $color-riverstone_gray;
+  font-family: ROBOTO-reg;
+  position: relative;
+  transition: 100ms ease;
+  z-index: 10;
+}
+
 // Animations
 @keyframes slide-in {
   from {
