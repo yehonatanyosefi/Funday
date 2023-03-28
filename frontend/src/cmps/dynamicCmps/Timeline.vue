@@ -126,7 +126,7 @@ export default {
 		},
 		progressDate() {
 			const percentage = (this.daysPassed / this.totalDays) * 100
-			const percentageDisplay = percentage.toFixed(2)
+			let percentageDisplay = percentage.toFixed(2)
 			if (percentageDisplay > 100) return 100
 			if (percentageDisplay < 0) return 0
 			if (isNaN(percentageDisplay)) percentageDisplay = 100

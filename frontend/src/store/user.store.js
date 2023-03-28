@@ -17,7 +17,12 @@ export const userStore = {
         users({ users }) { 
             return users 
         },
-        loggedinUser({ loggedinUser,demoUser }) { return loggedinUser || demoUser},
+        loggedinUser({ loggedinUser,demoUser }) { 
+            const user= loggedinUser || demoUser
+            console.log('user',user)
+            return user
+            // return loggedinUser || demoUser
+        },
         watchedUser({ watchedUser }) { return watchedUser }
     },
     mutations: {

@@ -8,7 +8,7 @@
 		</div>
 		<div
 			class="search-tasks"
-			:class="{ 'input-open': isSearchClicked, filtering: isFiltering }"
+			:class="{ 'input-open': isSearchClicked, filtering: isFiltering, selected: txt }"
 			@click="searchClicked"
 		>
 			<Search class="svg-img"></Search>
@@ -21,15 +21,24 @@
 				v-model="txt"
 				@input="setFilter({ txt })"
 			/>
+			<div v-if="txt" class="svg-small" @click.stop="clearFilter('txt')">
+				<CloseRound></CloseRound>
+			</div>
 		</div>
+
 		<div
 			@click="openModal('MemberFilter')"
 			@mouseover="showTitleModal = true"
 			@mouseout="showTitleModal = false"
 			class="person-attach"
+			:class="{ selected: filterMember }"
 		>
-			<PersonRound></PersonRound>
+			<img v-if="filterMember" :src="filterMember.imgUrl" />
+			<PersonRound v-else></PersonRound>
 			<button>Person</button>
+			<div v-if="filterMember" class="svg-small" @click.stop="clearFilter('member')">
+				<CloseRound></CloseRound>
+			</div>
 		</div>
 		<div class="filter" @click="openModal('multi-filter-modal')">
 			<Filter class="svg-img"></Filter>
@@ -58,14 +67,11 @@ import Search from '../assets/svg/Search.svg'
 import PersonRound from '../assets/svg/PersonRound.svg'
 import Filter from '../assets/svg/Filter.svg'
 import OpenOptions from '../assets/svg/OpenOptions.svg'
-
+import CloseRound from '../assets/svg/CloseRound.svg'
 import MenuModal from '../cmps/dynamicModals/MenuModal.vue'
 export default {
 	name: 'BoardFilter',
-	props: {
-		// users: Array,
-		// filter: Object,
-	},
+	props: {},
 	emits: ['setFilter', 'addTask', 'addGroup'],
 	data() {
 		return {
@@ -75,6 +81,7 @@ export default {
 			isSearchClicked: false,
 			isFiltering: false,
 			txt: '',
+			filterMember: null,
 		}
 	},
 	methods: {
@@ -95,19 +102,51 @@ export default {
 		},
 
 		setFilter(filterBy) {
+			let { txt, member } = filterBy
+			txt = txt ? txt : this.txt
+			member = member ? member : this.filterMember
+			this.filterMember = member
+			this.txt = txt
+			this.isFiltering = txt ? true : false
+			filterBy = { txt, member }
 			this.$emit('setFilter', filterBy)
 		},
-		clearFilter() {
+
+		resetFilter() {
+			this.txt = this.filterBy.txt || ''
+			this.filterMember = this.filterBy.member || null
 			this.isFiltering = false
-			this.txt = ''
-			this.$emit('setFilter', 'txt', '')
+		},
+
+		clearFilter(type) {
+			if (type === 'txt') {
+				this.isFiltering = false
+				this.txt = ''
+			}
+			if (type === 'member') {
+				this.filterMember = null
+			}
+			const filterBy = { txt: this.txt, member: this.filterMember }
+			this.$emit('setFilter', filterBy)
 		},
 	},
 	computed: {
-		vw() {
-			return window.innerWidth
+		filterBy() {
+			const filterBy = this.$store.getters.filterBy
+			console.log(filterBy)
+			return filterBy
 		},
 	},
-	components: { Search, PersonRound, Filter, OpenOptions, MenuModal },
+	watch: {
+		'$route.params': {
+			handler() {
+				this.resetFilter()
+			},
+			// deep: true,
+			// immediate: true,
+		},
+	},
+
+	components: { Search, PersonRound, Filter, OpenOptions, CloseRound, MenuModal },
 }
 </script>

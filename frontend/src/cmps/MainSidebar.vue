@@ -1,9 +1,12 @@
 <template>
 	<section class="side-bars">
 		<section class="sidebar">
-			<!-- <router-link :to="'/'"> -->
-			<img src="../assets/funday.png" alt="" />
-			<!-- </router-link> -->
+			<div class="logo-img">
+				<router-link :to="'/'">
+					<img src="../assets/funday.png" alt="" />
+				</router-link>
+
+			</div>
 			<!-- <div class="monday-style-divider surface-divider bottom monday-style-divider--horizontal"></div> -->
 			<div class="divider"></div>
 			<!-- <div class="triangle"></div> -->
@@ -17,7 +20,7 @@
 						</a>
 					</div>
 
-					<button disabbled>
+					<button @click="hey">
 						<Notifications class="svg-icon" />
 					</button>
 					<button disabbled>
@@ -48,12 +51,19 @@
 			<button disabbled>
 				<InstalledProducts class="svg-icon InstalledProducts" />
 			</button>
-			<img
-				src="https://files.monday.com/euc1/photos/41054538/thumb/41054538-user_photo_2023_03_18_19_59_31.png?1679169572"
-				class="profile"
-				title="Dor Toledano"
-				alt="Dor Toledano"
-			/>
+			<!-- :src="loggedinUser.imgUrl" v-if="loggedinUser"-->
+			<!-- src="https://files.monday.com/euc1/photos/41054538/thumb/41054538-user_photo_2023_03_18_19_59_31.png?1679169572" -->
+			<img :src="loggedinUser.imgUrl" v-if="loggedinUser" class="profile" title="Dor Toledano" alt="Dor Toledano" />
+
+			<div v-if="isModalOpen" class="modal" v-click-outside.stop="closeModal">
+				<div @click.stop="doLogout" class="modal-container">
+					<section class="wrapper">
+						<LogOut class="svg-icon" width="20px" height="20px" />
+						<span> Logout</span>
+					</section>
+				</div>
+			</div>
+
 		</section>
 		<FoldingSideBar />
 	</section>
@@ -72,16 +82,33 @@ import Help from '../assets/svg/Help.svg'
 import InstalledProducts from '../assets/svg/InstalledProducts.svg'
 import Divider from '../assets/svg/Divider.svg'
 import FoldingSideBar from '../cmps/FoldingSidebar.vue'
+import LogOut from '../assets/svg/LogOut.svg'
 
 export default {
 	props: {},
-	created() {},
+	created() {
+		this.loggedinUser = this.$store.getters.loggedinUser
+	},
 	data() {
 		return {
 			isSelected: false,
+			loggedinUser: null,
+			isModalOpen: true
 		}
 	},
-	methods: {},
+	computed: {
+		// loggedinUser() {
+		// 	return this.$store.getters.loggedinUser
+		// },
+	},
+	methods: {
+		hey() {
+			this.loggedinUser = this.$store.getters.loggedinUser
+			console.log('loggedinUser', this.loggedinUser)
+			console.log(this.$store.getters.users)
+
+		}
+	},
 	computed: {},
 	components: {
 		WorkManagement,
@@ -96,6 +123,7 @@ export default {
 		InstalledProducts,
 		Divider,
 		FoldingSideBar,
+		LogOut,
 	},
 }
 </script>

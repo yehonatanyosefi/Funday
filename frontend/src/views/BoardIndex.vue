@@ -15,7 +15,7 @@ export default {
   props: {},
   async created() {
     const params = this.$route.params.boardId
-		await this.$store.dispatch({ type: "getFirstBoard", params })
+    await this.$store.dispatch({ type: "getFirstBoard", params })
   },
   data() {
     return {
