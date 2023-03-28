@@ -15,6 +15,7 @@ export const boardService = {
 	getEmptyBoard,
 	getEmptyGroup,
 	getEmptyTask,
+	setAdvanceFilter,
 	filterByTxt,
 	filterByMember,
 	applyDrag,
@@ -78,33 +79,34 @@ async function updateBoard(boardId, payload) {
 			board.isStarred = val
 			break
 		case 'createdBy':
-			board.createdBy= val
+			board.createdBy = val
 			board.members.push(val)
 			break
 	}
 	return saveBoard(board)
 }
 
-async function queryList(filterBy = { txt: '', userId:''}) {
+async function queryList(filterBy = { txt: '', userId: '' }) {
 	// return httpService.get(STORAGE_KEY, filterBy)
-	try{
+	try {
 		let boards = await storageService.query(STORAGE_KEY)
 		let boardsCopy = JSON.parse(JSON.stringify(boards))
 		if (filterBy.txt) {
 			const regex = new RegExp(filterBy.txt, 'i')
 			boards = boardsCopy.filter((board) => regex.test(board.title))
 		}
-	
-		if (filterBy.userId){
-			boards = boardsCopy.filter(board => board.members.some(member => member._id===filterBy.userId))
+
+		if (filterBy.userId) {
+			boards = boardsCopy.filter((board) =>
+				board.members.some((member) => member._id === filterBy.userId)
+			)
 		}
 		const boardList = boards.map((board) => {
 			return { _id: board._id, title: board.title }
 		})
 		return boardList
-	}
-	catch(err){
-		console.log('queryList erroe:'+err)
+	} catch (err) {
+		console.log('queryList erroe:' + err)
 	}
 	// var tasks = await storageService.query(STORAGE_KEY)
 	// if (filterBy.txt) {
@@ -190,7 +192,30 @@ function filterByMember(board, member) {
 	}, [])
 	return board
 }
+function setAdvanceFilter(board, advanceFilter) {
+	// Iterating through board groups
 
+	advanceFilter.person?.map((curPerson) => {
+		filterByMember(board, curPerson)
+	})
+
+	// board.groups = board.groups.reduce((groupArr, group) => {
+	// 	const groupInclude = advanceFilter.group?.includes(group.title)
+	// 	group.tasks = group.tasks.reduce((taskArr, task) => {
+	// 		if (
+	// 			advanceFilter.priority?.includes(task.priority) &&
+	// 			advanceFilter.status?.includes(task.status)
+	// 		) {
+	// 			taskArr.push(task)
+	// 		}
+	// 		return taskArr
+	// 	}, [])
+
+	// 	if (group.tasks?.length || groupInclude) groupArr.push(group)
+	// 	return groupArr
+	// }, [])
+	return board
+}
 async function applyDrag(addedId, removedId, type, boardId, groupId) {
 	//arr, dragResult
 	let board

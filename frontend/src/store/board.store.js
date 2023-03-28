@@ -1,8 +1,6 @@
 import { boardService } from '../services/board.service'
 import { router } from '../router'
-import { toRefs } from 'vue'
 import { utilService } from '../services/util.service'
-import { useFavicon } from '@vueuse/core'
 
 export const boardStore = {
 	state: {
@@ -12,6 +10,13 @@ export const boardStore = {
 		filterBy: {
 			txt: '',
 			member: null,
+		},
+		advanceFilter: {
+			person: [],
+			group: [],
+			priority: [],
+			status: [],
+			tasks: [],
 		},
 	},
 	getters: {
@@ -26,6 +31,9 @@ export const boardStore = {
 		},
 		filterBy({ filterBy }) {
 			return filterBy
+		},
+		advanceFilter({ advanceFilter }) {
+			return advanceFilter
 		},
 	},
 	mutations: {
@@ -69,6 +77,12 @@ export const boardStore = {
 			}
 			state.filteredBoard = filterBoard
 			state.filterBy = filter
+		},
+		setAdvanceFilter(state, { advanceFilter }) {
+			let filterBoard = JSON.parse(JSON.stringify(state.board))
+			filterBoard = boardService.setAdvanceFilter(filterBoard, advanceFilter)
+			state.advanceFilter = JSON.parse(JSON.stringify(advanceFilter))
+			state.filterBoard = filterBoard
 		},
 		removeTask(state, { ids }) {
 			const { groupId, taskId } = ids

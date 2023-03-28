@@ -68,6 +68,7 @@
 				@setFilter="setFilter"
 				@addTask="addTask"
 				@addGroup="addGroup"
+				@advanceFilter="advanceFilter"
 			/>
 		</section>
 		<!-- <BorderFilter
@@ -87,7 +88,6 @@ import Favorite from '../assets/svg/Favorite.svg'
 import FavoriteFull from '../assets/svg/FavoriteFull.svg'
 import BorderFilter from './BoardFilter.vue'
 
-import { boardService } from '../services/board.service'
 export default {
 	name: 'board-header',
 	emits: ['setFilter', 'addTask', 'addGroup', 'saveBoardTitle'],
@@ -112,6 +112,9 @@ export default {
 		},
 		setFilter(filterBy) {
 			this.$store.commit({ type: 'filterBoard', filterBy })
+		},
+		advanceFilter(advanceFilter) {
+			this.$store.commit({ type: 'setAdvanceFilter', advanceFilter })
 		},
 		saveBoardTitle(ev) {
 			this.isEditing = false
