@@ -104,7 +104,7 @@ async function queryList(filterBy = { txt: '', userId:''}) {
 		return boardList
 	}
 	catch(err){
-		console.log('queryList erroe:'+err)
+		console.log('queryList error:'+err)
 	}
 	// var tasks = await storageService.query(STORAGE_KEY)
 	// if (filterBy.txt) {
