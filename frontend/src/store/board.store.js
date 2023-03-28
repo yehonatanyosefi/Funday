@@ -45,10 +45,13 @@ export const boardStore = {
     },
     deleteBoard(state, { boardId }) {
       const idx = state.boardList.findIndex((board) => board._id === boardId)
-      state.boardList = state.boardList.filter((board) => board._id !== boardId)
-      if (idx > -1 && state.boardList.length === 1)
-        state.board = state.boardList[state.boardList.length - 1]
-      state.filteredBoard = JSON.parse(JSON.stringify(state.board))
+      //   state.boardList = state.boardList.filter((board) => board._id !== boardId)
+	  //&& state.boardList.length === 1
+      if (idx > -1 ){
+		  const boardListCopy= JSON.parse(JSON.stringify(state.boardList))
+			boardListCopy.splice(idx, 1)
+			state.boardList=boardListCopy	
+	  }
     },
 
     resetFilters(state) {
@@ -228,7 +231,7 @@ export const boardStore = {
       try {
         const board = await boardService.getById(boardId)
         // commit({ type: 'resetFilters', board })
-        dispatch({ type: 'setAndFilterBoard', board })
+        await dispatch({ type: 'setAndFilterBoard', board })
         return board
       } catch (err) {
         console.log('Store: Error in getBoardById', err)
@@ -250,10 +253,10 @@ export const boardStore = {
         throw err
       }
     },
-    async addBoard({ commit ,getters}) {
+    async addBoard({ commit, getters }) {
       try {
         const board = boardService.getEmptyBoard()
-		console.log('board',board)
+        console.log('board', board)
         const user = getters.loggedinUser
         board.createdBy = {
           _id: user._id,
@@ -283,7 +286,10 @@ export const boardStore = {
         if (boardListCopy.length > 1) {
           await boardService.remove({ boardId }, 'board')
           context.commit({ type: 'deleteBoard', boardId })
-          context.dispatch({ type: 'loadBoardList' })
+          const miniBoards= await context.dispatch({ type: 'loadBoardList' })
+		  console.log('miniBoards',miniBoards)
+		  const miniBoardId = miniBoards[miniBoards.length - 1]._id
+		  context.dispatch({type:'getBoardById', boardId:miniBoardId})
         }
       } catch (err) {
         console.log('boardStore: Error in deleteBoard', err)

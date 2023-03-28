@@ -76,14 +76,20 @@ export default {
         setBoard(boardId) {
             this.$store.dispatch({ type: 'getBoardById', boardId })
         },
-        deleteBoard(boardId) {
-            this.$store.dispatch({ type: 'deleteBoard', boardId })
-            this.currBoardId = ''
-            this.closeModal()
-            const boards = this.$store.getters.boardList
-            const length =this.$store.getters.boardList.length
-            const lastBoard = boards[length-1]
-            this.$router.push(`/board/${lastBoard._id}/main-table`)
+        async deleteBoard(boardId) {
+            try{
+                await this.$store.dispatch({ type: 'deleteBoard', boardId })
+                this.closeModal()
+                // this.currBoardId()
+                // const boards = this.$store.getters.boardList
+                // const length =this.$store.getters.boardList.length
+                // const lastBoard = boards[length-1]
+                const board= this.$store.getters.board
+                this.$router.push(`/board/${board._id}/main-table`)
+            }
+            catch(err){
+                console.log('couldnt delete ',err )
+            }
 
         },
         toggleRename(boardId) {
