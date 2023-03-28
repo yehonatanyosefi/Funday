@@ -13,15 +13,15 @@
 							v-if="isCircleShown"
 							class="color-circle"
 							@click.stop="openColorPicker"
-							:style="{ backgroundColor: groupColor }"
+							:style="{ backgroundColor: group.style.color }"
 						></div>
 						<input
 							class="board-input group-title-input"
 							name="groupTitleInput"
 							id="groupTitleInput"
-							ref="groupTitleInput"
+							:ref="'groupTitleInput' + group.id"
 							v-model="groupTitle"
-							:style="{ color: groupColor }"
+							:style="{ color: group.style.color }"
 							type="text"
 							@input="saveGroupTitle"
 							@focus="showCircle"
@@ -42,7 +42,7 @@
 			<div class="task-title-group task-sticky task-container">
 				<div class="menu-btn-wrapper-task"></div>
 				<div class="task">
-					<div class="group-preview-color" :style="{ backgroundColor: groupColor }"></div>
+					<div class="group-preview-color" :style="{ backgroundColor: group.style.color }"></div>
 					<div class="task-checkbox-container">
 						<input
 							type="checkbox"
@@ -82,7 +82,10 @@
 			<div class="task-sticky task task-title-container add-task-container">
 				<div class="menu-btn-wrapper-task"></div>
 				<div class="task-checkbox-container">
-					<div class="task-preview-color last-task" :style="{ backgroundColor: groupColor }"></div>
+					<div
+						class="task-preview-color last-task"
+						:style="{ backgroundColor: group.style.color }"
+					></div>
 					<!-- :style="borderStyle" -->
 					<input type="checkbox" class="task-checkbox" disabled />
 				</div>
@@ -186,8 +189,8 @@ export default {
 			this.$emit('saveGroupAtt', payload)
 		},
 		chooseGroupColor(color) {
-			// const style = {color} //TODO fix store
-			const payload = { attName: 'style', att: color, groupId: this.group.id }
+			const style = { color }
+			const payload = { attName: 'style', att: style, groupId: this.group.id }
 			this.isCircleShown = false
 			this.$emit('saveGroupAtt', payload)
 		},
@@ -205,8 +208,9 @@ export default {
 			this.isRemoveModalOpen = false
 		},
 		onTaskDrop(dropPayload) {
-			const { removedIndex, addedIndex } = dropPayload
-			if (removedIndex === null && addedIndex === null) return
+			const removedIndex = dropPayload.removedIndex || null
+			const addedIndex = dropPayload.addedIndex || null
+			if (!removedIndex || !addedIndex) return
 			const removedId = this.group.tasks.find((task, idx) => idx === removedIndex).id
 			const addedId = this.group.tasks.find((task, idx) => idx === addedIndex).id
 			const payload = { removedId, addedId, groupId: this.group.id }

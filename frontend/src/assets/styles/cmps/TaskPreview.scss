@@ -1,5 +1,5 @@
 
-.task-preview {
+.board-group .task-preview {
   display: grid;
   grid-template-columns: $table-grids;
   position: relative;
@@ -65,7 +65,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      color: white;
+      color: #fff;
     }
 
     .priority {
@@ -121,15 +121,6 @@
   
   &:focus-within:not(.add-task) {
     input[type='checkbox'] {
-      // &::before {
-      // content: "";
-      // position: absolute;
-      // left: 0;
-      // top: 0;
-      // translate: -50% -50%;
-      // width: 16px;
-      // height: 16px;
-      // }
       background-color: $color-focused-within;
     }
     background-color: $color-focused-within;
@@ -204,6 +195,10 @@
 }
 .task-preview.add-task {
   border-block-end: 1px solid $color-divider;
-  border-inline-end: 1px solid $color-divider;
   box-shadow: $small-shadow;
+  border-inline-end: 1px solid $color-divider;
+  width: 1240px;
 }
+// .animated .task-preview {
+//   border: 1px solid red;
+// }
