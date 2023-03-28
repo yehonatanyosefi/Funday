@@ -71,10 +71,7 @@ import CloseRound from '../assets/svg/CloseRound.svg'
 import MenuModal from '../cmps/dynamicModals/MenuModal.vue'
 export default {
 	name: 'BoardFilter',
-	props: {
-		// users: Array,
-		// filter: Object,
-	},
+	props: {},
 	emits: ['setFilter', 'addTask', 'addGroup'],
 	data() {
 		return {
@@ -115,6 +112,12 @@ export default {
 			this.$emit('setFilter', filterBy)
 		},
 
+		resetFilter() {
+			this.txt = this.filterBy.txt || ''
+			this.filterMember = this.filterBy.member || null
+			this.isFiltering = false
+		},
+
 		clearFilter(type) {
 			if (type === 'txt') {
 				this.isFiltering = false
@@ -128,10 +131,22 @@ export default {
 		},
 	},
 	computed: {
-		vw() {
-			return window.innerWidth
+		filterBy() {
+			const filterBy = this.$store.getters.filterBy
+			console.log(filterBy)
+			return filterBy
 		},
 	},
+	watch: {
+		'$route.params': {
+			handler() {
+				this.resetFilter()
+			},
+			// deep: true,
+			// immediate: true,
+		},
+	},
+
 	components: { Search, PersonRound, Filter, OpenOptions, CloseRound, MenuModal },
 }
 </script>
