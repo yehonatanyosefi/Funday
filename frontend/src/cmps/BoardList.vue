@@ -80,6 +80,11 @@ export default {
             this.$store.dispatch({ type: 'deleteBoard', boardId })
             this.currBoardId = ''
             this.closeModal()
+            const boards = this.$store.getters.boardList
+            const length =this.$store.getters.boardList.length
+            const lastBoard = boards[length-1]
+            this.$router.push(`/board/${lastBoard._id}/main-table`)
+
         },
         toggleRename(boardId) {
             this.title = this.boardList.find(listItem => listItem._id === boardId).title
@@ -132,8 +137,7 @@ export default {
         currBoardId() {
             return this.$store.getters.board._id
         },
-        boardList(){
-            console.log('this.$store.getters.boardList',this.$store.getters.boardList)
+        boardList() {
             return this.$store.getters.boardList
         }
     },
@@ -147,11 +151,11 @@ export default {
         Draggable,
     },
     directives: {
-    focus: {
-      mounted(el) {
-        el.focus();
-      }
+        focus: {
+            mounted(el) {
+                el.focus()
+            }
+        }
     }
-  }
 }
 </script>
