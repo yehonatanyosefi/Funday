@@ -1,36 +1,41 @@
 <template>
-    <main class="folding-bar" @click="onBlur" :class="{folded: isFolded}">
-        
-        <div class="slide-btn" @click="foldBar">
-                <LeftArrow class="svg-icon" />  
-        </div>
-        <div class="workspace">
-            <span class="workspace-title flex ">Workspace
-                <Menu class="svg-icon" />
-            </span>
-            <p class="main-workspace-title">
-                <img src="../assets/M-home.png" alt="">
-                <div class="title">Main workspace</div> 
-            </p>
-            <div class="btns flex column">
-                <button @click.stop="addBoard">
-                    <Add class="svg-icon" /> <span class="optn">Add</span>
-                </button>
-                <button>
-                    <Filter class="svg-icon" /> <span class="optn">Filters</span>
-                </button>
-                <div class="searching" @click.stop="isSearching = true">
-                    <button>
-                        <Search class="svg-icon" /> <span class="optn" v-if="!isSearching">Search</span>
-                        <input v-focus v-else v-model="filterBy.txt" type="search" placeholder="Search" @input="search">
-                    </button>
+    <main class="folding-bar" @click="onBlur" :class="{ folded: isFolded }" >
 
+        <div class="slide-btn" @click.stop="foldBar">
+            <LeftArrow class="svg-icon" />
+        </div>
+
+        <div >
+
+            <div class="workspace">
+                <span class="workspace-title flex ">Workspace
+                    <Menu class="svg-icon" />
+                </span>
+                <p class="main-workspace-title">
+                    <img src="../assets/M-home.png" alt="">
+                <div class="title">Main workspace</div>
+                </p>
+                <div class="btns flex column">
+                    <button @click.stop="addBoard">
+                        <Add class="svg-icon" /> <span class="optn">Add</span>
+                    </button>
+                    <button>
+                        <Filter class="svg-icon" /> <span class="optn">Filters</span>
+                    </button>
+                    <div class="searching" @click.stop="isSearching = true">
+                        <button>
+                            <Search class="svg-icon" /> <span class="optn" v-if="!isSearching">Search</span>
+                            <input v-focus v-else v-model="filterBy.txt" type="search" placeholder="Search" @input="search">
+                        </button>
+
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="spacer"></div>
-        <BoardList :boardList="boardList" />
+            <div class="spacer"></div>
+            <BoardList  />
+            <!-- :boardList="boardList" -->
+        </div>
     </main>
 </template>
 
@@ -54,7 +59,9 @@ export default {
         return {
             isSearching: false,
             filterBy: { txt: '' },
-            isFolded:false
+            isFolded: false,
+            isHoverOpen: false,
+            btnHover: false
         }
     },
     methods: {
@@ -82,9 +89,31 @@ export default {
             this.filterBy.txt = ''
             this.search()
         },
-        foldBar(){
-            this.isFolded=!this.isFolded
-        }
+        foldBar() {
+            this.isFolded = !this.isFolded
+            this.isHoverOpen = false
+        },
+        mouseOverUnfold() {
+
+            // console.log('this.btnHover', this.btnHover)
+            if (!this.btnHover) {
+                this.isHoverOpen = true
+                this.isFolded = false
+            }
+
+
+        },
+        mouseOutFold() {
+
+            // console.log('this.btnHover', this.btnHover)
+            if (this.isFolded || this.btnHover) return
+            else {
+                this.isHoverOpen = false
+                this.isFolded = true
+            }
+
+        },
+
     },
     computed: {
         boardList() {
@@ -101,11 +130,11 @@ export default {
         LeftArrow
     },
     directives: {
-    focus: {
-      mounted(el) {
-        el.focus();
-      }
+        focus: {
+            mounted(el) {
+                el.focus()
+            }
+        }
     }
-  }
 }
 </script>

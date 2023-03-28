@@ -19,7 +19,6 @@ export const userStore = {
         },
         loggedinUser({ loggedinUser,demoUser }) { 
             const user= loggedinUser || demoUser
-            console.log('user',user)
             return user
             // return loggedinUser || demoUser
         },

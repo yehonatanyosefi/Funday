@@ -1,24 +1,53 @@
 <template>
-	<section class="dashboard" v-if="statusDataFull && priorityDataFull">
-		<DoughnutChart :chartData="statusDataFull" :options="options" />
-		<BarChart :chartData="priorityDataFull" :options="options" />
+	<section class="board-details dashboard" v-if="statusDataFull && priorityDataFull">
+		<div class="dashboard-card">
+			<div class="dashboard-card-header">Statuses</div>
+			<div class="dashboard-chart">
+				<PieChart :chartData="statusDataFull" :options="statusOptions" />
+			</div>
+		</div>
+		<div class="dashboard-card">
+			<div class="dashboard-card-header">Priorities</div>
+			<div class="dashboard-chart">
+				<BarChart :chartData="priorityDataFull" :options="priorityOptions" />
+			</div>
+		</div>
 	</section>
 </template>
 
 <script>
-import { BarChart, DoughnutChart } from 'vue-chart-3'
+import { BarChart, PieChart } from 'vue-chart-3'
 import { Chart, registerables } from 'chart.js'
 Chart.register(...registerables)
 export default {
 	name: 'Chart',
-	components: { BarChart, DoughnutChart },
+	components: { BarChart, PieChart },
 	data() {
 		return {
 			statusLabels: ['Done', 'Working on it', 'Stuck', 'Empty'],
 			priorityLabels: ['Critical', 'High', 'Medium', 'Low', 'Empty'],
-			options: {
+			statusOptions: {
 				plugins: {
-					legend: { display: true },
+					legend: { display: true, position: 'bottom' },
+				},
+				responsive: true,
+				maintainAspectRatio: false,
+				scales: {
+					y: {
+						beginAtZero: true,
+					},
+				},
+			},
+			priorityOptions: {
+				plugins: {
+					legend: { display: false, position: 'bottom' },
+				},
+				responsive: true,
+				maintainAspectRatio: false,
+				scales: {
+					y: {
+						beginAtZero: true,
+					},
 				},
 			},
 		}
@@ -30,7 +59,8 @@ export default {
 			return this.$store.getters.filteredBoard
 		},
 		priorityData() {
-			const priorities = this.board.groups
+			if (!this.board?.groups) return
+			const priorities = this.board?.groups
 				.map((group) => {
 					return group.tasks.map((task) => (!task.priority ? 'Empty' : task.priority))
 				})
@@ -42,7 +72,8 @@ export default {
 			})
 		},
 		statusData() {
-			const statuses = this.board.groups
+			if (!this.board?.groups) return
+			const statuses = this.board?.groups
 				.map((group) => {
 					return group.tasks.map((task) => (!task.status ? 'Empty' : task.status))
 				})

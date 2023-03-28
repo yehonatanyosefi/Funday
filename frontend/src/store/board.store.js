@@ -181,8 +181,7 @@ export const boardStore = {
 					JSON.stringify(state.board.groups.find((group) => group.id === groupId))
 				)
 				if (!group) throw new Error('No group')
-				if (attName === 'style') group.style.color = att
-				else group[attName] = att
+				group[attName] = att
 				const updatedBoard = await boardService.save(boardId, 'group', group, groupId)
 				dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
 				return group
@@ -212,8 +211,8 @@ export const boardStore = {
 		async getBoardById({ dispatch, commit }, { boardId }) {
 			try {
 				const board = await boardService.getById(boardId)
-				commit({ type: 'resetFilters', board })
-				dispatch({ type: 'setAndFilterBoard', board })
+				// commit({ type: 'resetFilters', board })
+				await dispatch({ type: 'setAndFilterBoard', board })
 				return board
 			} catch (err) {
 				console.log('Store: Error in getBoardById', err)
@@ -235,9 +234,22 @@ export const boardStore = {
 				throw err
 			}
 		},
-		async addBoard({ commit }) {
+		async addBoard({ commit, getters }) {
 			try {
 				const board = boardService.getEmptyBoard()
+				console.log('board', board)
+				const user = getters.loggedinUser
+				board.createdBy = {
+					_id: user._id,
+					fullname: user.fullname,
+					imgUrl: user.imgUrl,
+				}
+				board.members.push({
+					_id: user._id,
+					fullname: user.fullname,
+					imgUrl: user.imgUrl,
+				})
+
 				const newBoard = await boardService.save(null, 'board', board)
 				commit({ type: 'addBoard', board: newBoard })
 				return newBoard
@@ -253,7 +265,10 @@ export const boardStore = {
 				if (boardListCopy.length > 1) {
 					await boardService.remove({ boardId }, 'board')
 					context.commit({ type: 'deleteBoard', boardId })
-					context.dispatch({ type: 'loadBoardList' })
+					const miniBoards = await context.dispatch({ type: 'loadBoardList' })
+					console.log('miniBoards', miniBoards)
+					const miniBoardId = miniBoards[miniBoards.length - 1]._id
+					context.dispatch({ type: 'getBoardById', boardId: miniBoardId })
 				}
 			} catch (err) {
 				console.log('boardStore: Error in deleteBoard', err)
@@ -310,7 +325,7 @@ export const boardStore = {
 				return group
 			})
 			const savedBoard = await boardService.saveBoard(dupBoard)
-			console.log('savedBoard', savedBoard)
+			// console.log('savedBoard', savedBoard)
 			dispatch({ type: 'setAndFilterBoard', board: savedBoard })
 			dispatch({ type: 'loadBoardList' })
 			return savedBoard
@@ -318,7 +333,12 @@ export const boardStore = {
 
 		async getUserBoardList({ commit, dispatch, getters }) {
 			const user = JSON.parse(JSON.stringify(getters.loggedinUser))
-			const boards = (await dispatch({ type: 'loadBoardList', filterBy: { userId: user._id } })) || []
+			const boards =
+				(await dispatch({
+					type: 'loadBoardList',
+					filterBy: { userId: user._id },
+				})) || []
+			console.log('boards', boards)
 			let firstBoard = boards[0] || null
 			if (!firstBoard) {
 				firstBoard = await dispatch({ type: 'addBoard' })
@@ -334,7 +354,8 @@ export const boardStore = {
 				firstBoard = await dispatch({ type: 'updateBoard', payload })
 				return firstBoard
 			}
-			commit({ type: 'setBoardList', boards })
+			console.log('boards from getUserBoardList', boards)
+			commit({ type: 'setBoardList', boardList: boards })
 			return firstBoard
 		},
 

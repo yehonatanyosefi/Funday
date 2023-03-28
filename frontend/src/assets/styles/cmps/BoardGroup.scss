@@ -1,13 +1,19 @@
-$table-grids: 400px repeat(6, $group-column-width);
+
 .drop-preview {
      border: 1px dashed $color-divider;
      z-index: 1;
 }
-
-.task-sticky {
+.board-group .task-preview .task.task-sticky,
+.task-title-group.task-sticky.task-container {
      position: sticky;
-     left: 45px;
+     @include for-wide-layout {
+          left: 45px;
+     }
      z-index: 1;
+     &:focus-within::before {
+          background-color: $color-focused-within;
+          box-shadow: inset 0 0 0 1px $group-header-clr;
+     }
 }
 .group-header-container {
      position: absolute;
@@ -18,6 +24,7 @@ $table-grids: 400px repeat(6, $group-column-width);
      background-color: #fff;
 }
 .board-group {
+     margin-inline-start: 47px;
      display: grid;
      border-radius: 3px;
      height: fit-content;
@@ -74,16 +81,21 @@ $table-grids: 400px repeat(6, $group-column-width);
      }
      .group-header-container {
           padding-block-start: 10px;
-          top: 150px;
-          width: 1239px;
+          height: 46px;
+          width: 1240px;
+          z-index: 4;
           position: sticky;
-          z-index: 2;
+          @include for-wide-layout {
+               top: 150px;
+          }
      }
      .group-header {
+          z-index: 3;
           position: sticky;
+          @include for-wide-layout {
+               left: 45px;
+          }
           width: fit-content;
-          left: 45px;
-          z-index: 2;
           background-color: #fff;
           color: $group-header-clr;
           font-size: 18px;
@@ -132,20 +144,26 @@ $table-grids: 400px repeat(6, $group-column-width);
           }
      }
      .progress-bar {
-          margin-inline-start: 399px;
+          padding-inline-start: 399px;
           @include flex-center;
-          border-inline-start: 1px solid $color-divider;
-          border-block-end: 1px solid $color-divider;
-          border-end-end-radius: 7px;
-          border-end-start-radius: 7px;
-          border-inline-end: 1px solid $color-divider;
-          box-shadow: $small-shadow;
           z-index: 2;
           background-color: white;
+          .progress-column:first-child {
+               border-end-start-radius: 7px;
+               border-inline-start: 1px solid $color-divider;
+          }
+          .progress-column:last-child {
+               border-inline-end: 1px solid $color-divider;
+               border-end-end-radius: 7px;
+               width: 141px;
+          }
           .progress-column:not(:last-child) {
                border-inline-end: 1px solid $color-divider;
           }
           .progress-column {
+               box-shadow: $small-shadow;
+               padding-inline-start: 1px;
+               border-block-end: 1px solid $color-divider;
                width: $group-column-width;
                height: $group-row-height;
                @include flex-center;
@@ -160,18 +178,20 @@ $table-grids: 400px repeat(6, $group-column-width);
           }
           position: relative;
      }
-          .task-checkbox-container {
-               @include flex-center;
-               width: 38px;
-               border-inline-start: 1px solid $color-divider;
-               border-inline-end: 1px solid $color-divider;
-               width: 100%;
-               height: 100%;
-          }
+     .task-checkbox-container {
+          @include flex-center;
+          width: 38px;
+          border-inline-start: 1px solid $color-divider;
+          border-inline-end: 1px solid $color-divider;
+          width: 100%;
+          height: 100%;
+     }
      .task-header {
-          position: sticky;
-          top: 185px;
           z-index: 3;
+          position: sticky;
+          @include for-wide-layout {
+               top: 196px;
+          }
           background-color: #fff;
           display: grid;
           grid-template-columns: $table-grids;
@@ -183,6 +203,17 @@ $table-grids: 400px repeat(6, $group-column-width);
                height: 100%;
                background-color: $group-header-clr;
                border-top-left-radius: 5px;
+               &::before {
+                    content: '';
+                    top:0;
+                    left:0;
+                    height: 36px;
+                    width: 6px;
+                    background-color: #fff;
+                    z-index: -1;
+                    position: absolute;
+                    display: block;
+               }
           }
           // section:nth-child(2) {
           //      border: 1px solid $color-divider;

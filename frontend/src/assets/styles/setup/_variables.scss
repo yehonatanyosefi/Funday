@@ -5,6 +5,18 @@ $clr4: #95adbe;
 $clr5: #dff0ea;
 $clr6: #fff;
 
+// layout
+$group-column-width: 140px;
+$group-row-height: 36px;
+$task-title-columns: 33px 300px 67px;
+$table-grids: 400px repeat(6, $group-column-width);
+//board
+$small-shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
+$lighten-priority-amount: 15%;
+$lighten-status-amount: 7.5%;
+$color-focused-within: #cce5ff;
+$group-header-clr: rgb(87, 155, 252);
+
 // Breakpoints
 $mobile-breakpoint: 460px;
 $narrow-breakpoint: 720px;
@@ -64,15 +76,6 @@ $color-btn-active: #cce3fe;
 $color-surface: #292f4c;
 $color-login-header: #f7f7f7;
 $header-bottom-border-login: #e0e0e0;
-
-//Board
-$lighten-priority-amount: 15%;
-$lighten-status-amount: 7.5%;
-$color-focused-within: #cce5ff;
-$group-header-clr: rgb(87, 155, 252);
-$small-shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
-$group-column-width: 140px;
-$group-row-height: 36px;
 
 // Common colors
 $brdr-clr: #c3c6d4;

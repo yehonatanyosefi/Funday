@@ -56,9 +56,9 @@ import { Container, Draggable } from 'vue3-smooth-dnd'
 
 export default {
 
-    props: {
-        boardList: Array
-    }, //[{_id,title},{_id,title}]
+    // props: {
+    //     boardList: Array
+    // }, //[{_id,title},{_id,title}]
     created() {
 
     },
@@ -76,10 +76,21 @@ export default {
         setBoard(boardId) {
             this.$store.dispatch({ type: 'getBoardById', boardId })
         },
-        deleteBoard(boardId) {
-            this.$store.dispatch({ type: 'deleteBoard', boardId })
-            this.currBoardId = ''
-            this.closeModal()
+        async deleteBoard(boardId) {
+            try{
+                await this.$store.dispatch({ type: 'deleteBoard', boardId })
+                this.closeModal()
+                // this.currBoardId()
+                // const boards = this.$store.getters.boardList
+                // const length =this.$store.getters.boardList.length
+                // const lastBoard = boards[length-1]
+                const board= this.$store.getters.board
+                this.$router.push(`/board/${board._id}/main-table`)
+            }
+            catch(err){
+                console.log('couldnt delete ',err )
+            }
+
         },
         toggleRename(boardId) {
             this.title = this.boardList.find(listItem => listItem._id === boardId).title
@@ -131,6 +142,9 @@ export default {
 
         currBoardId() {
             return this.$store.getters.board._id
+        },
+        boardList() {
+            return this.$store.getters.boardList
         }
     },
     components: {
@@ -143,11 +157,11 @@ export default {
         Draggable,
     },
     directives: {
-    focus: {
-      mounted(el) {
-        el.focus();
-      }
+        focus: {
+            mounted(el) {
+                el.focus()
+            }
+        }
     }
-  }
 }
 </script>

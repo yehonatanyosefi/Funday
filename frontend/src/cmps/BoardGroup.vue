@@ -4,7 +4,12 @@
 			<h4 class="group-header">
 				<div class="menu-btn-wrapper">
 					<div class="menu-btn-container">
-						<Menu class="svg-icon menu-btn" width="20" height="20" @click="toggleMenuModal" />
+						<Menu
+							class="svg-icon menu-btn"
+							width="20"
+							height="20"
+							@click="$emit('selectGroupTasks', group.id)"
+						/>
 					</div>
 				</div>
 				<div class="group-title-input">
@@ -13,15 +18,15 @@
 							v-if="isCircleShown"
 							class="color-circle"
 							@click.stop="openColorPicker"
-							:style="{ backgroundColor: groupColor }"
+							:style="{ backgroundColor: group.style.color }"
 						></div>
 						<input
 							class="board-input group-title-input"
 							name="groupTitleInput"
 							id="groupTitleInput"
-							ref="groupTitleInput"
+							:ref="'groupTitleInput' + group.id"
 							v-model="groupTitle"
-							:style="{ color: groupColor }"
+							:style="{ color: group.style.color }"
 							type="text"
 							@input="saveGroupTitle"
 							@focus="showCircle"
@@ -42,14 +47,10 @@
 			<div class="task-title-group task-sticky task-container">
 				<div class="menu-btn-wrapper-task"></div>
 				<div class="task">
-					<div class="group-preview-color" :style="{ backgroundColor: groupColor }"></div>
+					<div class="group-preview-color" :style="{ backgroundColor: group.style.color }"></div>
 					<div class="task-checkbox-container">
-						<input
-							type="checkbox"
-							title="Delete Task"
-							class="task-checkbox"
-							v-model="isActionsModalOpen"
-						/>
+						<input type="checkbox" title="Delete Task" class="task-checkbox" />
+						<!-- v-model="isActionsModalOpen" -->
 					</div>
 					<section class="task-title">Task</section>
 				</div>
@@ -64,7 +65,6 @@
 			class="group"
 			@drop="onTaskDrop($event)"
 			:drop-placeholder="dropPlaceholderOptions"
-			:get-child-payload="getCardPayload('task.id')"
 		>
 			<Draggable v-for="(task, idx) in group.tasks" :key="task.id">
 				<TaskPreview
@@ -73,8 +73,15 @@
 					:groupColor="group.style.color"
 					:cmpOrder="cmpOrder"
 					@saveTask="$emit('saveTask', { task: $event, groupId: group.id })"
-					@removeTask="$emit('removeTask', { taskId: $event, groupId: group.id })"
+					@toggleSelectTask="
+						$emit('toggleSelectTask', {
+							taskId: $event,
+							groupId: group.id,
+							groupColor: group.style.color,
+						})
+					"
 				></TaskPreview>
+				<!-- $emit('removeTask', { taskId: $event, groupId: group.id }) -->
 			</Draggable>
 		</Container>
 
@@ -82,7 +89,10 @@
 			<div class="task-sticky task task-title-container add-task-container">
 				<div class="menu-btn-wrapper-task"></div>
 				<div class="task-checkbox-container">
-					<div class="task-preview-color last-task" :style="{ backgroundColor: groupColor }"></div>
+					<div
+						class="task-preview-color last-task"
+						:style="{ backgroundColor: group.style.color }"
+					></div>
 					<!-- :style="borderStyle" -->
 					<input type="checkbox" class="task-checkbox" disabled />
 				</div>
@@ -108,27 +118,17 @@
 				></Timeline>
 			</div>
 		</div>
-		<ActionsModal
-			v-if="isActionsModalOpen"
-			@closeActionsModal="closeActionsModal"
-			@openRemoveModal="openRemoveModal"
-		></ActionsModal>
-		<RemoveModal v-if="isRemoveModalOpen" @closeModal="closeRemoveModal" @remove="handleRemoveGroup"
-			>group</RemoveModal
-		>
 	</section>
 </template>
 
 <script>
 import ProgressBar from './dynamicCmps/ProgressBar.vue'
 import Menu from '../assets/svg/Menu.svg'
-import RemoveModal from './util/RemoveModal.vue'
 import { Container, Draggable } from 'vue3-smooth-dnd'
 import TaskPreview from './TaskPreview.vue'
 import Title from './dynamicCmps/Title.vue'
 import Timeline from './dynamicCmps/Timeline.vue'
 import ColorPicker from './util/ColorPicker.vue'
-import ActionsModal from './util/ActionsModal.vue'
 export default {
 	emits: [
 		'saveTask',
@@ -138,6 +138,8 @@ export default {
 		'applyTaskDrag',
 		'addTask',
 		'saveGroupAtt',
+		'toggleMenuModal',
+		'toggleSelectTask',
 	],
 	props: {
 		group: Object,
@@ -148,13 +150,10 @@ export default {
 	},
 	data() {
 		return {
-			isActionsModalOpen: false,
 			isCircleShown: false,
 			openColorPickerModal: false,
 			addTaskTitle: '',
 			groupTitle: null,
-			isRemoveModalOpen: false,
-			isMenuModalOpen: false,
 			hideSetTimeout: null,
 			progressObj: {
 				status: {
@@ -174,6 +173,9 @@ export default {
 		}
 	},
 	methods: {
+		toggleSelectTask(taskId) {
+			this.$emit('toggleSelectTask', { taskId, groupId: this.group.id })
+		},
 		capitalizeFirstLetter(str) {
 			return str.charAt(0).toUpperCase() + str.slice(1)
 		},
@@ -186,39 +188,22 @@ export default {
 			this.$emit('saveGroupAtt', payload)
 		},
 		chooseGroupColor(color) {
-			// const style = {color} //TODO fix store
-			const payload = { attName: 'style', att: color, groupId: this.group.id }
+			const style = { color }
+			const payload = { attName: 'style', att: style, groupId: this.group.id }
 			this.isCircleShown = false
 			this.$emit('saveGroupAtt', payload)
 		},
 		removeGroup() {
 			this.$emit('removeGroup', this.group.id)
 		},
-		openRemoveModal() {
-			this.isRemoveModalOpen = true
-		},
-		handleRemoveGroup() {
-			this.isRemoveModalOpen = false
-			this.$emit('removeGroup', this.group.id)
-		},
-		closeRemoveModal() {
-			this.isRemoveModalOpen = false
-		},
 		onTaskDrop(dropPayload) {
-			const { removedIndex, addedIndex } = dropPayload
-			if (removedIndex === null && addedIndex === null) return
+			const removedIndex = dropPayload.removedIndex || null
+			const addedIndex = dropPayload.addedIndex || null
+			if (!removedIndex || !addedIndex) return
 			const removedId = this.group.tasks.find((task, idx) => idx === removedIndex).id
 			const addedId = this.group.tasks.find((task, idx) => idx === addedIndex).id
 			const payload = { removedId, addedId, groupId: this.group.id }
 			this.$emit('applyTaskDrag', payload)
-		},
-		toggleMenuModal() {
-			//placeholder for menu modal
-			this.isMenuModalOpen = !this.isMenuModalOpen
-			this.isRemoveModalOpen = true
-		},
-		getCardPayload(ev) {
-			// console.log('getCardPayload',ev)
 		},
 		addTask() {
 			const title = this.addTaskTitle
@@ -241,26 +226,10 @@ export default {
 		showCircle() {
 			this.isCircleShown = true
 		},
-		openActionsModal() {
-			this.isActionsModalOpen = true
-		},
-		closeActionsModal() {
-			this.isActionsModalOpen = false
-		},
-		// onDragStart(name,{payload}) {
-		//     console.log('onDragStart', payload)
-		// },
-		// onDragEnd(name,{payload}) {
-		//     console.log('onDragEnd', payload)
-		// },
 	},
 	computed: {
 		groupColor() {
 			return this.group.style.color
-		},
-		borderStyle() {
-			//TODO opacity
-			return { borderInlineStart: `6px solid ${this.groupColor}` }
 		},
 		timelineProgress() {
 			const timelineProgress = {
@@ -292,14 +261,11 @@ export default {
 		TaskPreview,
 		Container,
 		Draggable,
-		RemoveModal,
 		Menu,
 		Title,
 		ProgressBar,
 		Timeline,
 		ColorPicker,
-		ActionsModal,
-		//  MenuModal,
 	},
 }
 </script>

@@ -14,14 +14,14 @@
 
       <form v-if="isSignin" @submit.prevent="doSignup">
         <h2>Set up your account</h2>
-        <input v-model="signupCred.username" placeholder="name@company.com" />
+        <input type="email" v-model="signupCred.username" placeholder="name@company.com" require/>
         <label id="text" for="">
           Full name
-          <input type="text" v-model="signupCred.fullname" placeholder="e.g. Jane Doe" />
+          <input type="text" v-model="signupCred.fullname" placeholder="e.g. Jane Doe" require/>
         </label>
         <label for="">
           Password
-          <input type="password" v-model="signupCred.password" placeholder="Enter at least 8 characters" />
+          <input type="password" v-model="signupCred.password" placeholder="Enter at least 8 characters" require/>
         </label>
         <ImgUploader @uploaded="onUploaded" />
         <button>Signup</button>
@@ -36,10 +36,10 @@
           </select> -->
         <label id="mail-label" for="mail">
           Enter your work email address
-          <input id="mail" type="email" v-model="loginCred.username" placeholder="Example@company.com" />
+          <input id="mail" type="email" v-model="loginCred.username" placeholder="Example@company.com" require/>
         </label>
 
-        <input type="text" v-model="loginCred.password" placeholder="Password" />
+        <input type="password" v-model="loginCred.password" placeholder="Password" require/>
         <button>
           <div class="login-btn">
             <p>Login</p>
@@ -109,18 +109,6 @@ export default {
           return
         }
         const firstBoard=await this.$store.dispatch({ type: "getUserBoardList" })
-        // const boards = await this.$store.dispatch({ type: "loadBoardList", filterBy: {userId:user._id} }) || []
-        // let firstBoard = boards[0]
-        // console.log('firstBoard',firstBoard)
-        // if (!firstBoard) {
-        //   firstBoard = await this.$store.dispatch({ type: "addBoard" })
-        //   payload={type:'createdBy',val:{
-        //     "_id": user._id,
-        //     "fullname": user.fullname,
-        //     "imgUrl": user.imgUrl
-        //   }}
-        //   await this.$store.dispatch({ type: "updateBoard", payload})
-        // }
         this.$router.push(`/board/${firstBoard._id}/main-table`)
       } catch (err) {
         console.log(err)

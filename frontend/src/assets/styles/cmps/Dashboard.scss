@@ -1,0 +1,28 @@
+.dashboard {
+     padding: 10px 25px;
+     background-color: #f6f7fb;
+     display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(100px, 400px));
+	grid-auto-flow: dense;
+	gap: 30px;
+     justify-content: start;
+     user-select: none;
+     .dashboard-card {
+          display: grid;
+          width: fit-content;
+          aspect-ratio: 1/1.1;
+          background-color: #fff;
+          border-radius: 20px;
+          border: 1px solid $color-divider;
+          margin: 10px;
+          .dashboard-card-header {
+               height: 50px;
+               padding: 8px;
+               @include flex-center;
+               border-block-end: 1px solid $color-divider;
+          }
+          .dashboard-chart {
+               padding: 20px;
+          }
+     }
+}

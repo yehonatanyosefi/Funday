@@ -15,6 +15,27 @@
     background-color: $clr-small-side-bar;
     position: relative;
 
+    .modal {
+      left: 66px;
+      z-index: 11;
+      bottom: 1%;
+      width: 220px;
+      // height: 40px;
+      justify-content: center;
+      padding: 8px;
+      .wrapper {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        padding: 4px 16px;
+        line-height: 24px;
+        border-radius: 4px;
+        &:hover{
+          background-color: $color-btn-hover;
+        }
+      }
+    }
+
     .logo-img {
       display: flex;
       align-items: center;

@@ -83,8 +83,8 @@
 						],
 						"person": ["u101", "u102", "u103", "u104"],
 						"timeline": {
-							"startDate": 16156215211,
-							"dueDate": null
+							"startDate": 1680008302633,
+							"dueDate": 1680555600000
 						},
 						"date": 1679612400000,
 						"byMember": {
@@ -106,7 +106,10 @@
 						"comments": [],
 						"person": ["u101", "u102"],
 						"date": 1679612400000,
-						"dueDate": 1680037200000,
+						"timeline": {
+							"startDate": 1680008302633,
+							"dueDate": 1680555600000
+						},
 						"byMember": {
 							"_id": "u103",
 							"username": "yehonatanmind@gmail.com",
@@ -126,8 +129,8 @@
 						"comments": [],
 						"person": ["u104", "u103"],
 						"timeline": {
-							"startDate": 1679706000000,
-							"dueDate": null
+							"startDate": 1680008302633,
+							"dueDate": 1680555600000
 						},
 						"date": 1679216400000,
 						"byMember": {
@@ -149,8 +152,8 @@
 						"comments": [],
 						"person": ["u103"],
 						"timeline": {
-							"startDate": 1679965200000,
-							"dueDate": null
+							"startDate": 1680008302633,
+							"dueDate": 1680555600000
 						},
 						"date": 1680253200000,
 						"byMember": {
@@ -172,8 +175,8 @@
 						"comments": [],
 						"person": ["u103"],
 						"timeline": {
-							"startDate": 16156215211,
-							"dueDate": null
+							"startDate": 1680008302633,
+							"dueDate": 1680555600000
 						},
 						"date": 1679612400000,
 						"byMember": {
@@ -217,8 +220,8 @@
 							"bgColor": ""
 						},
 						"timeline": {
-							"startDate": 1679738180426,
-							"dueDate": null
+							"startDate": 1680008302633,
+							"dueDate": 1680555600000
 						}
 					},
 					{
@@ -240,8 +243,8 @@
 							"bgColor": ""
 						},
 						"timeline": {
-							"startDate": 1679738180426,
-							"dueDate": null
+							"startDate": 1680008302633,
+							"dueDate": 1680555600000
 						}
 					},
 					{
@@ -263,8 +266,8 @@
 							"bgColor": ""
 						},
 						"timeline": {
-							"startDate": 1679738180426,
-							"dueDate": null
+							"startDate": 1680008302633,
+							"dueDate": 1680555600000
 						}
 					},
 					{
@@ -286,8 +289,8 @@
 							"bgColor": ""
 						},
 						"timeline": {
-							"startDate": 1679738203722,
-							"dueDate": null
+							"startDate": 1680008302633,
+							"dueDate": 1680555600000
 						}
 					}
 				],
@@ -344,8 +347,8 @@
 							"bgColor": ""
 						},
 						"timeline": {
-							"startDate": 1679738240378,
-							"dueDate": null
+							"startDate": 1680008302633,
+							"dueDate": 1680555600000
 						}
 					},
 					{
@@ -367,8 +370,8 @@
 							"bgColor": ""
 						},
 						"timeline": {
-							"startDate": 1679738240378,
-							"dueDate": null
+							"startDate": 1680008302633,
+							"dueDate": 1680555600000
 						}
 					},
 					{
@@ -384,8 +387,8 @@
 							"bgColor": ""
 						},
 						"timeline": {
-							"startDate": 1679738240378,
-							"dueDate": null
+							"startDate": 1680008302633,
+							"dueDate": 1680555600000
 						}
 					}
 				],
@@ -417,8 +420,8 @@
 							"bgColor": ""
 						},
 						"timeline": {
-							"startDate": 1679738311041,
-							"dueDate": null
+							"startDate": 1680008302633,
+							"dueDate": 1680555600000
 						}
 					},
 					{
@@ -440,8 +443,8 @@
 							"bgColor": ""
 						},
 						"timeline": {
-							"startDate": 1679738311041,
-							"dueDate": null
+							"startDate": 1680008302633,
+							"dueDate": 1680555600000
 						}
 					}
 				],
