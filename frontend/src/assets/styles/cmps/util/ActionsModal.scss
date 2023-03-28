@@ -5,7 +5,7 @@
      position: fixed;
      min-width: 800px;
      height: 63px;
-     z-index: 4;
+     z-index: 5;
      background-color: #fff;
      border-radius: 5px;
      box-shadow: 0px 15px 50px rgba(0, 0, 0, 0.3);
@@ -27,7 +27,18 @@
           cursor: default;
           font-size: 30px;
      }
-     
+     .num-of-tasks-colors {
+          display: flex;
+          justify-content: start;
+          gap: 5px;
+          width: 200px;
+          height: 20px;
+          .num-of-tasks-color {
+               border-radius: 50%;
+               width: 20px;
+               height: 20px;
+          }
+     }
      .title-of-actions {
           padding-inline-start: 20px;
           overflow: hidden;

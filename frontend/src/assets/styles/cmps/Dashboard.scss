@@ -1,12 +1,16 @@
 .dashboard {
-     background-color: lightgray;
+     padding: 10px 25px;
+     background-color: #f6f7fb;
      display: grid;
-     grid-auto-flow: row;
+	grid-template-columns: repeat(auto-fit, minmax(100px, 400px));
+	grid-auto-flow: dense;
+	gap: 30px;
+     justify-content: start;
      user-select: none;
      .dashboard-card {
           display: grid;
           width: fit-content;
-          // max-height: 500px;
+          aspect-ratio: 1/1.1;
           background-color: #fff;
           border-radius: 20px;
           border: 1px solid $color-divider;

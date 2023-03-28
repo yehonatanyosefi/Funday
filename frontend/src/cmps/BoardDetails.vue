@@ -12,18 +12,32 @@
 					:group="group"
 					:cmpOrder="cmpOrder"
 					@saveTask="saveTask"
-					@removeTask="removeTask"
+					@toggleSelectTask="toggleSelectTask"
 					@saveGroup="saveGroup"
 					@saveGroupAtt="saveGroupAtt"
 					@removeGroup="removeGroup"
 					@applyTaskDrag="applyTaskDrag"
 					@addTask="addTask"
+					@selectGroupTasks="selectGroupTasks"
 				></BoardGroup>
 			</Draggable>
 		</Container>
 		<button @click="addGroup" class="add-group-btn">
 			<Plus class="add-new-group-plus"></Plus> Add new group
 		</button>
+		<ActionsModal
+			v-if="isActionsModalOpen"
+			@closeActionsModal="closeActionsModal"
+			@openRemoveModal="openRemoveModal"
+			:selectedTasksArr="selectedTasksArr"
+		></ActionsModal>
+		<RemoveModal
+			v-if="isRemoveModalOpen"
+			@closeModal="closeRemoveModal"
+			@remove="handleRemoveTasks"
+			:removeGroup="false"
+			>Task<span v-if="selectedTasksArr.length > 1">s</span></RemoveModal
+		>
 		<RouterView></RouterView>
 	</section>
 </template>
@@ -35,10 +49,15 @@ import BoardGroup from './BoardGroup.vue'
 import Plus from '../assets/svg/plus.svg'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { boardService } from '../services/board.service.local'
+import ActionsModal from './util/ActionsModal.vue'
+import RemoveModal from './util/RemoveModal.vue'
 export default {
 	data() {
 		return {
 			taskToAdd: boardService.getEmptyTask(),
+			selectedTasksArr: [],
+			isRemoveModalOpen: false,
+			isActionsModalOpen: false,
 			dropPlaceholderOptions: {
 				className: 'drop-preview',
 				animationDuration: '150',
@@ -59,6 +78,26 @@ export default {
 	},
 	created() {},
 	methods: {
+		selectGroupTasks(groupId) {
+			const group = this.board.groups.find((group) => group.id === groupId)
+			group.forEach((task) => {
+				const idx = this.selectedTasksArr.findIndex((selectedTask) => selectedTask.taskId === task.id)
+				if (idx !== -1) {
+					this.selectedTasksArr.push(task)
+				}
+			})
+		},
+		toggleSelectTask({ taskId, groupId, groupColor }) {
+			const task = { taskId, groupId, groupColor }
+			const idx = this.selectedTasksArr.findIndex((task) => task.taskId === taskId)
+			if (idx !== -1) {
+				this.selectedTasksArr.splice(idx, 1)
+				if (!this.selectedTasksArr.length) this.isActionsModalOpen = false
+				return
+			}
+			this.isActionsModalOpen = true
+			this.selectedTasksArr.push(task)
+		},
 		async saveTask(payload) {
 			try {
 				const payloadToSave = { ...payload, boardId: this.board._id }
@@ -69,19 +108,43 @@ export default {
 				// showErrorMsg('Cannot update task')
 			}
 		},
-		async removeTask(ids) {
-			try {
-				ids = { ...ids, boardId: this.board._id }
-				await this.$store.dispatch({ type: 'removeTask', ids })
-				const groupIdx = this.board.groups.findIndex((group) => group.id === ids.groupId)
-				if (!this.board.groups[groupIdx].tasks?.length)
-					await this.$store.dispatch({ type: 'addTask', payload: ids.groupIdx })
-				showSuccessMsg('Task removed')
-			} catch (err) {
-				console.log(err)
-				showErrorMsg('Cannot remove task')
-			}
+		closeActionsModal() {
+			this.isActionsModalOpen = false
 		},
+		closeRemoveModal() {
+			this.isRemoveModalOpen = false
+		},
+		openRemoveModal() {
+			this.isRemoveModalOpen = true
+		},
+		async handleRemoveTasks() {
+			const tasksToRemove = [...this.selectedTasksArr]
+			tasksToRemove.forEach((task) => {
+				this.removeTask(task)
+			})
+			this.selectedTasksArr = []
+			this.isActionsModalOpen = false
+			this.isRemoveModalOpen = false
+		},
+		async removeTask(task) {
+			await this.$nextTick()
+			const ids = { taskId: task.taskId, groupId: task.groupId, boardId: this.board._id }
+			await this.$store.dispatch({ type: 'removeTask', ids })
+		},
+		// async removeTask(ids) {
+		// 	try {
+		// 		ids = { ...ids, boardId: this.board._id }
+		// 		await this.$store.dispatch({ type: 'removeTask', ids })
+		// 		const groupIdx = this.board.groups.findIndex((group) => group.id === ids.groupId)
+		// 		if (!this.board.groups[groupIdx].tasks?.length)
+		// 			await this.$store.dispatch({ type: 'addTask', payload: ids.groupIdx })
+		// 		showSuccessMsg('Task removed')
+		// 		return true
+		// 	} catch (err) {
+		// 		console.log(err)
+		// 		showErrorMsg('Cannot remove task')
+		// 	}
+		// },
 		async saveGroupAtt(payload) {
 			try {
 				const payloadToSave = { ...payload, boardId: this.board._id }
@@ -140,6 +203,8 @@ export default {
 		Container,
 		Draggable,
 		Plus,
+		ActionsModal,
+		RemoveModal,
 	},
 }
 </script>
