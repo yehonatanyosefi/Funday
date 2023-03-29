@@ -53,6 +53,7 @@
 							type="checkbox"
 							title="Delete Group"
 							class="task-checkbox"
+							:checked="selectedTasks?.length === group.tasks?.length"
 							@click="$emit('selectGroupTasks', group.id)"
 						/>
 						<!-- v-model="isActionsModalOpen" -->
@@ -77,7 +78,7 @@
 					:task="task"
 					:groupColor="group.style.color"
 					:cmpOrder="cmpOrder"
-					:isSelected="selectedTasks?.includes(task.id)"
+					:isSelected="isSelected(task.id)"
 					@removeTask="$emit('removeTask', { taskId: $event, groupId: group.id })"
 					@saveTask="$emit('saveTask', { task: $event, groupId: group.id })"
 					@toggleSelectTask="
@@ -234,6 +235,9 @@ export default {
 		},
 		showCircle() {
 			this.isCircleShown = true
+		},
+		isSelected(taskId) {
+			return this.selectedTasks?.some((selectedTask) => selectedTask.taskId === taskId)
 		},
 	},
 	computed: {

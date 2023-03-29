@@ -40,7 +40,7 @@
 				<CloseRound></CloseRound>
 			</div>
 		</div>
-		<div class="filter" @click="openModal('multi-filter-modal')">
+		<div class="filter" @click="openModal('FilterModal')">
 			<Filter class="svg-img"></Filter>
 			<button>Filter</button>
 		</div>
@@ -57,6 +57,7 @@
 			@addGroup="addGroup"
 			@addTask="addTask"
 			@setFilter="setFilter"
+			@advanceFilter="advanceFilter"
 		/>
 	</section>
 </template>
@@ -72,7 +73,7 @@ import MenuModal from '../cmps/dynamicModals/MenuModal.vue'
 export default {
 	name: 'BoardFilter',
 	props: {},
-	emits: ['setFilter', 'addTask', 'addGroup'],
+	emits: ['setFilter', 'addTask', 'addGroup', 'advanceFilter'],
 	data() {
 		return {
 			showModal: false,
@@ -111,6 +112,9 @@ export default {
 			filterBy = { txt, member }
 			this.$emit('setFilter', filterBy)
 		},
+		advanceFilter(advanceFilter) {
+			this.$emit('advanceFilter', advanceFilter)
+		},
 
 		resetFilter() {
 			this.txt = this.filterBy.txt || ''
@@ -133,7 +137,6 @@ export default {
 	computed: {
 		filterBy() {
 			const filterBy = this.$store.getters.filterBy
-			console.log(filterBy)
 			return filterBy
 		},
 	},

@@ -74,6 +74,9 @@ export default {
 		cmpOrder() {
 			return this.board.cmpOrder
 		},
+		isSelectedEmpty() {
+			return !Object.values(this.selectedTasks).flat().length
+		},
 	},
 	created() {},
 	methods: {
@@ -83,7 +86,7 @@ export default {
 			if (!groupSelectedCount) this.selectedTasks[groupId] = []
 			if (groupSelectedCount >= group.tasks?.length) {
 				this.selectedTasks[groupId] = []
-				if (!this.selectedTasks.length) this.isActionsModalOpen = false
+				if (this.isSelectedEmpty) this.isActionsModalOpen = false
 				return
 			}
 			const selectedGroup = this.selectedTasks[groupId]
@@ -93,8 +96,7 @@ export default {
 			this.isActionsModalOpen = true
 		},
 		selectTask(taskId, groupId, group, selectedGroup) {
-			//TODO fix bug
-			const idx = selectedGroup?.findIndex((selectedTask) => selectedTask.id === taskId)
+			const idx = selectedGroup?.findIndex((selectedTask) => selectedTask.taskId === taskId)
 			if (idx === -1) {
 				const minifiedTask = { taskId, groupId, groupColor: group.style.color }
 				if (!this.selectedTasks[groupId].length) this.selectedTasks[groupId] = [minifiedTask]
@@ -108,7 +110,7 @@ export default {
 			const idx = this.selectedTasks[groupId]?.findIndex((task) => task.taskId === taskId)
 			if (idx > -1) {
 				this.selectedTasks[groupId].splice(idx, 1)
-				if (!this.selectedTasks.length) this.isActionsModalOpen = false
+				if (this.isSelectedEmpty) this.isActionsModalOpen = false
 				return
 			}
 			if (!this.selectedTasks[groupId].length) this.selectedTasks[groupId] = [task]

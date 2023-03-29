@@ -1,6 +1,13 @@
 <template>
 	<section @keydown.escape="closeModal" class="menu-modal" v-click-outside="closeModal">
-		<component :is="cmp" @addGroup="addGroup" @addTask="addTask" @setFilter="setFilter" />
+		<component
+			:is="cmp"
+			@addGroup="addGroup"
+			@addTask="addTask"
+			@setFilter="setFilter"
+			@advanceFilter="advanceFilter"
+			@closeModal="closeModal"
+		/>
 	</section>
 </template>
 
@@ -8,9 +15,11 @@
 import AddItemModal from './AddItemModal.vue'
 import MemberFilter from './MemberFilter.vue'
 import RenameDeleteModal from './RenameDeleteModal.vue'
+import FilterModal from './FilterModal.vue'
+
 export default {
 	name: 'menu-modal',
-	emits: ['closeModal', 'addTask', 'addGroup', 'setFilter'],
+	emits: ['closeModal', 'addTask', 'addGroup', 'setFilter', 'advanceFilter'],
 	props: {
 		cmp: {
 			type: String,
@@ -33,11 +42,18 @@ export default {
 			this.$emit('setFilter', filterBy)
 			this.$emit('closeModal')
 		},
+		advanceFilter(advanceFilter) {
+			this.$emit('advanceFilter', advanceFilter)
+		},
+		closeModal() {
+			this.$emit('closeModal')
+		},
 	},
 	components: {
 		AddItemModal,
 		RenameDeleteModal,
 		MemberFilter,
+		FilterModal,
 	},
 }
 </script>
