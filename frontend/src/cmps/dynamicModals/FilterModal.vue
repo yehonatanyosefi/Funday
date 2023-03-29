@@ -58,7 +58,7 @@ export default {
 		// },
 
 		board() {
-			return this.$store.getters.filteredBoard
+			return this.$store.getters.board
 		},
 
 		totalTasks() {
@@ -74,7 +74,14 @@ export default {
 			this.$emit('advanceFilter', advanceFilter)
 		},
 		clearFilter() {
-			this.$emit('advanceFilter', {})
+			const advanceFilter = {
+				person: [],
+				group: [],
+				priority: [],
+				status: [],
+				tasks: [],
+			}
+			this.$emit('advanceFilter', advanceFilter)
 			this.$emit('closeModal')
 
 			// this.$store.commit({ type: 'filterBoard', filter: {} })

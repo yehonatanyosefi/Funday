@@ -1,6 +1,7 @@
 import { boardService } from '../services/board.service'
 import { router } from '../router'
 import { utilService } from '../services/util.service'
+import { toRaw } from 'vue'
 
 export const boardStore = {
 	state: {
@@ -78,11 +79,16 @@ export const boardStore = {
 			state.filteredBoard = filterBoard
 			state.filterBy = filter
 		},
+
 		setAdvanceFilter(state, { advanceFilter }) {
 			let filterBoard = JSON.parse(JSON.stringify(state.board))
+			console.log('filterBoard', filterBoard)
+
 			filterBoard = boardService.setAdvanceFilter(filterBoard, advanceFilter)
+			// console.log('filterBoard', filterBoard)
+
+			state.filteredBoard = filterBoard
 			state.advanceFilter = JSON.parse(JSON.stringify(advanceFilter))
-			state.filterBoard = filterBoard
 		},
 		removeTask(state, { ids }) {
 			const { groupId, taskId } = ids
@@ -93,7 +99,6 @@ export const boardStore = {
 		},
 		removeGroup(state, { groupId }) {
 			const groupIdx = state.board.groups.findIndex((group) => group.id === groupId)
-			state.board.groups.splice(groupIdx, 1)
 			state.board.groups.splice(groupIdx, 1)
 			state.filteredBoard.groups.splice(groupIdx, 1)
 		},

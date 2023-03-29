@@ -4,6 +4,7 @@ import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
 
 const STORAGE_KEY = 'boardDB'
+const STORAGE_FILTER = 'advFilter'
 
 export const boardService = {
 	// query,
@@ -135,15 +136,14 @@ async function remove(ids, type) {
 			for (let groupId in tasksToRemove) {
 				const groupIdx = board.groups.findIndex((group) => group.id === groupId)
 				const tasks = board.groups[groupIdx].tasks.filter((task) => {
-					return !tasksToRemove[groupId].some(selectedTask => {
+					return !tasksToRemove[groupId].some((selectedTask) => {
 						return selectedTask.taskId === task.id
 					})
 				})
 				if (!tasks.length) {
 					board.groups.splice(groupIdx, 1)
 					if (!board.groups.length) board.groups = [getEmptyGroup()]
-				}
-				else board.groups[groupIdx].tasks = tasks
+				} else board.groups[groupIdx].tasks = tasks
 			}
 			return await saveBoard(board)
 			break
@@ -209,18 +209,41 @@ function filterByMember(board, member) {
 	return board
 }
 function setAdvanceFilter(board, advanceFilter) {
-	// Iterating through board groups
+	console.log('1', board)
 
-	advanceFilter.person?.map((curPerson) => {
-		filterByMember(board, curPerson)
-	})
+	board.groups = board.groups.reduce((groupArr, group) => {
+		const groupInclude = advanceFilter.group?.length ? advanceFilter.group.includes(group.title) : true
+		if (groupInclude) {
+			group.tasks = group.tasks.reduce((taskArr, task) => {
+				if (
+					advanceFilter.priority.length
+						? advanceFilter.priority.includes(task.priority)
+						: true && advanceFilter.status.length
+						? advanceFilter.status.includes(task.status)
+						: true && advanceFilter.person.length
+						? advanceFilter.person.some((item) => task.person.some((person) => person._id === item._id))
+						: true
+				) {
+					taskArr.push(task)
+				}
+				return taskArr
+			}, [])
+		} else {
+			group.tasks = []
+		}
 
+		if (group.tasks?.length || groupInclude) groupArr.push(group)
+		return groupArr
+	}, [])
+	console.log('2', board)
+	return board
 	// board.groups = board.groups.reduce((groupArr, group) => {
 	// 	const groupInclude = advanceFilter.group?.includes(group.title)
 	// 	group.tasks = group.tasks.reduce((taskArr, task) => {
 	// 		if (
 	// 			advanceFilter.priority?.includes(task.priority) &&
-	// 			advanceFilter.status?.includes(task.status)
+	// 			advanceFilter.status?.includes(task.status) &&
+	// 			advanceFilter.person.some((item) => task.person.includes(item))
 	// 		) {
 	// 			taskArr.push(task)
 	// 		}
@@ -230,7 +253,7 @@ function setAdvanceFilter(board, advanceFilter) {
 	// 	if (group.tasks?.length || groupInclude) groupArr.push(group)
 	// 	return groupArr
 	// }, [])
-	return board
+	// return board
 }
 async function applyDrag(addedId, removedId, type, boardId, groupId) {
 	//arr, dragResult
