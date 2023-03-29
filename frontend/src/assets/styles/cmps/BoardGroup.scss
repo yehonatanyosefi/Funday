@@ -6,7 +6,7 @@
 .board-group .task-preview .task.task-sticky,
 .task-title-group.task-sticky.task-container {
      position: sticky;
-     @include for-wide-layout {
+     @include for-normal-layout {
           left: 45px;
      }
      z-index: 1;
@@ -85,14 +85,14 @@
           width: 1240px;
           z-index: 4;
           position: sticky;
-          @include for-wide-layout {
+          @include for-normal-layout {
                top: 150px;
           }
      }
      .group-header {
           z-index: 3;
           position: sticky;
-          @include for-wide-layout {
+          @include for-normal-layout {
                left: 45px;
           }
           width: fit-content;
@@ -189,7 +189,7 @@
      .task-header {
           z-index: 3;
           position: sticky;
-          @include for-wide-layout {
+          @include for-normal-layout {
                top: 196px;
           }
           background-color: #fff;
