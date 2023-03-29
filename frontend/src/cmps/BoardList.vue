@@ -99,7 +99,7 @@ export default {
         },
         async renameBoard() {
             try {
-                const payload = { val: this.title, type: 'title', editedBoardId: this.editedBoardId }
+                const payload = { val: this.title, type: 'title', newBoardId: this.editedBoardId }
                 await this.$store.dispatch({ type: 'updateBoard', payload })
                 this.isRename = false
             }

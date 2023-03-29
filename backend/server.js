@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'production') {
 const authRoutes = require('./api/auth/auth.routes')
 const userRoutes = require('./api/user/user.routes')
 const reviewRoutes = require('./api/review/review.routes')
-const taskRoutes = require('./api/task/task.routes')
+const boardRoutes = require('./api/board/board.routes')
 const { setupSocketAPI } = require('./services/socket.service')
 
 // routes
@@ -34,7 +34,7 @@ app.all('*', setupAsyncLocalStorage)
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/review', reviewRoutes)
-app.use('/api/task', taskRoutes)
+app.use('/api/board', boardRoutes)
 setupSocketAPI(http)
 
 // Make every server-side-route to match the index.html

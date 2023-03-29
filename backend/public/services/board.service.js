@@ -4,7 +4,7 @@ import { utilService } from './util.service.js'
 
 
 
-export const boardService = {
+export const boardService1 = {
     query,
     getById,
     save,

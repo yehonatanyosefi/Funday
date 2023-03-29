@@ -271,7 +271,6 @@ function setAdvanceFilter(board, advanceFilter) {
 }
 async function applyDrag(addedId, removedId, type, boardId, groupId) {
 	//arr, dragResult
-	console.log('type',type)
 	let board
 	switch (type) {
 		case 'task':
@@ -299,16 +298,16 @@ async function applyDrag(addedId, removedId, type, boardId, groupId) {
 			break
 		case 'board':
 			// const boards = await storageService.query(STORAGE_KEY)
-			const boards = await storageService.query(STORAGE_KEY)
-			const addedBoardIdx = boards.findIndex((board) => board._id === addedId)
-			const removedBoardIdx = boards.findIndex((board) => board._id === removedId)
-			if (addedBoardIdx !== -1 && removedBoardIdx !== -1) {
-				boards[addedBoardIdx]._id = removedId
-				boards[removedBoardIdx]._id = addedId
-				await saveBoard(boards[removedBoardIdx])
-				await saveBoard(boards[addedBoardIdx])
-			}
-			return queryList()
+			// const boards = await storageService.query(STORAGE_KEY)
+			// const addedBoardIdx = boards.findIndex((board) => board._id === addedId)
+			// const removedBoardIdx = boards.findIndex((board) => board._id === removedId)
+			// if (addedBoardIdx !== -1 && removedBoardIdx !== -1) {
+			// 	boards[addedBoardIdx]._id = removedId
+			// 	boards[removedBoardIdx]._id = addedId
+			// 	await saveBoard(boards[removedBoardIdx])
+			// 	await saveBoard(boards[addedBoardIdx])
+			// }
+			// return queryList()
 			break
 	}
 }

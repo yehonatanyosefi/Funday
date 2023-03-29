@@ -2,10 +2,10 @@
   <div class="login-signup">
     <header>
       <div class="left-container">
-        <a href="/">
+        <router-link to="/">
           <img class="logo" src="/src/assets/funday.png" alt="" />
           <h1>Funday</h1>
-        </a>
+        </router-link>
       </div>
     </header>
 
