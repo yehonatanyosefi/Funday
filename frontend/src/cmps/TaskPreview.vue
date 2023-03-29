@@ -8,7 +8,13 @@
 				</div>
 			</div>
 			<div class="task-checkbox-container">
-				<input type="checkbox" title="Delete Task" class="task-checkbox" @click="toggleSelectTask" />
+				<input
+					type="checkbox"
+					title="Delete Task"
+					class="task-checkbox"
+					:checked="isSelected"
+					@click="toggleSelectTask"
+				/>
 				<!-- v-model="isModalOpen" -->
 				<!-- openModal -->
 			</div>
@@ -29,7 +35,7 @@
 				@saveTask="saveTask($event, cmp)"
 			></component>
 		</div>
-		<RemoveModal v-if="isModalOpen" @closeModal="handleCloseModal" @remove="handleRemoveTask"
+		<RemoveModal v-if="isModalOpen" @closeModal="handleCloseModal" @remove="$emit('removeTask', task.id)"
 			>task</RemoveModal
 		>
 	</section>
@@ -50,12 +56,13 @@ import Priority from './dynamicCmps/Priority.vue'
 import Text from './dynamicCmps/Text.vue'
 import Timeline from './dynamicCmps/Timeline.vue'
 export default {
-	emits: ['saveTask', 'toggleSelectTask'],
+	emits: ['saveTask', 'toggleSelectTask', 'removeTask'],
 	props: {
 		task: Object,
 		cmpOrder: Array,
 		groupColor: String,
 		idx: Number,
+		isSelected: Boolean,
 	},
 	data() {
 		return {

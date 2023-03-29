@@ -11,15 +11,18 @@
 				<BoardGroup
 					:group="group"
 					:cmpOrder="cmpOrder"
+					:selectedTasks="selectedTasks[group.id]"
 					@saveTask="saveTask"
 					@toggleSelectTask="toggleSelectTask"
 					@saveGroup="saveGroup"
 					@saveGroupAtt="saveGroupAtt"
 					@removeGroup="removeGroup"
 					@applyTaskDrag="applyTaskDrag"
+					@removeTask="removeTask"
 					@addTask="addTask"
 					@selectGroupTasks="selectGroupTasks"
 				></BoardGroup>
+				<!-- :selectedTaskArr="selectedTasks[group.id]" -->
 			</Draggable>
 		</Container>
 		<button @click="addGroup" class="add-group-btn">
@@ -29,14 +32,10 @@
 			v-if="isActionsModalOpen"
 			@closeActionsModal="closeActionsModal"
 			@openRemoveModal="openRemoveModal"
-			:selectedTasksArr="selectedTasksArr"
+			:selectedTasks="selectedTasks"
 		></ActionsModal>
-		<RemoveModal
-			v-if="isRemoveModalOpen"
-			@closeModal="closeRemoveModal"
-			@remove="handleRemoveTasks"
-			:removeGroup="false"
-			>Task<span v-if="selectedTasksArr.length > 1">s</span></RemoveModal
+		<RemoveModal v-if="isRemoveModalOpen" @closeModal="closeRemoveModal" @remove="handleRemoveTasks"
+			>Task<span v-if="Object.values(selectedTasks).length > 1">s</span></RemoveModal
 		>
 		<RouterView></RouterView>
 	</section>
@@ -55,7 +54,7 @@ export default {
 	data() {
 		return {
 			taskToAdd: boardService.getEmptyTask(),
-			selectedTasksArr: [],
+			selectedTasks: {},
 			isRemoveModalOpen: false,
 			isActionsModalOpen: false,
 			dropPlaceholderOptions: {
@@ -80,23 +79,41 @@ export default {
 	methods: {
 		selectGroupTasks(groupId) {
 			const group = this.board.groups.find((group) => group.id === groupId)
-			group.forEach((task) => {
-				const idx = this.selectedTasksArr.findIndex((selectedTask) => selectedTask.taskId === task.id)
-				if (idx !== -1) {
-					this.selectedTasksArr.push(task)
-				}
+			const groupSelectedCount = this.selectedTasks[groupId]?.length
+			if (!groupSelectedCount) this.selectedTasks[groupId] = []
+			if (groupSelectedCount >= group.tasks?.length) {
+				this.selectedTasks[groupId] = []
+				if (!this.selectedTasks.length) this.isActionsModalOpen = false
+				return
+			}
+			const selectedGroup = this.selectedTasks[groupId]
+			group.tasks.forEach((task) => {
+				this.selectTask(task.id, groupId, group, selectedGroup)
 			})
+			this.isActionsModalOpen = true
+		},
+		selectTask(taskId, groupId, group, selectedGroup) {
+			//TODO fix bug
+			const idx = selectedGroup?.findIndex((selectedTask) => selectedTask.id === taskId)
+			if (idx === -1) {
+				const minifiedTask = { taskId, groupId, groupColor: group.style.color }
+				if (!this.selectedTasks[groupId].length) this.selectedTasks[groupId] = [minifiedTask]
+				else this.selectedTasks[groupId].push(minifiedTask)
+			}
 		},
 		toggleSelectTask({ taskId, groupId, groupColor }) {
 			const task = { taskId, groupId, groupColor }
-			const idx = this.selectedTasksArr.findIndex((task) => task.taskId === taskId)
-			if (idx !== -1) {
-				this.selectedTasksArr.splice(idx, 1)
-				if (!this.selectedTasksArr.length) this.isActionsModalOpen = false
+			const selectedGroup = this.selectedTasks[groupId]
+			if (!selectedGroup) this.selectedTasks[groupId] = []
+			const idx = this.selectedTasks[groupId]?.findIndex((task) => task.taskId === taskId)
+			if (idx > -1) {
+				this.selectedTasks[groupId].splice(idx, 1)
+				if (!this.selectedTasks.length) this.isActionsModalOpen = false
 				return
 			}
+			if (!this.selectedTasks[groupId].length) this.selectedTasks[groupId] = [task]
+			else this.selectedTasks[groupId].push(task)
 			this.isActionsModalOpen = true
-			this.selectedTasksArr.push(task)
 		},
 		async saveTask(payload) {
 			try {
@@ -110,6 +127,7 @@ export default {
 		},
 		closeActionsModal() {
 			this.isActionsModalOpen = false
+			this.selectedTasks = {}
 		},
 		closeRemoveModal() {
 			this.isRemoveModalOpen = false
@@ -118,33 +136,29 @@ export default {
 			this.isRemoveModalOpen = true
 		},
 		async handleRemoveTasks() {
-			const tasksToRemove = [...this.selectedTasksArr]
-			tasksToRemove.forEach((task) => {
-				this.removeTask(task)
-			})
-			this.selectedTasksArr = []
 			this.isActionsModalOpen = false
 			this.isRemoveModalOpen = false
+			const ids = {
+				tasksToRemove: JSON.parse(JSON.stringify(this.selectedTasks)),
+				boardId: this.board._id,
+			}
+			await this.$store.dispatch({ type: 'removeTasks', ids })
+			this.selectedTasks = {}
 		},
-		async removeTask(task) {
-			await this.$nextTick()
-			const ids = { taskId: task.taskId, groupId: task.groupId, boardId: this.board._id }
-			await this.$store.dispatch({ type: 'removeTask', ids })
+		async removeTask(ids) {
+			try {
+				ids = { ...ids, boardId: this.board._id }
+				await this.$store.dispatch({ type: 'removeTask', ids })
+				const groupIdx = this.board.groups.findIndex((group) => group.id === ids.groupId)
+				if (!this.board.groups[groupIdx].tasks?.length)
+					await this.$store.dispatch({ type: 'addTask', payload: ids.groupIdx })
+				showSuccessMsg('Task removed')
+				return true
+			} catch (err) {
+				console.log(err)
+				showErrorMsg('Cannot remove task')
+			}
 		},
-		// async removeTask(ids) {
-		// 	try {
-		// 		ids = { ...ids, boardId: this.board._id }
-		// 		await this.$store.dispatch({ type: 'removeTask', ids })
-		// 		const groupIdx = this.board.groups.findIndex((group) => group.id === ids.groupId)
-		// 		if (!this.board.groups[groupIdx].tasks?.length)
-		// 			await this.$store.dispatch({ type: 'addTask', payload: ids.groupIdx })
-		// 		showSuccessMsg('Task removed')
-		// 		return true
-		// 	} catch (err) {
-		// 		console.log(err)
-		// 		showErrorMsg('Cannot remove task')
-		// 	}
-		// },
 		async saveGroupAtt(payload) {
 			try {
 				const payloadToSave = { ...payload, boardId: this.board._id }

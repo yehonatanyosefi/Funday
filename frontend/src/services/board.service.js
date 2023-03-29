@@ -78,33 +78,33 @@ async function updateBoard(boardId, payload) {
 			board.isStarred = val
 			break
 		case 'createdBy':
-			board.createdBy= val
+			board.createdBy = val
 			board.members.push(val)
 			break
 	}
 	return saveBoard(board)
 }
 
-async function queryList(filterBy = { txt: '', userId:''}) {
+async function queryList(filterBy = { txt: '', userId: '' }) {
 	// return httpService.get(STORAGE_KEY, filterBy)
-	try{
+	try {
 		let boards = await storageService.query(STORAGE_KEY)
 		let boardsCopy = JSON.parse(JSON.stringify(boards))
 		if (filterBy.txt) {
 			const regex = new RegExp(filterBy.txt, 'i')
 			boards = boardsCopy.filter((board) => regex.test(board.title))
 		}
-	
-		if (filterBy.userId){
-			boards = boardsCopy.filter(board => board.members.some(member => member._id===filterBy.userId))
+
+		if (filterBy.userId) {
+			boards = boardsCopy.filter(board => board.members.some(member => member._id === filterBy.userId))
 		}
 		const boardList = boards.map((board) => {
 			return { _id: board._id, title: board.title }
 		})
 		return boardList
 	}
-	catch(err){
-		console.log('queryList error:'+err)
+	catch (err) {
+		console.log('queryList error:' + err)
 	}
 	// var tasks = await storageService.query(STORAGE_KEY)
 	// if (filterBy.txt) {
@@ -118,7 +118,7 @@ async function queryList(filterBy = { txt: '', userId:''}) {
 }
 
 async function remove(ids, type) {
-	const { boardId, groupId, taskId } = ids
+	const { boardId, groupId, taskId, tasksToRemove } = ids
 	let board = await getById(boardId)
 	const groupIdx = type !== 'board' ? board.groups.findIndex((group) => group.id === groupId) : -1
 	switch (type) {
@@ -127,6 +127,22 @@ async function remove(ids, type) {
 			const tasks = board.groups[groupIdx].tasks.splice(taskIdx, 1)[0]
 			const group = board.groups.splice(groupIdx, 1, tasks)[0]
 			board.groups[groupIdx] = group
+			return await saveBoard(board)
+			break
+		case 'tasks':
+			for (let groupId in tasksToRemove) {
+				const groupIdx = board.groups.findIndex((group) => group.id === groupId)
+				const tasks = board.groups[groupIdx].tasks.filter((task) => {
+					return !tasksToRemove[groupId].some(selectedTask => {
+						return selectedTask.taskId === task.id
+					})
+				})
+				if (!tasks.length) {
+					board.groups.splice(groupIdx, 1)
+					if (!board.groups.length) board.groups = [getEmptyGroup()]
+				}
+				else board.groups[groupIdx].tasks = tasks
+			}
 			return await saveBoard(board)
 			break
 		case 'group':

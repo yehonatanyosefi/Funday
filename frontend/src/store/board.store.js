@@ -46,12 +46,12 @@ export const boardStore = {
     deleteBoard(state, { boardId }) {
       const idx = state.boardList.findIndex((board) => board._id === boardId)
       //   state.boardList = state.boardList.filter((board) => board._id !== boardId)
-	  //&& state.boardList.length === 1
-      if (idx > -1 ){
-		  const boardListCopy= JSON.parse(JSON.stringify(state.boardList))
-			boardListCopy.splice(idx, 1)
-			state.boardList=boardListCopy	
-	  }
+      //&& state.boardList.length === 1
+      if (idx > -1) {
+        const boardListCopy = JSON.parse(JSON.stringify(state.boardList))
+        boardListCopy.splice(idx, 1)
+        state.boardList = boardListCopy
+      }
     },
 
     resetFilters(state) {
@@ -154,6 +154,15 @@ export const boardStore = {
         const updatedBoard = await boardService.remove(ids, 'task')
         dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
         // commit({ type: 'removeTask', ids })
+      } catch (err) {
+        console.log('Store: Error in removeTask', err)
+        throw err
+      }
+    },
+    async removeTasks({ commit, dispatch }, { ids }) {
+      try {
+        const updatedBoard = await boardService.remove(ids, 'tasks')
+        dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
       } catch (err) {
         console.log('Store: Error in removeTask', err)
         throw err
@@ -286,10 +295,10 @@ export const boardStore = {
         if (boardListCopy.length > 1) {
           await boardService.remove({ boardId }, 'board')
           context.commit({ type: 'deleteBoard', boardId })
-          const miniBoards= await context.dispatch({ type: 'loadBoardList' })
-		  console.log('miniBoards',miniBoards)
-		  const miniBoardId = miniBoards[miniBoards.length - 1]._id
-		  context.dispatch({type:'getBoardById', boardId:miniBoardId})
+          const miniBoards = await context.dispatch({ type: 'loadBoardList' })
+          console.log('miniBoards', miniBoards)
+          const miniBoardId = miniBoards[miniBoards.length - 1]._id
+          context.dispatch({ type: 'getBoardById', boardId: miniBoardId })
         }
       } catch (err) {
         console.log('boardStore: Error in deleteBoard', err)

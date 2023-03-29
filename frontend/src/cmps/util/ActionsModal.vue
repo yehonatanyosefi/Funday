@@ -18,7 +18,7 @@
 			<Duplicate></Duplicate>
 			Duplicate
 		</div>
-		<div class="action-item" @click="$emit('openRemoveModal'), $emit('closeActionsModal')">
+		<div class="action-item" @click="$emit('openRemoveModal')">
 			<Delete></Delete>
 			Delete
 		</div>
@@ -34,7 +34,7 @@ import Duplicate from '../../assets/svg/Duplicate.svg'
 export default {
 	emits: ['closeActionsModal', 'openRemoveModal'],
 	props: {
-		selectedTasksArr: { type: Array, default: [] },
+		selectedTasks: { type: Object, default: {} },
 	},
 	created() {},
 	data() {
@@ -42,6 +42,9 @@ export default {
 	},
 	methods: {},
 	computed: {
+		selectedTasksArr() {
+			return Object.values(this.selectedTasks).flat()
+		},
 		numOfActions() {
 			return this.selectedTasksArr?.length
 		},

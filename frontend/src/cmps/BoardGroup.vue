@@ -49,7 +49,12 @@
 				<div class="task">
 					<div class="group-preview-color" :style="{ backgroundColor: group.style.color }"></div>
 					<div class="task-checkbox-container">
-						<input type="checkbox" title="Delete Task" class="task-checkbox" />
+						<input
+							type="checkbox"
+							title="Delete Group"
+							class="task-checkbox"
+							@click="$emit('selectGroupTasks', group.id)"
+						/>
 						<!-- v-model="isActionsModalOpen" -->
 					</div>
 					<section class="task-title">Task</section>
@@ -72,6 +77,8 @@
 					:task="task"
 					:groupColor="group.style.color"
 					:cmpOrder="cmpOrder"
+					:isSelected="selectedTasks?.includes(task.id)"
+					@removeTask="$emit('removeTask', { taskId: $event, groupId: group.id })"
 					@saveTask="$emit('saveTask', { task: $event, groupId: group.id })"
 					@toggleSelectTask="
 						$emit('toggleSelectTask', {
@@ -140,10 +147,12 @@ export default {
 		'saveGroupAtt',
 		'toggleMenuModal',
 		'toggleSelectTask',
+		'selectGroupTasks',
 	],
 	props: {
 		group: Object,
 		cmpOrder: Array,
+		selectedTasks: Array,
 	},
 	created() {
 		this.groupTitle = this.group.title
