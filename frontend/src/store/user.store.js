@@ -44,11 +44,12 @@ export const userStore = {
         },
     },
     actions: {
-        async login({ commit }, { userCred }) {
+        async login({ commit ,dispatch}, { userCred }) {
             try {
                 let user = await userService.login(userCred)
                 user= JSON.parse(JSON.stringify(user))
                 commit({ type: 'setLoggedinUser', user })
+                dispatch({type:'loadBoardList'}) //!
                 return user
             } catch (err) {
                 console.log('userStore: Error in login', err)

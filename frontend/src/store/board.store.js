@@ -247,6 +247,7 @@ export const boardStore = {
         filterBy.userId = context.getters.loggedinUser._id
         const boardList = await boardService.queryList(filterBy)
         context.commit({ type: 'setBoardList', boardList })
+        console.log('boardList',boardList)
         return boardList
       } catch (err) {
         console.log('Store: Error in loadBoardList', err)

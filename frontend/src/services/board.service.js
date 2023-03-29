@@ -4,6 +4,7 @@ import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
 
 const STORAGE_KEY = 'boardDB'
+const API_KEY = 'board/'
 
 export const boardService = {
 	// query,
@@ -22,11 +23,11 @@ export const boardService = {
 }
 window.cs = boardService
 
-_createDemoData()
+// _createDemoData()
 
 function getById(boardId) {
-	return storageService.get(STORAGE_KEY, boardId)
-	// return httpService.get(`boardId/${boardId}`)
+	// return storageService.get(STORAGE_KEY, boardId)
+	return httpService.get(`${API_KEY}/${boardId}`)
 }
 
 async function save(boardId = null, type = 'task', payload, groupId = null) {
@@ -56,13 +57,13 @@ async function save(boardId = null, type = 'task', payload, groupId = null) {
 async function saveBoard(board) {
 	let savedBoard
 	if (board._id) {
-		savedBoard = await storageService.put(STORAGE_KEY, board)
-		// savedTask = await httpService.put(`task/${task._id}`, task)
+		// savedBoard = await storageService.put(STORAGE_KEY, board)
+		savedBoard = await httpService.put(`${API_KEY}/${board._id}`, board)
 	} else {
 		// Later, owner is set by the backend
 		// board.owner = userService.getLoggedinUser()
-		savedBoard = await storageService.post(STORAGE_KEY, board)
-		// savedTask = await httpService.post('task', task)
+		// savedBoard = await storageService.post(STORAGE_KEY, board)
+		savedBoard = await httpService.post(API_KEY , board)
 	}
 	return savedBoard
 }
@@ -86,22 +87,22 @@ async function updateBoard(boardId, payload) {
 }
 
 async function queryList(filterBy = { txt: '', userId:''}) {
-	// return httpService.get(STORAGE_KEY, filterBy)
 	try{
-		let boards = await storageService.query(STORAGE_KEY)
-		let boardsCopy = JSON.parse(JSON.stringify(boards))
-		if (filterBy.txt) {
-			const regex = new RegExp(filterBy.txt, 'i')
-			boards = boardsCopy.filter((board) => regex.test(board.title))
-		}
+		return httpService.get(API_KEY, filterBy)
+		// let boards = await storageService.query(STORAGE_KEY)
+		// let boardsCopy = JSON.parse(JSON.stringify(boards))
+		// if (filterBy.txt) {
+		// 	const regex = new RegExp(filterBy.txt, 'i')
+		// 	boards = boardsCopy.filter((board) => regex.test(board.title))
+		// }
 	
-		if (filterBy.userId){
-			boards = boardsCopy.filter(board => board.members.some(member => member._id===filterBy.userId))
-		}
-		const boardList = boards.map((board) => {
-			return { _id: board._id, title: board.title }
-		})
-		return boardList
+		// if (filterBy.userId){
+		// 	boards = boardsCopy.filter(board => board.members.some(member => member._id===filterBy.userId))
+		// }
+		// const boardList = boards.map((board) => {
+		// 	return { _id: board._id, title: board.title }
+		// })
+		// return boardList
 	}
 	catch(err){
 		console.log('queryList error:'+err)
@@ -134,8 +135,8 @@ async function remove(ids, type) {
 			return await saveBoard(board)
 			break
 		case 'board':
-			return await storageService.remove(STORAGE_KEY, boardId)
-			// return httpService.delete(`task/${taskId}`)
+			// return await storageService.remove(STORAGE_KEY, boardId)
+			return httpService.delete(`board/${boardId}`)
 			break
 	}
 }
@@ -193,6 +194,7 @@ function filterByMember(board, member) {
 
 async function applyDrag(addedId, removedId, type, boardId, groupId) {
 	//arr, dragResult
+	console.log('type',type)
 	let board
 	switch (type) {
 		case 'task':
@@ -219,6 +221,7 @@ async function applyDrag(addedId, removedId, type, boardId, groupId) {
 			return await saveBoard(board)
 			break
 		case 'board':
+			// const boards = await storageService.query(STORAGE_KEY)
 			const boards = await storageService.query(STORAGE_KEY)
 			const addedBoardIdx = boards.findIndex((board) => board._id === addedId)
 			const removedBoardIdx = boards.findIndex((board) => board._id === removedId)

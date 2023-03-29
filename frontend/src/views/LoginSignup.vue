@@ -103,6 +103,7 @@ export default {
         return
       }
       try {
+        // console.log('this.loginCred',this.loginCred)
         const user = await this.$store.dispatch({ type: "login", userCred: this.loginCred })
         if (!user) {
           this.msg = 'User not found'
