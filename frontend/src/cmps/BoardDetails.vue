@@ -197,9 +197,9 @@ export default {
 			}
 		},
 		onGroupDrop(dropPayload) {
-			const removedIndex = dropPayload.removedIndex || null
-			const addedIndex = dropPayload.addedIndex || null
-			if (!removedIndex || !addedIndex) return
+			const removedIndex = dropPayload.removedIndex
+			const addedIndex = dropPayload.addedIndex
+			if (removedIndex === -1 || addedIndex === -1) return
 			const removedId = this.board.groups.find((group, idx) => idx === removedIndex).id
 			const addedId = this.board.groups.find((group, idx) => idx === addedIndex).id
 			const payload = { removedId, addedId, boardId: this.board._id }

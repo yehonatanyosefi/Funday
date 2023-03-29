@@ -207,9 +207,9 @@ export default {
 			this.$emit('removeGroup', this.group.id)
 		},
 		onTaskDrop(dropPayload) {
-			const removedIndex = dropPayload.removedIndex || null
-			const addedIndex = dropPayload.addedIndex || null
-			if (!removedIndex || !addedIndex) return
+			const removedIndex = dropPayload.removedIndex
+			const addedIndex = dropPayload.addedIndex
+			if (removedIndex === -1 || addedIndex === -1) return
 			const removedId = this.group.tasks.find((task, idx) => idx === removedIndex).id
 			const addedId = this.group.tasks.find((task, idx) => idx === addedIndex).id
 			const payload = { removedId, addedId, groupId: this.group.id }
