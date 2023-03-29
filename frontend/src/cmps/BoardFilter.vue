@@ -22,7 +22,7 @@
 				@input="setFilter({ txt })"
 			/>
 			<div v-if="txt" class="svg-small" @click.stop="clearFilter('txt')">
-				<CloseRound></CloseRound>
+				<CloseSolid class="svg-small"></CloseSolid>
 			</div>
 		</div>
 
@@ -37,12 +37,12 @@
 			<PersonRound v-else></PersonRound>
 			<button>Person</button>
 			<div v-if="filterMember" class="svg-small" @click.stop="clearFilter('member')">
-				<CloseRound></CloseRound>
+				<CloseSolid></CloseSolid>
 			</div>
 		</div>
-		<div class="filter" @click="openModal('FilterModal')">
+		<div class="filter" @click="openModal('FilterModal')" :class="{ selected: filterCount > 0 }">
 			<Filter class="svg-img"></Filter>
-			<button>Filter</button>
+			<button>Filter {{ formattedFilterCount }}</button>
 		</div>
 		<!-- <div class="sort">
             <span v-svg-icon="'sort'"></span>
@@ -68,7 +68,7 @@ import Search from '../assets/svg/Search.svg'
 import PersonRound from '../assets/svg/PersonRound.svg'
 import Filter from '../assets/svg/Filter.svg'
 import OpenOptions from '../assets/svg/OpenOptions.svg'
-import CloseRound from '../assets/svg/CloseRound.svg'
+import CloseSolid from '../assets/svg/CloseSolid.svg'
 import MenuModal from '../cmps/dynamicModals/MenuModal.vue'
 export default {
 	name: 'BoardFilter',
@@ -83,6 +83,7 @@ export default {
 			isFiltering: false,
 			txt: '',
 			filterMember: null,
+			filterCount: 0,
 		}
 	},
 	methods: {
@@ -112,17 +113,34 @@ export default {
 			filterBy = { txt, member }
 			this.$emit('setFilter', filterBy)
 		},
+
 		advanceFilter(advanceFilter) {
+			this.getFilterCount(advanceFilter)
+			this.resetFilter()
 			this.$emit('advanceFilter', advanceFilter)
 		},
 
+		getFilterCount(advanceFilter) {
+			this.filterCount = Object.values(advanceFilter).reduce((count, value) => {
+				if (Array.isArray(value) && value.length > 0) {
+					return count + 1
+				} else {
+					return count
+				}
+			}, 0)
+		},
+
 		resetFilter() {
-			this.txt = this.filterBy.txt || ''
-			this.filterMember = this.filterBy.member || null
+			const filterBy = { txt: this.txt, member: this.filterMember }
+			this.$emit('setFilter', filterBy)
+			this.txt = ''
+			this.filterMember = null
 			this.isFiltering = false
+			this.isOpen = false
 		},
 
 		clearFilter(type) {
+			this.filterCount = 0
 			if (type === 'txt') {
 				this.isFiltering = false
 				this.txt = ''
@@ -137,7 +155,12 @@ export default {
 	computed: {
 		filterBy() {
 			const filterBy = this.$store.getters.filterBy
+			// this.getFilterCount(filterBy)
 			return filterBy
+		},
+
+		formattedFilterCount() {
+			return this.filterCount > 0 ? '/' + this.filterCount : ''
 		},
 	},
 	watch: {
@@ -150,6 +173,6 @@ export default {
 		},
 	},
 
-	components: { Search, PersonRound, Filter, OpenOptions, CloseRound, MenuModal },
+	components: { Search, PersonRound, Filter, OpenOptions, CloseSolid, MenuModal },
 }
 </script>

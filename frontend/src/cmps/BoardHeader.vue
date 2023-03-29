@@ -3,7 +3,7 @@
 		<section class="board-header">
 			<section class="top-header">
 				<div class="board-title-left-container">
-					<h1
+					<div
 						:class="{ editing: isEditing }"
 						@keydown.enter.prevent="saveBoardTitle"
 						@blur="saveBoardTitle"
@@ -12,7 +12,7 @@
 						class="board-title"
 					>
 						{{ boardTitle }}
-					</h1>
+					</div>
 					<Favorite v-if="!board.isStarred" @click="favorite"></Favorite>
 					<FavoriteFull class="selected" v-else @click="favorite"></FavoriteFull>
 				</div>
@@ -28,14 +28,21 @@
 				</div>
 			</section>
 			<section class="add-views">
-				<router-link :to="'/board/' + board._id + '/main-table'">
-					<button @click="changeView('table')" class="view-item" :class="{ selected: view === 'table' }">
-						<div class="content">
-							<Home></Home>
-							<p class="view-title">Main Table</p>
-						</div>
-					</button>
-				</router-link>
+				<div>
+					<router-link :to="'/board/' + board._id + '/main-table'">
+						<button
+							@click="changeView('table')"
+							class="view-item"
+							:class="{ selected: view === 'table' }"
+						>
+							<div class="content">
+								<Home></Home>
+								<p class="view-title">Main Table</p>
+							</div>
+						</button>
+					</router-link>
+				</div>
+
 				<span class="separator"></span>
 				<router-link :to="'/board/' + board._id + '/kanban'">
 					<button

@@ -12,8 +12,10 @@
 					:key="item._id"
 				>
 					<div class="filter-option">
-						<img :src="item.imgUrl" alt="" />
-						<span>{{ item.fullname }}</span>
+						<div class="img-container">
+							<img :src="item.imgUrl" alt="" />
+							{{ item.fullname }}
+						</div>
 					</div>
 					<div class="filter-counter">{{}}</div>
 				</div>

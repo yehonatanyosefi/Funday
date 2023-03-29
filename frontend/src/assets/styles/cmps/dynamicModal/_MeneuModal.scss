@@ -129,18 +129,21 @@
 			// margin-top: 5px;
 			width: 40px;
 			height: 40px;
-			border-radius: 50%;
+
 			display: flex;
 			align-items: center;
 			justify-content: center;
 
 			&.selected {
 				background-color: $color-btn-active;
+				border-radius: 50%;
 			}
 
 			img {
 				width: 30px;
 				height: 30px;
+				border-radius: 50%;
+				object-fit: cover;
 			}
 		}
 	}
@@ -253,6 +256,8 @@
 					flex-direction: column;
 					.title {
 						text-transform: capitalize;
+						width: 100%;
+						justify-content: flex-start;
 					}
 				}
 				.filter-item {
@@ -260,16 +265,16 @@
 					align-items: center;
 					justify-content: space-between;
 					padding: 0 12px;
-					margin-right: 4px;
 					min-height: 32px;
 					cursor: pointer;
 					border-radius: 4px;
 					background-color: #f5f6f8;
 					width: 100%;
+
 					.filter-option {
 						display: flex;
 						align-items: center;
-						width: 87%;
+
 						div,
 						span {
 							@include ellipsis(14px, 100%);
@@ -292,12 +297,13 @@
 					&:hover {
 						background-color: #dcdfec;
 					}
-
 					&.person {
 						.filter-option {
 							img {
 								width: 26px;
 								height: 26px;
+								border-radius: 50%;
+								object-fit: cover;
 							}
 							span {
 								margin-left: 8px;
