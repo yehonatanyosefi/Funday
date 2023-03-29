@@ -4,7 +4,7 @@
 			{{ numOfActions }}
 		</div>
 		<div class="num-of-actions-wrapper">
-			<div class="title-of-actions">Task<span v-if="numOfActions > 1">s</span> selected</div>
+			<div class="title-of-actions">Task<template v-if="numOfActions > 1">s</template> selected</div>
 			<div class="num-of-tasks-colors">
 				<div
 					v-for="(groupColor, idx) in groupColorsArr"
@@ -23,12 +23,13 @@
 			Delete
 		</div>
 		<div class="exit-actions">
-			<div @click="$emit('closeActionsModal')">X</div>
+			<div @click="$emit('closeActionsModal')"><Close class="close-btn"></Close></div>
 		</div>
 	</div>
 </template>
 
 <script>
+import Close from '../../assets/svg/Close.svg'
 import Delete from '../../assets/svg/Delete.svg'
 import Duplicate from '../../assets/svg/Duplicate.svg'
 export default {
@@ -55,6 +56,7 @@ export default {
 	components: {
 		Delete,
 		Duplicate,
+		Close,
 	},
 }
 </script>
