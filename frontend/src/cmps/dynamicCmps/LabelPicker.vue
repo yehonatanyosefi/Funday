@@ -4,11 +4,10 @@
           <div class="modal-container">
                <div v-for="(label, idx) in labels" :key="idx" :class="Object.keys(label)[0]"
                     @click="saveTask(Object.values(label)[0])">
-                    <p >
+                    <p>
                          <p class="label-name">{{ Object.values(label)[0] }}</p> 
-                         <Alert v-if="Object.values(label)[0] === 'Critical'" class="svg-icon " height="15px" width="15px" />
+                         <Alert v-if="Object.values(label)[0] === 'Critical'" class="svg-icon " height="15px" width="15px" ></Alert>
                     </p>
-
                </div>
           </div>
           <!-- <section class="edit-labels">

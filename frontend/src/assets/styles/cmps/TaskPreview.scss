@@ -130,7 +130,7 @@
   }
   .task-title-container {
       display: grid;
-      grid-template-columns: 33px 300px 67px;
+      grid-template-columns: $task-title-columns;
   
       .task-preview-color {
         position: absolute;
@@ -160,17 +160,36 @@
         height: 100%;
         @include flex-center;
         border-inline-start: 1px solid $color-divider;
-  
-        .add-update {
-          &:hover {
-            color: #0073ea;
-          }
-  
+        .update,.add-update {
           width: 24px;
           height: 24px;
           cursor: pointer;
-          color: $color-empty-label;
           font-size: 24px;
+        }
+        .add-update {
+          color: $color-empty-label;
+          &:hover {
+            color: #0073ea;
+          }
+        }
+        .task-details-open {
+          @include flex-center;
+          .update {
+            position: relative;
+              color: #0073ea;
+            }
+            .update-num {
+              color: #fff;
+              background-color: #0073ea;
+              position: absolute;
+              bottom: 5px;
+              right: 22px;
+              width: 12px;
+              height: 12px;
+              font-size: 10px;
+              border-radius: 50%;
+              @include flex-center;
+          }
         }
       }
     }

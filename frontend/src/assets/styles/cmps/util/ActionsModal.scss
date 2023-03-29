@@ -5,18 +5,25 @@
      position: fixed;
      min-width: 800px;
      height: 63px;
-     z-index: 4;
+     z-index: 5;
      background-color: #fff;
      border-radius: 5px;
      box-shadow: 0px 15px 50px rgba(0, 0, 0, 0.3);
      pointer-events: auto;
-     flex-direction: row;
-     display: flex;
-     justify-content: space-between;
+     // flex-direction: row;
+     // display: flex;
+     // justify-content: space-between;
      bottom: 35px;
      -webkit-user-select: none;
      user-select: none;
-
+     display: grid;
+          grid-auto-flow: row;
+grid-template-columns: auto auto 1fr 1fr auto;
+     align-items: center;
+     column-gap: 20px;   
+     > * {
+          height: 100%;
+     }
      .num-of-actions {
           width: 63px;
           color: #fff;
@@ -27,15 +34,27 @@
           cursor: default;
           font-size: 30px;
      }
-     
+     .num-of-tasks-colors {
+          display: flex;
+          justify-content: start;
+          align-items: center;
+          gap: 5px;
+          width: 200px;
+          height: 20px;
+          .num-of-tasks-color {
+               border-radius: 50%;
+               width: 8px;
+               height: 8px;
+          }
+     }
      .title-of-actions {
-          padding-inline-start: 20px;
+          // padding-inline-start: 20px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
           max-width: 300px;
           font-size: 24px;
-          @include flex-center;
+          // @include flex-center;
      }
 
      .action-item {
@@ -58,6 +77,10 @@
           text-align: center;
           border-left: 2px solid;
           border-left-color: #c3c6d4;
+          .close-btn {
+               height: 15px;
+               width: 15px;
+          }
           &:hover svg {
                color: #0073ea;
           }

@@ -4,7 +4,12 @@
 			<h4 class="group-header">
 				<div class="menu-btn-wrapper">
 					<div class="menu-btn-container">
-						<Menu class="svg-icon menu-btn" width="20" height="20" @click="toggleMenuModal" />
+						<Menu
+							class="svg-icon menu-btn"
+							width="20"
+							height="20"
+							@click="$emit('selectGroupTasks', group.id)"
+						/>
 					</div>
 				</div>
 				<div class="group-title-input">
@@ -46,10 +51,12 @@
 					<div class="task-checkbox-container">
 						<input
 							type="checkbox"
-							title="Delete Task"
+							title="Delete Group"
 							class="task-checkbox"
-							v-model="isActionsModalOpen"
+							:checked="selectedTasks?.length === group.tasks?.length"
+							@click="$emit('selectGroupTasks', group.id)"
 						/>
+						<!-- v-model="isActionsModalOpen" -->
 					</div>
 					<section class="task-title">Task</section>
 				</div>
@@ -64,7 +71,6 @@
 			class="group"
 			@drop="onTaskDrop($event)"
 			:drop-placeholder="dropPlaceholderOptions"
-			:get-child-payload="getCardPayload('task.id')"
 		>
 			<Draggable v-for="(task, idx) in group.tasks" :key="task.id">
 				<TaskPreview
@@ -72,9 +78,18 @@
 					:task="task"
 					:groupColor="group.style.color"
 					:cmpOrder="cmpOrder"
-					@saveTask="$emit('saveTask', { task: $event, groupId: group.id })"
+					:isSelected="isSelected(task.id)"
 					@removeTask="$emit('removeTask', { taskId: $event, groupId: group.id })"
+					@saveTask="$emit('saveTask', { task: $event, groupId: group.id })"
+					@toggleSelectTask="
+						$emit('toggleSelectTask', {
+							taskId: $event,
+							groupId: group.id,
+							groupColor: group.style.color,
+						})
+					"
 				></TaskPreview>
+				<!-- $emit('removeTask', { taskId: $event, groupId: group.id }) -->
 			</Draggable>
 		</Container>
 
@@ -111,27 +126,17 @@
 				></Timeline>
 			</div>
 		</div>
-		<ActionsModal
-			v-if="isActionsModalOpen"
-			@closeActionsModal="closeActionsModal"
-			@openRemoveModal="openRemoveModal"
-		></ActionsModal>
-		<RemoveModal v-if="isRemoveModalOpen" @closeModal="closeRemoveModal" @remove="handleRemoveGroup"
-			>group</RemoveModal
-		>
 	</section>
 </template>
 
 <script>
 import ProgressBar from './dynamicCmps/ProgressBar.vue'
 import Menu from '../assets/svg/Menu.svg'
-import RemoveModal from './util/RemoveModal.vue'
 import { Container, Draggable } from 'vue3-smooth-dnd'
 import TaskPreview from './TaskPreview.vue'
 import Title from './dynamicCmps/Title.vue'
 import Timeline from './dynamicCmps/Timeline.vue'
 import ColorPicker from './util/ColorPicker.vue'
-import ActionsModal from './util/ActionsModal.vue'
 export default {
 	emits: [
 		'saveTask',
@@ -141,23 +146,24 @@ export default {
 		'applyTaskDrag',
 		'addTask',
 		'saveGroupAtt',
+		'toggleMenuModal',
+		'toggleSelectTask',
+		'selectGroupTasks',
 	],
 	props: {
 		group: Object,
 		cmpOrder: Array,
+		selectedTasks: Array,
 	},
 	created() {
 		this.groupTitle = this.group.title
 	},
 	data() {
 		return {
-			isActionsModalOpen: false,
 			isCircleShown: false,
 			openColorPickerModal: false,
 			addTaskTitle: '',
 			groupTitle: null,
-			isRemoveModalOpen: false,
-			isMenuModalOpen: false,
 			hideSetTimeout: null,
 			progressObj: {
 				status: {
@@ -177,6 +183,9 @@ export default {
 		}
 	},
 	methods: {
+		toggleSelectTask(taskId) {
+			this.$emit('toggleSelectTask', { taskId, groupId: this.group.id })
+		},
 		capitalizeFirstLetter(str) {
 			return str.charAt(0).toUpperCase() + str.slice(1)
 		},
@@ -197,32 +206,14 @@ export default {
 		removeGroup() {
 			this.$emit('removeGroup', this.group.id)
 		},
-		openRemoveModal() {
-			this.isRemoveModalOpen = true
-		},
-		handleRemoveGroup() {
-			this.isRemoveModalOpen = false
-			this.$emit('removeGroup', this.group.id)
-		},
-		closeRemoveModal() {
-			this.isRemoveModalOpen = false
-		},
 		onTaskDrop(dropPayload) {
-			const removedIndex = dropPayload.removedIndex || null
-			const addedIndex = dropPayload.addedIndex || null
-			if (!removedIndex || !addedIndex) return
+			const removedIndex = dropPayload.removedIndex
+			const addedIndex = dropPayload.addedIndex
+			if (removedIndex === -1 || addedIndex === -1) return
 			const removedId = this.group.tasks.find((task, idx) => idx === removedIndex).id
 			const addedId = this.group.tasks.find((task, idx) => idx === addedIndex).id
 			const payload = { removedId, addedId, groupId: this.group.id }
 			this.$emit('applyTaskDrag', payload)
-		},
-		toggleMenuModal() {
-			//placeholder for menu modal
-			this.isMenuModalOpen = !this.isMenuModalOpen
-			this.isRemoveModalOpen = true
-		},
-		getCardPayload(ev) {
-			// console.log('getCardPayload',ev)
 		},
 		addTask() {
 			const title = this.addTaskTitle
@@ -245,26 +236,13 @@ export default {
 		showCircle() {
 			this.isCircleShown = true
 		},
-		openActionsModal() {
-			this.isActionsModalOpen = true
+		isSelected(taskId) {
+			return this.selectedTasks?.some((selectedTask) => selectedTask.taskId === taskId)
 		},
-		closeActionsModal() {
-			this.isActionsModalOpen = false
-		},
-		// onDragStart(name,{payload}) {
-		//     console.log('onDragStart', payload)
-		// },
-		// onDragEnd(name,{payload}) {
-		//     console.log('onDragEnd', payload)
-		// },
 	},
 	computed: {
 		groupColor() {
 			return this.group.style.color
-		},
-		borderStyle() {
-			//TODO opacity
-			return { borderInlineStart: `6px solid ${this.groupColor}` }
 		},
 		timelineProgress() {
 			const timelineProgress = {
@@ -296,14 +274,11 @@ export default {
 		TaskPreview,
 		Container,
 		Draggable,
-		RemoveModal,
 		Menu,
 		Title,
 		ProgressBar,
 		Timeline,
 		ColorPicker,
-		ActionsModal,
-		//  MenuModal,
 	},
 }
 </script>

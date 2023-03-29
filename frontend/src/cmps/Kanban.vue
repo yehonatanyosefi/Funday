@@ -1,28 +1,14 @@
-<template>
-<div>
-     Kanban - Work in progress feature
-</div>
-</template>
+<template></template>
 
 <script>
 export default {
-props: {},
-created() {
-
-},
-data() {
-return {
-
-}
-},
-methods: {
-
-},
-computed: {
-
-},
-components: {
-
-},
+	props: {},
+	created() {},
+	data() {
+		return {}
+	},
+	methods: {},
+	computed: {},
+	components: {},
 }
 </script>

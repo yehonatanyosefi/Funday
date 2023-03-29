@@ -5,6 +5,7 @@ import { userService } from './user.service.js'
 
 const STORAGE_KEY = 'boardDB'
 const API_KEY = 'board/'
+const STORAGE_FILTER = 'advFilter'
 
 export const boardService = {
 	// query,
@@ -16,6 +17,7 @@ export const boardService = {
 	getEmptyBoard,
 	getEmptyGroup,
 	getEmptyTask,
+	setAdvanceFilter,
 	filterByTxt,
 	filterByMember,
 	applyDrag,
@@ -79,7 +81,7 @@ async function updateBoard(boardId, payload) {
 			board.isStarred = val
 			break
 		case 'createdBy':
-			board.createdBy= val
+			board.createdBy = val
 			board.members.push(val)
 			break
 	}
@@ -119,7 +121,7 @@ async function queryList(filterBy = { txt: '', userId:''}) {
 }
 
 async function remove(ids, type) {
-	const { boardId, groupId, taskId } = ids
+	const { boardId, groupId, taskId, tasksToRemove } = ids
 	let board = await getById(boardId)
 	const groupIdx = type !== 'board' ? board.groups.findIndex((group) => group.id === groupId) : -1
 	switch (type) {
@@ -128,6 +130,21 @@ async function remove(ids, type) {
 			const tasks = board.groups[groupIdx].tasks.splice(taskIdx, 1)[0]
 			const group = board.groups.splice(groupIdx, 1, tasks)[0]
 			board.groups[groupIdx] = group
+			return await saveBoard(board)
+			break
+		case 'tasks':
+			for (let groupId in tasksToRemove) {
+				const groupIdx = board.groups.findIndex((group) => group.id === groupId)
+				const tasks = board.groups[groupIdx].tasks.filter((task) => {
+					return !tasksToRemove[groupId].some((selectedTask) => {
+						return selectedTask.taskId === task.id
+					})
+				})
+				if (!tasks.length) {
+					board.groups.splice(groupIdx, 1)
+					if (!board.groups.length) board.groups = [getEmptyGroup()]
+				} else board.groups[groupIdx].tasks = tasks
+			}
 			return await saveBoard(board)
 			break
 		case 'group':
@@ -191,7 +208,67 @@ function filterByMember(board, member) {
 	}, [])
 	return board
 }
+function setAdvanceFilter(board, advanceFilter) {
+	console.log('1', board)
 
+	board.groups = board.groups.reduce((groupArr, group) => {
+		const groupInclude = advanceFilter.group?.length ? advanceFilter.group.includes(group.title) : true
+		if (groupInclude) {
+			group.tasks = group.tasks.reduce((taskArr, task) => {
+				const priorityInclude = advanceFilter.priority.length
+					? advanceFilter.priority.includes(task.priority)
+					: true
+				const statusInclude = advanceFilter.status.length
+					? advanceFilter.status.includes(task.status)
+					: true
+				const personInclude = advanceFilter.person.length
+					? advanceFilter.person.some((item) => task.person.some((person) => person === item._id))
+					: true
+
+				// return this.users?.filter(user => {
+				// 	return !this.addedUsers.some(addedUser=>user._id===addedUser._id)
+
+				if (priorityInclude && statusInclude && personInclude) {
+					// if (
+					// 	advanceFilter.priority.length
+					// 		? advanceFilter.priority.includes(task.priority)
+					// 		: true && advanceFilter.status.length
+					// 		? advanceFilter.status.includes(task.status)
+					// 		: true && advanceFilter.person.length
+					// 		? advanceFilter.person.some((item) => task.person.some((person) => person._id === item._id))
+					// 		: true
+					// ) {
+					taskArr.push(task)
+				}
+				return taskArr
+			}, [])
+		} else {
+			group.tasks = []
+		}
+
+		if (group.tasks?.length || groupInclude) groupArr.push(group)
+		return groupArr
+	}, [])
+	console.log('2', board)
+	return board
+	// board.groups = board.groups.reduce((groupArr, group) => {
+	// 	const groupInclude = advanceFilter.group?.includes(group.title)
+	// 	group.tasks = group.tasks.reduce((taskArr, task) => {
+	// 		if (
+	// 			advanceFilter.priority?.includes(task.priority) &&
+	// 			advanceFilter.status?.includes(task.status) &&
+	// 			advanceFilter.person.some((item) => task.person.includes(item))
+	// 		) {
+	// 			taskArr.push(task)
+	// 		}
+	// 		return taskArr
+	// 	}, [])
+
+	// 	if (group.tasks?.length || groupInclude) groupArr.push(group)
+	// 	return groupArr
+	// }, [])
+	// return board
+}
 async function applyDrag(addedId, removedId, type, boardId, groupId) {
 	//arr, dragResult
 	console.log('type',type)

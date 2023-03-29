@@ -12,13 +12,19 @@
 					type="checkbox"
 					title="Delete Task"
 					class="task-checkbox"
-					v-model="isModalOpen"
-					@click="openModal"
+					:checked="isSelected"
+					@click="toggleSelectTask"
 				/>
+				<!-- v-model="isModalOpen" -->
+				<!-- openModal -->
 			</div>
 			<Title :info="task.title" @saveTask="saveTask($event, 'title')"></Title>
 			<RouterLink :to="'/board/' + boardId + '/main-table/task/' + task.id" class="task-details-icon">
-				<AddUpdate class="svg-icon add-update" width="24" height="24" />
+				<div v-if="task.comments?.length" class="task-details-open">
+					<Update class="svg-icon update" width="24" height="24" />
+					<div class="update-num">{{ task.comments.length }}</div>
+				</div>
+				<AddUpdate v-else class="svg-icon add-update" width="24" height="24" />
 			</RouterLink>
 		</div>
 		<div v-for="(cmp, idx) in cmpOrder" :key="idx" class="task">
@@ -29,7 +35,7 @@
 				@saveTask="saveTask($event, cmp)"
 			></component>
 		</div>
-		<RemoveModal v-if="isModalOpen" @closeModal="handleCloseModal" @remove="handleRemoveTask"
+		<RemoveModal v-if="isModalOpen" @closeModal="handleCloseModal" @remove="$emit('removeTask', task.id)"
 			>task</RemoveModal
 		>
 	</section>
@@ -37,6 +43,7 @@
 
 <script>
 import AddUpdate from '../assets/svg/AddUpdate.svg'
+import Update from '../assets/svg/Update.svg'
 import Menu from '../assets/svg/Menu.svg'
 import RemoveModal from './util/RemoveModal.vue'
 // import { Container, Draggable } from "vue3-smooth-dnd"
@@ -49,12 +56,13 @@ import Priority from './dynamicCmps/Priority.vue'
 import Text from './dynamicCmps/Text.vue'
 import Timeline from './dynamicCmps/Timeline.vue'
 export default {
-	emits: ['saveTask', 'removeTask'],
+	emits: ['saveTask', 'toggleSelectTask', 'removeTask'],
 	props: {
 		task: Object,
 		cmpOrder: Array,
 		groupColor: String,
 		idx: Number,
+		isSelected: Boolean,
 	},
 	data() {
 		return {
@@ -74,15 +82,14 @@ export default {
 		openModal() {
 			this.isModalOpen = true
 		},
-		handleRemoveTask() {
+		toggleSelectTask() {
 			this.isModalOpen = false
-			this.$emit('removeTask', this.task.id)
+			this.$emit('toggleSelectTask', this.task.id)
 		},
 		handleCloseModal() {
 			this.isModalOpen = false
 		},
 		toggleMenuModal() {
-			//placeholder for menu modal
 			this.isMenuModalOpen = !this.isMenuModalOpen
 			this.isModalOpen = true
 		},
@@ -104,6 +111,7 @@ export default {
 		Menu,
 		AddUpdate,
 		Timeline,
+		Update,
 	},
 }
 </script>

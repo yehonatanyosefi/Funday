@@ -1,4 +1,4 @@
-$table-grids: 400px repeat(6, $group-column-width);
+
 .drop-preview {
      border: 1px dashed $color-divider;
      z-index: 1;
@@ -6,7 +6,9 @@ $table-grids: 400px repeat(6, $group-column-width);
 .board-group .task-preview .task.task-sticky,
 .task-title-group.task-sticky.task-container {
      position: sticky;
-     left: 45px;
+     @include for-normal-layout {
+          left: 45px;
+     }
      z-index: 1;
      &:focus-within::before {
           background-color: $color-focused-within;
@@ -79,17 +81,21 @@ $table-grids: 400px repeat(6, $group-column-width);
      }
      .group-header-container {
           padding-block-start: 10px;
-          top: 150px;
           height: 46px;
           width: 1240px;
-          position: sticky;
           z-index: 4;
+          position: sticky;
+          @include for-normal-layout {
+               top: 150px;
+          }
      }
      .group-header {
-          position: sticky;
-          width: fit-content;
-          left: 45px;
           z-index: 3;
+          position: sticky;
+          @include for-normal-layout {
+               left: 45px;
+          }
+          width: fit-content;
           background-color: #fff;
           color: $group-header-clr;
           font-size: 18px;
@@ -181,9 +187,11 @@ $table-grids: 400px repeat(6, $group-column-width);
           height: 100%;
      }
      .task-header {
-          position: sticky;
-          top: 196px;
           z-index: 3;
+          position: sticky;
+          @include for-normal-layout {
+               top: 196px;
+          }
           background-color: #fff;
           display: grid;
           grid-template-columns: $table-grids;
