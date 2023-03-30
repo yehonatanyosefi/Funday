@@ -29,11 +29,10 @@ async function getBoardById(req, res) {
 }
 
 async function addBoard(req, res) {
-  const { loggedinUser } = req
-
+  // const { loggedinUser } = req
   try {
     const board = req.body
-    board.owner = loggedinUser
+    // board.owner = loggedinUser
     const addedBoard = await boardService.add(board)
     res.json(addedBoard)
   } catch (err) {

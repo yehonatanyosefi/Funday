@@ -13,7 +13,7 @@ async function query(filterBy = { txt: '', userId: '' }) {
         filterBy.txt
           ? { title: { $regex: new RegExp(filterBy.txt, 'i') } }
           : {},
-        filterBy.userId? {members: {$elemMatch: {_id: filterBy.userId},},}: {},
+        filterBy.userId ? { members: { $elemMatch: { _id: filterBy.userId }, }, } : {},
       ],
     }
 
@@ -62,7 +62,7 @@ async function remove(boardId) {
   }
 }
 
-async function add(board) {
+async function add(board) { //db.collection.find().sort({age:-1}).limit(1)
   try {
     const collection = await dbService.getCollection('board')
     await collection.insertOne(board)
@@ -96,21 +96,21 @@ async function add(board) {
 // }
 
 async function update(board) {
-    try {
-      let boardToUpdate = { ...board };
-      delete boardToUpdate._id;
-  
-      const collection = await dbService.getCollection('board');
-      const filter = { _id: new ObjectId(board._id) };
-  
-      await collection.updateOne(filter, { $set: boardToUpdate });
-  
-      return board;
-    } catch (err) {
-      logger.error(`cannot update board ${board._id}`, err);
-      throw err;
-    }
+  try {
+    let boardToUpdate = { ...board };
+    delete boardToUpdate._id;
+
+    const collection = await dbService.getCollection('board');
+    const filter = { _id: new ObjectId(board._id) };
+
+    await collection.updateOne(filter, { $set: boardToUpdate });
+
+    return board;
+  } catch (err) {
+    logger.error(`cannot update board ${board._id}`, err);
+    throw err;
   }
+}
 
 async function addBoardMsg(boardId, msg) {
   try {
