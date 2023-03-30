@@ -28,9 +28,10 @@ window.cs = boardService
 
 // _createDemoData()
 
-function getById(boardId) {
+async function getById(boardId) {
 	// return storageService.get(STORAGE_KEY, boardId)
-	return httpService.get(`${API_KEY}/${boardId}`)
+	const board = await httpService.get(`${API_KEY}/${boardId}`)
+	return board
 }
 
 async function save(boardId = null, type = 'task', payload, groupId = null) {
