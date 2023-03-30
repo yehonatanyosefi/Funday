@@ -5,7 +5,7 @@
 			<img :src="user(id).imgUrl" :title="user(id).fullname" class="profile-picture" />
 		</template>
 		<template v-else-if="info.length > 2">
-			<img :src="user(info[0])?.imgUrl" :title="user(info[0]).fullname" class="profile-picture" />
+			<img :src="user(info[0])?.imgUrl" :title="user(info[0])?.fullname" class="profile-picture" />
 			<div class="more-users">+{{ info?.length - 1 }}</div>
 		</template>
 		<!-- <PersonRound class="svg-icon" /> -->

@@ -15,10 +15,8 @@
 					</router-link>
 				</div>
 
-				<!-- <router-link :to="'/board/642343ac91a1131b61553fef/main-table'">  -->
-
-				<button @click="guestLogin">Guest</button>
-				<router-link to="#">
+				<!-- <button @click="guestLogin">Guest</button> -->
+				<router-link to="#" @click="guestLogin">
 					<button class="cta-btn">
 						<span>Get started</span>
 						<span>→</span>
