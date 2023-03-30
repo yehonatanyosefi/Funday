@@ -44,12 +44,12 @@ export const boardStore = {
 			state.boardList = boardList
 		},
 		setBoard(state, { board }) {
-			// const sameBoard = board._id === state.board._id
+			const sameBoard = board._id === state.board._id
 			state.board = board
 			state.filterBy = { txt: '', member: null }
-			// if (!sameBoard) {
-			router.push(`/board/${board._id}/main-table`)
-			// }
+			if (!sameBoard) {
+				router.push(`/board/${board._id}/main-table`)
+			}
 		},
 		addBoard(state, { board }) {
 			const minBoard = { _id: board._id, title: board.title }
@@ -376,28 +376,27 @@ export const boardStore = {
 			commit({ type: 'setBoardList', boardList: boards })
 			return firstBoard
 		},
-		async addMember(context,{userId}){
-			try{
-				console.log('userId',userId)
+		async addMember(context, { userId }) {
+			try {
+				console.log('userId', userId)
 				const member = await userService.getById(userId)
-				console.log('member',member)
-				const payload={_id:member._id, fullname:member.fullname, imgUrl:member.imgUrl}
+				console.log('member', member)
+				const payload = { _id: member._id, fullname: member.fullname, imgUrl: member.imgUrl }
 				const boardId = context.getters.board._id
 				const updatedBoard = await boardService.save(boardId, 'member', payload)
 				await context.dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
-			}
-			catch(err){
+			} catch (err) {
 				console.log('boardStore: Error in add member', err)
 				throw err
 			}
 		},
-		async removeMember(context,{userId}){
+		async removeMember(context, { userId }) {
 			try {
 				const member = await userService.getById(userId)
-				console.log('member',member)
-				console.log('member._id',member._id)
+				console.log('member', member)
+				console.log('member._id', member._id)
 				const boardId = context.getters.board._id
-				const updatedBoard = await boardService.remove({ boardId, memberId:member._id }, 'member')
+				const updatedBoard = await boardService.remove({ boardId, memberId: member._id }, 'member')
 				await context.dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
 				// // // commit({ type: 'removeMember', memberId })
 				// return member._id
