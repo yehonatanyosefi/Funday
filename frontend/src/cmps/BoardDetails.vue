@@ -1,6 +1,9 @@
 <template>
 	<section class="board-details">
-		<div v-if="!board?.groups?.length">No Groups Found</div>
+		<div v-if="!board?.groups?.length" class="filter-no-results">
+			<img class="no-results-img" src="https://cdn.monday.com/images/general_not_found_state.svg" />
+			<div class="no-results-title">No results were found</div>
+		</div>
 		<Container
 			v-else
 			orientation="vertical"

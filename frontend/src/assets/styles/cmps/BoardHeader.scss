@@ -1,10 +1,5 @@
 .board-header-container {
 	display: grid;
-	padding-right: 30px;
-	padding-left: 40px;
-	padding-top: 16px;
-	width: 100%;
-	padding: 16px 30px 0 38px;
 
 	div {
 		display: flex;
@@ -19,7 +14,9 @@
 
 	.board-header {
 		color: $color-txt-primary;
-		font-family: pop-medium;
+		font-family: Figtree-reg;
+		width: 100%;
+		padding: 16px 30px 0 38px;
 		.top-header {
 			display: flex;
 			justify-content: space-between;
@@ -98,7 +95,7 @@
 					font-family: Figtree-reg;
 					color: $clr-divider;
 
-					.modal-overlay{
+					.modal-overlay {
 						background-color: rgb(41 47 76 / 100%);
 						transition: opacity 0.1s ease-in-out;
 					}
@@ -111,7 +108,7 @@
 						width: 73.71px;
 					}
 
-					svg:not(.close){
+					svg:not(.close) {
 						width: 20px;
 						height: 20px;
 					}
