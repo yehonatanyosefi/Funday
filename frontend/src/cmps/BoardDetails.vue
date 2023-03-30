@@ -6,12 +6,15 @@
 			orientation="vertical"
 			:drop-placeholder="dropPlaceholderOptions"
 			@drop="onGroupDrop($event)"
+			dragClass="dragged-element"
 		>
 			<Draggable v-for="group in board.groups" :key="group.id">
 				<BoardGroup
+					v-if="group?.isExpanded"
 					:group="group"
 					:cmpOrder="cmpOrder"
 					:selectedTasks="selectedTasks[group.id]"
+					@minimizeGroup="minimizeGroup"
 					@saveTask="saveTask"
 					@toggleSelectTask="toggleSelectTask"
 					@saveGroup="saveGroup"
@@ -22,6 +25,13 @@
 					@addTask="addTask"
 					@selectGroupTasks="selectGroupTasks"
 				></BoardGroup>
+				<BoardGroupCollapsed
+					v-else
+					:group="group"
+					:cmpOrder="cmpOrder"
+					@selectGroupTasks="selectGroupTasks"
+					@expandGroup="expandGroup"
+				/>
 				<!-- :selectedTaskArr="selectedTasks[group.id]" -->
 			</Draggable>
 		</Container>
@@ -45,6 +55,7 @@
 import { Container, Draggable } from 'vue3-smooth-dnd'
 import BoardHeader from './BoardHeader.vue'
 import BoardGroup from './BoardGroup.vue'
+import BoardGroupCollapsed from './BoardGroupCollapsed.vue'
 import Plus from '../assets/svg/plus.svg'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 import { boardService } from '../services/board.service.local'
@@ -161,6 +172,12 @@ export default {
 				showErrorMsg('Cannot remove task')
 			}
 		},
+		minimizeGroup(groupId) {
+			this.saveGroupAtt({ groupId, attName: 'isExpanded', att: false })
+		},
+		expandGroup(groupId) {
+			this.saveGroupAtt({ groupId, attName: 'isExpanded', att: true })
+		},
 		async saveGroupAtt(payload) {
 			try {
 				const payloadToSave = { ...payload, boardId: this.board._id }
@@ -221,6 +238,7 @@ export default {
 		Plus,
 		ActionsModal,
 		RemoveModal,
+		BoardGroupCollapsed,
 	},
 }
 </script>

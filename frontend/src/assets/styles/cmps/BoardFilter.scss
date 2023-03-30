@@ -2,8 +2,9 @@
 	display: flex;
 	position: relative;
 	padding: 1rem 0;
-	color: $color-txt-primary;
+	color: $clr-divider;
 	font-family: Figtree-reg;
+	min-width: 520px;
 
 	> * {
 		display: flex;
@@ -15,12 +16,13 @@
 			padding: 0;
 			padding-right: 10px;
 			font-size: rem(14px);
-			color: $color-txt-primary;
+			color: $clr-divider;
 			cursor: pointer;
 		}
 
 		svg {
-			fill: $color-txt-primary;
+			fill: $clr-divider;
+			color: $clr-divider;
 		}
 
 		&:not(.regular-modal) {
@@ -36,6 +38,7 @@
 		cursor: pointer;
 		margin-right: 16px;
 		border-radius: 4px;
+		width: 106px;
 
 		button {
 			color: white;
@@ -101,7 +104,6 @@
 			background-color: transparent;
 			width: 60px;
 			transition: width 0.4s;
-			height: 100%;
 			cursor: pointer;
 			outline: none;
 
@@ -120,6 +122,7 @@
 		position: relative;
 		margin-right: 0;
 		padding-right: 6px;
+		padding-left: 6px;
 
 		.title-modal {
 			width: 135px;
@@ -128,17 +131,18 @@
 		&.selected {
 			background-color: $color-btn-active;
 			border-radius: 4px;
+			padding-right: 20px;
 		}
 		button {
 			padding: 0;
 		}
 
 		.svg-small {
-			width: 10px;
-			height: 10px;
+			width: 11px;
+			height: 11px;
 			position: absolute;
-			top: 10;
-			right: 0;
+			top: 10px;
+			right: 6px;
 		}
 
 		cursor: pointer;
@@ -149,8 +153,8 @@
 		}
 
 		img {
-			width: 20px;
-			height: 20px;
+			width: 24px;
+			height: 24px;
 			border-radius: 50%;
 		}
 	}
@@ -161,6 +165,10 @@
 		padding-left: 10px;
 		button {
 			padding-left: 2px;
+		}
+		&.selected {
+			background-color: $color-btn-active;
+			border-radius: 4px;
 		}
 	}
 
@@ -207,12 +215,42 @@
 			}
 		}
 
-		svg {
-			margin-left: 5px;
+		.svg-small {
+			width: 11px;
+			height: 11px;
+			position: absolute;
+			top: 5px;
+			right: 3px;
 		}
 	}
 
 	@include for-mobile-layout {
-		display: block;
+		display: grid;
+		gap: 0.5rem 0;
+		grid-template-columns: repeat(3, auto);
+		justify-content: flex-start;
+		background-color: white;
+
+		.search-tasks {
+			grid-column: 1 /-1;
+			grid-row: 1;
+			width: fit-content;
+			height: 1.5rem;
+		}
+
+		.add-new-btns {
+			grid-row: 2;
+			grid-column: 1;
+		}
+
+		.person-attach {
+			grid-row: 2;
+			grid-column: 2;
+		}
+
+		.filter {
+			grid-row: 2;
+			grid-column: 3;
+		}
 	}
 }

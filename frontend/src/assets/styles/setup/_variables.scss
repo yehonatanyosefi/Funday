@@ -10,6 +10,7 @@ $group-column-width: 140px;
 $group-row-height: 36px;
 $task-title-columns: 33px 300px 67px;
 $table-grids: 400px repeat(6, $group-column-width);
+$collapsed-table-grids: 447px repeat(6, $group-column-width);
 //board
 $small-shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
 $lighten-priority-amount: 15%;

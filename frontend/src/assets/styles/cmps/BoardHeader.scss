@@ -3,6 +3,8 @@
 	padding-right: 30px;
 	padding-left: 40px;
 	padding-top: 16px;
+	width: 100%;
+	padding: 16px 30px 0 38px;
 
 	div {
 		display: flex;
@@ -33,17 +35,19 @@
 					justify-content: flex-start;
 					align-items: center;
 					position: relative;
-					padding: 0.5rem;
+					padding: 0 0.2rem;
 					border-radius: 0.1em;
 					transition: padding 0.4s;
 					height: 100%;
 					text-align: start;
 					margin: 0;
-					font-family: pop-medium;
+					font-family: Figtree-reg;
 					text-overflow: ellipsis;
-					line-height: rem(40px);
+					line-height: rem(42px);
 					letter-spacing: -0.2;
 					margin-left: -6px;
+					font-size: rem(27px);
+					font-weight: 500;
 
 					&:hover {
 						outline: 1px solid $brdr-clr;
@@ -91,6 +95,8 @@
 					position: relative;
 					cursor: pointer;
 					border: 1px solid $brdr-clr;
+					font-family: Figtree-reg;
+					color: $clr-divider;
 
 					a {
 						visibility: hiden;
@@ -98,6 +104,11 @@
 						top: 0;
 						height: 28px;
 						width: 73.71px;
+					}
+
+					svg {
+						width: 20px;
+						height: 20px;
 					}
 				}
 			}
@@ -151,7 +162,7 @@
 					box-shadow: inset 0px -2px 0px 0px #0373ea;
 				}
 				.content {
-					padding-right: 14px;
+					padding-right: 8px;
 					padding-left: 14px;
 				}
 				.content:hover {
@@ -184,154 +195,154 @@
 		}
 	}
 
-	@include for-mobile-layout {
-		padding-left: 8px;
-		padding-right: 8px;
+	// @include for-mobile-layout {
+	padding-left: 8px;
+	padding-right: 8px;
+	display: flex;
+
+	.header {
 		display: flex;
+		position: relative;
+		flex-wrap: wrap;
+		width: 100%;
 
-		.header {
-			display: flex;
+		.top-header {
+			flex-basis: 100%;
 			position: relative;
-			flex-wrap: wrap;
-			width: 100%;
+			justify-content: center;
+			margin-bottom: 18px;
 
-			.top-header {
-				flex-basis: 100%;
-				position: relative;
-				justify-content: center;
-				margin-bottom: 18px;
-
-				.board-title {
-					&.editing {
-						padding-right: 8px;
-					}
-				}
-
-				.board-title-right-container {
-					display: none;
-				}
-
-				a {
-					position: absolute;
-					left: -16px;
-					display: block !important;
+			.board-title {
+				&.editing {
+					padding-right: 8px;
 				}
 			}
 
-			.add-views {
+			.board-title-right-container {
 				display: none;
 			}
 
-			.add-views-mobile {
-				z-index: 50000;
-				display: flex !important;
-				align-items: center;
-				position: relative;
-				box-sizing: content-box;
-				flex-basis: 35%;
-				height: 40px;
+			a {
+				position: absolute;
+				left: -16px;
+				display: block !important;
+			}
+		}
 
+		.add-views {
+			display: none;
+		}
+
+		.add-views-mobile {
+			z-index: 50000;
+			display: flex !important;
+			align-items: center;
+			position: relative;
+			box-sizing: content-box;
+			flex-basis: 35%;
+			height: 40px;
+
+			background-color: lighten(
+				$brdr-clr,
+				6%
+			); // necessary for overlaying hover bg-color of selected option
+			border-radius: 4px;
+
+			select {
 				background-color: lighten(
 					$brdr-clr,
 					6%
 				); // necessary for overlaying hover bg-color of selected option
-				border-radius: 4px;
+				font-size: rem(14px);
+				font-family: Figtree-reg;
+				padding-left: 12px;
+				border: none;
+				outline: none;
+				-webkit-border-radius: 4px;
+				-webkit-appearance: none;
+				width: 100%;
+				flex-basis: 100%;
 
-				select {
-					background-color: lighten(
-						$brdr-clr,
-						6%
-					); // necessary for overlaying hover bg-color of selected option
-					font-size: rem(14px);
-					font-family: Figtree-reg;
-					padding-left: 12px;
-					border: none;
+				&:active {
 					outline: none;
-					-webkit-border-radius: 4px;
-					-webkit-appearance: none;
-					width: 100%;
-					flex-basis: 100%;
-
-					&:active {
-						outline: none;
-					}
-
-					&:focus {
-						outline: none;
-					}
-
-					&:focus-visible {
-						outline: none;
-					}
 				}
 
-				.select-arrow {
-					display: flex !important;
-					position: absolute;
-					right: 6px;
-					z-index: 50001;
-					pointer-events: none;
+				&:focus {
+					outline: none;
+				}
+
+				&:focus-visible {
+					outline: none;
 				}
 			}
 
-			.board-filter {
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				position: relative;
+			.select-arrow {
+				display: flex !important;
+				position: absolute;
+				right: 6px;
+				z-index: 50001;
+				pointer-events: none;
+			}
+		}
+
+		.board-filter {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			position: relative;
+			height: 40px;
+			margin-left: 8px;
+			flex-grow: 1;
+			gap: 10px;
+
+			.filter {
+				margin: 0;
+				padding-right: 16px;
+				padding-left: 8px;
+				flex-basis: 30%;
+				background-color: lighten($brdr-clr, 6%);
+				height: 100%;
+				border-radius: 0;
+				border-radius: 4px;
+
+				button {
+					padding: 0;
+				}
+			}
+
+			.search-tasks {
+				order: 1;
+				right: 0px;
+				background-color: lighten($brdr-clr, 6%);
+				margin: 0;
+				width: 40px;
 				height: 40px;
-				margin-left: 8px;
-				flex-grow: 1;
-				gap: 10px;
+				border-radius: 0px;
+				transition: 0.4s;
+				border-radius: 4px;
 
-				.filter {
-					margin: 0;
-					padding-right: 16px;
-					padding-left: 8px;
-					flex-basis: 30%;
-					background-color: lighten($brdr-clr, 6%);
-					height: 100%;
-					border-radius: 0;
-					border-radius: 4px;
-
-					button {
-						padding: 0;
-					}
+				span {
+					position: relative;
+					right: 3px;
+					scale: 0.8;
 				}
 
-				.search-tasks {
-					order: 1;
-					right: 0px;
-					background-color: lighten($brdr-clr, 6%);
-					margin: 0;
-					width: 40px;
-					height: 40px;
-					border-radius: 0px;
-					transition: 0.4s;
-					border-radius: 4px;
+				.search-input {
+					display: none;
+				}
 
-					span {
-						position: relative;
-						right: 3px;
-						scale: 0.8;
-					}
+				&.input-open {
+					flex-grow: 1;
+				}
 
-					.search-input {
-						display: none;
-					}
-
-					&.input-open {
-						flex-grow: 1;
-					}
-
-					.search-input-mobile {
-						&.open {
-							width: 100%;
-							display: block !important;
-						}
+				.search-input-mobile {
+					&.open {
+						width: 100%;
+						display: block !important;
 					}
 				}
 			}
 		}
 	}
+	// }
 }

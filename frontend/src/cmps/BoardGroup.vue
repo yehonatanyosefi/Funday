@@ -12,6 +12,12 @@
 						/>
 					</div>
 				</div>
+				<ExpandGroup
+					@click="$emit('minimizeGroup', group.id)"
+					class="arrow"
+					title="Minimize Group"
+					:style="{ color: group.style.color }"
+				></ExpandGroup>
 				<div class="group-title-input">
 					<label for="groupTitleInput" v-click-outside="hideCircle">
 						<div
@@ -20,6 +26,7 @@
 							@click.stop="openColorPicker"
 							:style="{ backgroundColor: group.style.color }"
 						></div>
+
 						<input
 							class="board-input group-title-input"
 							name="groupTitleInput"
@@ -71,6 +78,7 @@
 			class="group"
 			@drop="onTaskDrop($event)"
 			:drop-placeholder="dropPlaceholderOptions"
+			dragClass="dragged-element"
 		>
 			<Draggable v-for="(task, idx) in group.tasks" :key="task.id">
 				<TaskPreview
@@ -130,6 +138,7 @@
 </template>
 
 <script>
+import ExpandGroup from '../assets/svg/ExpandGroup.svg'
 import ProgressBar from './dynamicCmps/ProgressBar.vue'
 import Menu from '../assets/svg/Menu.svg'
 import { Container, Draggable } from 'vue3-smooth-dnd'
@@ -149,6 +158,7 @@ export default {
 		'toggleMenuModal',
 		'toggleSelectTask',
 		'selectGroupTasks',
+		'minimizeGroup',
 	],
 	props: {
 		group: Object,
@@ -279,6 +289,7 @@ export default {
 		ProgressBar,
 		Timeline,
 		ColorPicker,
+		ExpandGroup,
 	},
 }
 </script>
