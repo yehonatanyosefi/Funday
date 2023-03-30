@@ -2,6 +2,10 @@
 	font-family: Figtree-reg;
 	src: url('/src/assets/fonts/Figtree/Figtree-Regular.ttf');
 }
+@font-face {
+	font-family: Figtree-500;
+	src: url('/src/assets/fonts/Figtree/Figtree-Medium.ttf');
+}
 
 @font-face {
 	font-family: Figtree600;
@@ -45,5 +49,10 @@
 
 @font-face {
 	font-family: pop-medium;
+	src: url('/src/assets/fonts/Poppins/Poppins-Medium.ttf');
+}
+
+@font-face {
+	font-family: pop-500;
 	src: url('/src/assets/fonts/Poppins/Poppins-Medium.ttf');
 }

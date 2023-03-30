@@ -81,6 +81,7 @@ export const boardStore = {
 		},
 
 		setAdvanceFilter(state, { advanceFilter }) {
+			this.filterBy = { txt: '', member: null }
 			let filterBoard = JSON.parse(JSON.stringify(state.board))
 			console.log('filterBoard', filterBoard)
 
