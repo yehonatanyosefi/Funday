@@ -82,7 +82,7 @@ async function updateBoard(boardId, payload) {
 			break
 		case 'createdBy':
 			board.createdBy = val
-			board.members.push(val)
+			// board.members.push(val)
 			break
 	}
 	return saveBoard(board)
