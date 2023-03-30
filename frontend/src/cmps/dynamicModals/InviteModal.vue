@@ -1,0 +1,94 @@
+<template>
+	<div class="modal-overlay" v-if="isOpen"></div>
+	<section v-if="isOpen" @keydown.escape="closeModal" class="modal invite-modal" v-click-outside="closeModal">
+		<h1>Board members</h1>
+
+		<div class="users-list">
+			<div class="search-member">
+				<input type="search" v-focus @input="search" v-model="searchTxt" placeholder="Search names" @click.stop>
+			</div>
+
+			<div class="board-subscribers">Anyone at <b class="bold">{{ loggedinUser.fullname }} account</b> can find and
+				access this board</div>
+
+			<ul class="clean-list">
+				<li v-for="user in users" :key="user._id" class="flex" @click="addMember(user._id)">
+					<img class="profile-picture" :src=user.imgUrl>
+					<div class="fullname">{{ user.fullname }}</div>
+					<div v-if="isMember(user._id)" class="crown-container">
+						<Crown class="svg-icon close" width="11px" height="11px" />
+					</div>
+					<div  v-if="isMember(user._id)" class="close-container">
+						<Close class="svg-icon close" width="9px" />
+
+					</div>
+				</li>
+
+			</ul>
+		</div>
+	</section>
+</template>
+
+<script>
+import Close from '../../assets/svg/Close.svg'
+import Crown from '../../assets/svg/Crown.svg'
+
+export default {
+
+	name: 'invite-modal',
+	emits: ['closeModal'],
+	props: {
+		isOpen: {
+			type: Boolean
+		},
+	},
+	created() {
+		this.search()
+	},
+	data() {
+		return {
+			searchTxt: '',
+			addedUsers: []
+		}
+	},
+	methods: {
+		closeModal() {
+			this.$emit('closeModal','addUser')
+		},
+		search() {
+			this.filteredSuggestedUsers = this.userSuggested?.filter(user => user.fullname.toLowerCase().includes(this.searchTxt.toLowerCase()))
+		},
+		isMember(userId) {
+			const bool = this.currBoard.members.some(member => member._id === userId)
+			return bool
+		},
+		addMember(userId){
+			this.$emit('addMember',userId)
+			
+		}
+
+	},
+	computed: {
+		users() {
+			return this.$store.getters.users
+		},
+		loggedinUser() {
+			return this.$store.getters.loggedinUser
+		},
+		currBoard() {
+			return this.$store.getters.board
+		}
+	},
+	components: {
+		Close,
+		Crown
+	},
+	directives: {
+		focus: {
+			mounted(el) {
+				el.focus()
+			}
+		}
+	}
+}
+</script>
