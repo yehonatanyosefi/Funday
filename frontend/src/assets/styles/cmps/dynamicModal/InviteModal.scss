@@ -29,6 +29,8 @@
     }
     ul {
       padding: 0;
+      height: em(300px);
+      overflow-y: scroll;
       li {
         font-size: 15px;
         margin-bottom: 16px;

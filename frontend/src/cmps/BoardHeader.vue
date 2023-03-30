@@ -18,7 +18,9 @@
 						<Invite class="svg-icon" />
 						Invite/{{ membersCount }}
 						<!-- <a :href="getBoardUrl" target="_blank" rel="noopener noreferrer"></a> -->
-						<InviteModal :isOpen="isOpen"
+						<InviteModal 
+						v-if="isOpen"
+						:isOpen="isOpen"
 						 @closeModal="closeModal" 
 						 @addMember="addMember"
 						 @removeMember="removeMember">
