@@ -44,12 +44,12 @@ export const boardStore = {
 			state.boardList = boardList
 		},
 		setBoard(state, { board }) {
-			const sameBoard = board._id === state.board._id
+			// const sameBoard = board._id === state.board._id
 			state.board = board
 			state.filterBy = { txt: '', member: null }
-			if (!sameBoard) {
-				router.push(`/board/${board._id}/main-table`)
-			}
+			// if (!sameBoard) {
+			router.push(`/board/${board._id}/main-table`)
+			// }
 		},
 		addBoard(state, { board }) {
 			const minBoard = { _id: board._id, title: board.title }
@@ -238,13 +238,16 @@ export const boardStore = {
 		},
 		async getFirstBoard({ dispatch, state }, { params }) {
 			const boardId = !params ? state.boardList[0]._id : params
-			dispatch({ type: 'getBoardById', boardId })
-			return boardId
+			const board = dispatch({ type: 'getBoardById', boardId })
+			return board
 		},
+
 		async loadBoardList(context, { filterBy = { txt: '' } }) {
 			try {
 				filterBy.userId = context.getters.loggedinUser._id
 				const boardList = await boardService.queryList(filterBy)
+				console.log('boardList', boardList)
+
 				context.commit({ type: 'setBoardList', boardList })
 				return boardList
 			} catch (err) {
