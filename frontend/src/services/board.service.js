@@ -65,7 +65,7 @@ async function saveBoard(board) {
 		// Later, owner is set by the backend
 		// board.owner = userService.getLoggedinUser()
 		// savedBoard = await storageService.post(STORAGE_KEY, board)
-		savedBoard = await httpService.post(API_KEY , board)
+		savedBoard = await httpService.post(API_KEY, board)
 	}
 	return savedBoard
 }
@@ -88,8 +88,8 @@ async function updateBoard(boardId, payload) {
 	return saveBoard(board)
 }
 
-async function queryList(filterBy = { txt: '', userId:''}) {
-	try{
+async function queryList(filterBy = { txt: '', userId: '' }) {
+	try {
 		return httpService.get(API_KEY, filterBy)
 		// let boards = await storageService.query(STORAGE_KEY)
 		// let boardsCopy = JSON.parse(JSON.stringify(boards))
@@ -97,7 +97,7 @@ async function queryList(filterBy = { txt: '', userId:''}) {
 		// 	const regex = new RegExp(filterBy.txt, 'i')
 		// 	boards = boardsCopy.filter((board) => regex.test(board.title))
 		// }
-	
+
 		// if (filterBy.userId){
 		// 	boards = boardsCopy.filter(board => board.members.some(member => member._id===filterBy.userId))
 		// }
@@ -106,8 +106,8 @@ async function queryList(filterBy = { txt: '', userId:''}) {
 		// })
 		// return boardList
 	}
-	catch(err){
-		console.log('queryList error:'+err)
+	catch (err) {
+		console.log('queryList error:' + err)
 	}
 	// var tasks = await storageService.query(STORAGE_KEY)
 	// if (filterBy.txt) {
@@ -357,6 +357,7 @@ function getEmptyGroup() {
 	return {
 		id: utilService.makeId(),
 		title: 'Title',
+		isExpanded: true,
 		archivedAt: null,
 		tasks: [getEmptyTask(), getEmptyTask(), getEmptyTask()],
 		style: {

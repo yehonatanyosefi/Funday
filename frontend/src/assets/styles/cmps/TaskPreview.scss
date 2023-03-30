@@ -26,6 +26,9 @@
     top: 6.8px;
   }
   .task {
+    &.add-task-container {
+          margin-inline-end: 0.5px;
+    }
     &:not(:first-of-type) {
       width: $group-column-width;
     }
@@ -221,3 +224,8 @@
 // .animated .task-preview {
 //   border: 1px solid red;
 // }
+.board-group .task-preview:focus-within .task.task-sticky::before,
+.task-title-group.task-sticky.task-container::before {
+    background-color: $color-focused-within;
+}
+//TODO move to board group

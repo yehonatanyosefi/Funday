@@ -7,6 +7,8 @@ $input-padding-board-details: 4px;
 
 .board-details {
      .add-group-btn {
+          position: sticky;
+          left: 47px;
           margin-inline-start: 47px;
           height: 32px;
           width: 141px;
@@ -16,7 +18,11 @@ $input-padding-board-details: 4px;
           padding: 4px 8px;
           border-radius: 4px;
           @include flex-center;
+          cursor: pointer;
           background: rgba($color: #000000, $alpha: 0);
+          &:hover {
+               background-color: #dcdfec;
+          }
           .add-new-group-plus {
                color: #c3c6d4;
                height: 20px;
