@@ -1,6 +1,7 @@
 import { boardService } from '../services/board.service'
 import { router } from '../router'
 import { utilService } from '../services/util.service'
+
 import { toRaw } from 'vue'
 
 export const boardStore = {
@@ -42,9 +43,12 @@ export const boardStore = {
 			state.boardList = boardList
 		},
 		setBoard(state, { board }) {
+			const sameBoard = board._id === state.board._id
 			state.board = board
 			state.filterBy = { txt: '', member: null }
-			router.push(`/board/${board._id}/main-table`)
+			if (!sameBoard) {
+				router.push(`/board/${board._id}/main-table`)
+			}
 		},
 		addBoard(state, { board }) {
 			const minBoard = { _id: board._id, title: board.title }
@@ -250,7 +254,7 @@ export const boardStore = {
 		async addBoard({ commit, getters }) {
 			try {
 				const board = boardService.getEmptyBoard()
-			const user = getters.loggedinUser
+				const user = getters.loggedinUser
 				board.createdBy = {
 					_id: user._id,
 					fullname: user.fullname,

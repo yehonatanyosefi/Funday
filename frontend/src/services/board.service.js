@@ -2,6 +2,7 @@ import { storageService } from './async-storage.service.js'
 import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
+import { socketService, SOCKET_EVENT_CHANGE_BOARD } from '../services/socket.service'
 
 const STORAGE_KEY = 'boardDB'
 const API_KEY = 'board/'
@@ -67,6 +68,7 @@ async function saveBoard(board) {
 		// savedBoard = await storageService.post(STORAGE_KEY, board)
 		savedBoard = await httpService.post(API_KEY, board)
 	}
+	socketService.emit(SOCKET_EVENT_CHANGE_BOARD, savedBoard)
 	return savedBoard
 }
 
@@ -107,8 +109,7 @@ async function queryList(filterBy = { txt: '', userId: '' }) {
 		// 	return { _id: board._id, title: board.title }
 		// })
 		// return boardList
-	}
-	catch (err) {
+	} catch (err) {
 		console.log('queryList error:' + err)
 	}
 	// var tasks = await storageService.query(STORAGE_KEY)
