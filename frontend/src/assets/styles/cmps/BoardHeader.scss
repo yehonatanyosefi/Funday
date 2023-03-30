@@ -92,11 +92,16 @@
 				}
 
 				.invite {
-					position: relative;
+					// position: relative;
 					cursor: pointer;
 					border: 1px solid $brdr-clr;
 					font-family: Figtree-reg;
 					color: $clr-divider;
+
+					.modal-overlay{
+						background-color: rgb(41 47 76 / 100%);
+						transition: opacity 0.1s ease-in-out;
+					}
 
 					a {
 						visibility: hiden;
@@ -106,7 +111,7 @@
 						width: 73.71px;
 					}
 
-					svg {
+					svg:not(.close){
 						width: 20px;
 						height: 20px;
 					}
