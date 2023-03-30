@@ -12,7 +12,7 @@
 				access this board</div>
 
 			<ul class="clean-list">
-				<li v-for="user in filteredSuggestedUsers" :key="user._id" class="flex" @click="addMember(user._id)">
+				<li v-if="filteredSuggestedUsers.length > 0" v-for="user in filteredSuggestedUsers" :key="user._id" class="flex" @click="addMember(user._id)">
 					<img class="profile-picture" :src=user.imgUrl>
 					<div class="fullname">{{ user.fullname }}</div>
 					<div v-if="isMember(user._id)" class="crown-container">
@@ -22,6 +22,10 @@
 						<Close class="svg-icon close" width="9px" />
 					</div>
 				</li>
+
+				<div v-else class="no-members">
+					No members found
+				</div>
 
 			</ul>
 		</div>
@@ -52,7 +56,6 @@ export default {
 			this.$emit('closeModal')
 		},
 		search() {
-			console.log('this.users',this.users)
 			this.filteredSuggestedUsers = this.users?.filter((user) => user.fullname.toLowerCase().includes(this.searchTxt.toLowerCase()) )
 		},
 		isMember(userId) {
