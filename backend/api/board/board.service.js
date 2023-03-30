@@ -18,7 +18,7 @@ async function query(filterBy = { txt: '', userId: '' }) {
     }
 
     const collection = await dbService.getCollection('board')
-    var boardList = await collection.find(criteria).toArray()
+    var boardList = await collection.find(criteria).sort({ position: 1 }).toArray()
     return boardList
 
     // let boardsCopy = JSON.parse(JSON.stringify(boards))
@@ -65,10 +65,40 @@ async function remove(boardId) {
 async function add(board) { //db.collection.find().sort({age:-1}).limit(1)
   try {
     const collection = await dbService.getCollection('board')
+    const isBoard = await collection.find()
+    const maxPos = (isBoard) ? await collection.find().sort({ 'position': -1 }).limit(1).toArray() : null
+    const maxPosition = (maxPos) ? maxPos[0]?.position : 1
+    board.position = (!maxPosition) ? 1 : maxPosition + 1
     await collection.insertOne(board)
     return board
   } catch (err) {
     logger.error('cannot insert board', err)
+    throw err
+  }
+}
+
+async function applyDrag(ids) {
+  try {
+    if (ids.addedId === -1 || ids.removedId === -1) return true
+    const collection = await dbService.getCollection('board')
+    const addedBoard = await collection.findOne({ _id: new ObjectId(ids.addedId) })
+    const removedBoard = await collection.findOne({ _id: new ObjectId(ids.removedId) })
+    const tempPos = addedBoard.position
+    addedBoard.position = removedBoard.position
+    console.log(`addedBoard.position:`, addedBoard.position)
+    removedBoard.position = tempPos
+    console.log(`removedBoard.position:`, removedBoard.position)
+    await collection.updateOne(
+      { _id: new ObjectId(ids.addedId) },
+      { $set: { addedBoard } }
+    )
+    await collection.updateOne(
+      { _id: new ObjectId(ids.removedId) },
+      { $set: { removedBoard } }
+    )
+    return true
+  } catch (err) {
+    logger.error('cannot apply drag', err)
     throw err
   }
 }
@@ -149,4 +179,5 @@ module.exports = {
   update,
   addBoardMsg,
   removeBoardMsg,
+  applyDrag,
 }

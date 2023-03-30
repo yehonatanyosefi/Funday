@@ -90,7 +90,8 @@ async function updateBoard(boardId, payload) {
 
 async function queryList(filterBy = { txt: '', userId: '' }) {
 	try {
-		return httpService.get(API_KEY, filterBy)
+		const boardList = await httpService.get(API_KEY, filterBy)
+		return boardList
 		// let boards = await storageService.query(STORAGE_KEY)
 		// let boardsCopy = JSON.parse(JSON.stringify(boards))
 		// if (filterBy.txt) {
@@ -209,8 +210,6 @@ function filterByMember(board, member) {
 	return board
 }
 function setAdvanceFilter(board, advanceFilter) {
-	console.log('1', board)
-
 	board.groups = board.groups.reduce((groupArr, group) => {
 		const groupInclude = advanceFilter.group?.length ? advanceFilter.group.includes(group.title) : true
 		if (groupInclude) {
@@ -249,7 +248,6 @@ function setAdvanceFilter(board, advanceFilter) {
 		if (group.tasks?.length || groupInclude) groupArr.push(group)
 		return groupArr
 	}, [])
-	console.log('2', board)
 	return board
 	// board.groups = board.groups.reduce((groupArr, group) => {
 	// 	const groupInclude = advanceFilter.group?.includes(group.title)
@@ -269,7 +267,7 @@ function setAdvanceFilter(board, advanceFilter) {
 	// }, [])
 	// return board
 }
-async function applyDrag(addedId, removedId, type, boardId, groupId) {
+async function applyDrag(addedId, removedId, type, boardId, groupId, filterBy) {
 	//arr, dragResult
 	let board
 	switch (type) {
@@ -297,7 +295,8 @@ async function applyDrag(addedId, removedId, type, boardId, groupId) {
 			return await saveBoard(board)
 			break
 		case 'board':
-			// const boards = await storageService.query(STORAGE_KEY)
+			const ids = { addedId, removedId }
+			return await httpService.put(`board/drag`, ids)
 			// const boards = await storageService.query(STORAGE_KEY)
 			// const addedBoardIdx = boards.findIndex((board) => board._id === addedId)
 			// const removedBoardIdx = boards.findIndex((board) => board._id === removedId)

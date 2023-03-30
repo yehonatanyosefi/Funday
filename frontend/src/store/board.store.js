@@ -322,8 +322,8 @@ export const boardStore = {
 		async applyBoardDrag(context, { payload }) {
 			try {
 				const { addedId, removedId } = payload
-				const boardList = await boardService.applyDrag(addedId, removedId, 'board')
-				context.commit({ type: 'setBoardList', boardList })
+				await boardService.applyDrag(addedId, removedId, 'board')
+				await context.dispatch({ type: 'loadBoardList' })
 				return true
 			} catch (err) {
 				console.log('Store: Error in apply board drag', err)
@@ -351,7 +351,6 @@ export const boardStore = {
 					type: 'loadBoardList',
 					filterBy: { userId: user._id },
 				})) || []
-			console.log('boards', boards)
 			let firstBoard = boards[0] || null
 			if (!firstBoard) {
 				firstBoard = await dispatch({ type: 'addBoard' })
@@ -367,7 +366,6 @@ export const boardStore = {
 				firstBoard = await dispatch({ type: 'updateBoard', payload })
 				return firstBoard
 			}
-			console.log('boards from getUserBoardList', boards)
 			commit({ type: 'setBoardList', boardList: boards })
 			return firstBoard
 		},

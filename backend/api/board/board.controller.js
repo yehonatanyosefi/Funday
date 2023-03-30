@@ -55,6 +55,18 @@ async function updateBoard(req, res) {
   }
 }
 
+async function applyDrag(req, res) {
+  try {
+    const ids = req.body
+    await boardService.applyDrag(ids)
+    res.json(true)
+  } catch (err) {
+    logger.error('Failed to update board', err)
+    res.status(500).send({ err: 'Failed to update board' })
+
+  }
+}
+
 async function removeBoard(req, res) {
   try {
     const boardId = req.params.id
@@ -105,5 +117,6 @@ module.exports = {
   updateBoard,
   removeBoard,
   addBoardMsg,
-  removeBoardMsg
+  removeBoardMsg,
+  applyDrag,
 }
