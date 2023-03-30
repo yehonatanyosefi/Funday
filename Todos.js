@@ -3,6 +3,7 @@ multi select duplicate
 user messages ccss
 demo data guest
 try catch
+cursor pointer on expand
 
 fix:
 progress bar sticky

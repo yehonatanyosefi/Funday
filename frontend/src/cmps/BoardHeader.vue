@@ -18,7 +18,13 @@
 						<Invite class="svg-icon" />
 						Invite/{{ membersCount }}
 						<!-- <a :href="getBoardUrl" target="_blank" rel="noopener noreferrer"></a> -->
-						<InviteModal :isOpen="isOpen" @closeModal="closeModal" @addMember="addMember" ></InviteModal>
+						<InviteModal 
+						v-if="isOpen"
+						:isOpen="isOpen"
+						 @closeModal="closeModal" 
+						 @addMember="addMember"
+						 @removeMember="removeMember">
+						</InviteModal>
 					</div>
 				</div>
 			</section>
@@ -135,11 +141,14 @@ export default {
 			else if (path.includes('dashboard')) this.view = 'dashboard'
 			else this.view = 'table'
 		},
-		closeModal(){
-			this.isOpen=false
+		closeModal() {
+			this.isOpen = false
 		},
-		addMember(userId){
+		addMember(userId) {
 			this.$store.dispatch({ type: 'addMember', userId })
+		},
+		removeMember(userId) {
+			this.$store.dispatch({ type: 'removeMember', userId })
 		}
 	},
 	components: { BorderFilter, Invite, Favorite, FavoriteFull, Home, InviteModal },

@@ -1,6 +1,7 @@
 import { boardService } from '../services/board.service'
 import { router } from '../router'
 import { utilService } from '../services/util.service'
+import { userService } from '../services/user.service'
 
 import { toRaw } from 'vue'
 
@@ -237,13 +238,16 @@ export const boardStore = {
 		},
 		async getFirstBoard({ dispatch, state }, { params }) {
 			const boardId = !params ? state.boardList[0]._id : params
-			dispatch({ type: 'getBoardById', boardId })
-			return boardId
+			const board = dispatch({ type: 'getBoardById', boardId })
+			return board
 		},
+
 		async loadBoardList(context, { filterBy = { txt: '' } }) {
 			try {
 				filterBy.userId = context.getters.loggedinUser._id
 				const boardList = await boardService.queryList(filterBy)
+				console.log('boardList', boardList)
+
 				context.commit({ type: 'setBoardList', boardList })
 				return boardList
 			} catch (err) {
@@ -406,6 +410,36 @@ export const boardStore = {
 				throw err
 			}
 		},
+		async addMember(context, { userId }) {
+			try {
+				console.log('userId', userId)
+				const member = await userService.getById(userId)
+				console.log('member', member)
+				const payload = { _id: member._id, fullname: member.fullname, imgUrl: member.imgUrl }
+				const boardId = context.getters.board._id
+				const updatedBoard = await boardService.save(boardId, 'member', payload)
+				await context.dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
+			} catch (err) {
+				console.log('boardStore: Error in add member', err)
+				throw err
+			}
+		},
+		async removeMember(context, { userId }) {
+			try {
+				const member = await userService.getById(userId)
+				console.log('member', member)
+				console.log('member._id', member._id)
+				const boardId = context.getters.board._id
+				const updatedBoard = await boardService.remove({ boardId, memberId: member._id }, 'member')
+				await context.dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
+				// // // commit({ type: 'removeMember', memberId })
+				// return member._id
+			} catch (err) {
+				console.log('boardStore: Error in removeMember', err)
+				throw err
+			}
+		},
+
 		// async addGroupMsg(context, { groupId, txt }) {
 		//     try {
 		//         const msg = await boardService.addGroupMsg(groupId, txt)

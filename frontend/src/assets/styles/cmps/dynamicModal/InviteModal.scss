@@ -29,6 +29,12 @@
     }
     ul {
       padding: 0;
+      height: em(300px);
+      overflow-y: scroll;
+      .no-members{
+        min-height: 36px;
+        min-width: 466px;
+      }
       li {
         font-size: 15px;
         margin-bottom: 16px;

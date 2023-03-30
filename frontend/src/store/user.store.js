@@ -86,6 +86,22 @@ export const userStore = {
 				throw err
 			}
 		},
+		async guestLogin({ commit, dispatch, getters }) {
+			try {
+				const userCred = { username: 'guest@gmail.com', password: '1234' }
+				let user = await userService.login(userCred)
+				console.log('User', user)
+				user = JSON.parse(JSON.stringify(user))
+				commit({ type: 'setLoggedinUser', user })
+				dispatch({ type: 'loadBoardList' })
+				const boards = getters.boardList
+				if (boards.length) dispatch({ type: 'setAndFilterBoard', board: boards[0] })
+				return user
+			} catch (err) {
+				console.log('userStore: Error in login', err)
+				throw err
+			}
+		},
 		async loadUsers({ commit }) {
 			try {
 				const users = await userService.getUsers()
