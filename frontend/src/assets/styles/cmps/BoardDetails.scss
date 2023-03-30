@@ -2,7 +2,7 @@
 $input-padding-board-details: 4px;
 
 .smooth-dnd-container.vertical>.smooth-dnd-draggable-wrapper {
-     overflow: visible;
+     overflow: visible !important;
 }
 
 .board-details {

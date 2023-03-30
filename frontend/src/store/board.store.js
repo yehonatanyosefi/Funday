@@ -250,7 +250,7 @@ export const boardStore = {
 		async addBoard({ commit, getters }) {
 			try {
 				const board = boardService.getEmptyBoard()
-			const user = getters.loggedinUser
+				const user = getters.loggedinUser
 				board.createdBy = {
 					_id: user._id,
 					fullname: user.fullname,
@@ -352,8 +352,7 @@ export const boardStore = {
 				})) || []
 			let firstBoard = boards[0] || null
 			if (!firstBoard) {
-				firstBoard = await dispatch({ type: 'addBoard' })
-				console.log('firstBoard', firstBoard)
+				firstBoard = await dispatch({ type: 'addDemoBoards' })
 				const payload = {
 					type: 'createdBy',
 					val: {
@@ -368,7 +367,41 @@ export const boardStore = {
 			commit({ type: 'setBoardList', boardList: boards })
 			return firstBoard
 		},
-
+		async addDemoBoards({ commit, getters }) {
+			try {
+				const boardDev = boardService.getDemoDev()
+				const boardFinance = boardService.getDemoFinance()
+				const user = getters.loggedinUser
+				boardDev.createdBy = {
+					_id: user._id,
+					fullname: user.fullname,
+					imgUrl: user.imgUrl,
+				}
+				boardFinance.createdBy = {
+					_id: user._id,
+					fullname: user.fullname,
+					imgUrl: user.imgUrl,
+				}
+				boardDev.members.push({
+					_id: user._id,
+					fullname: user.fullname,
+					imgUrl: user.imgUrl,
+				})
+				boardFinance.members.push({
+					_id: user._id,
+					fullname: user.fullname,
+					imgUrl: user.imgUrl,
+				})
+				const newBoardDev = await boardService.save(null, 'board', boardDev)
+				const newBoardFinance = await boardService.save(null, 'board', boardFinance)
+				commit({ type: 'addBoard', board: newBoardDev })
+				commit({ type: 'addBoard', board: newBoardFinance })
+				return newBoardDev
+			} catch (err) {
+				console.log('Store: Error in add demo boards', err)
+				throw err
+			}
+		},
 		// async addGroupMsg(context, { groupId, txt }) {
 		//     try {
 		//         const msg = await boardService.addGroupMsg(groupId, txt)

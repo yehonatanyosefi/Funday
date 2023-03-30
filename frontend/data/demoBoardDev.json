@@ -1,0 +1,252 @@
+{
+	"title": "Dev",
+	"isStarred": false,
+	"archivedAt": "",
+	"cmpOrder": ["date", "person", "status", "text", "priority", "timeline"],
+	"createdBy": {
+		"_id": "64256886bed90a6123316139",
+		"fullname": "Yehonatan Yosefi",
+		"imgUrl": "https://res.cloudinary.com/dcwibf9o5/image/upload/v1680173189/xsaoytjwozbrayy7nntj.png"
+	},
+	"style": {},
+	"labels": [],
+	"members": [
+		{
+			"_id": "64256886bed90a6123316139",
+			"fullname": "Yehonatan Yosefi",
+			"imgUrl": "https://res.cloudinary.com/dcwibf9o5/image/upload/v1680173189/xsaoytjwozbrayy7nntj.png"
+		},
+		{
+			"_id": "642568659754292a566a00ee",
+			"fullname": "Dor Toledano",
+			"imgUrl": "https://res.cloudinary.com/dcwibf9o5/image/upload/v1680173152/s08q3wnshtwqzifrxl7c.jpg"
+		},
+		{
+			"_id": "6425751a68ab2a1db80c88f3",
+			"fullname": "Yael Bilu",
+			"imgUrl": "https://res.cloudinary.com/dcwibf9o5/image/upload/v1680176410/nuwfr4n8hqxd7lpn2h6f.jpg"
+		},
+		{
+			"_id": "642575c468ab2a1db80c88f5",
+			"fullname": "Eran Peled",
+			"imgUrl": "https://res.cloudinary.com/dcwibf9o5/image/upload/v1680176580/sxpsuxnxnrkwqt2oykws.png"
+		}
+	],
+	"groups": [
+		{
+			"id": "XE38Bf",
+			"title": "Frontend",
+			"isExpanded": true,
+			"archivedAt": null,
+			"tasks": [
+				{
+					"id": "QqJWHh",
+					"title": "Implement Services",
+					"status": "Done",
+					"priority": "High",
+					"text": "User, Socket, Bo",
+					"comments": [],
+					"person": ["6425751a68ab2a1db80c88f3", "642568659754292a566a00ee"],
+					"timeline": {
+						"startDate": "1678831200000",
+						"dueDate": "1680210000000"
+					},
+					"date": "1679349600000",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				},
+				{
+					"id": "LPgUuJ",
+					"title": "Make components",
+					"status": "Done",
+					"priority": "High",
+					"text": "Board, Task, Gro",
+					"comments": [],
+					"person": ["64256886bed90a6123316139"],
+					"timeline": {
+						"startDate": "1679522400000",
+						"dueDate": "1680642000000"
+					},
+					"date": "1679436000000",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				},
+				{
+					"id": "KYZ0k7",
+					"title": "Make ",
+					"status": "Working on it",
+					"priority": "Medium",
+					"text": "This is it",
+					"comments": [],
+					"person": ["642568659754292a566a00ee"],
+					"timeline": {
+						"startDate": "1679436000000",
+						"dueDate": "1680382800000"
+					},
+					"date": "1679522400000",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				},
+				{
+					"id": "ElBWM2",
+					"title": "Make view pages",
+					"status": "Working on it",
+					"priority": "High",
+					"text": "Homepage, Loginsignup..",
+					"comments": [],
+					"person": ["6425751a68ab2a1db80c88f3"],
+					"timeline": {
+						"startDate": "1679436000000",
+						"dueDate": "1680210000000"
+					},
+					"date": "1679864400000",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				},
+				{
+					"id": "3rVq6Q",
+					"title": "Fix bugs",
+					"status": "Working on it",
+					"priority": "Critical",
+					"text": "header",
+					"comments": [],
+					"person": ["642568659754292a566a00ee", "6425751a68ab2a1db80c88f3"],
+					"timeline": {
+						"startDate": "1679436000000",
+						"dueDate": "1680469200000"
+					},
+					"date": "1680037200000",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				},
+				{
+					"id": "Vj06Tk",
+					"title": "Add Bonus",
+					"status": "Stuck",
+					"priority": "Low",
+					"text": "Think with group leader",
+					"comments": [],
+					"person": ["642568659754292a566a00ee", "64256886bed90a6123316139", "6425751a68ab2a1db80c88f3"],
+					"timeline": {
+						"startDate": "1680555600000",
+						"dueDate": "1682456400000"
+					},
+					"date": "1680210000000",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				},
+				{
+					"id": "dTuUYD",
+					"title": "Get CR",
+					"status": "",
+					"priority": "Medium",
+					"text": "",
+					"comments": [],
+					"person": [
+						"64256886bed90a6123316139",
+						"642568659754292a566a00ee",
+						"642575c468ab2a1db80c88f5",
+						"6425751a68ab2a1db80c88f3"
+					],
+					"timeline": {
+						"startDate": "1680555600000",
+						"dueDate": "1681160400000"
+					},
+					"date": "1680555600000",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				}
+			],
+			"style": { "color": "#579BFC" }
+		},
+		{
+			"id": "NnJpae",
+			"title": "Backend",
+			"isExpanded": true,
+			"archivedAt": null,
+			"tasks": [
+				{
+					"id": "OVjeVV",
+					"title": "Implement REST ",
+					"status": "Done",
+					"priority": "High",
+					"text": "",
+					"comments": [],
+					"person": ["64256886bed90a6123316139", "642568659754292a566a00ee"],
+					"timeline": {
+						"startDate": "1678831200000",
+						"dueDate": "1680210000000"
+					},
+					"date": "1678658400000",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				},
+				{
+					"id": "YSHLaH",
+					"title": "Add Users",
+					"status": "Done",
+					"priority": "High",
+					"text": "with full CRUD",
+					"comments": [],
+					"person": ["642568659754292a566a00ee"],
+					"timeline": {
+						"startDate": "1680555600000",
+						"dueDate": "1681246800000"
+					},
+					"date": "1679436000000",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				},
+				{
+					"id": "ESi3Ux",
+					"title": "Add ALS to get logged in",
+					"status": "Done",
+					"priority": "Low",
+					"text": "",
+					"comments": [],
+					"person": ["6425751a68ab2a1db80c88f3"],
+					"timeline": {
+						"startDate": "1678917600000",
+						"dueDate": "1680901200000"
+					},
+					"date": "1679950800000",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				},
+				{
+					"id": "jUOQsk",
+					"title": "Fix api bugs",
+					"status": "Working on it",
+					"priority": "Medium",
+					"text": "",
+					"comments": [],
+					"person": ["6425751a68ab2a1db80c88f3"],
+					"timeline": {
+						"startDate": "1680469200000",
+						"dueDate": "1681851600000"
+					},
+					"date": "1680037200000",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				},
+				{
+					"id": "FZ8XaM",
+					"title": "Upload to render",
+					"status": "Stuck",
+					"priority": "Low",
+					"text": "",
+					"comments": [],
+					"person": ["642575c468ab2a1db80c88f5", "64256886bed90a6123316139"],
+					"timeline": {
+						"startDate": "1678744800000",
+						"dueDate": "1681765200000"
+					},
+					"date": "1680210000000",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				}
+			],
+			"style": { "color": "#9CD326" }
+		}
+	]
+}

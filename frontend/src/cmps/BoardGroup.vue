@@ -27,6 +27,7 @@
 							:style="{ backgroundColor: group.style.color }"
 						></div>
 
+						<!-- size="1" -->
 						<input
 							class="board-input group-title-input"
 							name="groupTitleInput"

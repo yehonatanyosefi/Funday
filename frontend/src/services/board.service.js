@@ -22,6 +22,8 @@ export const boardService = {
 	filterByMember,
 	applyDrag,
 	saveBoard,
+	getDemoDev,
+	getDemoFinance,
 }
 window.cs = boardService
 
@@ -409,10 +411,19 @@ function getEmptyBoard() {
 	}
 }
 
-import jsonBoard from '../../data/board.json' assert { type: 'json' }
-function _createDemoData() {
-	const board = utilService.loadFromStorage(STORAGE_KEY)
-	if (!board) {
-		utilService.saveToStorage(STORAGE_KEY, jsonBoard)
-	}
+// import jsonBoard from '../../data/board.json' assert { type: 'json' }
+// function _createDemoData() {
+// 	const board = utilService.loadFromStorage(STORAGE_KEY)
+// 	if (!board) {
+// 		utilService.saveToStorage(STORAGE_KEY, jsonBoard)
+// 	}
+// }
+
+import demoBoardDev from '../../data/demoBoardDev.json' assert { type: 'json' }
+import demoBoardFinance from '../../data/demoBoardFinance.json' assert { type: 'json' }
+function getDemoFinance() {
+	return demoBoardFinance
+}
+function getDemoDev() {
+	return demoBoardDev
 }

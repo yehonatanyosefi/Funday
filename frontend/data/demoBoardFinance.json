@@ -1,0 +1,164 @@
+{
+	"title": "Finance",
+	"isStarred": false,
+	"archivedAt": "",
+	"cmpOrder": ["date", "person", "status", "text", "priority", "timeline"],
+	"createdBy": {
+		"_id": "64256886bed90a6123316139",
+		"fullname": "Yehonatan Yosefi",
+		"imgUrl": "https://res.cloudinary.com/dcwibf9o5/image/upload/v1680173189/xsaoytjwozbrayy7nntj.png"
+	},
+	"style": {},
+	"labels": [],
+	"members": [
+		{
+			"_id": "64256886bed90a6123316139",
+			"fullname": "Yehonatan Yosefi",
+			"imgUrl": "https://res.cloudinary.com/dcwibf9o5/image/upload/v1680173189/xsaoytjwozbrayy7nntj.png"
+		},
+		{
+			"_id": "642568659754292a566a00ee",
+			"fullname": "Dor Toledano",
+			"imgUrl": "https://res.cloudinary.com/dcwibf9o5/image/upload/v1680173152/s08q3wnshtwqzifrxl7c.jpg"
+		},
+		{
+			"_id": "6425751a68ab2a1db80c88f3",
+			"fullname": "Yael Bilu",
+			"imgUrl": "https://res.cloudinary.com/dcwibf9o5/image/upload/v1680176410/nuwfr4n8hqxd7lpn2h6f.jpg"
+		},
+		{
+			"_id": "642575c468ab2a1db80c88f5",
+			"fullname": "Eran Peled",
+			"imgUrl": "https://res.cloudinary.com/dcwibf9o5/image/upload/v1680176580/sxpsuxnxnrkwqt2oykws.png"
+		}
+	],
+	"groups": [
+		{
+			"id": "B0VIp1",
+			"title": "Marketing",
+			"isExpanded": true,
+			"archivedAt": null,
+			"tasks": [
+				{
+					"id": "VMYIdw",
+					"title": "Get spreadsheets from marketing",
+					"status": "Done",
+					"priority": "Critical",
+					"text": "Market data",
+					"comments": [],
+					"person": ["6425751a68ab2a1db80c88f3", "64256886bed90a6123316139", "642575c468ab2a1db80c88f5"],
+					"timeline": {
+						"startDate": "1679004000000",
+						"dueDate": "1681678800000"
+					},
+					"date": "1680176246908",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				},
+				{
+					"id": "By4RAZ",
+					"title": "Research market dat",
+					"status": "Stuck",
+					"priority": "Medium",
+					"text": "",
+					"comments": [],
+					"person": ["64256886bed90a6123316139"],
+					"timeline": {
+						"startDate": "1678312800000",
+						"dueDate": "1679608800000"
+					},
+					"date": "1679950800000",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				},
+				{
+					"id": "SrXg0y",
+					"title": "Find relevant information",
+					"status": "",
+					"priority": "",
+					"text": "",
+					"comments": [],
+					"person": [],
+					"timeline": {
+						"startDate": "1681246800000",
+						"dueDate": "1681938000000"
+					},
+					"date": "1680176246908",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				},
+				{
+					"id": "IsMoQx",
+					"title": "Penetrate new markets",
+					"status": "Working on it",
+					"priority": "Low",
+					"text": "",
+					"comments": [],
+					"person": ["642568659754292a566a00ee"],
+					"timeline": { "startDate": "1680176905555", "dueDate": null },
+					"date": "1680176905555",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				}
+			],
+			"style": { "color": "#037F4C" }
+		},
+		{
+			"id": "O76T0A",
+			"title": "Title",
+			"isExpanded": true,
+			"archivedAt": null,
+			"tasks": [
+				{
+					"id": "MPPwh6",
+					"title": "Beautify",
+					"status": "Done",
+					"priority": "Critical",
+					"text": "",
+					"comments": [],
+					"person": ["64256886bed90a6123316139", "642568659754292a566a00ee"],
+					"timeline": {
+						"startDate": "1678744800000",
+						"dueDate": "1679608800000"
+					},
+					"date": "1680176246908",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				},
+				{
+					"id": "hLc2Ou",
+					"title": "Get new ",
+					"status": "Stuck",
+					"priority": "Medium",
+					"text": "",
+					"comments": [],
+					"person": ["642568659754292a566a00ee"],
+					"timeline": {
+						"startDate": "1678831200000",
+						"dueDate": "1680296400000"
+					},
+					"date": "1680176246908",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				},
+				{
+					"id": "K4fShX",
+					"title": "Find important market",
+					"status": "Working on it",
+					"priority": "Low",
+					"text": "",
+					"comments": [],
+					"person": ["642575c468ab2a1db80c88f5"],
+					"timeline": {
+						"startDate": "1680555600000",
+						"dueDate": "1681246800000"
+					},
+					"date": "1680176246908",
+					"byMember": { "_id": "", "username": "", "fullname": "", "imgUrl": "" },
+					"style": { "bgColor": "" }
+				}
+			],
+			"style": { "color": "#FF5AC4" }
+		}
+	]
+}
