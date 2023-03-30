@@ -90,7 +90,8 @@ async function updateBoard(boardId, payload) {
 
 async function queryList(filterBy = { txt: '', userId: '' }) {
 	try {
-		const boardList = await httpService.get(API_KEY, filterBy)
+		let boardList = await httpService.get(API_KEY, filterBy)
+		boardList = boardList.sort((a, b) => a.position - b.position)
 		return boardList
 		// let boards = await storageService.query(STORAGE_KEY)
 		// let boardsCopy = JSON.parse(JSON.stringify(boards))
