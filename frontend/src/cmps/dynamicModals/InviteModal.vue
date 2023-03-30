@@ -18,9 +18,8 @@
 					<div v-if="isMember(user._id)" class="crown-container">
 						<Crown class="svg-icon close" width="11px" height="11px" />
 					</div>
-					<div  v-if="isMember(user._id)" class="close-container">
+					<div  v-if="isMember(user._id)" class="close-container" @click.stop="removeMember(user._id)">
 						<Close class="svg-icon close" width="9px" />
-
 					</div>
 				</li>
 
@@ -36,7 +35,7 @@ import Crown from '../../assets/svg/Crown.svg'
 export default {
 
 	name: 'invite-modal',
-	emits: ['closeModal'],
+	emits: ['closeModal','addMember','removeMember'],
 	props: {
 		isOpen: {
 			type: Boolean
@@ -63,9 +62,13 @@ export default {
 			return bool
 		},
 		addMember(userId){
+			if (this.isMember(userId)) return 
 			this.$emit('addMember',userId)
-			
-		}
+		},
+		removeMember(userId){
+			this.$emit('removeMember',userId)
+		},
+
 
 	},
 	computed: {
