@@ -3,6 +3,8 @@
 	padding-right: 30px;
 	padding-left: 40px;
 	padding-top: 16px;
+	width: 100%;
+	padding: 16px 30px 0 38px;
 
 	div {
 		display: flex;
@@ -33,7 +35,7 @@
 					justify-content: flex-start;
 					align-items: center;
 					position: relative;
-					padding: 0.5rem;
+					padding: 0 0.2rem;
 					border-radius: 0.1em;
 					transition: padding 0.4s;
 					height: 100%;
@@ -93,6 +95,8 @@
 					position: relative;
 					cursor: pointer;
 					border: 1px solid $brdr-clr;
+					font-family: Figtree-reg;
+					color: $clr-divider;
 
 					a {
 						visibility: hiden;
@@ -100,6 +104,11 @@
 						top: 0;
 						height: 28px;
 						width: 73.71px;
+					}
+
+					svg {
+						width: 20px;
+						height: 20px;
 					}
 				}
 			}
@@ -153,7 +162,7 @@
 					box-shadow: inset 0px -2px 0px 0px #0373ea;
 				}
 				.content {
-					padding-right: 14px;
+					padding-right: 8px;
 					padding-left: 14px;
 				}
 				.content:hover {

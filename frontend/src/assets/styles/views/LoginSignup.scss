@@ -1,4 +1,10 @@
 .login-signup {
+    .upload-preview{
+        margin: auto;
+        label{
+            text-align: center;
+        }
+    }
     form > * {
         margin: 20px 0px;
     }

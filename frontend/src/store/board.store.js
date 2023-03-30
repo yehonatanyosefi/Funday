@@ -250,8 +250,7 @@ export const boardStore = {
 		async addBoard({ commit, getters }) {
 			try {
 				const board = boardService.getEmptyBoard()
-				console.log('board', board)
-				const user = getters.loggedinUser
+			const user = getters.loggedinUser
 				board.createdBy = {
 					_id: user._id,
 					fullname: user.fullname,

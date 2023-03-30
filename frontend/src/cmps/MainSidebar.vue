@@ -20,7 +20,7 @@
 						</a>
 					</div>
 
-					<button @click="hey">
+					<!-- <button @click="hey">
 						<Notifications class="svg-icon" />
 					</button>
 					<button disabbled>
@@ -31,9 +31,9 @@
 					</button>
 					<button disabbled>
 						<Favorite class="svg-icon" />
-					</button>
+					</button> -->
 				</div>
-				<button disabbled>
+				<!-- <button disabbled>
 					<Apps class="svg-icon" />
 				</button>
 				<button disabbled>
@@ -44,7 +44,7 @@
 				</button>
 				<button disabbled>
 					<Help class="svg-icon" />
-				</button>
+				</button> -->
 			</div>
 			<div class="divider"></div>
 

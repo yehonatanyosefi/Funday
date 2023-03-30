@@ -1,8 +1,10 @@
 <template>
   <div className="upload-preview">
-    <img v-if="imgUrl" :src="imgUrl" :style="{ maxWidth: '200px', float: 'right' }" />
+    <label @drop.prevent="uploadImg" @dragover.prevent>
+      <img v-if="imgUrl" :src="imgUrl" :style="{ maxWidth: '200px', float: 'right' }" title="Click to upload"/>
+      <input type="file" @change="uploadImg" accept="img/*" id="imgUpload" hidden/>
+    </label>
     <label for="imgUpload">{{ uploadMsg }}</label>
-    <input type="file" @change="uploadImg" accept="img/*" id="imgUpload" />
   </div>
 </template>
 
@@ -12,7 +14,7 @@ import { uploadService } from '../services/upload.service.js'
 export default {
   data() {
     return {
-      imgUrl: null,
+      imgUrl: 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png',
       height: 500,
       width: 500,
       isUploading: false
@@ -33,7 +35,8 @@ export default {
     uploadMsg() {
       if (this.imgUrl) return 'Upload Another?'
       return this.isUploading ? 'Uploading....' : 'Upload Image'
-    }
+    },
+    
   }
 }
 </script>
