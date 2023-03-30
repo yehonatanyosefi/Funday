@@ -59,7 +59,7 @@ export default {
         return {
             isSearching: false,
             filterBy: { txt: '' },
-            isFolded: false,
+            isFolded: true,
             isHoverOpen: false,
             btnHover: false
         }

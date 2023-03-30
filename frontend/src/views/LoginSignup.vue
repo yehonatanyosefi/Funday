@@ -13,17 +13,23 @@
       <h1 class="login-header">{{ isSignin ? 'Welcome to Funday.com' : 'Log in to your account' }} </h1>
 
       <form v-if="isSignin" @submit.prevent="doSignup">
+
+        <!-- <label @drop.prevent="handleFile" @dragover.prevent>
+          <img class="user-img" :src="signupCred.imgUrl" alt="">
+          <input type="file" @change="handleFile" hidden>
+        </label> -->
+
+        <ImgUploader @uploaded="onUploaded" />
         <h2>Set up your account</h2>
-        <input type="email" v-model="signupCred.username" placeholder="name@company.com" require/>
+        <input type="email" v-model="signupCred.username" placeholder="name@company.com" require />
         <label id="text" for="">
           Full name
-          <input type="text" v-model="signupCred.fullname" placeholder="e.g. Jane Doe" require/>
+          <input type="text" v-model="signupCred.fullname" placeholder="e.g. Jane Doe" require />
         </label>
         <label for="">
           Password
-          <input type="password" v-model="signupCred.password" placeholder="Enter at least 8 characters" require/>
+          <input type="password" v-model="signupCred.password" placeholder="Enter at least 8 characters" require />
         </label>
-        <ImgUploader @uploaded="onUploaded" />
         <button>Signup</button>
         <div class="pre-signup"><span>Already have an account?</span><button @click="isSignin = !isSignin" type="button"
             class="pre-signup-btn">Log in</button></div>
@@ -36,10 +42,10 @@
           </select> -->
         <label id="mail-label" for="mail">
           Enter your work email address
-          <input id="mail" type="email" v-model="loginCred.username" placeholder="Example@company.com" require/>
+          <input id="mail" type="email" v-model="loginCred.username" placeholder="Example@company.com" require />
         </label>
 
-        <input type="password" v-model="loginCred.password" placeholder="Password" require/>
+        <input type="password" v-model="loginCred.password" placeholder="Password" require />
         <button>
           <div class="login-btn">
             <p>Login</p>
@@ -73,6 +79,8 @@
 
 import ImgUploader from '../cmps/ImgUploader.vue'
 import Next from '../assets/svg/Next.svg'
+// import { uploadService } from '../services/upload.service.js'
+
 
 export default {
   name: 'login-signup',
@@ -82,6 +90,7 @@ export default {
       loginCred: { username: '', password: '' },
       signupCred: { username: '', password: '', fullname: '', imgUrl: '' },
       isSignin: false,
+      isLoading: false
 
     }
   },
@@ -92,6 +101,7 @@ export default {
     loggedinUser() {
       return this.$store.getters.loggedinUser
     },
+
   },
   created() {
     this.loadUsers()
@@ -109,7 +119,7 @@ export default {
           this.msg = 'User not found'
           return
         }
-        const firstBoard=await this.$store.dispatch({ type: "getUserBoardList" })
+        const firstBoard = await this.$store.dispatch({ type: "getUserBoardList" })
         this.$router.push(`/board/${firstBoard._id}/main-table`)
       } catch (err) {
         console.log(err)
@@ -126,7 +136,7 @@ export default {
       }
       // console.log('this.signupCred',this.signupCred)
       await this.$store.dispatch({ type: 'signup', userCred: this.signupCred })
-      const firstBoard=await this.$store.dispatch({ type: "getUserBoardList" })
+      const firstBoard = await this.$store.dispatch({ type: "getUserBoardList" })
       this.$router.push(`/board/${firstBoard._id}/main-table`)
     },
     loadUsers() {
@@ -143,7 +153,15 @@ export default {
     onUploaded(imgUrl) {
       // console.log('imgUrl',imgUrl)
       this.signupCred.imgUrl = imgUrl
-    }
+    },
+    // async handleFile(ev) {
+    //   const file = ev.type === 'change' ?
+    //     ev.target.files[0] :
+    //     ev.dataTransfer.files[0]
+    //   const { imgUrl } = await uploadService.uploadImg(file)
+    //   // this.item.imgUrl=imgUrl
+    //   this.signupCred.imgUrl = imgUrl
+    // }
 
   },
   components: {

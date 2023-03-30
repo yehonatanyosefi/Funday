@@ -42,6 +42,7 @@ a:hover {
 .profile-picture {
 	border-radius: 50%;
 	object-fit: cover;
-	max-width: 30px;
+	width: 30px;
+    height: 30px;
 	border: 2px solid #f5f6f8;
 }

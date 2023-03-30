@@ -138,6 +138,11 @@
             padding: 8px;
             align-items: center;
             height: em(40px);
+            margin-block-end: 6px;
+            gap: 6px;
+            &:first-child{
+              margin-block-start: 4px;
+            }
 
             &:hover{
               background-color: $color-btn-hover;

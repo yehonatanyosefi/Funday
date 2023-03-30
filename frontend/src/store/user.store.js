@@ -8,8 +8,8 @@ import { utilService } from '../services/util.service'
 export const userStore = {
     state: {
         loggedinUser:null,
-        demoUser: {fullname: "Dor Toledano",imgUrl: "https://files.monday.com/euc1/photos/41054538/small/41054538-user_photo_2023_03_18_19_59_31.png?1679169572",
-            mentions: [],password: "123",username: "dortoledano210@gmail.com", _id: "u101"},
+        demoUser: {fullname: "Guest",imgUrl: "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png",
+            mentions: [],password: "123",username: "Guest@gmail.com", _id: "u101"},
         users: [],
         watchedUser: null
     },
