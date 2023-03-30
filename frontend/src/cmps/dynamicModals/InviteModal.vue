@@ -1,5 +1,5 @@
 <template>
-	<div class="modal-overlay" v-if="isOpen"></div>
+	<div class="modal-overlay" ></div>
 	<section v-if="isOpen" @keydown.escape="closeModal" class="modal invite-modal" v-click-outside="closeModal">
 		<h1>Board members</h1>
 
@@ -12,7 +12,7 @@
 				access this board</div>
 
 			<ul class="clean-list">
-				<li v-for="user in users" :key="user._id" class="flex" @click="addMember(user._id)">
+				<li v-for="user in filteredSuggestedUsers" :key="user._id" class="flex" @click="addMember(user._id)">
 					<img class="profile-picture" :src=user.imgUrl>
 					<div class="fullname">{{ user.fullname }}</div>
 					<div v-if="isMember(user._id)" class="crown-container">
@@ -41,21 +41,19 @@ export default {
 			type: Boolean
 		},
 	},
-	created() {
-		this.search()
-	},
 	data() {
 		return {
 			searchTxt: '',
-			addedUsers: []
+			filteredSuggestedUsers: []
 		}
 	},
 	methods: {
 		closeModal() {
-			this.$emit('closeModal','addUser')
+			this.$emit('closeModal')
 		},
 		search() {
-			this.filteredSuggestedUsers = this.userSuggested?.filter(user => user.fullname.toLowerCase().includes(this.searchTxt.toLowerCase()))
+			console.log('this.users',this.users)
+			this.filteredSuggestedUsers = this.users?.filter((user) => user.fullname.toLowerCase().includes(this.searchTxt.toLowerCase()) )
 		},
 		isMember(userId) {
 			const bool = this.currBoard.members.some(member => member._id === userId)
@@ -80,7 +78,10 @@ export default {
 		},
 		currBoard() {
 			return this.$store.getters.board
-		}
+		},
+	},
+	created() {
+		this.search()	
 	},
 	components: {
 		Close,
