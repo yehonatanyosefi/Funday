@@ -36,24 +36,18 @@ demo data guest
 bugs:
 emits break in logout
 
-Others:
-sockets - V
-invite
-task details
 
 yael:
-elipsis Filter, blank to blank filters
 fix routing - to first board, to home
 center text in routes in header
 fix board title
 search text is different
 x in timeline and date
 fix the showing of kanban / board in header
+tooltips - https://floating-vue.starpad.dev/guide/component.html#dropdown
 
 bonus: board details
 
 dor:
 fix login
-loader
 media query
-activities

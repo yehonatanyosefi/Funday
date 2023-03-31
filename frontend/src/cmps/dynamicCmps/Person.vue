@@ -120,7 +120,7 @@ export default {
 		},
 		userSuggested() {
 			return this.currBoard.members?.filter((user) => {
-				return !this.addedUsers?.some((addedUser) => user._id === addedUser._id)
+				return !this.addedUsers?.some((addedUser) => user?._id === addedUser?._id)
 			})
 		},
 		currBoard() {

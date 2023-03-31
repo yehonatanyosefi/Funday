@@ -5,10 +5,10 @@
 		</div>
 		<Container
 			class="card"
-			group-name="cols"
+			:group-name="'col-' + idx"
 			tag="div"
 			orientation="vertical"
-			@drop="onGroupDrop($event)"
+			@drop="onCardDrop($event)"
 			dragClass="dragged-element"
 		>
 			<!-- :drag-handle-selector="dragHandleSelector" -->
@@ -80,7 +80,8 @@ export default {
 			taskToSave[cmp] = payload
 			this.$emit('saveTask', { taskToSave, groupId })
 		},
-		onGroupDrop(dropResult) {
+		onCardDrop(dropResult) {
+			console.log(`dropResult:`, dropResult)
 			// const { removedIndex, addedIndex, payload } = dropResult
 			// if (removedIndex === null && addedIndex === null) return
 			// const cards = [...this.cardsArr]
