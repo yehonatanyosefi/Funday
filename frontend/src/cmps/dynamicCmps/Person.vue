@@ -88,6 +88,7 @@ export default {
 			return this.users?.find((user) => user._id === id)
 		},
 		toggleModal() {
+			this.search()
 			this.isOpen = !this.isOpen
 		},
 		addUser(user) {

@@ -14,8 +14,12 @@
 				<div class="inside-icons flex column">
 					<div class="svg-wrapper selected">
 						<div class="triangle"></div>
+						
+						<a class="desktop-table-btn" role="button" >
+							<WorkManagement class="svg-icon" />
+						</a>
 
-						<a role="button">
+						<a class="mobile-table-btn"  role="button" @click.stop="isMobile=!isMobile">
 							<WorkManagement class="svg-icon" />
 						</a>
 					</div>
@@ -65,7 +69,8 @@
 			</div>
 
 		</section>
-		<FoldingSideBar />
+		<FoldingSideBar  v-show="isMobile" class="mobile-folding-bar" /> 
+		<FoldingSideBar class="desktop-folding-bar"/>
 	</section>
 </template>
 
@@ -93,7 +98,8 @@ export default {
 		return {
 			isSelected: false,
 			loggedinUpser: null,
-			isModalOpen: false
+			isModalOpen: false,
+			isMobile:false
 		}
 	},
 	computed: {

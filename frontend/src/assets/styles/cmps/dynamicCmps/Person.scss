@@ -135,7 +135,7 @@
           color: $clr-divider;
           .suggested-users-container {
             max-height: 160px;
-            overflow-y: scroll;
+            overflow-y: auto;
             li {
               color: $color-txt-primary;
               padding: 8px;

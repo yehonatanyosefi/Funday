@@ -1,23 +1,24 @@
-
+.kanban-wrapper {
+     height: calc(100% - 176px);
+     width: 100%;
+     display: flex;
+     border-block-start: 1px solid #c3c6d4;
+     margin-block-start: 25px;
+}
 .kanban {
-     margin-top: 25px;
-     // height: 100%;
-     padding: 4px 8px 16px 12px;
+     height: 100%;
+     width: 100%;
+     display: flex;
+     overflow: hidden;
+     overflow-x: auto;
+     white-space: nowrap;
+     margin-inline-start: 37px;
+     padding: 8px 8px 16px 12px;
      background: #fff;
      border-bottom-right-radius: 8px;
      border-bottom-left-radius: 8px;
      transition: background .2s ease,
      box-shadow .2s ease;
-     *::-webkit-scrollbar-track {
-          background-color: #f5f5f5;
-     }
-     *::-webkit-scrollbar {
-          width: 10px;
-          background-color: #a4a4a4;
-     }
-     *::-webkit-scrollbar-thumb {
-          background-color: #a4a4a4;
-     }
      .kanban-column {
           margin-inline-end: 10px;
           .header-wrapper {
@@ -35,33 +36,136 @@
           .card {
                display: grid;
                gap: 10px;
+               overflow-y: auto;
+               border-bottom-right-radius: 8px;
+               border-bottom-left-radius: 8px;
+               transition: background .2s ease, box-shadow .2s ease;
+               max-height: calc(100vh - 245px);
+               // max-height: calc(100vh - 176px);
+               width: 260px;
+               margin: 0;
+               padding: 4px 8px 16px 12px;
+               background: #f6f7fb;
                .card-preview {
+                    // padding-inline-start: 8px;
                     background-color: #fff;
                     border-radius: 4px;
-                    padding-inline-start: 8px;
                     position: relative;
                     box-shadow: 0px 4px 8px rgba(0, 0, 0, .2);
                     font-size: 13px;
                     width: 100%;
-                    height: fit-content;
+                    height: max-content;
                }
                .cmp-preview {
                     display: grid;
-                    grid-template-columns: 1fr 1fr;
+                    height: 36px;
+                    grid-template-columns: 34px 140px;
                     align-content: center;
-                    justify-content: center;
-                    padding: 8px 8px;
+                    justify-content: space-between;
+                    padding: 0px 8px;
+                    margin-block-end: 8px;
+                    // &:not(:last-child) {
+                    //      }
+                    .card-title {
+                         display: flex;
+                         align-items: center;
+                         justify-content: start;
+                         height: 100%;
+                         width: 72px;
+                         text-overflow: ellipsis;
+                         margin-inline-end: 8px;
+                    }
+                    .card-cmp {
+                         height: 34px;
+                         width: 100%;
+                         @include flex-center;
+                         background-color: #f5f6f8;
+                         .timeline-progress {
+                              margin-block-start: 7px;
+                         }
+                         & > * {
+                              @include flex-center;
+                              height: 34px;
+                              width: 100%;
+                              &:is(.priority,.status) {
+                                   color: #fff;
+                              }
+                              &:is(.priority,.status,.profile-div,.label,.start-end-date-container) {
+                                   cursor: pointer;
+                              }
+                         }
+                         &:hover {
+                              background-color: #e6e9ef;
+                         }
+                    }
                }
-               border-bottom-right-radius: 8px;
-               border-bottom-left-radius: 8px;
-               transition: background .2s ease, box-shadow .2s ease;
-               height: 360px;
-               width: 260px;
-               overflow-y: scroll;
-               flex: 1;
-               margin: 0;
-               padding: 4px 8px 16px 12px;
-               background: #f6f7fb;
+               &:hover {
+                    background-color: #dcdfec;
+                    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+               }
+          }
+          .card::-webkit-scrollbar {
+               width: 5px;
+               background-color: transparent;
+          }
+          .card::-webkit-scrollbar-track {
+               background-color: transparent;
+               opacity: 0;
+          }
+          .card::-webkit-scrollbar-thumb {
+               background-color: transparent;
+               border-radius: 10px;
+               transition: opacity .35s ease;
+          }
+          .card:hover::-webkit-scrollbar-thumb {
+               background-color: #c3c6d4;
+               opacity: 1;
           }
      }
+          .board-input {
+               font: inherit;
+               color: inherit;
+               border: inherit;
+               border-radius: 0.25em;
+               outline: none;
+               text-overflow: ellipsis;
+               padding-inline-start: $input-padding-board-details;
+               padding-inline-end: $input-padding-board-details;
+     
+               background-color: inherit;
+               &:hover {
+                    box-shadow: 0px 0px 0px 0.5px $color-divider;
+               }
+     
+               &:focus {
+                    background-color: white;
+                    box-shadow: 0px 0px 0px 0.5px $group-header-clr !important;
+               }
+          }
+          .checkbox {
+               height: 16px;
+          }
+}
+.kanban-options {
+     width: 270px;
+     height: 100%;
+     padding: 16px 16px 0px;
+     border-inline-start: 1px solid #c3c6d4;
+     overflow-y: auto;
+}
+
+.kanban::-webkit-scrollbar-track {
+     background-color: transparent;
+     opacity: 0;
+}
+
+.kanban::-webkit-scrollbar {
+     width: 6px;
+     height: 10px;
+     background-color: transparent;
+}
+
+.kanban::-webkit-scrollbar-thumb {
+     border-radius: 10px;
+     background-color: #c3c6d4;
 }

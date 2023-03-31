@@ -1,5 +1,5 @@
 <template>
-    <main class="folding-bar" @click="onBlur" :class="{ folded: isFolded }" >
+    <main class="folding-bar" @click="onBlur" :class="{folded: isFolded }" >
 
         <div class="slide-btn" @click.stop="foldBar">
             <LeftArrow class="svg-icon" />
@@ -16,10 +16,10 @@
                 <div class="title">Main workspace</div>
                 </p>
                 <div class="btns flex column">
-                    <button @click.stop="addBoard">
+                    <button class="add-btn" @click.stop="addBoard">
                         <Add class="svg-icon" /> <span class="optn">Add</span>
                     </button>
-                    <button>
+                    <button class="filter-btn">
                         <Filter class="svg-icon" /> <span class="optn">Filters</span>
                     </button>
                     <div class="searching" @click.stop="isSearching = true">
@@ -51,7 +51,6 @@ import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 
 
 export default {
-    props: {},
     created() {
 
     },

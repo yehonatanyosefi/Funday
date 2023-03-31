@@ -36,7 +36,6 @@ export const userStore = {
 		setLoggedinUser(state, { user }) {
 			// Yaron: needed this workaround as for score not reactive from birth
 			state.loggedinUser = user ? { ...user } : null
-			console.log('state.loggedinUser', state.loggedinUser)
 		},
 		setWatchedUser(state, { user }) {
 			state.watchedUser = user
@@ -57,7 +56,7 @@ export const userStore = {
 				let user = await userService.login(userCred)
 				user = JSON.parse(JSON.stringify(user))
 				commit({ type: 'setLoggedinUser', user })
-				dispatch({ type: 'loadBoardList' }) //!
+				dispatch({ type: 'loadBoardList' })
 				return user
 			} catch (err) {
 				console.log('userStore: Error in login', err)
@@ -90,7 +89,6 @@ export const userStore = {
 			try {
 				const userCred = { username: 'guest@gmail.com', password: '1234' }
 				let user = await userService.login(userCred)
-				console.log('User', user)
 				user = JSON.parse(JSON.stringify(user))
 				commit({ type: 'setLoggedinUser', user })
 				dispatch({ type: 'loadBoardList' })

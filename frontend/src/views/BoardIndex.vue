@@ -15,7 +15,8 @@ import { SOCKET_EMIT_SET_BOARD, SOCKET_EMIT_BOARD_MSG } from '../services/socket
 export default {
 	props: {},
 	async created() {
-		const params = this.$route.params.boardId
+		const params = this.$route.params?.boardId
+		if (!params) return
 		await this.$store.dispatch({ type: 'getFirstBoard', params })
 		this.onBoardChanged(params)
 	},
@@ -27,11 +28,9 @@ export default {
 	},
 	methods: {
 		onBoardUpdate(data) {
-			console.log('---->SOCKET board update', data)
 			this.$store.dispatch({ type: 'setAndFilterBoard', board: data })
 		},
 		onBoardChanged(boardId) {
-			console.log('---->SOCKET onBoardChanged')
 			socketService.emit(SOCKET_EMIT_SET_BOARD, boardId)
 			socketService.on(SOCKET_EMIT_BOARD_MSG, this.onBoardUpdate)
 		},
@@ -39,7 +38,8 @@ export default {
 	watch: {
 		'$route.params': {
 			handler() {
-				const boardId = this.$route.params.boardId
+				const boardId = this.$route.params?.boardId
+				if (!boardId) return
 				this.onBoardChanged(boardId)
 			},
 		},
