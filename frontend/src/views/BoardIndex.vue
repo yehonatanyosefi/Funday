@@ -5,7 +5,8 @@
 			<BoardHeader></BoardHeader>
 			<RouterView></RouterView>
 		</div>
-		<span v-if="!board?._id">LOADING...</span>
+		<!-- <span v-if="!board?._id">LOADING...</span> -->
+		<Loader v-if="!board?._id"/>
 	</main>
 </template>
 
@@ -13,6 +14,7 @@
 import MainSidebar from '../cmps/MainSidebar.vue'
 import BoardHeader from '../cmps/BoardHeader.vue'
 import { SOCKET_EMIT_SET_BOARD, SOCKET_EMIT_BOARD_MSG } from '../services/socket.service'
+import Loader from '../cmps/util/Loader.vue'
 export default {
 	props: {},
 	async created() {
@@ -52,6 +54,7 @@ export default {
 	components: {
 		MainSidebar,
 		BoardHeader,
+		Loader
 	},
 }
 </script>

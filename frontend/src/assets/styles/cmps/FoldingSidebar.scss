@@ -18,10 +18,11 @@
 
 .folding-bar {
   color: $color-txt-primary;
-  @include for-normal-layout {
-    width: 255px;
+  width: 255px;
+  border-inline-end: 1px solid $color-divider;
+  @include for-mobile-layout {
+    width: 100vw;
   }
-  width: 100vw;
   background-color: $color-riverstone_gray;
   font-family: ROBOTO-reg;
   position: relative;
