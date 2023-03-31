@@ -8,6 +8,21 @@ async function query(filterBy = { txt: '', userId: '' }) {
 		// const criteria = {
 		//     title: { $regex: filterBy.txt, $options: 'i' }
 		// }
+
+		// const criteria = {
+		// 	$and: [
+		// 		filterBy.txt ? { title: { $regex: new RegExp(filterBy.txt, 'i') } } : {},
+		// 		filterBy.userId ? { members: { $elemMatch: { _id: filterBy.userId } } } : {},
+		// 	],
+		// }
+
+		// const collection = await dbService.getCollection('board')
+		// const boards = await collection.find(criteria).sort({ position: 1 }).toArray()
+		// let boardList = boards.map((board) => {
+		// 	return { _id: board._id, title: board.title, position: board.position, isStarred: board.isStarred }
+		// })
+		// return boardList
+
 		const criteria = {
 			$and: [
 				filterBy.txt ? { title: { $regex: new RegExp(filterBy.txt, 'i') } } : {},
@@ -15,9 +30,23 @@ async function query(filterBy = { txt: '', userId: '' }) {
 			],
 		}
 
+		const projection = {
+			$project: {
+				_id: 1,
+				title: 1,
+				position: 1,
+				isStarred: 1,
+			},
+		}
+
 		const collection = await dbService.getCollection('board')
-		var boardList = await collection.find(criteria).sort({ position: 1 }).toArray()
+		const boardList = await collection
+			.aggregate([{ $match: criteria }, projection])
+			.sort({ position: 1 })
+			.toArray()
+
 		return boardList
+
 
 		// let boardsCopy = JSON.parse(JSON.stringify(boards))
 		// if (filterBy.txt) {
@@ -61,7 +90,6 @@ async function remove(boardId) {
 }
 
 async function add(board) {
-	//db.collection.find().sort({age:-1}).limit(1)
 	try {
 		const collection = await dbService.getCollection('board')
 		const isBoard = await collection.find()

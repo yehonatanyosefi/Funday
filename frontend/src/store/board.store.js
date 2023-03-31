@@ -3,8 +3,6 @@ import { router } from '../router'
 import { utilService } from '../services/util.service'
 import { userService } from '../services/user.service'
 
-import { toRaw } from 'vue'
-
 export const boardStore = {
 	state: {
 		board: {},
@@ -63,11 +61,9 @@ export const boardStore = {
 			if (idx > -1 && state.boardList.length === 1) state.board = state.boardList[idx - 1]
 			state.filteredBoard = JSON.parse(JSON.stringify(state.board))
 		},
-
 		resetFilters(state) {
 			state.filterBy = { txt: '', member: null }
 		},
-
 		filterBoard(state, { filterBy }) {
 			let filter = !filterBy ? state.filterBy : filterBy
 
@@ -84,12 +80,9 @@ export const boardStore = {
 			state.filteredBoard = filterBoard
 			state.filterBy = filter
 		},
-
 		setAdvanceFilter(state, { advanceFilter }) {
 			this.filterBy = { txt: '', member: null }
 			let filterBoard = JSON.parse(JSON.stringify(state.board))
-			console.log('filterBoard', filterBoard)
-
 			filterBoard = boardService.setAdvanceFilter(filterBoard, advanceFilter)
 			// console.log('filterBoard', filterBoard)
 
@@ -222,6 +215,7 @@ export const boardStore = {
 			}
 		},
 		setAndFilterBoard({ commit, state }, { board }) {
+			if (!board?._id) return
 			commit({ type: 'setBoard', board })
 			const filterBy = state.filterBy
 			commit({ type: 'filterBoard', filterBy })
@@ -246,8 +240,6 @@ export const boardStore = {
 			try {
 				filterBy.userId = context.getters.loggedinUser._id
 				const boardList = await boardService.queryList(filterBy)
-				console.log('boardList', boardList)
-
 				context.commit({ type: 'setBoardList', boardList })
 				return boardList
 			} catch (err) {
@@ -412,9 +404,7 @@ export const boardStore = {
 		},
 		async addMember(context, { userId }) {
 			try {
-				console.log('userId', userId)
 				const member = await userService.getById(userId)
-				console.log('member', member)
 				const payload = { _id: member._id, fullname: member.fullname, imgUrl: member.imgUrl }
 				const boardId = context.getters.board._id
 				const updatedBoard = await boardService.save(boardId, 'member', payload)
@@ -427,8 +417,6 @@ export const boardStore = {
 		async removeMember(context, { userId }) {
 			try {
 				const member = await userService.getById(userId)
-				console.log('member', member)
-				console.log('member._id', member._id)
 				const boardId = context.getters.board._id
 				const updatedBoard = await boardService.remove({ boardId, memberId: member._id }, 'member')
 				await context.dispatch({ type: 'setAndFilterBoard', board: updatedBoard })

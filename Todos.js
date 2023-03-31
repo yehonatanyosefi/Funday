@@ -47,6 +47,8 @@ fix routing - to first board, to home
 center text in routes in header
 fix board title
 search text is different
+x in timeline and date
+fix the showing of kanban / board in header
 
 bonus: board details
 

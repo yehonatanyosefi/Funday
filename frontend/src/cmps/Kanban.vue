@@ -6,7 +6,7 @@
 				tag="div"
 				dragClass="dragged-element"
 				orientation="horizontal"
-				@drop="onGroupDrop($event)"
+				@drop="onColumnDrop($event)"
 			>
 				<Draggable v-for="(column, idx) in currColumns.words" :key="idx">
 					<KanbanColumn
@@ -27,6 +27,7 @@
 			</select>
 			<div v-for="(cmpName, idx) in cmpOrder" :key="idx">
 				<input
+					class="checkbox"
 					type="checkbox"
 					:checked="filteredCmpOrder.includes(cmpName)"
 					@click="toggleFilter(cmpName)"
@@ -65,18 +66,19 @@ export default {
 		changeSelection(ev) {
 			this.current = ev.target.value
 		},
-		getgroupHeightPx() {
+		getGroupHeightPx() {
 			// 	let kanban = document.getElementById('kanbanContainer')
 			// 	return kanban ? kanban.offsetHeight - 122 : 0
 		},
-		onGroupDrop(dropResult) {
-			const { removedIndex, addedIndex } = dropResult
-			if (removedIndex === null || addedIndex === null) return
-			const newWords = [...this.currColumns.words]
-			const newColors = [...this.currColumns.colors]
-			newWords.splice(addedIndex, 0, ...newWords.splice(removedIndex, 1))
-			newColors.splice(addedIndex, 0, ...newColors.splice(removedIndex, 1))
-			this.updateColumns({ words: newWords, colors: newColors })
+		onColumnDrop(dropResult) {
+			console.log(`dropResult:`, dropResult)
+			// const { removedIndex, addedIndex } = dropResult
+			// if (removedIndex === null || addedIndex === null) return
+			// const newWords = [...this.currColumns.words]
+			// const newColors = [...this.currColumns.colors]
+			// newWords.splice(addedIndex, 0, ...newWords.splice(removedIndex, 1))
+			// newColors.splice(addedIndex, 0, ...newColors.splice(removedIndex, 1))
+			// this.updateColumns({ words: newWords, colors: newColors })
 		},
 		updateColumns(newColumns) {
 			this.columnList.status.words = newColumns.words
