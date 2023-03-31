@@ -1,10 +1,12 @@
 <template>
 	<main class="main-layout">
-		<MainSidebar></MainSidebar>
-		<div class="container">
-			<BoardHeader></BoardHeader>
-			<RouterView></RouterView>
-		</div>
+		<template v-if="board._id">
+			<MainSidebar></MainSidebar>
+			<div class="container">
+				<BoardHeader></BoardHeader>
+				<RouterView></RouterView>
+			</div>
+		</template>
 	</main>
 </template>
 
@@ -16,7 +18,6 @@ export default {
 	props: {},
 	async created() {
 		const params = this.$route.params?.boardId
-		if (!params) return
 		await this.$store.dispatch({ type: 'getFirstBoard', params })
 		this.onBoardChanged(params)
 	},
@@ -44,7 +45,11 @@ export default {
 			},
 		},
 	},
-	computed: {},
+	computed: {
+		board() {
+			return this.$store.getters.board
+		},
+	},
 	components: {
 		MainSidebar,
 		BoardHeader,
