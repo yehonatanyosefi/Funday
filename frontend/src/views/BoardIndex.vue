@@ -1,12 +1,10 @@
 <template>
 	<main class="main-layout">
-		<template v-if="board._id">
-			<MainSidebar></MainSidebar>
-			<div class="container">
-				<BoardHeader></BoardHeader>
-				<RouterView></RouterView>
-			</div>
-		</template>
+		<MainSidebar v-show="board._id"></MainSidebar>
+		<div class="container" v-show="board._id">
+			<BoardHeader></BoardHeader>
+			<RouterView></RouterView>
+		</div>
 	</main>
 </template>
 
