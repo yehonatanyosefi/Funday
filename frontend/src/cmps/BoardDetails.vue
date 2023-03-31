@@ -86,7 +86,8 @@ export default {
 			return this.$store.getters.filteredBoard
 		},
 		cmpOrder() {
-			return this.board.cmpOrder
+			// return this.board.cmpOrder
+			return ['status', 'person', 'timeline', 'date', 'priority', 'text']
 		},
 		isSelectedEmpty() {
 			return !Object.values(this.selectedTasks).flat().length

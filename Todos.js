@@ -1,13 +1,21 @@
 kanban
-multi select duplicate
 user messages ccss
-demo data guest
 try catch
 cursor pointer on expand
+infinity lines
+fix update group / task attributes to update locally first
+input closing with enter
+dashboard spacing, height and row -> columns
+dashboard legend reconsider, update dashboard
+mobile
+progress bar sticky
+hover task font
+remove scroll on container in kanban
+input with "New Task" auto select
 
 fix:
-progress bar sticky
 add task input start location
+content editable
 
 questions:
 demo data dates - still not working
@@ -15,32 +23,35 @@ modals in kanban
 
 demo data guest - include guest not on invite
 GUEST - MGFDS@#RSDD1
-width fit content input not working
 focus within, when modal is open in absolute
-check box not inheriting background color on focus within
 
 ITP:
-bonus
-dashboard legend reconsider, update dashboard
 title input in collapsed
 debounce ?
-     minified boards in backend
-dashboard spacing, height and row -> columns
-empty values to "blank"
+     empty values to "blank"
 minified users, minified boards in boardlist
-fix update group attributes to update locally first
+multi select duplicate
+demo data guest
 
 bugs:
-emits break in llogut
+emits break in logout
 
 Others:
 sockets - V
 invite
 task details
-activity history
-loader
-fix login
 
 yael:
 elipsis Filter, blank to blank filters
+fix routing - to first board, to home
+center text in routes in header
+fix board title
+search text is different
 
+bonus: board details
+
+dor:
+fix login
+loader
+media query
+activities

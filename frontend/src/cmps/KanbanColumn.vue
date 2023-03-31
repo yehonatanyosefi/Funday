@@ -11,16 +11,19 @@
 			@drop="onGroupDrop($event)"
 			dragClass="dragged-element"
 		>
+			<!-- :drag-handle-selector="dragHandleSelector" -->
 			<Draggable class="card-preview" v-for="task in cardsArr" :key="task.id">
 				<div class="cmp-preview">{{ task.title }}</div>
-				<div class="cmp-preview" v-for="(cmp, idx) in cmpOrder" :key="idx">
-					<div class="column-title">{{ cmp }}</div>
-					<component
-						:is="capitalizeFirstLetter(cmp)"
-						:info="task[cmp]"
-						:groupColor="task.groupColor"
-						@saveTask="saveTask($event, { cmp, task, groupId: task.taskGroupId })"
-					></component>
+				<div class="cmp-preview" v-for="(cmp, idx) in filteredCmpOrder" :key="idx">
+					<div class="card-title">{{ cmp }}</div>
+					<div class="card-cmp">
+						<component
+							:is="capitalizeFirstLetter(cmp)"
+							:info="task[cmp]"
+							:groupColor="task.groupColor"
+							@saveTask="saveTask($event, { cmp, task, groupId: task.taskGroupId })"
+						></component>
+					</div>
 				</div>
 			</Draggable>
 		</Container>
@@ -42,8 +45,9 @@ export default {
 	props: {
 		board: Object,
 		column: Object,
-		cmpOrder: Array,
 		idx: Number,
+		current: String,
+		filteredCmpOrder: Array,
 	},
 	created() {},
 	data() {
@@ -52,6 +56,9 @@ export default {
 		}
 	},
 	methods: {
+		// isMobile() {
+		// 	return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+		// },
 		capitalizeFirstLetter(str) {
 			return str.charAt(0).toUpperCase() + str.slice(1)
 		},
@@ -74,27 +81,27 @@ export default {
 			this.$emit('saveTask', { taskToSave, groupId })
 		},
 		onGroupDrop(dropResult) {
-			const { removedIndex, addedIndex, payload } = dropResult
-			if (removedIndex === null && addedIndex === null) return
-			const cards = [...this.cardsArr]
-			const itemToAdd = payload
-			if (removedIndex !== null) {
-				cards.splice(removedIndex, 1)
-			}
-			if (addedIndex !== null) {
-				cards.splice(addedIndex, 0, itemToAdd)
-			}
-			this.modifiedCards = cards
-			this.updateBoardCards(cards)
+			// const { removedIndex, addedIndex, payload } = dropResult
+			// if (removedIndex === null && addedIndex === null) return
+			// const cards = [...this.cardsArr]
+			// const itemToAdd = payload
+			// if (removedIndex !== null) {
+			// 	cards.splice(removedIndex, 1)
+			// }
+			// if (addedIndex !== null) {
+			// 	cards.splice(addedIndex, 0, itemToAdd)
+			// }
+			// this.modifiedCards = cards
+			// this.updateBoardCards(cards)
 		},
 		updateBoardCards(updatedCards) {
-			const newBoard = JSON.parse(JSON.stringify(this.board))
-			updatedCards.forEach((card) => {
-				const groupIndex = newBoard.groups.findIndex((group) => group.id === card.taskGroupId)
-				const taskIndex = newBoard.groups[groupIndex].tasks.findIndex((task) => task.id === card.id)
-				newBoard.groups[groupIndex].tasks.splice(taskIndex, 1, card)
-			})
-			this.updateBoard(newBoard)
+			// const newBoard = JSON.parse(JSON.stringify(this.board))
+			// updatedCards.forEach((card) => {
+			// 	const groupIndex = newBoard.groups.findIndex((group) => group.id === card.taskGroupId)
+			// 	const taskIndex = newBoard.groups[groupIndex].tasks.findIndex((task) => task.id === card.id)
+			// 	newBoard.groups[groupIndex].tasks.splice(taskIndex, 1, card)
+			// })
+			// this.updateBoard(newBoard)
 		},
 		updateBoard(newBoard) {
 			console.log(`newBoard:`, newBoard)
@@ -110,7 +117,7 @@ export default {
 			if (this.modifiedCards.length > 0) {
 				return this.modifiedCards
 			}
-			return this.getListCards('status', this.column.words[this.idx]).flat()
+			return this.getListCards(this.current, this.column.words[this.idx]).flat()
 		},
 	},
 	components: {

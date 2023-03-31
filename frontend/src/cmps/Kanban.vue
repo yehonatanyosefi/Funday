@@ -1,22 +1,41 @@
 <template>
-	<div class="kanban" v-if="board._id">
-		<Container
-			group-name="cols"
-			tag="div"
-			dragClass="dragged-element"
-			orientation="horizontal"
-			@drop="onGroupDrop($event)"
-		>
-			<Draggable v-for="(column, idx) in currColumns.words" :key="idx">
-				<KanbanColumn
-					:column="currColumns"
-					:board="board"
-					:cmpOrder="cmpOrder"
-					:idx="idx"
-					@saveTask="saveTask"
+	<div class="kanban-wrapper">
+		<div class="kanban" v-if="board._id">
+			<Container
+				group-name="cols"
+				tag="div"
+				dragClass="dragged-element"
+				orientation="horizontal"
+				@drop="onGroupDrop($event)"
+			>
+				<Draggable v-for="(column, idx) in currColumns.words" :key="idx">
+					<KanbanColumn
+						:filteredCmpOrder="filteredCmpOrder"
+						:current="current"
+						:column="currColumns"
+						:board="board"
+						:idx="idx"
+						@saveTask="saveTask"
+					/>
+				</Draggable>
+			</Container>
+		</div>
+		<div class="kanban-options">
+			<select @input="changeSelection">
+				<option value="status">Status</option>
+				<option value="priority">Priority</option>
+			</select>
+			<div v-for="(cmpName, idx) in cmpOrder" :key="idx">
+				<input
+					type="checkbox"
+					:checked="filteredCmpOrder.includes(cmpName)"
+					@click="toggleFilter(cmpName)"
 				/>
-			</Draggable>
-		</Container>
+				<!-- :checked="filteredCmpOrder[cmpName]" -->
+				<label>{{ cmpName }}</label>
+				<!-- @change="cmpFilter[cmpName] = !cmpFilter[cmpName]" -->
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -36,11 +55,16 @@ export default {
 					colors: ['#333333', '#401694', '#5559df', '#579bfc', '#c4c4c4'],
 				},
 			},
+			current: 'status',
+			filteredCmpOrder: ['person', 'timeline'],
 			modifiedCards: [],
 		}
 	},
 	created() {},
 	methods: {
+		changeSelection(ev) {
+			this.current = ev.target.value
+		},
 		getgroupHeightPx() {
 			// 	let kanban = document.getElementById('kanbanContainer')
 			// 	return kanban ? kanban.offsetHeight - 122 : 0
@@ -68,6 +92,11 @@ export default {
 				// showErrorMsg('Cannot update task')
 			}
 		},
+		toggleFilter(cmpName) {
+			this.filteredCmpOrder.includes(cmpName)
+				? (this.filteredCmpOrder = this.filteredCmpOrder.filter((name) => name !== cmpName))
+				: this.filteredCmpOrder.push(cmpName)
+		},
 	},
 	computed: {
 		board() {
@@ -77,8 +106,7 @@ export default {
 			return this.board.cmpOrder
 		},
 		currColumns() {
-			const current = 'status'
-			return this.columnList[current]
+			return this.columnList[this.current]
 		},
 	},
 	components: { Container, Draggable, KanbanColumn },
