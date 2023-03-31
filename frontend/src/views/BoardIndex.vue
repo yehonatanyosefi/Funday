@@ -1,10 +1,11 @@
 <template>
 	<main class="main-layout">
-		<MainSidebar v-show="board._id"></MainSidebar>
-		<div class="container" v-show="board._id">
+		<MainSidebar v-show="board?._id"></MainSidebar>
+		<div class="container" v-show="board?._id">
 			<BoardHeader></BoardHeader>
 			<RouterView></RouterView>
 		</div>
+		<span v-if="!board?._id">LOADING...</span>
 	</main>
 </template>
 
