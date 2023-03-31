@@ -222,7 +222,7 @@
 
 			.filter-groups {
 				display: grid;
-				grid-auto-columns: 150px;
+				grid-auto-columns: 130px;
 				grid-auto-flow: column;
 				align-items: flex-start;
 				overflow: auto;
@@ -274,11 +274,14 @@
 					.filter-option {
 						display: flex;
 						align-items: center;
-
+						justify-content: flex-start;
 						div,
 						span {
-							@include ellipsis(14px, 100%);
+							display: block;
 							text-align: left;
+							overflow: hidden;
+							white-space: nowrap;
+							text-overflow: ellipsis;
 						}
 						.label-color {
 							display: inline-block;
@@ -299,12 +302,17 @@
 					}
 					&.person {
 						.filter-option {
+							display: grid;
+							grid-template-columns: 28px 82px;
+							width: 100%;
 							img {
 								width: 26px;
 								height: 26px;
 								border-radius: 50%;
 								object-fit: cover;
+								display: flex;
 							}
+
 							span {
 								margin-left: 8px;
 							}

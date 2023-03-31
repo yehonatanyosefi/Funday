@@ -14,8 +14,8 @@
 					<div class="filter-option">
 						<div class="img-container">
 							<img :src="item.imgUrl" alt="" />
-							{{ item.fullname }}
 						</div>
+						<div>{{ item.fullname }}</div>
 					</div>
 					<div class="filter-counter">{{}}</div>
 				</div>
@@ -30,9 +30,10 @@
 					<div class="filter-option">
 						<span v-if="column === 'date'">{{ getFormattedDate(item) }}</span>
 						<div v-else-if="column === 'status' || column === 'priority'">
-							<span class="label-color" :style="getFormattedLabelStyle(item)"></span>{{ item }}
+							<span class="label-color" :style="getFormattedLabelStyle(item)"></span>
+							{{ itemName(item) }}
 						</div>
-						<span v-else>{{ item }}</span>
+						<span v-else>{{ item }} </span>
 					</div>
 					<div class="filter-counter">
 						<span> {{}}</span>
@@ -60,13 +61,13 @@ export default {
 	data() {
 		return {
 			months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-			status: { Done: '#00c875', 'Working on it': '#fdab3d', Stuck: '#e2445c', '': '#c4c4c4' },
+			status: { Done: '#00c875', 'Working on it': '#fdab3d', Stuck: '#e2445c', Blank: '#c4c4c4' },
 			priority: {
 				Critical: '#333333',
 				High: '#401694',
 				Medium: '#5559df',
 				Low: '#579bfc',
-				'': '#c4c4c4',
+				Blank: '#c4c4c4',
 			},
 		}
 	},
@@ -114,8 +115,13 @@ export default {
 			return item.toLocaleString()
 		},
 
+		itemName(item) {
+			return !item ? 'Blank' : item
+		},
+
 		getFormattedLabelStyle(item) {
 			let color = '#c4c4c4'
+			item = !item ? 'Blank' : item
 			if (this.column === 'priority') {
 				color = this.priority[item]
 			} else if (this.column === 'status') {
