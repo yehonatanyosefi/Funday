@@ -103,15 +103,14 @@
 			font-family: Figtree-reg;
 			font-size: rem(16px);
 			border: none;
-			&::placeholder {
-				color: $clr-divider;
-			}
-
-			background-color: transparent;
-			width: 60px;
-			transition: width 0.4s;
-			cursor: pointer;
 			outline: none;
+			&::placeholder {
+				fill: $clr-divider;
+				color: $clr-divider;
+				font-family: Figtree-reg;
+				font-size: rem(16px);
+				opacity: 0.85;
+			}
 
 			&.open {
 				width: 190px;
@@ -121,6 +120,8 @@
 
 		svg {
 			margin-left: 5px;
+			fill: $clr-divider;
+			color: $clr-divider;
 		}
 	}
 

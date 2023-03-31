@@ -165,8 +165,8 @@
 					box-shadow: inset 0px -2px 0px 0px #0373ea;
 				}
 				.content {
-					padding-right: 8px;
-					padding-left: 14px;
+					padding-right: 11px;
+					padding-left: 11px;
 				}
 				.content:hover {
 					width: 100%;
@@ -187,6 +187,10 @@
 				&:hover {
 					text-decoration: none;
 				}
+			}
+
+			button {
+				font-family: Figtree-reg;
 			}
 
 			.view-title {
