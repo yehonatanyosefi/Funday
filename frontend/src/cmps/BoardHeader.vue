@@ -3,8 +3,14 @@
 		<section class="board-header">
 			<section class="top-header">
 				<div class="board-title-left-container">
-					<div :class="{ editing: isEditing }" @keydown.enter.prevent="saveBoardTitle" @blur="saveBoardTitle"
-						contenteditable @click="isEditing = true" class="board-title">
+					<div
+						:class="{ editing: isEditing }"
+						@keydown.enter.prevent="saveBoardTitle"
+						@blur="saveBoardTitle"
+						contenteditable
+						@click="isEditing = true"
+						class="board-title"
+					>
 						{{ boardTitle }}
 					</div>
 					<Favorite v-if="!board.isStarred" @click="favorite"></Favorite>
@@ -14,16 +20,17 @@
 					<!-- <div v-if="getlastSeenUserImg" class="last-seen">
             Last seen <img :src="getlastSeenUserImg" alt="" />
           </div> -->
-					<div class="invite " @click="isOpen = !isOpen">
+					<div class="invite" @click="isOpen = !isOpen">
 						<Invite class="svg-icon" />
 						Invite/{{ membersCount }}
 						<!-- <a :href="getBoardUrl" target="_blank" rel="noopener noreferrer"></a> -->
-						<InviteModal 
-						v-if="isOpen"
-						:isOpen="isOpen"
-						 @closeModal="closeModal" 
-						 @addMember="addMember"
-						 @removeMember="removeMember">
+						<InviteModal
+							v-if="isOpen"
+							:isOpen="isOpen"
+							@closeModal="closeModal"
+							@addMember="addMember"
+							@removeMember="removeMember"
+						>
 						</InviteModal>
 					</div>
 				</div>
@@ -31,7 +38,11 @@
 			<section class="add-views">
 				<div>
 					<router-link :to="'/board/' + board._id + '/main-table'">
-						<button @click="changeView('table')" class="view-item" :class="{ selected: view === 'table' }">
+						<button
+							@click="changeView('main-table')"
+							class="view-item"
+							:class="{ selected: view === 'main-table' }"
+						>
 							<div class="content">
 								<Home></Home>
 								<p class="view-title">Main Table</p>
@@ -42,7 +53,11 @@
 
 				<span class="separator"></span>
 				<router-link :to="'/board/' + board._id + '/kanban'">
-					<button @click="changeView('kanban')" class="view-item" :class="{ selected: view === 'kanban' }">
+					<button
+						@click="changeView('kanban')"
+						class="view-item"
+						:class="{ selected: view === 'kanban' }"
+					>
 						<div class="content">
 							<p class="view-title">Kanban</p>
 						</div>
@@ -50,7 +65,11 @@
 				</router-link>
 				<span class="separator"></span>
 				<router-link :to="'/board/' + board._id + '/dashboard'">
-					<button @click="changeView('dashboard')" class="view-item" :class="{ selected: view === 'dashboard' }">
+					<button
+						@click="changeView('dashboard')"
+						class="view-item"
+						:class="{ selected: view === 'dashboard' }"
+					>
 						<div class="content">
 							<p class="view-title">Dashboard</p>
 						</div>
@@ -58,8 +77,14 @@
 				</router-link>
 			</section>
 
-			<BorderFilter :filter="filter" :users="users" @setFilter="setFilter" @addTask="addTask" @addGroup="addGroup"
-				@advanceFilter="advanceFilter" />
+			<BorderFilter
+				:filter="filter"
+				:users="users"
+				@setFilter="setFilter"
+				@addTask="addTask"
+				@addGroup="addGroup"
+				@advanceFilter="advanceFilter"
+			/>
 		</section>
 		<!-- <BorderFilter
       v-if="vw > 500"
@@ -89,11 +114,15 @@ export default {
 	data() {
 		return {
 			isEditing: false,
-			view: '',
+			view: 'main-table',
 			lastSeenUserImg: '',
 			lastSeenUserId: '',
-			isOpen: false
+			isOpen: false,
 		}
+	},
+	created() {
+		this.setView()
+		this.setLastSeenUserImg(this.loggedinUser?._id)
 	},
 	methods: {
 		changeView(viewName) {
@@ -136,10 +165,10 @@ export default {
 			this.$router.push(dest)
 		},
 		setView() {
-			const path = this.$route.path
-			if (path.includes('kanban')) this.view = 'kanban'
-			else if (path.includes('dashboard')) this.view = 'dashboard'
-			else this.view = 'table'
+			// const path = this.$route.path
+			// if (path.includes('kanban')) this.view = 'kanban'
+			// else if (path.includes('dashboard')) this.view = 'dashboard'
+			// else this.view = 'main-table'
 		},
 		closeModal() {
 			this.isOpen = false
@@ -149,7 +178,7 @@ export default {
 		},
 		removeMember(userId) {
 			this.$store.dispatch({ type: 'removeMember', userId })
-		}
+		},
 	},
 	components: { BorderFilter, Invite, Favorite, FavoriteFull, Home, InviteModal },
 	computed: {
@@ -181,10 +210,16 @@ export default {
 			return window.innerWidth
 		},
 	},
-	created() {
-		this.setView()
-		this.setLastSeenUserImg(this.loggedinUser?._id)
+
+	watch: {
+		'$route.path': {
+			handler() {
+				const path = this.$route.path
+				const idx = path.lastIndexOf('/')
+				this.changeView(path.substring(idx + 1).toLowerCase())
+			},
+		},
 	},
-	mounted() { },
+	mounted() {},
 }
 </script>
