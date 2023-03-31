@@ -4,7 +4,7 @@
 		<template v-if="info?.length > 0 && info?.length < 3" v-for="(id, idx) in info" :key="idx">
 			<img :src="user(id).imgUrl" :title="user(id).fullname" class="profile-picture" />
 		</template>
-		<template v-else-if="info.length > 2">
+		<template v-else-if="info?.length > 2">
 			<img :src="user(info[0])?.imgUrl" :title="user(info[0])?.fullname" class="profile-picture" />
 			<div class="more-users">+{{ info?.length - 1 }}</div>
 		</template>
@@ -72,7 +72,7 @@ export default {
 		info: Array,
 	},
 	created() {
-		this.addedUsers = this.info.map((userId) => this.user(userId))
+		this.addedUsers = this.info?.map((userId) => this.user(userId))
 		this.search()
 	},
 	data() {
@@ -120,7 +120,7 @@ export default {
 		},
 		userSuggested() {
 			return this.currBoard.members?.filter((user) => {
-				return !this.addedUsers.some((addedUser) => user._id === addedUser._id)
+				return !this.addedUsers?.some((addedUser) => user._id === addedUser._id)
 			})
 		},
 		currBoard() {
