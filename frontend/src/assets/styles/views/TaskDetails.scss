@@ -417,6 +417,9 @@
 				justify-content: center;
 				cursor: pointer;
 
+				.selected {
+					color: $primary-blue;
+				}
 				&.liked {
 					button {
 						color: $primary-blue;
@@ -427,6 +430,9 @@
 						fill: $primary-blue;
 						scale: 1.1;
 					}
+				}
+				svg {
+					padding-bottom: 2px;
 				}
 
 				div {
