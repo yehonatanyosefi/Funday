@@ -19,6 +19,7 @@
 .folding-bar {
   color: $color-txt-primary;
   @include for-normal-layout {
+    border-inline-end: 1px solid $color-divider;
     width: 255px;
   }
   width: 100vw;
