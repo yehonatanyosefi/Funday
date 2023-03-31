@@ -122,6 +122,16 @@
                opacity: 1;
           }
      }
+          .profile-div {
+               display: flex;
+               justify-content: center;
+               align-items: center;
+          }
+     
+          .profile-div img,
+          .profile-div svg {
+               margin-inline-end: -6px;
+          }
           .board-input {
                font: inherit;
                color: inherit;

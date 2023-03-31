@@ -278,7 +278,6 @@ export const boardStore = {
 					await boardService.remove({ boardId }, 'board')
 					context.commit({ type: 'deleteBoard', boardId })
 					const miniBoards = await context.dispatch({ type: 'loadBoardList' })
-					console.log('miniBoards', miniBoards)
 					const miniBoardId = miniBoards[miniBoards.length - 1]._id
 					context.dispatch({ type: 'getBoardById', boardId: miniBoardId })
 				}

@@ -1,10 +1,12 @@
 <template>
 	<main class="main-layout">
-		<MainSidebar></MainSidebar>
-		<div class="container">
+		<MainSidebar v-show="board?._id"></MainSidebar>
+		<div class="container" v-show="board?._id">
 			<BoardHeader></BoardHeader>
 			<RouterView></RouterView>
 		</div>
+		<!-- <span v-if="!board?._id">LOADING...</span> -->
+		<Loader v-if="!board?._id"/>
 	</main>
 </template>
 
@@ -12,11 +14,11 @@
 import MainSidebar from '../cmps/MainSidebar.vue'
 import BoardHeader from '../cmps/BoardHeader.vue'
 import { SOCKET_EMIT_SET_BOARD, SOCKET_EMIT_BOARD_MSG } from '../services/socket.service'
+import Loader from '../cmps/util/Loader.vue'
 export default {
 	props: {},
 	async created() {
 		const params = this.$route.params?.boardId
-		if (!params) return
 		await this.$store.dispatch({ type: 'getFirstBoard', params })
 		this.onBoardChanged(params)
 	},
@@ -44,10 +46,15 @@ export default {
 			},
 		},
 	},
-	computed: {},
+	computed: {
+		board() {
+			return this.$store.getters.board
+		},
+	},
 	components: {
 		MainSidebar,
 		BoardHeader,
+		Loader
 	},
 }
 </script>
