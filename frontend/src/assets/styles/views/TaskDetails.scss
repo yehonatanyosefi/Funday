@@ -254,6 +254,7 @@
 
 	.task-comments {
 		padding-top: 20px;
+		overflow-y: scroll;
 
 		form {
 			display: flex;
@@ -381,9 +382,11 @@
 						img {
 							border-radius: 2em;
 							border: 1px solid white;
-							width: 24px;
-							height: 24px;
-							margin: 0 -3px;
+							width: 26px;
+							height: 26px;
+							margin: 0 -4px;
+							object-fit: cover;
+							border: 2px solid #f5f6f8;
 						}
 					}
 				}

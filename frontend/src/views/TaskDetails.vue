@@ -28,6 +28,7 @@
 		<section v-if="task && showComp === 'comments'" class="task-comments">
 			<form @submit.prevent="addComment">
 				<textarea
+					ref="inputTxt"
 					v-model="commentToAdd"
 					type="text"
 					placeholder="Write an update..."
@@ -35,7 +36,12 @@
 				/>
 				<button class="add-comment-btn">Update</button>
 			</form>
-			<div v-if="task.comments" class="comment" v-for="comment in task.comments" :key="comment.id">
+			<div
+				v-if="task.comments"
+				class="comment"
+				v-for="(comment, idx) in task.comments"
+				:key="comment.id"
+			>
 				<div class="comment-profile">
 					<img v-if="comment.byMember.imgUrl" :src="comment.byMember.imgUrl" alt="" />
 					<PersonRound v-else></PersonRound>
@@ -44,22 +50,22 @@
 
 				<div class="comment-options">
 					<Time></Time>
-					<p>3h</p>
+					<p>{{ getFormattedTime(comment.createdAt) }}</p>
 					<Menu></Menu>
 				</div>
 				<div class="comment-content">{{ comment.txt }}</div>
 
 				<div class="comment-reactions">
-					<!--<div v-if="comment.likes?.length" class="likes">
-						<div class="liked-users" v-for="userId in comment.likes">
-							<img :src="getUserImg(userId)" alt="" />
+					<div v-if="comment.likes?.length" class="likes">
+						<div class="liked-users" v-for="user in comment.likes">
+							<img :src="user.imgUrl" :title="user.fullname" />
 						</div>
 						<p>Liked</p>
-					</div> -->
-					<div class="seen-count">
+					</div>
+					<!-- <div class="seen-count">
 						<Show></Show>
 						<p>1 Seen</p>
-					</div>
+					</div> -->
 				</div>
 				<!-- </div> -->
 
@@ -137,12 +143,14 @@ import Show from '../assets/svg/Show.svg'
 import Like from '../assets/svg/Like.svg'
 import Replay from '../assets/svg/Replay.svg'
 
+import { utilService } from '../services/util.service'
+
 export default {
 	name: 'task-details',
 	data() {
 		return {
 			commentToAdd: '',
-			task: null,
+			groupId: '',
 			showComp: 'comments',
 			imgUrls: [],
 			imgToShow: '',
@@ -156,7 +164,6 @@ export default {
 		}
 	},
 	async created() {
-		this.loadTask()
 		// await this.$store.dispatch({ type: 'loadUsers' })
 		// socketService.on('task-saved', (savedTask) => {
 		//   this.$store.commit({ type: 'saveTask', savedTask })
@@ -170,7 +177,7 @@ export default {
 			return this.$store.getters.board
 		},
 		loggedinUser() {
-			//   return this.$store.getters.loggedinUser
+			return this.$store.getters.loggedinUser
 		},
 		users() {
 			//return this.$store.getters.users
@@ -185,9 +192,24 @@ export default {
 			//   )
 			//   return activities
 		},
+		task() {
+			const { taskId } = this.$route.params
+			const { boardId } = this.$route.params
+			let task = null
+			this.board.groups?.some(({ tasks, id }) => {
+				return tasks.some((currTask) => {
+					if (currTask.id === taskId) {
+						task = JSON.parse(JSON.stringify(currTask))
+						this.groupId = id
+						return true
+					}
+				})
+			})
+			return task
+		},
 	},
 	methods: {
-		getFormattedTime(oldTimestamp) {
+		getFormattedTime(oldTimestamp = Date.now()) {
 			return utilService.getTimeDifference(Date.now(), oldTimestamp)
 		},
 		goTo(dest) {
@@ -207,41 +229,46 @@ export default {
 			this.$router.push('/board/' + this.board._id + '/main-table')
 		},
 		addComment() {
-			//   const comment = {
-			//     txt: this.commentToAdd,
-			//     taskId: this.task._id,
-			//     createdAt: Date.now(),
-			//     _id: utilService.makeId(),
-			//     byMember: this.loggedinUser,
-			//   }
-			//   const task = JSON.parse(JSON.stringify(this.task))
-			//   if (!task.comments) task.comments = []
-			//   task.comments.unshift(comment)
-			//   if (!this.task.comments) this.task.comments = []
-			//   this.task.comments.unshift(comment)
-			//   const taskToSave = { task }
-			//   console.log(`taskToSave:`, taskToSave)
-			//   this.$store.dispatch({ type: 'saveTask', taskToSave })
-			//   this.commentToAdd = ''
+			const comment = {
+				txt: this.commentToAdd,
+				taskId: this.task._id,
+				createdAt: Date.now(),
+				id: utilService.makeId(),
+				byMember: this.loggedinUser,
+			}
+			const task = JSON.parse(JSON.stringify(this.task))
+			if (!task.comments) task.comments = []
+			task.comments.unshift(comment)
+			if (!this.task.comments) this.task.comments = []
+			this.task.comments.unshift(comment)
+			const payload = { boardId: this.board._id, task, groupId: this.groupId }
+			this.$store.dispatch({ type: 'saveTask', payload })
+			this.commentToAdd = ''
 		},
 		getUserImg(userId) {
 			//   let user = this.users.find((user) => user._id === userId)
 			//   return user.imgUrl
 		},
 		likeComment(commentIdx) {
-			//   const task = JSON.parse(JSON.stringify(this.task))
-			//   const loggedinUserId = this.loggedinUser._id
-			//   if (!task.comments[commentIdx].likes) {
-			//     task.comments[commentIdx].likes = []
-			//   }
-			//   const idx = task.comments[commentIdx].likes.findIndex(
-			//     (likeId) => likeId === loggedinUserId
-			//   )
-			//   if (idx !== -1) task.comments[commentIdx].likes.splice(idx, 1)
-			//   else task.comments[commentIdx].likes.unshift(loggedinUserId)
-			//   this.task = task
-			//   const taskToSave = { task }
-			//   this.$store.dispatch({ type: 'saveTask', taskToSave })
+			let task = JSON.parse(JSON.stringify(this.task))
+			const loggedinUser = JSON.parse(JSON.stringify(this.loggedinUser))
+			if (!task.comments[commentIdx].likes) {
+				task.comments[commentIdx].likes = []
+				this.task.comments[commentIdx].likes = []
+			}
+			const idx = task.comments[commentIdx].likes.findIndex(
+				(userLike) => userLike._id === loggedinUser._id
+			)
+			if (idx !== -1) {
+				task.comments[commentIdx].likes.splice(idx, 1)
+				this.task.comments[commentIdx].likes.splice(idx, 1)
+			} else {
+				task.comments[commentIdx].likes.unshift(loggedinUser)
+				this.task.comments[commentIdx].likes.unshift(loggedinUser)
+			}
+
+			const payload = { boardId: this.board._id, task, groupId: this.groupId }
+			this.$store.dispatch({ type: 'saveTask', payload })
 		},
 		handleFile(ev) {
 			//   let file
@@ -270,23 +297,6 @@ export default {
 			//   const task = JSON.parse(JSON.stringify(this.task))
 			//   const taskToSave = { task }
 			//   this.$store.dispatch({ type: 'saveTask', taskToSave })
-		},
-		async loadTask() {
-			const { taskId } = this.$route.params
-			const { boardId } = this.$route.params
-			// if (this.board) {
-			//   await this.$store.dispatch({ type: 'queryBoard', filter: { id } })
-			// }
-			this.board.groups.some(({ tasks }) =>
-				tasks.some((currTask) => {
-					if (currTask.id === taskId) {
-						this.task = JSON.parse(JSON.stringify(currTask))
-					}
-				})
-			)
-			//   await this.$store.dispatch({ type: 'loadActivities' })
-			//   if (this.task.imgUrls) this.imgUrls = this.task.imgUrls
-			//   else this.imgUrls = []
 		},
 	},
 	components: {
