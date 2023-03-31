@@ -29,10 +29,9 @@
             <div v-if="filteredSuggestedUsers.length > 0" class="suggested-users-container">
               <li  v-for="user in filteredSuggestedUsers" :key="user._id"
                 class="flex" @click="addUser(user)">
-                <img class="profile-picture" :src="user.imgUrl" />
+                <img class="profile-picture" :src="user.imgUrl"/>
                 <div class="fullname">{{ user.fullname }}</div>
               </li>
-
             </div>
 
             <div v-else class="no-members">
@@ -74,6 +73,7 @@ export default {
       return this.users?.find((user) => user._id === id)
     },
     toggleModal() {
+      this.search()
       this.isOpen = !this.isOpen
     },
     addUser(user) {

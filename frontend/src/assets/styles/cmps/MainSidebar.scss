@@ -4,16 +4,32 @@
   width: unset;
   background-color: $clr-divider;
   margin-bottom: 12px;
+  @include for-mobile-layout {
+    display: none;
+  }
 }
 .side-bars {
   display: flex;
   .sidebar {
     display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 66px;
+    @include for-normal-layout {
+      flex-direction: column;
+      height: 100%;
+      width: 66px;
+    }
+
     background-color: $clr-small-side-bar;
     position: relative;
+    @include for-mobile-layout {
+      width: 100vw;
+      height: 66px;
+      position: absolute;
+      bottom: 0;
+      align-items: center;
+      justify-content: space-around;
+      z-index: 11;
+      padding-inline: 15px 20px;
+    }
 
     .modal {
       left: 66px;
@@ -30,7 +46,7 @@
         padding: 4px 16px;
         line-height: 24px;
         border-radius: 4px;
-        &:hover{
+        &:hover {
           background-color: $color-btn-hover;
         }
       }
@@ -52,6 +68,7 @@
       }
       .inside-icons {
         flex-grow: 1;
+
         .svg-wrapper {
           margin-inline: auto;
           position: relative;
@@ -69,6 +86,9 @@
             height: 16px;
             width: 6px;
             right: -18px;
+            @include for-mobile-layout {
+              display: none;
+            }
           }
         }
         a {
@@ -78,6 +98,27 @@
           justify-content: center;
           align-items: center;
           outline: none;
+
+          &.desktop-table-btn,&.mobile-table-btn {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+          }
+          @include for-mobile-layout {
+            &.desktop-table-btn {
+              opacity: 0;
+              pointer-events: none;
+              user-select: none;
+            }
+          }
+          @include for-narrow-layout {
+            &.mobile-table-btn {
+              
+              opacity: 0;
+              pointer-events: none;
+              user-select: none;
+            }
+          }
         }
         .selected {
           background-color: rgba(255, 255, 255, 0.2);
@@ -96,9 +137,11 @@
     img {
       height: 40px;
       width: 40px;
-      margin: 0 0 8px;
-      margin-inline: auto;
-      margin-top: 8px;
+      @include for-normal-layout {
+        margin: 0 0 8px;
+        margin-inline: auto;
+        margin-top: 8px;
+      }
       &.profile {
         height: 44px;
         width: 44px;
@@ -111,11 +154,26 @@
       background-color: $clr-small-side-bar;
       cursor: not-allowed;
       color: $color-snow_white;
+      @include for-mobile-layout {
+        display: none;
+      }
     }
     .svg-icon {
       &.InstalledProducts {
         color: $side-bar-svg-purple;
       }
     }
+  }
+}
+.mobile-folding-bar {
+
+  @include for-narrow-layout {
+    display: none;
+  }
+}
+.desktop-folding-bar {
+
+  @include for-mobile-layout {
+    display: none;
   }
 }
