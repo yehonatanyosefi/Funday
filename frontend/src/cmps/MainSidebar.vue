@@ -52,9 +52,9 @@
 			</div>
 			<div class="divider"></div>
 
-			<button disabbled>
+			<!-- <button disabbled>
 				<InstalledProducts class="svg-icon InstalledProducts" />
-			</button>
+			</button> -->
 			<!-- :src="loggedinUser.imgUrl" v-if="loggedinUser"-->
 			<!-- src="https://files.monday.com/euc1/photos/41054538/thumb/41054538-user_photo_2023_03_18_19_59_31.png?1679169572" -->
 			<img @click="toggleModal" :src="loggedinUser.imgUrl" v-if="loggedinUser" class="profile" :title="loggedinUser.fullname" alt="Dor Toledano" />
