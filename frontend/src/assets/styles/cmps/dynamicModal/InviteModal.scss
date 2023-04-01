@@ -76,6 +76,10 @@
           justify-content: center;
           height: 21px;
           padding: 6px !important;
+          svg {
+              margin-block-start: 1px;
+              margin-inline-start: 1px;
+          }
         }
         .close-container {
           padding-inline-start: 22px !important;
