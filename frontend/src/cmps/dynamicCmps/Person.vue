@@ -2,7 +2,7 @@
 	<div class="profile-div" @click="toggleModal" v-if="users">
 		<PlusSolid class="svg-icon add-users"></PlusSolid>
 		<template v-if="info?.length > 0 && info?.length < 3" v-for="(id, idx) in info" :key="idx">
-			<img :src="user(id).imgUrl" :title="user(id).fullname" class="profile-picture" />
+			<img :src="user(id)?.imgUrl" :title="user(id)?.fullname" class="profile-picture" />
 		</template>
 		<template v-else-if="info?.length > 2">
 			<img :src="user(info[0])?.imgUrl" :title="user(info[0])?.fullname" class="profile-picture" />

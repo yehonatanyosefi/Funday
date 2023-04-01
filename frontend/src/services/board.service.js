@@ -229,6 +229,8 @@ function filterByMember(board, member) {
 	return board
 }
 function setAdvanceFilter(board, advanceFilter) {
+	console.log('advanceFilter', advanceFilter)
+
 	board.groups = board.groups.reduce((groupArr, group) => {
 		const groupInclude = advanceFilter.group?.length ? advanceFilter.group.includes(group.title) : true
 		if (groupInclude) {
@@ -240,7 +242,7 @@ function setAdvanceFilter(board, advanceFilter) {
 					? advanceFilter.status.includes(task.status)
 					: true
 				const personInclude = advanceFilter.person.length
-					? advanceFilter.person.some((item) => task.person.some((person) => person === item._id))
+					? advanceFilter.person.some((item) => task.person?.some((person) => person === item._id))
 					: true
 
 				// return this.users?.filter(user => {

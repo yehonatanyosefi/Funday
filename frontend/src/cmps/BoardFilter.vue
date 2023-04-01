@@ -131,12 +131,29 @@ export default {
 		},
 
 		resetFilter() {
-			const filterBy = { txt: this.txt, member: this.filterMember }
+			const filterBy = { txt: '', member: [] }
 			this.$emit('setFilter', filterBy)
 			this.txt = ''
 			this.filterMember = null
 			this.isFiltering = false
 			this.isOpen = false
+		},
+		clearAdvanceFilter() {
+			const filterBy = { txt: '', member: [] }
+			this.$emit('setFilter', filterBy)
+			const advanceFilter = {
+				person: [],
+				group: [],
+				priority: [],
+				status: [],
+				tasks: [],
+			}
+			this.$emit('advanceFilter', advanceFilter)
+			this.txt = ''
+			this.filterMember = null
+			this.isFiltering = false
+			this.isOpen = false
+			this.filterCount = 0
 		},
 
 		clearFilter(type) {
@@ -164,9 +181,9 @@ export default {
 		},
 	},
 	watch: {
-		'$route.params': {
+		'$route.params.boardId': {
 			handler() {
-				this.resetFilter()
+				this.clearAdvanceFilter()
 			},
 			// deep: true,
 			// immediate: true,
