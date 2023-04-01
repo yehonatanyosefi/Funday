@@ -110,7 +110,7 @@ export default {
 		},
 		search() {
 			this.filteredSuggestedUsers = this.userSuggested?.filter((user) =>
-				user.fullname.toLowerCase().includes(this.searchTxt.toLowerCase())
+				user?.fullname.toLowerCase().includes(this.searchTxt.toLowerCase())
 			)
 		},
 	},

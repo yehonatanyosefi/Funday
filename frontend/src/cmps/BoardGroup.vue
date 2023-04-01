@@ -75,6 +75,7 @@
 		</div>
 
 		<Container
+			v-if="!isMobile"
 			orientation="vertical"
 			class="group"
 			@drop="onTaskDrop($event)"
@@ -101,7 +102,24 @@
 				<!-- $emit('removeTask', { taskId: $event, groupId: group.id }) -->
 			</Draggable>
 		</Container>
-
+		<div v-else v-for="(task, idx) in group.tasks" :key="task.id">
+			<TaskPreview
+				:idx="idx"
+				:task="task"
+				:groupColor="group.style.color"
+				:cmpOrder="cmpOrder"
+				:isSelected="isSelected(task.id)"
+				@removeTask="$emit('removeTask', { taskId: $event, groupId: group.id })"
+				@saveTask="$emit('saveTask', { task: $event, groupId: group.id })"
+				@toggleSelectTask="
+					$emit('toggleSelectTask', {
+						taskId: $event,
+						groupId: group.id,
+						groupColor: group.style.color,
+					})
+				"
+			></TaskPreview>
+		</div>
 		<section class="task-preview add-task">
 			<div class="task-sticky task task-title-container add-task-container">
 				<div class="menu-btn-wrapper-task"></div>
@@ -280,6 +298,10 @@ export default {
 			)
 			if (dueDate < 0) return null
 			return dueDate
+		},
+		isMobile() {
+			const mobileScreenWidthThreshold = 768
+			return window.innerWidth <= mobileScreenWidthThreshold
 		},
 	},
 	components: {

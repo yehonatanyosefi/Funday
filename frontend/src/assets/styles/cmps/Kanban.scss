@@ -18,6 +18,10 @@
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
   transition: background 0.2s ease, box-shadow 0.2s ease;
+  .slash {
+    margin-inline-start: 4px;
+    margin-inline-end: 4px;
+  }
   .kanban-column {
     margin-inline-end: 10px;
     .header-wrapper {

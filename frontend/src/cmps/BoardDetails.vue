@@ -5,7 +5,7 @@
 			<div class="no-results-title">No results were found</div>
 		</div>
 		<Container
-			v-else
+			v-else-if="!isMobile"
 			orientation="vertical"
 			:drop-placeholder="dropPlaceholderOptions"
 			@drop="onGroupDrop($event)"
@@ -35,9 +35,33 @@
 					@selectGroupTasks="selectGroupTasks"
 					@expandGroup="expandGroup"
 				/>
-				<!-- :selectedTaskArr="selectedTasks[group.id]" -->
 			</Draggable>
 		</Container>
+		<div v-else v-for="group in board.groups" :key="group.id">
+			<BoardGroup
+				v-if="group?.isExpanded"
+				:group="group"
+				:cmpOrder="cmpOrder"
+				:selectedTasks="selectedTasks[group.id]"
+				@minimizeGroup="minimizeGroup"
+				@saveTask="saveTask"
+				@toggleSelectTask="toggleSelectTask"
+				@saveGroup="saveGroup"
+				@saveGroupAtt="saveGroupAtt"
+				@removeGroup="removeGroup"
+				@applyTaskDrag="applyTaskDrag"
+				@removeTask="removeTask"
+				@addTask="addTask"
+				@selectGroupTasks="selectGroupTasks"
+			></BoardGroup>
+			<BoardGroupCollapsed
+				v-else
+				:group="group"
+				:cmpOrder="cmpOrder"
+				@selectGroupTasks="selectGroupTasks"
+				@expandGroup="expandGroup"
+			/>
+		</div>
 		<button @click="addGroup" class="add-group-btn">
 			<Plus class="add-new-group-plus"></Plus> Add new group
 		</button>
@@ -91,6 +115,10 @@ export default {
 		},
 		isSelectedEmpty() {
 			return !Object.values(this.selectedTasks).flat().length
+		},
+		isMobile() {
+			const mobileScreenWidthThreshold = 768
+			return window.innerWidth <= mobileScreenWidthThreshold
 		},
 	},
 	created() {},

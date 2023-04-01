@@ -1,10 +1,17 @@
-kanban - Ui + drag and drop
-infinity lines
-blank in kanban
+keta kod
+refresh not working mobile
+update btn center on taskdetails
 fix update group / task attributes to update locally first
-mobile drag not working
-fix guest not logging sometimes or refresh not working
+debounce
+
+
+cursor grab kanban
+infinity lines
+svg on kanban
+input on kanban and collapsed group, taskdetails on kanban
+
 user messages scss
+fix mobile homepage
 
 dashboard spacing, height and row -> columns
 dashboard legend reconsider, update dashboard
@@ -25,8 +32,9 @@ multi select duplicate
 
 yael:
 x in timeline and date
-remove cookies on logout
 
-dor:
-fix layout to see scrollbar in mobile, and avoid the layout shift before mobile
+bonus:
 tooltips - https://floating-vue.starpad.dev/guide/component.html#dropdown
+drag and drop between groups in main table
+quill
+activity log
