@@ -52,7 +52,7 @@
 				<div class="comment-options">
 					<Time></Time>
 					<p>{{ getFormattedTime(comment.createdAt) }}</p>
-					<Menu></Menu>
+					<Delete @click="deleteComment(idx)"></Delete>
 				</div>
 				<div class="comment-content">{{ comment.txt }}</div>
 
@@ -140,13 +140,14 @@ import Home from '../assets/svg/Home.svg'
 import Close from '../assets/svg/Close.svg'
 import PersonRound from '../assets/svg/PersonRound.svg'
 import Time from '../assets/svg/Time.svg'
-import Menu from '../assets/svg/Menu.svg'
+import Delete from '../assets/svg/Delete.svg'
 import Show from '../assets/svg/Show.svg'
 import LikeSvg from '../assets/svg/Like.svg'
 import LikeSolid from '../assets/svg/LikeSolid.svg'
 import Replay from '../assets/svg/Replay.svg'
 
 import { utilService } from '../services/util.service'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 
 export default {
 	name: 'task-details',
@@ -273,6 +274,19 @@ export default {
 			const payload = { boardId: this.board._id, task, groupId: this.groupId }
 			this.$store.dispatch({ type: 'saveTask', payload })
 		},
+
+		deleteComment(commentIdx) {
+			let task = JSON.parse(JSON.stringify(this.task))
+			if (task.comments[commentIdx].byMember._id === this.loggedinUser._id) {
+				task.comments.splice(commentIdx, 1)
+				this.task.comments.splice(commentIdx, 1)
+				showSuccessMsg('Message successfully deleted!')
+			} else {
+				showErrorMsg('Sorry, only the message creator can delete it.')
+			}
+			const payload = { boardId: this.board._id, task, groupId: this.groupId }
+			this.$store.dispatch({ type: 'saveTask', payload })
+		},
 		handleFile(ev) {
 			//   let file
 			//   if (ev.type === 'change') file = ev.target.files[0]
@@ -315,7 +329,7 @@ export default {
 		Close,
 		PersonRound,
 		Time,
-		Menu,
+		Delete,
 		Show,
 		LikeSvg,
 		LikeSolid,
