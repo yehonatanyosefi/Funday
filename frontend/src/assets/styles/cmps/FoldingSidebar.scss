@@ -176,6 +176,8 @@
   
     & > *:not(.slide-btn, .triangle) {
       opacity: 0;
+      pointer-events: none;
+      user-select: none;
     }
     .svg-icon {
       transform: rotate(-180deg);

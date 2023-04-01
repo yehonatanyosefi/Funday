@@ -21,20 +21,28 @@
 			</Container>
 		</div>
 		<div class="kanban-options">
-			<select @input="changeSelection">
-				<option value="status">Status</option>
-				<option value="priority">Priority</option>
-			</select>
-			<div v-for="(cmpName, idx) in cmpOrder" :key="idx">
-				<input
-					class="checkbox"
-					type="checkbox"
-					:checked="filteredCmpOrder.includes(cmpName)"
-					@click="toggleFilter(cmpName)"
-				/>
-				<!-- :checked="filteredCmpOrder[cmpName]" -->
-				<label>{{ cmpName }}</label>
-				<!-- @change="cmpFilter[cmpName] = !cmpFilter[cmpName]" -->
+			<div class="custom-view">Customize View</div>
+			<div class="kanban-col">Kanban Column</div>
+			<div class="select-container">
+				<select @input="changeSelection">
+					<option value="status">Status</option>
+					<option value="priority">Priority</option>
+				</select>
+			</div>
+			<div class="card-cols">Card Columns</div>
+			<div class="cmp-list">
+				<div class="cmp" v-for="(cmpName, idx) in cmpOrder" :key="idx">
+					<input
+						class="checkbox"
+						type="checkbox"
+						:checked="filteredCmpOrder.includes(cmpName)"
+						@click="toggleFilter(cmpName)"
+					/>
+					<!-- :checked="filteredCmpOrder[cmpName]" -->
+					<label>{{ cmpName }}</label>
+					<!-- @change="cmpFilter[cmpName] = !cmpFilter[cmpName]" -->
+				</div>
+
 			</div>
 		</div>
 	</div>
