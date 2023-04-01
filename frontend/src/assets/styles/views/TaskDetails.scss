@@ -298,7 +298,7 @@
 
 			display: grid;
 			grid-template-columns: 1fr 1fr;
-			grid-template-rows: 46px 90px 24px 42px;
+			grid-template-rows: 60px 90px 24px 42px;
 			grid-template-areas:
 				'profile options'
 				'content content'
@@ -308,10 +308,10 @@
 
 			.comment-profile {
 				grid-area: profile;
-				display: flex;
+				display: grid;
+				grid-template-columns: 44px auto;
 				align-items: center;
 				padding-left: 15px;
-				padding-top: 15px;
 
 				.guest-profile-pic {
 					@include profile;
@@ -330,25 +330,33 @@
 					width: 40px;
 					height: 40px;
 					margin-right: 12px;
+					object-fit: cover;
+					border-radius: 50%;
 				}
 
 				p {
 					font-size: rem(16px);
+					display: block;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					overflow: hidden;
 				}
 			}
 
 			.comment-options {
-				display: flex;
-				align-items: center;
 				grid-area: options;
+				display: grid;
+				grid-template-columns: 24px auto 24px;
+				align-items: center;
 				padding-right: 15px;
-				padding-top: 10px;
-				justify-self: end;
+				height: 100%;
 
 				p {
-					font-size: rem(14px);
-					padding-right: 3px;
-					padding-left: 2px;
+					font-size: rem(16px);
+					display: block;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					overflow: hidden;
 				}
 			}
 
