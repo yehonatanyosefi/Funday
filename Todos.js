@@ -1,10 +1,15 @@
-kanban - Ui + drag and drop
-infinity lines
-blank in kanban
-fix update group / task attributes to update locally first
-mobile drag not working
+kanban - drag and drop
+login fix / check if cookies are removed on logout
 fix guest not logging sometimes or refresh not working
+update btn center on taskdetails
+
+
+infinity lines
+mobile drag not working
 user messages scss
+fix mobile homepage
+fix update group / task attributes to update locally first
+debounce
 
 dashboard spacing, height and row -> columns
 dashboard legend reconsider, update dashboard
@@ -25,7 +30,6 @@ multi select duplicate
 
 yael:
 x in timeline and date
-remove cookies on logout
 
 dor:
 tooltips - https://floating-vue.starpad.dev/guide/component.html#dropdown

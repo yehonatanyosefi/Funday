@@ -5,6 +5,7 @@
 			><span class="slash">/</span><span>{{ cardsArr.length }}</span>
 		</div>
 		<Container
+			v-if="!isMobile"
 			class="card"
 			group-name="col-items"
 			orientation="vertical"
@@ -29,6 +30,22 @@
 				</div>
 			</Draggable>
 		</Container>
+		<div v-else class="card">
+			<div v-for="task in cardsArr" :key="task.id" class="card-preview">
+				<div class="cmp-preview">{{ task.title }}</div>
+				<div class="cmp-preview" v-for="(cmp, idx) in filteredCmpOrder" :key="idx">
+					<div class="card-title">{{ capitalizeFirstLetter(cmp) }}</div>
+					<div class="card-cmp">
+						<component
+							:is="capitalizeFirstLetter(cmp)"
+							:info="task[cmp]"
+							:groupColor="task.groupColor"
+							@saveTask="saveTask($event, { cmp, task, groupId: task.taskGroupId })"
+						></component>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -58,9 +75,6 @@ export default {
 		}
 	},
 	methods: {
-		// isMobile() {
-		// 	return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-		// },
 		capitalizeFirstLetter(str) {
 			return str.charAt(0).toUpperCase() + str.slice(1)
 		},
@@ -126,14 +140,15 @@ export default {
 		},
 	},
 	computed: {
-		// cardsArr() {
-		// 	return this.getListCards('status', this.column.words[this.idx]).flat()
-		// },
 		cardsArr() {
 			if (this.modifiedCards.length > 0) {
 				return this.modifiedCards
 			}
 			return this.getListCards(this.current, this.column.words[this.idx]).flat()
+		},
+		isMobile() {
+			const mobileScreenWidthThreshold = 768
+			return window.innerWidth <= mobileScreenWidthThreshold
 		},
 	},
 	components: {

@@ -2,6 +2,7 @@
 	<div class="kanban-wrapper">
 		<div class="kanban" v-if="board._id">
 			<Container
+				v-if="!isMobile"
 				group-name="cols"
 				tag="div"
 				dragClass="dragged-element"
@@ -19,6 +20,16 @@
 					/>
 				</Draggable>
 			</Container>
+			<div v-else v-for="(column, idx) in currColumns.words" :key="idx">
+				<KanbanColumn
+					:filteredCmpOrder="filteredCmpOrder"
+					:current="current"
+					:column="currColumns"
+					:board="board"
+					:idx="idx"
+					@saveTask="saveTask"
+				/>
+			</div>
 		</div>
 		<div class="kanban-options">
 			<div class="custom-view">Customize View</div>
@@ -119,6 +130,10 @@ export default {
 		},
 		currColumns() {
 			return this.columnList[this.current]
+		},
+		isMobile() {
+			const mobileScreenWidthThreshold = 768
+			return window.innerWidth <= mobileScreenWidthThreshold
 		},
 	},
 	components: { Container, Draggable, KanbanColumn },
