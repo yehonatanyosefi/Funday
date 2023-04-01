@@ -11,6 +11,7 @@
 	width: 350px;
 	@include for-mobile-layout {
 		width: 100%;
+		touch-action: auto;
 	}
 	top: 0;
 	right: 0;
