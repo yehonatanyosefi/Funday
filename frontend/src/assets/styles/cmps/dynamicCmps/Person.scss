@@ -136,6 +136,22 @@
           .suggested-users-container {
             max-height: 160px;
             overflow-y: auto;
+            overflow-x: hidden;
+            &::-webkit-scrollbar-track {
+                background-color: transparent;
+                opacity: 0;
+              }
+            
+              &::-webkit-scrollbar {
+                width: 6px;
+                height: 10px;
+                background-color: transparent;
+              }
+            
+              &::-webkit-scrollbar-thumb {
+                border-radius: 10px;
+                background-color: #c3c6d4;
+              }
             li {
               color: $color-txt-primary;
               padding: 8px;
