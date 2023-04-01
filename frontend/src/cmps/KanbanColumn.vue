@@ -10,11 +10,10 @@
 			group-name="col-items"
 			orientation="vertical"
 			dragClass="dragged-element"
-			:shouldAcceptDrop="shouldAcceptDrop"
 			@drop="onCardDrop($event)"
+			:drop-placeholder="dropPlaceholderOptions"
 		>
-			<!-- :get-child-payload="getCardPayload(idx)" -->
-			<!-- :drag-handle-selector="dragHandleSelector" -->
+			<!-- :should-accept-drop="shouldAcceptDrop" -->
 			<Draggable class="card-preview" v-for="task in cardsArr" :key="task.id">
 				<div class="cmp-preview">{{ task.title }}</div>
 				<div class="cmp-preview" v-for="(cmp, idx) in filteredCmpOrder" :key="idx">
@@ -58,8 +57,9 @@ import Title from './dynamicCmps/Title.vue'
 import Text from './dynamicCmps/Text.vue'
 import Person from './dynamicCmps/Person.vue'
 import { Container, Draggable } from 'vue3-smooth-dnd'
+import { registerRuntimeCompiler } from 'vue'
 export default {
-	emits: ['saveTask'],
+	emits: ['saveTask', 'setDraggedTask', 'setDraggedColumn'],
 	name: 'KanbanColumn',
 	props: {
 		board: Object,
@@ -72,6 +72,11 @@ export default {
 	data() {
 		return {
 			modifiedCards: [],
+			dropPlaceholderOptions: {
+				className: 'drop-preview',
+				animationDuration: '150',
+				showOnTop: true,
+			},
 		}
 	},
 	methods: {
@@ -97,45 +102,20 @@ export default {
 			this.$emit('saveTask', { taskToSave, groupId })
 		},
 		onCardDrop(dropResult) {
-			const { removedIndex, addedIndex, payload } = dropResult
+			const { removedIndex, addedIndex } = dropResult
 			if (removedIndex === null && addedIndex === null) return
-			if (removedIndex !== null) {
-				console.log(`removedIndex:`, removedIndex)
-				this.cardsArr[removedIndex]
+			let task = removedIndex !== null ? this.cardsArr[removedIndex] : null
+			if (task?.id) {
+				const payload = { task, groupId: task.taskGroupId, cmp: this.current }
+				this.$emit('setDraggedTask', payload)
+			} else {
+				let toColumn = this.column.words[this.idx]
+				this.$emit('setDraggedColumn', toColumn)
 			}
-			if (addedIndex !== null) {
-				console.log(`addedIndex:`, addedIndex)
-				this.cardsArr[addedIndex]
-			}
-			// const cards = [...this.cardsArr]
-			// const itemToAdd = payload
-			// if (removedIndex !== null) {
-			// 	cards.splice(removedIndex, 1)
-			// }
-			// if (addedIndex !== null) {
-			// 	cards.splice(addedIndex, 0, itemToAdd)
-			// }
-			// this.modifiedCards = cards
-			// this.updateBoardCards(cards)
-		},
-		updateBoardCards(updatedCards) {
-			// const newBoard = JSON.parse(JSON.stringify(this.board))
-			// updatedCards.forEach((card) => {
-			// 	const groupIndex = newBoard.groups.findIndex((group) => group.id === card.taskGroupId)
-			// 	const taskIndex = newBoard.groups[groupIndex].tasks.findIndex((task) => task.id === card.id)
-			// 	newBoard.groups[groupIndex].tasks.splice(taskIndex, 1, card)
-			// })
-			// this.updateBoard(newBoard)
-		},
-		updateBoard(newBoard) {
-			console.log(`newBoard:`, newBoard)
-			// Update the board state in Vuex (or use another method to update the board)
-			// this.$store.commit('updateBoard', newBoard)
-		},
-		getCardPayload(columnIdx) {
-			console.log(`columnIdx:`, columnIdx)
+			// this.saveTask(payload, { cmp:this.current, task, groupId })
 		},
 		shouldAcceptDrop(e) {
+			//needed to check if the drop is on the right column
 			return e === 'col-items'
 		},
 	},
