@@ -25,7 +25,6 @@ minified users, minified boards in boardlist
 multi select duplicate
 
 yael:
-fix board title
 x in timeline and date
 
 dor:
