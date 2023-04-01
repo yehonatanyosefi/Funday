@@ -123,6 +123,7 @@
 			</div>
 		</section>
 		<div class="progress-bar">
+			<div class="sticky-progress-bar"></div>
 			<div class="progress-column" v-for="(cmp, idx) in cmpOrder" :key="idx + 50">
 				<template v-if="Object.keys(progressObj).includes(cmp)">
 					<ProgressBar :group="group" :cmp="cmp" :progressObj="progressObj"></ProgressBar>

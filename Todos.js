@@ -1,11 +1,8 @@
 kanban - Ui + drag and drop
-cursor pointer on expand
-progress bar sticky
 infinity lines
-mobile drag not working
-input closing with enter
 fix update group / task attributes to update locally first
 
+mobile drag not working
 dashboard spacing, height and row -> columns
 dashboard legend reconsider, update dashboard
 input with "New Task" auto select

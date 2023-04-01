@@ -28,9 +28,25 @@
       padding-inline: 0 !important;
     }
     ul {
+      &::-webkit-scrollbar-track {
+          background-color: transparent;
+          opacity: 0;
+        }
+      
+        &::-webkit-scrollbar {
+          width: 6px;
+          height: 10px;
+          background-color: transparent;
+        }
+      
+        &::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          background-color: #c3c6d4;
+        }
       padding: 0;
       height: em(300px);
-      overflow-y: scroll;
+      overflow-y: auto;
+      overflow-x: hidden;
       .no-members{
         min-height: 36px;
         min-width: 466px;
@@ -60,6 +76,10 @@
           justify-content: center;
           height: 21px;
           padding: 6px !important;
+          svg {
+              margin-block-start: 1px;
+              margin-inline-start: 1px;
+          }
         }
         .close-container {
           padding-inline-start: 22px !important;
