@@ -134,6 +134,7 @@
                opacity: 0;
                @include flex-center;
 			font-family: Figtree-reg;
+               font-weight: normal;
 			font-size: rem(14px);
 			color: $clr-divider;
                transition: opacity 0.2s ease-in-out;
