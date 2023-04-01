@@ -35,7 +35,6 @@
     &:focus-within {
       box-shadow: inset 0 0 0 1px $group-header-clr;
     }
-    cursor: pointer;
     // border: 1px solid $color-divider;
     // border-inline-start: 1px solid $color-divider;
     &:not(.add-task-container) {

@@ -4,6 +4,7 @@
 .profile-div {
   position: relative;
   width: 100%;
+  cursor: pointer !important;
   @include flex-center;
   .more-users {
     padding: 0px 5px;

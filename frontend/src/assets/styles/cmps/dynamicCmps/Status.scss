@@ -54,6 +54,9 @@
 		}
 	}
 	position: relative;
+		.label {
+			cursor: pointer !important;
+		}
 	& .modal {
 		// bottom: 0;
 		// left: 50%;
