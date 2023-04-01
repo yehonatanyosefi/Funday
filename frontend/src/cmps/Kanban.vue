@@ -3,10 +3,11 @@
 		<div class="kanban" v-if="board._id">
 			<Container
 				v-if="!isMobile"
-				group-name="cols"
 				tag="div"
+				group-name="cols"
 				dragClass="dragged-element"
 				orientation="horizontal"
+				:drop-placeholder="dropPlaceholderOptions"
 				@drop="onColumnDrop($event)"
 			>
 				<Draggable v-for="(column, idx) in currColumns.words" :key="idx">
@@ -17,6 +18,8 @@
 						:board="board"
 						:idx="idx"
 						@saveTask="saveTask"
+						@setDraggedTask="setDraggedTask"
+						@setDraggedColumn="setDraggedColumn"
 					/>
 				</Draggable>
 			</Container>
@@ -28,6 +31,8 @@
 					:board="board"
 					:idx="idx"
 					@saveTask="saveTask"
+					@setDraggedTask="setDraggedTask"
+					@setDraggedColumn="setDraggedColumn"
 				/>
 			</div>
 		</div>
@@ -77,16 +82,40 @@ export default {
 			current: 'status',
 			filteredCmpOrder: ['person', 'timeline'],
 			modifiedCards: [],
+			dropPlaceholderOptions: {
+				className: 'drop-preview',
+				animationDuration: '150',
+				showOnTop: true,
+			},
+			draggedTaskPayload: null,
+			draggedToColumn: null,
 		}
 	},
 	created() {},
 	methods: {
+		setDraggedTask({ task, groupId, cmp }) {
+			this.draggedTaskPayload = { task, groupId, cmp }
+			if (this.draggedToColumn) {
+				this.saveDraggedTask()
+			}
+		},
+		setDraggedColumn(column) {
+			this.draggedToColumn = column
+			if (this.draggedTaskPayload) {
+				this.saveDraggedTask()
+			}
+		},
+		saveDraggedTask() {
+			const { task, groupId, cmp } = this.draggedTaskPayload
+			const payload = this.draggedToColumn
+			const taskToSave = JSON.parse(JSON.stringify(task))
+			taskToSave[cmp] = payload
+			this.saveTask({ taskToSave, groupId })
+			this.draggedTaskPayload = null
+			this.draggedToColumn = null
+		},
 		changeSelection(ev) {
 			this.current = ev.target.value
-		},
-		getGroupHeightPx() {
-			// 	let kanban = document.getElementById('kanbanContainer')
-			// 	return kanban ? kanban.offsetHeight - 122 : 0
 		},
 		onColumnDrop(dropResult) {
 			console.log(`dropResult:`, dropResult)

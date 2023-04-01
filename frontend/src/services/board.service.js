@@ -217,7 +217,7 @@ function filterByMember(board, member) {
 	const memberId = member._id
 	board.groups = board.groups.reduce((groupArr, group) => {
 		group.tasks = group.tasks.reduce((taskArr, task) => {
-			if (task.person.includes(memberId)) {
+			if (task.person?.includes(memberId)) {
 				taskArr.push(task)
 			}
 			return taskArr
@@ -240,22 +240,10 @@ function setAdvanceFilter(board, advanceFilter) {
 					? advanceFilter.status.includes(task.status)
 					: true
 				const personInclude = advanceFilter.person.length
-					? advanceFilter.person.some((item) => task.person.some((person) => person === item._id))
+					? advanceFilter.person.some((item) => task.person?.some((person) => person === item._id))
 					: true
 
-				// return this.users?.filter(user => {
-				// 	return !this.addedUsers.some(addedUser=>user._id===addedUser._id)
-
 				if (priorityInclude && statusInclude && personInclude) {
-					// if (
-					// 	advanceFilter.priority.length
-					// 		? advanceFilter.priority.includes(task.priority)
-					// 		: true && advanceFilter.status.length
-					// 		? advanceFilter.status.includes(task.status)
-					// 		: true && advanceFilter.person.length
-					// 		? advanceFilter.person.some((item) => task.person.some((person) => person._id === item._id))
-					// 		: true
-					// ) {
 					taskArr.push(task)
 				}
 				return taskArr
