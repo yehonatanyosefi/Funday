@@ -34,6 +34,7 @@
 					placeholder="Write an update..."
 					class="comment-add-txt"
 				/>
+				<!-- <QuillEditor v-model="commentToAdd" /> -->
 				<button class="add-comment-btn">Update</button>
 			</form>
 			<div
@@ -72,15 +73,16 @@
 				<div class="comment-like" @click.stop.prevent="likeComment(idx)">
 					<div>
 						<!-- <span v-if="comment?.likes?.includes(loggedinUser._id)"></span>-->
-						<Like></Like>
-						<button>Like</button>
+						<LikeSolid v-if="likeByMe(comment)" :class="{ selected: likeByMe(comment) }"></LikeSolid>
+						<LikeSvg v-else></LikeSvg>
+						<button :class="{ selected: likeByMe(comment) }">Like</button>
 					</div>
 				</div>
 
 				<div class="comment-reply">
 					<div>
 						<Replay></Replay>
-						<button>Reply</button>
+						<button @click="reply()">Reply</button>
 					</div>
 				</div>
 			</div>
@@ -140,7 +142,8 @@ import PersonRound from '../assets/svg/PersonRound.svg'
 import Time from '../assets/svg/Time.svg'
 import Menu from '../assets/svg/Menu.svg'
 import Show from '../assets/svg/Show.svg'
-import Like from '../assets/svg/Like.svg'
+import LikeSvg from '../assets/svg/Like.svg'
+import LikeSolid from '../assets/svg/LikeSolid.svg'
 import Replay from '../assets/svg/Replay.svg'
 
 import { utilService } from '../services/util.service'
@@ -298,6 +301,14 @@ export default {
 			//   const taskToSave = { task }
 			//   this.$store.dispatch({ type: 'saveTask', taskToSave })
 		},
+		reply() {
+			this.$refs.inputTxt.focus()
+		},
+		likeByMe(comment) {
+			const myId = this.loggedinUser._id
+			const idx = comment.likes?.findIndex((like) => like._id === myId)
+			return idx > -1
+		},
 	},
 	components: {
 		Home,
@@ -306,7 +317,8 @@ export default {
 		Time,
 		Menu,
 		Show,
-		Like,
+		LikeSvg,
+		LikeSolid,
 		Replay,
 		// imgList,
 		// activityCmp,
