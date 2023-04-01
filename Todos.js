@@ -1,6 +1,5 @@
 kanban - Ui + drag and drop
 cursor pointer on expand
-hover task font
 progress bar sticky
 infinity lines
 mobile drag not working
@@ -26,14 +25,8 @@ minified users, minified boards in boardlist
 multi select duplicate
 
 yael:
-fix routing - to first board, to home
-center text in routes in header
 fix board title
-search text is different
 x in timeline and date
-fix the showing of kanban / board in header
-
-bonus: board details
 
 dor:
 fix layout to see scrollbar in mobile, and avoid the layout shift before mobile
