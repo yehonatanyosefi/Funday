@@ -103,7 +103,8 @@
       @include for-mobile-layout {
         .add-btn {
             position: absolute;
-            bottom: 14%;
+            // bottom: 14%;
+            top: 1050%;
             width: fit-content;
             background-color: #b4b5ffa1;
             margin-inline: 5px;
@@ -176,6 +177,8 @@
   
     & > *:not(.slide-btn, .triangle) {
       opacity: 0;
+      pointer-events: none;
+      user-select: none;
     }
     .svg-icon {
       transform: rotate(-180deg);
