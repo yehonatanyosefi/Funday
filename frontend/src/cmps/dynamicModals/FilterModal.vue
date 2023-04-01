@@ -35,7 +35,7 @@ export default {
 	props: {
 		filter: Object,
 	},
-	emits: ['setAdvanceFilter'],
+	emits: ['advanceFilter', 'closeModal'],
 	data() {
 		return {
 			filterItems: null,
