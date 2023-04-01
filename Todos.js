@@ -28,5 +28,4 @@ x in timeline and date
 remove cookies on logout
 
 dor:
-fix layout to see scrollbar in mobile, and avoid the layout shift before mobile
 tooltips - https://floating-vue.starpad.dev/guide/component.html#dropdown

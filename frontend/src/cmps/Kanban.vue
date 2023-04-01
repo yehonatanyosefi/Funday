@@ -39,10 +39,9 @@
 						@click="toggleFilter(cmpName)"
 					/>
 					<!-- :checked="filteredCmpOrder[cmpName]" -->
-					<label>{{ cmpName }}</label>
+					<label>{{ capitalizeFirstLetter(cmpName) }}</label>
 					<!-- @change="cmpFilter[cmpName] = !cmpFilter[cmpName]" -->
 				</div>
-
 			</div>
 		</div>
 	</div>
@@ -106,6 +105,9 @@ export default {
 			this.filteredCmpOrder.includes(cmpName)
 				? (this.filteredCmpOrder = this.filteredCmpOrder.filter((name) => name !== cmpName))
 				: this.filteredCmpOrder.push(cmpName)
+		},
+		capitalizeFirstLetter(str) {
+			return str.charAt(0).toUpperCase() + str.slice(1)
 		},
 	},
 	computed: {

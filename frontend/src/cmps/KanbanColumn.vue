@@ -1,7 +1,8 @@
 <template>
 	<div class="kanban-column">
 		<div class="header-wrapper" :style="{ backgroundColor: column.colors[idx] }">
-			<span v-if="!column.words[idx]">Blank</span>{{ column.words[idx] }} / {{ cardsArr.length }}
+			<span v-if="!column.words[idx]">Blank</span><span v-else>{{ column.words[idx] }}</span
+			><span class="slash">/</span><span>{{ cardsArr.length }}</span>
 		</div>
 		<Container
 			class="card"
@@ -16,7 +17,7 @@
 			<Draggable class="card-preview" v-for="task in cardsArr" :key="task.id">
 				<div class="cmp-preview">{{ task.title }}</div>
 				<div class="cmp-preview" v-for="(cmp, idx) in filteredCmpOrder" :key="idx">
-					<div class="card-title">{{ cmp }}</div>
+					<div class="card-title">{{ capitalizeFirstLetter(cmp) }}</div>
 					<div class="card-cmp">
 						<component
 							:is="capitalizeFirstLetter(cmp)"
