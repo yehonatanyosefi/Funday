@@ -5,12 +5,13 @@
 		</div>
 		<Container
 			class="card"
-			:group-name="'col-' + idx"
-			tag="div"
+			group-name="col-items"
 			orientation="vertical"
-			@drop="onCardDrop($event)"
 			dragClass="dragged-element"
+			:shouldAcceptDrop="shouldAcceptDrop"
+			@drop="onCardDrop($event)"
 		>
+			<!-- :get-child-payload="getCardPayload(idx)" -->
 			<!-- :drag-handle-selector="dragHandleSelector" -->
 			<Draggable class="card-preview" v-for="task in cardsArr" :key="task.id">
 				<div class="cmp-preview">{{ task.title }}</div>
@@ -81,9 +82,16 @@ export default {
 			this.$emit('saveTask', { taskToSave, groupId })
 		},
 		onCardDrop(dropResult) {
-			console.log(`dropResult:`, dropResult)
-			// const { removedIndex, addedIndex, payload } = dropResult
-			// if (removedIndex === null && addedIndex === null) return
+			const { removedIndex, addedIndex, payload } = dropResult
+			if (removedIndex === null && addedIndex === null) return
+			if (removedIndex !== null) {
+				console.log(`removedIndex:`, removedIndex)
+				this.cardsArr[removedIndex]
+			}
+			if (addedIndex !== null) {
+				console.log(`addedIndex:`, addedIndex)
+				this.cardsArr[addedIndex]
+			}
 			// const cards = [...this.cardsArr]
 			// const itemToAdd = payload
 			// if (removedIndex !== null) {
@@ -108,6 +116,12 @@ export default {
 			console.log(`newBoard:`, newBoard)
 			// Update the board state in Vuex (or use another method to update the board)
 			// this.$store.commit('updateBoard', newBoard)
+		},
+		getCardPayload(columnIdx) {
+			console.log(`columnIdx:`, columnIdx)
+		},
+		shouldAcceptDrop(e) {
+			return e === 'col-items'
 		},
 	},
 	computed: {
