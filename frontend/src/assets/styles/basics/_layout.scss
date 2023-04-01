@@ -26,8 +26,10 @@
 			background-color: #fff;
 			z-index: 5;
 			width: 100%;
-			// height: 151px;
-			height: auto;
+			height: 151px;
+			@include for-mobile-layout {
+				height: auto;
+			}
 			top: 0;
 			left: 0;
 		}

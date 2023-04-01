@@ -220,7 +220,7 @@ export default {
 		onTaskDrop(dropPayload) {
 			const removedIndex = dropPayload.removedIndex
 			const addedIndex = dropPayload.addedIndex
-			if (removedIndex === -1 || addedIndex === -1) return
+			if (removedIndex === null || addedIndex === null) return
 			const removedId = this.group.tasks.find((task, idx) => idx === removedIndex).id
 			const addedId = this.group.tasks.find((task, idx) => idx === addedIndex).id
 			const payload = { removedId, addedId, groupId: this.group.id }
