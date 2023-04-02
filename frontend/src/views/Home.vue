@@ -41,7 +41,7 @@
 					<span> What would you like to manage with Funday today? </span>
 				</div>
 				<nav>
-					<router-link :to="'/board/642343ac91a1131b61553fef/main-table'">
+					<router-link to="#" @click="guestLogin">
 						<button class="cta-btn big">
 							<span>Get started</span>
 							<span>→</span>
@@ -70,6 +70,7 @@ export default {
 			profile: null,
 			login: null,
 			videoBG: 'stars.mp4',
+			
 		}
 	},
 	methods: {
@@ -91,7 +92,15 @@ export default {
 		},
 
 		async guestLogin() {
-			this.$store.dispatch({ type: 'guestLogin' })
+			// const loggedinUser = this.$store.getters.loggedinUser
+			// if (loggedinUser?._id) {
+				const boardList = this.$store.getters.boardList
+				const firstBoardId = boardList[0]._id
+				this.$router.push (`/board/${firstBoardId}/main-table`)
+			// }
+			// else{
+				// this.$store.dispatch({ type: 'guestLogin' })
+			// }
 		},
 	},
 }
