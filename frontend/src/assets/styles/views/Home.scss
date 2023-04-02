@@ -1,5 +1,5 @@
 .home {
-  height: 100vh;
+  height: 185vh;
   width: 100vw;
   // overflow: hidden;
   padding: 0;
@@ -128,6 +128,12 @@
     }
   }
 
+  .el-carousel{
+    margin-block-end: em(20px);
+  }
+  .el-carousel__mask{
+    background-color: transparent;
+  }
   .el-carousel__container{
     height: 287px !important;
   }
@@ -747,6 +753,7 @@
     }
     }
   }
+  
 
 #title div span:first-child {
   font-size: rem(72px);

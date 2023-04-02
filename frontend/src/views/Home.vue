@@ -55,9 +55,11 @@
 					</el-carousel-item>
 				</el-carousel>
 			</div>
+			<div class="about-us">
+				<p >Team Funday</p>
+				<AboutUs />
+			</div>
 
-			
-			<AboutUs />
 		</section>
 		
 	</section>

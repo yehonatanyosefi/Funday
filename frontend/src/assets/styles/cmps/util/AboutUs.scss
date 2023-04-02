@@ -5,7 +5,19 @@
   justify-content: center;
   margin: 0;
   background-color: transparent;
-  // background: radial-gradient(ellipse at bottom, #281b35c8 0%, rgba(15, 16, 72, 0.793) 100%);
+  position: absolute;
+    left: 50%;
+    top: 109%;
+    transform: translateX(-50%);
+    width: 100%;
+    
+    p{
+      margin: 0 0 40px 0;
+      max-width: 100%;
+      font-size: 22px;
+      font-size: 38px;
+    margin: 0;
+    }
   .person {
     align-items: center;
     display: flex;
@@ -81,7 +93,7 @@
     width: 160px;
   }
   .name {
-    color: #d4c6da;
+    color: #fff;
     font-size: 36px;
     font-weight: 600;
     margin-top: 16px;
@@ -90,7 +102,7 @@
   .title {
     color: #d4c6dac2;
     font-family: arial;
-    font-size: 14px;
+    font-size: 20px;
     font-style: italic;
     margin-top: 4px;
   }

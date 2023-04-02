@@ -3,7 +3,7 @@
 		<div class="person">
 			<div class="container">
 				<div class="container-inner">
-					<img class="circle" src="" />
+					<img class="circle" src="../../assets/img/blossom.jpg" />
 					<img class="img img1" src="../../assets/img/dor.png" />
 				</div>
 			</div>
@@ -14,7 +14,7 @@
 		<div class="person">
 			<div class="container">
 				<div class="container-inner">
-					<img class="circle" src="" />
+					<img class="circle" src="../../assets/img/colorful.jpg" />
 					<img class="img img2" src="../../assets/img/yael.png" />
 				</div>
 			</div>
@@ -25,7 +25,7 @@
 		<div class="person">
 			<div class="container">
 				<div class="container-inner">
-					<img class="circle" src="" />
+					<img class="circle" src="../../assets/img/leaves.jpg" />
 					<img class="img img3" src="../../assets/img/yehonatan.png" />
 				</div>
 			</div>
