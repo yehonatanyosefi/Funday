@@ -41,14 +41,13 @@
 		margin-right: 16px;
 		border-radius: 4px;
 		width: 106px;
-
+		
 		button {
 			color: white;
 			padding: 0;
 			height: 100%;
-			width: 62px;
+			// width: 62px;
 			border-radius: 0.2em;
-
 			&:hover {
 				background-color: (darken($primary-blue, 8%));
 			}

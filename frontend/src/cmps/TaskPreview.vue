@@ -32,6 +32,7 @@
 				:is="capitalizeFirstLetter(cmp)"
 				:info="task[cmp]"
 				:groupColor="groupColor"
+				:isFirst="first"
 				@saveTask="saveTask($event, cmp)"
 			></component>
 		</div>
@@ -97,6 +98,9 @@ export default {
 	computed: {
 		boardId() {
 			return this.$route.params.boardId
+		},
+		first() {
+			return this.idx === 0
 		},
 	},
 	components: {

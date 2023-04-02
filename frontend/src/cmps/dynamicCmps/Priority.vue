@@ -1,6 +1,6 @@
 <template>
 	<div class="priority" :class="info">
-		<div class="label" @click="toggleModal">
+		<div class="label" @click="toggleModal" :class="{ first: isFirst }">
 			<span>{{ info }}</span>
 			<Alert v-if="info === 'Critical'" class="svg-icon critical-alert-svg" height="15px" width="15px" />
 			<!-- <span>⚠️️</span> -->
@@ -26,6 +26,7 @@ export default {
 	name: 'Priority',
 	props: {
 		info: String,
+		isFirst: Boolean,
 	},
 	created() {},
 	data() {

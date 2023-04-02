@@ -168,6 +168,8 @@ export default {
 			// console.log('imgUrl',imgUrl)
 			this.isUploading = false
 			this.signupCred.imgUrl = imgUrl
+			console.log('imgUrl',imgUrl)
+			
 		},
 		toggleIsUploading() {
 			this.isUploading = true

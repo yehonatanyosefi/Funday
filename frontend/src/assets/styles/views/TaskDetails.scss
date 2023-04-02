@@ -261,6 +261,21 @@
 	.task-comments {
 		padding-top: 20px;
 		overflow-y: scroll;
+		&::-webkit-scrollbar-track {
+			background-color: transparent;
+			opacity: 0;
+		}
+
+		&::-webkit-scrollbar {
+			width: 6px;
+			height: 10px;
+			background-color: transparent;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			border-radius: 10px;
+			background-color: #c3c6d4;
+		}
 
 		form {
 			display: flex;
