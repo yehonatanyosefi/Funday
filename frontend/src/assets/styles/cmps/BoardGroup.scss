@@ -27,6 +27,10 @@
 	background-color: #fff;
 }
 .board-group {
+     .task-preview:focus-within .task.task-sticky::before,
+          .task-title-group.task-sticky.task-container::before {
+               background-color: $color-focused-within;
+     }
      margin-inline-start: 47px;
      display: grid;
      border-radius: 3px;
