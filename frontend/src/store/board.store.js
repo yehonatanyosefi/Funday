@@ -85,7 +85,6 @@ export const boardStore = {
 			let filterBoard = JSON.parse(JSON.stringify(state.board))
 			filterBoard = boardService.setAdvanceFilter(filterBoard, advanceFilter)
 			// console.log('filterBoard', filterBoard)
-
 			state.filteredBoard = filterBoard
 			state.advanceFilter = JSON.parse(JSON.stringify(advanceFilter))
 		},
@@ -218,7 +217,12 @@ export const boardStore = {
 			if (!board?._id) return
 			commit({ type: 'setBoard', board })
 			const filterBy = state.filterBy
-			commit({ type: 'filterBoard', filterBy })
+			const advanceFilter = state.advanceFilter
+			if (Object.values(advanceFilter).some((arr) => Array.isArray(arr) && arr.length > 0)) {
+				commit({ type: 'setAdvanceFilter', advanceFilter })
+			} else {
+				commit({ type: 'filterBoard', filterBy })
+			}
 		},
 		async getBoardById({ dispatch, commit }, { boardId }) {
 			try {
