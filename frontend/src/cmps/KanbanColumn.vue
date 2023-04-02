@@ -18,13 +18,13 @@
 				<div class="cmp-title">
 					<div class="card-title-container">{{ task.title }}</div>
 					<div class="cmp-buttons">
-						<RouterLink :to="'/board/' + board._id + '/kanban/task/' + task.id">
-							<div v-if="task.comments?.length">
-								<Update class="svg-icon update" width="24" height="24" />
-								<div class="update-num">{{ task.comments.length }}</div>
-							</div>
-							<AddUpdate v-else class="svg-icon add-update" width="24" height="24" />
-						</RouterLink>
+						<div>
+							<RouterLink :to="'/board/' + board._id + '/kanban/task-kanban/' + task.id">
+								<Update v-if="task.comments?.length" class="svg-icon update" width="24" height="24" />
+								<div v-if="task.comments?.length" class="update-num">{{ task.comments.length }}</div>
+								<AddUpdate v-else class="svg-icon add-update" width="24" height="24" />
+							</RouterLink>
+						</div>
 						<Menu class="svg-icon menu-btn" width="20" height="20" />
 					</div>
 				</div>
@@ -51,17 +51,26 @@
 		</Container>
 		<div v-else class="card">
 			<div v-for="task in cardsArr" :key="task.id" class="card-preview">
-				<div class="cmp-preview">
-					{{ task.title }}
-					<Menu class="svg-icon menu-btn" width="20" height="20" />
+				<div class="cmp-title">
+					<div class="card-title-container">{{ task.title }}</div>
+					<div class="cmp-buttons">
+						<div>
+							<RouterLink :to="'/board/' + board._id + '/kanban/task-kanban/' + task.id">
+								<Update v-if="task.comments?.length" class="svg-icon update" width="24" height="24" />
+								<div v-if="task.comments?.length" class="update-num">{{ task.comments.length }}</div>
+								<AddUpdate v-else class="svg-icon add-update" width="24" height="24" />
+							</RouterLink>
+						</div>
+						<Menu class="svg-icon menu-btn" width="20" height="20" />
+					</div>
 				</div>
 				<div class="cmp-preview" v-for="(cmp, idx) in filteredCmpOrder" :key="idx">
 					<div class="card-title">
 						<component
 							v-if="capitalizeFirstLetter(cmp) + 'Svg'"
 							:is="capitalizeFirstLetter(cmp) + 'Svg'"
-							width="13px"
-							height="13px"
+							width="16px"
+							height="16px"
 						></component>
 						{{ capitalizeFirstLetter(cmp) }}
 					</div>

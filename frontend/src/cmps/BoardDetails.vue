@@ -1,5 +1,5 @@
 <template>
-	<section class="board-details">
+	<section class="board-details" :class="checkWaiting">
 		<div v-if="!board?.groups?.length" class="filter-no-results">
 			<img class="no-results-img" src="https://cdn.monday.com/images/general_not_found_state.svg" />
 			<div class="no-results-title">No results were found</div>
@@ -95,6 +95,7 @@ export default {
 			selectedTasks: {},
 			isRemoveModalOpen: false,
 			isActionsModalOpen: false,
+			isWaiting: false,
 			dropPlaceholderOptions: {
 				className: 'drop-preview',
 				animationDuration: '150',
@@ -119,6 +120,9 @@ export default {
 		isMobile() {
 			const mobileScreenWidthThreshold = 768
 			return window.innerWidth <= mobileScreenWidthThreshold
+		},
+		checkWaiting() {
+			return this.isWaiting ? 'waiting-request' : ''
 		},
 	},
 	created() {},
@@ -163,7 +167,9 @@ export default {
 		async saveTask(payload) {
 			try {
 				const payloadToSave = { ...payload, boardId: this.board._id }
+				this.isWaiting = true
 				await this.$store.dispatch({ type: 'saveTask', payload: payloadToSave })
+				this.isWaiting = false
 				// showSuccessMsg('Task updated')
 			} catch (err) {
 				console.log(err)

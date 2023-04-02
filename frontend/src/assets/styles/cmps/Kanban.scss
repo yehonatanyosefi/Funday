@@ -37,6 +37,7 @@
       border-top-right-radius: 8px;
     }
     .card {
+      cursor: grab;
       display: grid;
       gap: 10px;
       overflow-y: auto;
@@ -68,11 +69,34 @@
       .cmp-title {
         display: grid;
         height: 36px;
-        grid-template-columns: 130px 44px;
+        grid-template-columns: 126px 48px;
         align-content: center;
         justify-content: space-between;
         padding: 0px 8px;
         margin-block-end: 8px;
+        .card-title-container {
+          display: flex;
+          align-items: center;
+        }
+        .cmp-buttons {
+          display: flex;
+          height: 36px;
+          overflow: hidden;
+          @include flex-center;
+          .menu-btn {
+            margin-inline-start: 4px;
+            color: rgb(103,104,121);
+            cursor: pointer;
+            &:hover {
+              background-color: #dcdfec;
+              border-radius: 4px;
+            }
+          }
+          div, a {
+            // height: 24px;
+            @include flex-center;
+          }
+        }
       }
       .cmp-preview {
         display: grid;
@@ -206,8 +230,8 @@
         color: #fff;
         background-color: #0073ea;
         position: absolute;
-        bottom: 5px;
-        right: 22px;
+        top: 18px;
+        right: 30px;
         width: 12px;
         height: 12px;
         font-size: 10px;

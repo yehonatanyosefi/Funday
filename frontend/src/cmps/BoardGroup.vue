@@ -26,17 +26,16 @@
 							@click.stop="openColorPicker"
 							:style="{ backgroundColor: group.style.color }"
 						></div>
-
-						<!-- size="1" -->
 						<input
 							class="board-input group-title-input"
 							name="groupTitleInput"
 							id="groupTitleInput"
-							:ref="'groupTitleInput' + group.id"
 							v-model="groupTitle"
-							:style="{ color: group.style.color }"
 							type="text"
-							@input="saveGroupTitle"
+							:style="{ color: group.style.color }"
+							:ref="'groupTitleInput' + group.id"
+							@blur="saveGroupTitle"
+							@keyup.enter="unfocus('groupTitleInput' + group.id)"
 							@focus="showCircle"
 						/>
 					</label>
@@ -99,7 +98,6 @@
 						})
 					"
 				></TaskPreview>
-				<!-- $emit('removeTask', { taskId: $event, groupId: group.id }) -->
 			</Draggable>
 		</Container>
 		<div v-else v-for="(task, idx) in group.tasks" :key="task.id">
@@ -268,6 +266,11 @@ export default {
 		},
 		isSelected(taskId) {
 			return this.selectedTasks?.some((selectedTask) => selectedTask.taskId === taskId)
+		},
+		unfocus(el) {
+			if (this.openColorPickerModal) return
+			this.$refs[el].blur()
+			this.hideCircle()
 		},
 	},
 	computed: {
