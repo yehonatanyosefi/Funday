@@ -4,7 +4,8 @@
   flex-wrap: wrap;
   justify-content: center;
   margin: 0;
-  background: radial-gradient(ellipse at bottom, #281b35c8 0%, rgba(15, 16, 72, 0.793) 100%);
+  background-color: transparent;
+  // background: radial-gradient(ellipse at bottom, #281b35c8 0%, rgba(15, 16, 72, 0.793) 100%);
   .person {
     align-items: center;
     display: flex;
@@ -20,7 +21,7 @@
     width: 400px;
   }
   .container:after {
-    background-color: #f2f2f2;
+    background-color: #f2f2f23b;
     content: '';
     height: 10px;
     position: absolute;
@@ -75,7 +76,7 @@
     width: 466px;
   }
   .divider {
-    background-color: #ca6060;
+    background-color: #b4abab;
     height: 1px;
     width: 160px;
   }

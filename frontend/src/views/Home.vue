@@ -57,10 +57,10 @@
 			</div>
 
 			
+			<AboutUs />
 		</section>
 		
 	</section>
-	<AboutUs />
 </template>
 
 <script>
