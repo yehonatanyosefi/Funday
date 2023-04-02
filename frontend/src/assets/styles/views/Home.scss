@@ -1,11 +1,14 @@
 .home {
   height: 100vh;
   width: 100vw;
-  overflow: hidden;
+  // overflow: hidden;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
+  font-family: pop-light;
+  color: #ffffff;
+  font-size: 16px;
   font-family: pop-light;
 
   header {
@@ -16,7 +19,9 @@
     display: flex;
     height: 65px;
     padding: 0;
-    margin: 0;
+    margin-block: 0;
+    margin-inline: 32px;
+    font-size: rem(14px);
 
     .left-container {
       display: flex;
@@ -40,7 +45,7 @@
       display: flex;
       align-items: center;
       background-color: white;
-      margin-right: 2%;
+      // margin-right: 2%;
 
       .login-signup-container {
         position: relative;
@@ -53,9 +58,10 @@
           padding: 8px 10px;
           align-items: center;
           justify-content: center;
+          font-family: pop-light;
 
           &:hover {
-            background-color: $brdr-clr;
+            background-color: $color-btn-hover;
             color: #535768;
             border-radius: 8px;
             transition: color 200ms ease;
@@ -71,6 +77,8 @@
       text-decoration: none;
     }
     .cta-btn {
+      font-family: pop-light;
+      font-size: rem(14px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -79,21 +87,25 @@
       height: 40px;
       border-radius: 2em;
       padding: 2px;
-      font-size: rem(14px);
       color: white;
-      background-color: #6161ff;
+      // background-color: #6161ff;
+      background-image: linear-gradient(90deg, #5034FF 25.69%, #B4B4FF 100%);
+
       transition: 0.4s;
       margin-left: 10px;
-      gap: rem(2px);
+      gap: rem(6px);
+      cursor: pointer;
 
       &.big {
         width: 172px;
         height: 50px;
-        background-image: linear-gradient(90deg, #5034ff 25%, #b4b4ff 100%);
+        background-image: linear-gradient(90deg, #5034FF 25.69%, #B4B4FF 100%);
+        font-size: rem(16px);
+        font-family: pop-light;
       }
 
       &:hover {
-        background-image: linear-gradient(to left, #8e8ede, #4f4fd4);
+        background-image:  linear-gradient(90deg, #432cd5 25.69%, #9797d5 100%);;
       }
       span:nth-child(2) {
         padding-bottom: rem(2px);
@@ -109,12 +121,41 @@
           content: '';
         }
       }
+      .arrow-container {
+        display: flex;
+        align-items: center;
+      }
     }
+  }
+
+  .el-carousel__container{
+    height: 287px !important;
+  }
+
+  .el-carousel__item{
+    border-radius:5px;
+  }
+
+  .el-carousel__item img {
+    object-fit: cover;
+    width: 579px;
+  }
+
+  .el-carousel__item:nth-child(2n) {
+    background-color: transparent;
+  }
+
+  .el-carousel__item:nth-child(2n + 1) {
+    background-color: transparent;
   }
 
   .body {
     height: 100%;
-    background: radial-gradient(ellipse at bottom, #281b35 0%, rgb(15, 16, 72) 100%);
+    background: radial-gradient(
+      ellipse at bottom,
+      #281b35 0%,
+      rgb(15, 16, 72) 100%
+    );
     overflow: hidden;
   }
 }
@@ -674,21 +715,44 @@
 
 #title {
   position: absolute;
-  top: 30%;
+  top: 15%;
   left: 0;
   right: 0;
   color: #fff;
   text-align: center;
   font-weight: 300;
   font-size: em(40px);
-  // margin-top: -60px; 
-  padding-left: 10px;
-}
+  padding-inline: 20px;
+  span {
+    font-family: pop-400;
+  }
+  .subtitle{
+    font-size: rem(22px);
+    .manage-word{
+    font-size: rem(22px);
+      position: relative;
+      .underline{
+        color: #fff;
+        text-align: center;
+        font-weight: 300;
+        font-size: 2.5em;
+        position: absolute;
+        transform: rotate(0deg);
+        width: 105px;
+        height: 1px;
+        top: 35px;
+    left: -9px;
+        background: linear-gradient(90deg,transparent,#fff);
+      }
+    }
+    }
+  }
+
 #title div span:first-child {
   font-size: rem(72px);
   line-height: rem(85px);
   padding-bottom: rem(12px);
-  font-family: pop-medium;
+  // font-family: pop-medium;
   //   background: -webkit-linear-gradient(white, #38495a);
   //   -webkit-background-clip: text;
   //   -webkit-text-fill-color: transparent;
@@ -703,6 +767,7 @@
   align-items: center;
   justify-content: center;
   padding: em(10px);
+  margin-block-end: em(10px);
 }
 
 @keyframes animStar {
