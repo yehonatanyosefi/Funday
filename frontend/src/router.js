@@ -11,64 +11,71 @@ import Dashboard from './cmps/Dashboard.vue'
 import TaskDetails from './views/TaskDetails.vue'
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home,
-  },
-  {
-    path: '/board/:boardId',
-    name: 'BoardIndex',
-    component: BoardIndex,
-    children: [
-      {
-        path: 'main-table',
-        name: 'Board',
-        component: BoardDetails,
-        children: [
-          {
-            path: 'task/:taskId',
-            name: 'TaskDetails',
-            component: TaskDetails,
-          },
-        ],
-      },
-      {
-        path: 'kanban',
-        name: 'BoardKanban',
-        component: Kanban,
-      },
-      {
-        path: 'dashboard',
-        name: 'BoardDashboard',
-        component: Dashboard,
-      },
-    ],
-  },
-  // {
-  //   path: '/chat',
-  //   name: 'Chat',
-  //   component: Chat,
-  // },
-  {
-    path: '/login',
-    name: 'LoginSignup',
-    component: LoginSignup,
-  },
-  {
-    path: '/user/:id',
-    name: 'UserDetails',
-    component: UserDetails,
-  },
-  {
-    path: '/login',
-    name: 'LoginSignup',
-    component: LoginSignup,
-  },
+	{
+		path: '/',
+		name: 'Home',
+		component: Home,
+	},
+	{
+		path: '/board/:boardId',
+		name: 'BoardIndex',
+		component: BoardIndex,
+		children: [
+			{
+				path: 'main-table',
+				name: 'Board',
+				component: BoardDetails,
+				children: [
+					{
+						path: 'task/:taskId',
+						name: 'TaskDetails',
+						component: TaskDetails,
+					},
+				],
+			},
+			{
+				path: 'kanban',
+				name: 'BoardKanban',
+				component: Kanban,
+				children: [
+					{
+						path: 'task-kanban/:taskId',
+						name: 'TaskDetailsKanban',
+						component: TaskDetails,
+					},
+				],
+			},
+			{
+				path: 'dashboard',
+				name: 'BoardDashboard',
+				component: Dashboard,
+			},
+		],
+	},
+	// {
+	//   path: '/chat',
+	//   name: 'Chat',
+	//   component: Chat,
+	// },
+	{
+		path: '/login',
+		name: 'LoginSignup',
+		component: LoginSignup,
+	},
+	{
+		path: '/user/:id',
+		name: 'UserDetails',
+		component: UserDetails,
+	},
+	{
+		path: '/login',
+		name: 'LoginSignup',
+		component: LoginSignup,
+	},
 ]
 
 export const router = createRouter({
-  routes,
-  history: createWebHashHistory(),
-  // base: process.env.BASE_URL,
+	routes,
+	history: createWebHashHistory(),
+	// base: process.env.BASE_URL,
 })

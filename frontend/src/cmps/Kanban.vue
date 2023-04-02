@@ -60,6 +60,7 @@
 				</div>
 			</div>
 		</div>
+		<RouterView></RouterView>
 	</div>
 </template>
 

@@ -1,7 +1,7 @@
 .status .modal {
 	// top: 611%;
 	top: 114%;
-	.triangle{
+	.triangle {
 		border-style: solid;
 		border-width: 8px 6px 8px 0;
 		position: absolute;
@@ -20,7 +20,7 @@
 	@include flex-center;
 	.label {
 		span {
-			@include flex-center
+			@include flex-center;
 		}
 		.critical-alert-svg {
 			margin-inline-start: 2px;
@@ -29,7 +29,18 @@
 		// padding: 10px;
 		width: 100%;
 		height: 100%;
+		&:not(.first)::before {
+			content: '';
+			position: absolute;
+			top: -1px;
+			left: -1px;
+			right: -1px;
+			width: 100%;
+			height: 1px;
+			box-shadow: 1px 1px #d0d4e4;
+		}
 	}
+
 	// &:hover::after {
 	// 	content: "+";
 	// 	position: absolute;
@@ -44,19 +55,19 @@
 		position: absolute;
 		right: 0;
 		top: 0;
-		transition: border-width .3s ease .2s;
+		transition: border-width 0.3s ease 0.2s;
 		background-color: $status-folding-corner;
-		border-bottom: 10px solid rgba(0, 0, 0, .4);
+		border-bottom: 10px solid rgba(0, 0, 0, 0.4);
 		border-right: 10px solid transparent;
 		&:hover {
-			border-bottom: 15px solid rgba(0, 0, 0, .4);
+			border-bottom: 15px solid rgba(0, 0, 0, 0.4);
 			border-right: 15px solid transparent;
 		}
 	}
 	position: relative;
-		.label {
-			cursor: pointer !important;
-		}
+	.label {
+		cursor: pointer !important;
+	}
 	& .modal {
 		// bottom: 0;
 		// left: 50%;

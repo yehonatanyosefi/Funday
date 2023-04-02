@@ -1,26 +1,26 @@
-keta kod
-refresh not working mobile
-update btn center on taskdetails
 fix update group / task attributes to update locally first
 debounce
 
-
+scrollbar taskdetails
+update btn center on taskdetails
+cursor pointer home get started
 cursor grab kanban
-infinity lines
 svg on kanban
+
+infinity lines
 input on kanban and collapsed group, taskdetails on kanban
 
 user messages scss
-fix mobile homepage
-
-dashboard spacing, height and row -> columns
-dashboard legend reconsider, update dashboard
+login message fail
 demo data dates - still not working
 modals in kanban
+
+
 try catch with error messages
+dashboard spacing, height and row -> columns
+dashboard legend reconsider, update dashboard
 
 title input in collapsed
-debounce savew
 content editable title to make the color picker not jump
 input with "New Task" auto select
 add task input start location

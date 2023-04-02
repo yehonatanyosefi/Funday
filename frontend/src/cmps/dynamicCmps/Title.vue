@@ -5,9 +5,9 @@
 			v-model="title"
 			name="task-title"
 			class="board-input task-title-input"
-			@input="$emit('saveTask', title)"
 			ref="titleInput"
 			@keyup.enter="unfocus"
+			@blur="$emit('saveTask', title)"
 		/>
 	</div>
 </template>
