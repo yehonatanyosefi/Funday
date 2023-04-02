@@ -1,3 +1,7 @@
 .smooth-dnd-draggable-wrapper {
      overflow: visible !important;
 }
+body .waiting-request * {
+          cursor: wait !important;
+          pointer-events: none;
+}

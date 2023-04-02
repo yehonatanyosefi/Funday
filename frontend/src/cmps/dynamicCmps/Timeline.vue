@@ -96,7 +96,7 @@ export default {
 			const bgc = this.info?.dueDate ? this.groupColor : 'inherit'
 			const width = (this.progressDate / 100) * 120
 			let radius = '0px'
-			if (width >= 110) {
+			if (width >= 115) {
 				radius = '555px'
 			}
 			return {

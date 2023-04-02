@@ -1,17 +1,5 @@
 <template>
 	<div class="start-end-date-container" @mouseover="onMouseover" @mouseout="mouseout">
-		<el-date-picker
-			:disabled="isProgressBar"
-			class="start-end-date"
-			v-model="value"
-			type="daterange"
-			range-separator="To"
-			start-placeholder="Start date"
-			end-placeholder="End date"
-			:size="size"
-			@change="change"
-			:style="dateStyles"
-		/>
 		<div class="timeline-progress" :style="{ backgroundColor: timelineBgc }">
 			<button v-if="this.info?.dueDate" :style="btnStyle"></button>
 			<div class="timeline-text">
@@ -38,13 +26,6 @@ export default {
 			defaultRadius: '555px',
 			barWidth: 120,
 		}
-	},
-	created() {
-		if (this.info?.dueDate === -Infinity) this.info.dueDate = null
-		this.value = [
-			new Date(this.info?.startDate),
-			new Date(this.info?.dueDate || this.info?.startDate || Date.now()),
-		]
 	},
 	computed: {
 		btnStyle() {
@@ -76,25 +57,6 @@ export default {
 		daysPassed() {
 			return Math.floor((new Date() - new Date(this.info?.startDate)) / (1000 * 60 * 60 * 24))
 		},
-		textDisplay() {
-			if (!this.info?.dueDate && !this.mouseOver) return '-'
-			if (!this.info?.dueDate && this.mouseOver) return 'Set Date'
-			if (this.mouseOver) return this.calculatedDate
-			const startDate = this.formattedDate(this.info.startDate)
-			const dueDate = this.formattedDate(this.info.dueDate)
-			return `${startDate} - ${dueDate}`
-		},
-		calculatedDate() {
-			const days = this.totalDays
-			if (days > 31) return Math.round(days / 30) + 'm'
-			return days + 'd'
-		},
-		timelineBgc() {
-			if (this.info?.dueDate) {
-				return '#333333'
-			}
-		},
 	},
-	components: {},
 }
 </script>
