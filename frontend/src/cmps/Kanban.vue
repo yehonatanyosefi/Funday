@@ -54,9 +54,7 @@
 						:checked="filteredCmpOrder.includes(cmpName)"
 						@click="toggleFilter(cmpName)"
 					/>
-					<!-- :checked="filteredCmpOrder[cmpName]" -->
 					<label>{{ capitalizeFirstLetter(cmpName) }}</label>
-					<!-- @change="cmpFilter[cmpName] = !cmpFilter[cmpName]" -->
 				</div>
 			</div>
 		</div>
@@ -67,6 +65,12 @@
 <script>
 import { Container, Draggable } from 'vue3-smooth-dnd'
 import KanbanColumn from './KanbanColumn.vue'
+import PersonSvg from '../assets/svg/PersonSvg.svg'
+import TimelineSvg from '../assets/svg/TimelineSvg.svg'
+import DateSvg from '../assets/svg/Date.svg'
+import GroupSvg from '../assets/svg/Group.svg'
+import StatusSvg from '../assets/svg/Status.svg'
+
 export default {
 	data() {
 		return {
@@ -166,6 +170,6 @@ export default {
 			return window.innerWidth <= mobileScreenWidthThreshold
 		},
 	},
-	components: { Container, Draggable, KanbanColumn },
+	components: { Container, Draggable, KanbanColumn,PersonSvg,TimelineSvg,DateSvg,GroupSvg,StatusSvg},
 }
 </script>
