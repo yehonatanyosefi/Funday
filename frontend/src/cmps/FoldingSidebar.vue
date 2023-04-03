@@ -17,11 +17,11 @@
                 </p>
                 <div class="btns flex column">
                     <button class="add-btn" @click.stop="addBoard">
-                        <Add class="svg-icon" /> <span class="optn">Add new</span>
+                        <Add class="svg-icon" /> <span class="optn">Add</span>
                     </button>
                     <button class="ai-btn" @click="openGPT">
                         <Ai class="svg-icon ai" width="19px" height="19px" />
-                        <span class="optn">Add by Ai</span>
+                        <span class="optn">Add board with AI</span>
 
                         <div v-if="isOpenAiModal" class="modal" v-click-outside="closeModal">
                             <form @submit.prevent="sendGpt">
