@@ -155,7 +155,7 @@ export default {
 		},
 		onCardDrop(dropResult) {
 			const { removedIndex, addedIndex } = dropResult
-			if (removedIndex === null && addedIndex === null) return
+			if ((removedIndex === null && addedIndex === null) || addedIndex === removedIndex) return
 			let task = removedIndex !== null ? this.cardsArr[removedIndex] : null
 			if (task?.id) {
 				const payload = { task, groupId: task.taskGroupId, cmp: this.current }

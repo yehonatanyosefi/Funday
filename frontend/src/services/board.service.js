@@ -364,7 +364,7 @@ function getEmptyGroup() {
 		id: utilService.makeId(),
 		title: 'Title',
 		isExpanded: true,
-		archivedAt: null, 
+		archivedAt: null,
 		tasks: [getEmptyTask(), getEmptyTask(), getEmptyTask()],
 		style: {
 			color: getRndColor(),

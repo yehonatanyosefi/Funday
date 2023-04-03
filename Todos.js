@@ -1,4 +1,3 @@
-fix update group / task attributes to update locally first
 debounce
 
 scrollbar taskdetails
@@ -20,7 +19,7 @@ try catch with error messages
 dashboard spacing, height and row -> columns
 dashboard legend reconsider, update dashboard
 
-title input in collapsed
+title input in collapsed group
 content editable title to make the color picker not jump
 input with "New Task" auto select
 add task input start location
@@ -36,5 +35,9 @@ x in timeline and date
 bonus:
 tooltips - https://floating-vue.starpad.dev/guide/component.html#dropdown
 drag and drop between groups in main table
-quill
 activity log
+למחוק את הactivity log, file
+kanban - delete in 3 dots
+kanban - title with input
+kanban - column drag and drop
+kanban - save on board the changes in number of task items to show

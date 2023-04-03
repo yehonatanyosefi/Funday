@@ -133,7 +133,7 @@ export default {
 		onColumnDrop(dropResult) {
 			console.log(`dropResult:`, dropResult)
 			// const { removedIndex, addedIndex } = dropResult
-			// if (removedIndex === null || addedIndex === null) return
+			// if (removedIndex === null || addedIndex === null || addedIndex === removedIndex) return
 			// const newWords = [...this.currColumns.words]
 			// const newColors = [...this.currColumns.colors]
 			// newWords.splice(addedIndex, 0, ...newWords.splice(removedIndex, 1))

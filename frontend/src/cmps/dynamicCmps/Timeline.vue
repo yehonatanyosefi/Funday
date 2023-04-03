@@ -47,6 +47,8 @@ export default {
 		}
 	},
 	created() {
+		// this.info.startDate = parseInt(this.info.startDate)
+		// this.info.dueDate = parseInt(this.info.dueDate)
 		if (this.info?.dueDate === -Infinity) this.info.dueDate = null
 		this.value = [
 			new Date(this.info?.startDate),

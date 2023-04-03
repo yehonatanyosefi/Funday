@@ -22,7 +22,7 @@ export default {
 		info: Number,
 	},
 	created() {
-		this.date = this.info
+		this.date = parseInt(this.info)
 	},
 	data() {
 		return {
