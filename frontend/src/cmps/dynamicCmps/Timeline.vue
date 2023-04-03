@@ -51,14 +51,7 @@ export default {
 		}
 	},
 	created() {
-		this.timelineInfo = { ...this.info }
-		this.timelineInfo.startDate = parseInt(this.timelineInfo.startDate)
-		this.timelineInfo.dueDate = parseInt(this.timelineInfo.dueDate)
-		if (this.timelineInfo?.dueDate === -Infinity) this.timelineInfo.dueDate = null
-		this.value = [
-			new Date(this.timelineInfo?.startDate),
-			new Date(this.timelineInfo?.dueDate || this.timelineInfo?.startDate || Date.now()),
-		]
+		this.setTimelineInfo()
 	},
 	methods: {
 		change() {
@@ -96,6 +89,23 @@ export default {
 		},
 		mouseout() {
 			this.mouseOver = false
+		},
+		setTimelineInfo() {
+			const startDateNum = parseInt(this.info.startDate)
+			const dueDateNum = parseInt(this.info.dueDate)
+			this.timelineInfo.startDate =
+				!startDateNum || isNaN(startDateNum) || startDateNum === Infinity || startDateNum === -Infinity
+					? Date.now()
+					: startDateNum
+			this.timelineInfo.dueDate =
+				!dueDateNum || isNaN(dueDateNum) || dueDateNum === Infinity || dueDateNum === -Infinity
+					? null
+					: dueDateNum
+			if (this.timelineInfo?.dueDate === -Infinity) this.timelineInfo.dueDate = null
+			this.value = [
+				new Date(this.timelineInfo?.startDate),
+				new Date(this.timelineInfo?.dueDate || this.timelineInfo?.startDate || Date.now()),
+			]
 		},
 	},
 	computed: {
@@ -157,7 +167,7 @@ export default {
 	components: {},
 	watch: {
 		info() {
-			this.timelineInfo = { ...this.info }
+			this.setTimelineInfo()
 		},
 	},
 }
