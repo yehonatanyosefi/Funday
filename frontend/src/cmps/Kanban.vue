@@ -121,10 +121,9 @@ export default {
 		},
 		saveDraggedTask() {
 			const { task, groupId, cmp } = this.draggedTaskPayload
-			const payload = this.draggedToColumn
-			const taskToSave = JSON.parse(JSON.stringify(task))
-			taskToSave[cmp] = payload
-			this.saveTask({ taskToSave, groupId })
+			const taskToSave = { attName: cmp, attValue: this.draggedToColumn, taskId: task.id }
+			const payloadToSave = { task: taskToSave, groupId }
+			this.saveTask(payloadToSave)
 			this.draggedTaskPayload = null
 			this.draggedToColumn = null
 		},
@@ -145,10 +144,13 @@ export default {
 			this.columnList.status.words = newColumns.words
 			this.columnList.status.colors = newColumns.colors
 		},
-		async saveTask({ taskToSave, groupId }) {
+		async saveTask(payload) {
 			try {
-				const payloadToSave = { task: taskToSave, groupId, boardId: this.board._id }
-				await this.$store.dispatch({ type: 'saveTask', payload: payloadToSave })
+				const payloadToSave = { ...payload, boardId: this.board._id }
+				const request = {
+					dispatch: () => this.$store.dispatch({ type: 'saveTask', payload: payloadToSave }),
+				}
+				await this.$store.dispatch('enqueueRequest', request)
 				// showSuccessMsg('Task updated')
 			} catch (err) {
 				console.log(err)

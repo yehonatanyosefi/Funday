@@ -149,9 +149,9 @@ export default {
 			return filteredTasks
 		},
 		saveTask(payload, { cmp, task, groupId }) {
-			const taskToSave = JSON.parse(JSON.stringify(task))
-			taskToSave[cmp] = payload
-			this.$emit('saveTask', { taskToSave, groupId })
+			const taskToSave = { attName: cmp, attValue: payload, taskId: task.id }
+			const payloadToSave = { task: taskToSave, groupId }
+			this.$emit('saveTask', payloadToSave)
 		},
 		onCardDrop(dropResult) {
 			const { removedIndex, addedIndex } = dropResult
