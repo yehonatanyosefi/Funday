@@ -1,11 +1,11 @@
 <template>
-    <main class="folding-bar" @click="onBlur" :class="{folded: isFolded }" >
+    <main class="folding-bar" @click="onBlur" :class="{ folded: isFolded }">
 
         <div class="slide-btn" @click.stop="foldBar">
             <LeftArrow class="svg-icon" />
         </div>
 
-        <div >
+        <div>
 
             <div class="workspace">
                 <span class="workspace-title flex ">Workspace
@@ -19,19 +19,22 @@
                     <button class="add-btn" @click.stop="addBoard">
                         <Add class="svg-icon" /> <span class="optn">Add new</span>
                     </button>
-                    <button class="filter-btn" @click="openGPT">
-                        <Ai class="svg-icon ai" /> <span class="optn">Add by Ai</span>
-                        <div v-if="isOpenAiModal" class="modal">
+                    <button class="ai-btn" @click="openGPT">
+                        <Ai class="svg-icon ai" width="19px" height="19px" />
+                        <span class="optn">Add by Ai</span>
+
+                        <div v-if="isOpenAiModal" class="modal" v-click-outside="closeModal">
                             <form @submit.prevent="sendGpt">
-                                <div class="flex">
-                                    <label for="boardName">Name: </label>
-                                    <input v-model="aiBoardName" id="boardName">
+                                <div class="flex input-container">
+                                    <label for="boardName">
+                                        <input v-model="aiBoardName" id="boardName" placeholder="Enter board theme" />
+                                    </label>
                                 </div>
-                                <button class="flex">Send</button>
+                                <button class="flex send-btn">Make with AI</button>
                             </form>
                         </div>
                     </button>
-                    <!-- <button class="filter-btn">
+                    <!-- <button class="ai-btn">
                         <Filter class="svg-icon" /> <span class="optn">Filters</span>
                     </button> -->
                     <div class="searching" @click.stop="isSearching = true">
@@ -45,7 +48,7 @@
             </div>
 
             <div class="spacer"></div>
-            <BoardList  />
+            <BoardList />
             <!-- :boardList="boardList" -->
         </div>
     </main>
@@ -135,6 +138,9 @@ export default {
         async openGPT() {
             this.isOpenAiModal = true
         },
+        closeModal() {
+			this.isOpenAiModal = false
+		}
 
     },
     computed: {
