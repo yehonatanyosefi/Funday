@@ -32,6 +32,9 @@
                background-color: $color-focused-within;
      }
      margin-inline-start: 47px;
+     @include for-mobile-layout {
+              margin-inline-start: 17px;
+     }
      display: grid;
      border-radius: 3px;
      height: fit-content;
@@ -54,6 +57,9 @@
           height: 46px;
           background-color: #fff;
           z-index: 3;
+          @include for-mobile-layout {
+               display: none;
+          }
           // position: relative;
      }
      .menu-btn-wrapper-task {
@@ -63,12 +69,13 @@
           left: -48px;
            width: 42px;
           background-color: #fff;
-          // z-index: 3;
-          // position: relative;
-     }
-          .add-task .menu-btn-wrapper-task {
-               height: 44px;
+          @include for-mobile-layout {
+               display: none;
           }
+     }
+     .add-task .menu-btn-wrapper-task {
+          height: 44px;
+     }
      .menu-btn-container {
           position: absolute;
           top: 10px;
@@ -285,7 +292,7 @@
           }
           .task-title-group.task-sticky .task {
                display: grid;
-               grid-template-columns: 32.5px 1fr;
+               grid-template-columns: 32.75px 1fr;
                background-color: #fff;
           }
      }

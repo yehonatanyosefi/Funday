@@ -273,7 +273,7 @@
 		}
 
 		&::-webkit-scrollbar-thumb {
-			border-radius: 10px;
+			border-radius: 6px;
 			background-color: #c3c6d4;
 		}
 
@@ -309,6 +309,56 @@
 
 				&:hover {
 					background-color: darken($primary-blue, 8%);
+				}
+			}
+
+			.ql-toolbar.ql-snow {
+				width: 100%;
+				padding: 0;
+				margin: 0;
+				border-top: 1px solid $brdr-clr;
+				border-left: 1px solid $brdr-clr;
+				border-right: 1px solid $brdr-clr;
+
+				border-top-left-radius: 6px;
+				border-top-right-radius: 6px;
+			}
+
+			.comment-add-txt.ql-container.ql-snow {
+				width: 100%;
+				height: 100px;
+
+				border-bottom: 1px solid $brdr-clr;
+				border-left: 1px solid $brdr-clr;
+				border-right: 1px solid $brdr-clr;
+
+				border-bottom-left-radius: 6px;
+				border-bottom-right-radius: 6px;
+				font-size: rem(16px);
+
+				padding: 10px;
+				padding-right: 0;
+
+				&:focus {
+					outline: none;
+				}
+				.ql-editor {
+					margin: 0;
+					&::-webkit-scrollbar-track {
+						background-color: transparent;
+						opacity: 0;
+					}
+
+					&::-webkit-scrollbar {
+						width: 6px;
+						height: 10px;
+						background-color: transparent;
+					}
+
+					&::-webkit-scrollbar-thumb {
+						border-radius: 6px;
+						background-color: #c3c6d4;
+					}
 				}
 			}
 		}
@@ -386,6 +436,22 @@
 				padding-left: 15px;
 				padding-top: 15px;
 				font-size: rem(16px);
+				overflow-y: scroll;
+				&::-webkit-scrollbar-track {
+					background-color: transparent;
+					opacity: 0;
+				}
+
+				&::-webkit-scrollbar {
+					width: 6px;
+					height: 6px;
+					background-color: transparent;
+				}
+
+				&::-webkit-scrollbar-thumb {
+					border-radius: 6px;
+					background-color: #c3c6d4;
+				}
 			}
 
 			.comment-reactions {

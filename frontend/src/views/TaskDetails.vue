@@ -27,14 +27,13 @@
 
 		<section v-if="task && showComp === 'comments'" class="task-comments">
 			<form @submit.prevent="addComment">
-				<textarea
+				<quill-editor
 					ref="inputTxt"
-					v-model="commentToAdd"
-					type="text"
 					placeholder="Write an update..."
 					class="comment-add-txt"
+					theme="snow"
+					contentType="text"
 				/>
-				<!-- <QuillEditor v-model="commentToAdd" /> -->
 				<button class="add-comment-btn">Update</button>
 			</form>
 			<div
@@ -54,7 +53,7 @@
 					<p>{{ getFormattedTime(comment.createdAt) }}</p>
 					<Delete @click="deleteComment(idx)"></Delete>
 				</div>
-				<div class="comment-content">{{ comment.txt }}</div>
+				<div class="comment-content" v-html="comment.txt"></div>
 
 				<div class="comment-reactions">
 					<div v-if="comment.likes?.length" class="likes">
@@ -148,6 +147,7 @@ import Replay from '../assets/svg/Replay.svg'
 
 import { utilService } from '../services/util.service'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
+import { QuillEditor } from '@vueup/vue-quill'
 
 export default {
 	name: 'task-details',
@@ -160,10 +160,10 @@ export default {
 			imgToShow: '',
 			isLoading: false,
 			isDragover: false,
-			content: {
-				icon: 'addComment',
-				type: 'Comment',
-			},
+			// content: {
+			// 	icon: 'addComment',
+			// 	type: 'Comment',
+			// },
 			darken: false,
 		}
 	},
@@ -233,8 +233,9 @@ export default {
 			this.$router.push('/board/' + this.board._id + '/main-table')
 		},
 		addComment() {
+			const commentToAdd = this.$refs.inputTxt.getHTML()
 			const comment = {
-				txt: this.commentToAdd,
+				txt: commentToAdd,
 				taskId: this.task._id,
 				createdAt: Date.now(),
 				id: utilService.makeId(),
@@ -247,7 +248,7 @@ export default {
 			this.task.comments.unshift(comment)
 			const payload = { boardId: this.board._id, task, groupId: this.groupId }
 			this.$store.dispatch({ type: 'saveTask', payload })
-			this.commentToAdd = ''
+			this.$refs.inputTxt.setHTML('')
 		},
 		getUserImg(userId) {
 			//   let user = this.users.find((user) => user._id === userId)
@@ -334,6 +335,7 @@ export default {
 		LikeSvg,
 		LikeSolid,
 		Replay,
+		QuillEditor,
 		// imgList,
 		// activityCmp,
 		// imgPreview,

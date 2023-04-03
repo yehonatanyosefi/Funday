@@ -2,6 +2,9 @@
      margin-block-end: 20px;
      display: grid;
      grid-template-columns: $collapsed-table-grids;
+     @include for-mobile-layout {
+          grid-template-columns: 417px repeat(6, 140px);
+     }
      height: 60px;
      // margin-inline-start: 6px;
      .collapsed-text {
@@ -22,6 +25,11 @@
           .menu-btn-wrapper {
                padding-block-end: 15px;
                @include flex-center;
+               @include for-mobile-layout {
+                    opacity: 0;
+                    pointer-events: none;
+                    user-select: none;
+               }
                .menu-btn {
                     opacity:0;
                     cursor: pointer;
@@ -65,6 +73,9 @@
           left: 0px;
                display: grid;
                grid-template-columns: 47px 400px;
+               @include for-mobile-layout {
+                    grid-template-columns: 17px 400px;
+               }
                z-index: 2;
                position: sticky;
                background-color: #fff;
@@ -85,6 +96,9 @@
                     position: absolute;
                     top: 0;
                     left: 41px;
+                    @include for-mobile-layout {
+                         left: 12px;
+                    }
                     width: 6px;
                     border-top-left-radius: 5px;
                     border-bottom-left-radius: 5px;
