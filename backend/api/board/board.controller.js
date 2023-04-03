@@ -29,11 +29,20 @@ async function getBoardById(req, res) {
 }
 
 async function addBoard(req, res) {
-  // const { loggedinUser } = req
   try {
     const board = req.body
-    // board.owner = loggedinUser
     const addedBoard = await boardService.add(board)
+    res.json(addedBoard)
+  } catch (err) {
+    logger.error('Failed to add board', err)
+    res.status(500).send({ err: 'Failed to add board' })
+  }
+}
+
+async function addGptBoard(req, res) {
+  try {
+    const boardName = req.body
+    const addedBoard = await boardService.gpt(boardName)
     res.json(addedBoard)
   } catch (err) {
     logger.error('Failed to add board', err)
@@ -118,4 +127,5 @@ module.exports = {
   addBoardMsg,
   removeBoardMsg,
   applyDrag,
+  addGptBoard
 }

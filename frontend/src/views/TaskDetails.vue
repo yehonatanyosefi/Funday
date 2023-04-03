@@ -230,7 +230,15 @@ export default {
 			}
 		},
 		close() {
-			this.$router.push('/board/' + this.board._id + '/main-table')
+			let path = this.$route.path
+			const prefix = '/board/' + this.board._id + '/'
+			path = path.replace(prefix, '')
+			const endIdx = path.indexOf('/')
+			path = path.substring(0, endIdx)
+
+			this.$router.push('/board/' + this.board._id + '/' + path)
+
+			// this.$router.push('/board/' + this.board._id + '/main-table')
 		},
 		addComment() {
 			const commentToAdd = this.$refs.inputTxt.getHTML()

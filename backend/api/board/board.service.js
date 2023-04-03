@@ -184,6 +184,24 @@ async function removeBoardMsg(boardId, msgId) {
 	}
 }
 
+require('dotenv').config();
+const { Configuration, OpenAIApi } = require("openai");
+
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration)
+
+async function gpt(boardName='Development'){
+const completion = await openai.createChatCompletion({
+  model: "gpt-3.5-turbo",
+  messages: [{role: "user", content: `write to me 15 task examples for a monday board named "${boardName}", write only the task names and make sure they are succinct and related to the topic. group them into 3 group, write the first group name at the top of the 5 tasks, then the 5 tasks for it. make sure to not include any other words in your answer but what I asked for because I need to parse it using code`}],
+});
+console.log(completion.data.choices[0].message.content);
+const content = completion.data.choices[0].message.content
+return content
+}
+
 module.exports = {
 	remove,
 	query,
@@ -193,4 +211,5 @@ module.exports = {
 	addBoardMsg,
 	removeBoardMsg,
 	applyDrag,
+	gpt
 }
