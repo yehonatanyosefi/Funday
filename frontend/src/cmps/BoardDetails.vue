@@ -1,5 +1,5 @@
 <template>
-	<section class="board-details" :class="checkWaiting">
+	<section class="board-details">
 		<div v-if="!board?.groups?.length" class="filter-no-results">
 			<img class="no-results-img" src="https://cdn.monday.com/images/general_not_found_state.svg" />
 			<div class="no-results-title">No results were found</div>
@@ -121,9 +121,6 @@ export default {
 			const mobileScreenWidthThreshold = 768
 			return window.innerWidth <= mobileScreenWidthThreshold
 		},
-		checkWaiting() {
-			return this.isWaiting ? 'waiting-request' : ''
-		},
 	},
 	created() {},
 	methods: {
@@ -167,9 +164,10 @@ export default {
 		async saveTask(payload) {
 			try {
 				const payloadToSave = { ...payload, boardId: this.board._id }
-				this.isWaiting = true
-				await this.$store.dispatch({ type: 'saveTask', payload: payloadToSave })
-				this.isWaiting = false
+				const request = {
+					dispatch: () => this.$store.dispatch({ type: 'saveTask', payload: payloadToSave }),
+				}
+				await this.$store.dispatch('enqueueRequest', request)
 				// showSuccessMsg('Task updated')
 			} catch (err) {
 				console.log(err)
@@ -219,7 +217,10 @@ export default {
 		async saveGroupAtt(payload) {
 			try {
 				const payloadToSave = { ...payload, boardId: this.board._id }
-				await this.$store.dispatch({ type: 'saveGroupAtt', payload: payloadToSave })
+				const request = {
+					dispatch: () => this.$store.dispatch({ type: 'saveGroupAtt', payload: payloadToSave }),
+				}
+				await this.$store.dispatch('enqueueRequest', request)
 				// showSuccessMsg('Task updated')
 			} catch (err) {
 				// showErrorMsg('Cannot update task')

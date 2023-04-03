@@ -73,8 +73,7 @@ export default {
 	},
 	methods: {
 		saveTask(payload, cmp) {
-			const taskToSave = JSON.parse(JSON.stringify(this.task))
-			taskToSave[cmp] = payload
+			const taskToSave = { attName: cmp, attValue: payload, taskId: this.task.id }
 			this.$emit('saveTask', taskToSave)
 		},
 		capitalizeFirstLetter(str) {
