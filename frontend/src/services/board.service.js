@@ -72,7 +72,17 @@ async function save(boardId = null, type = 'task', payload, groupId = null) {
 
 
 async function addGptBoard(boardObj) {
-	const board = await httpService.post(API_KEY + 'gpt', boardObj)
+	let board
+	const savedBoards = utilService.loadFromStorage(STORAGE_KEY) || []
+	let currBoard = (savedBoards) ? savedBoards.find(boards => boards.title === boardObj.boardName) : null
+	if (currBoard) {
+		delete currBoard._id
+		board = saveBoard(currBoard)
+	} else {
+		board = await httpService.post(API_KEY + 'gpt', boardObj)
+		savedBoards.push(board)
+		utilService.saveToStorage(STORAGE_KEY, savedBoards)
+	}
 	return board
 }
 
