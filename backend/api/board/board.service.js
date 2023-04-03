@@ -196,7 +196,29 @@ async function gpt(boardObj = { boardName: 'Development' }) {
 	const boardName = boardObj.boardName
 	const completion = await openai.createChatCompletion({
 		model: "gpt-3.5-turbo",
-		messages: [{ role: "user", content: `write to me 15 task examples for a monday board named "${boardName}", write only the task names and make sure they are succinct and related to the topic. group them into 3 group, write the first group name at the top of the 5 tasks, then the 5 tasks for it. make sure to not include any other words in your answer but what I asked for because I need to parse it using code` }],
+		messages: [{
+			role: "user", content: `Please provide 15 task names for a Monday board with the name "${boardName}". Each task name should be concise and relevant to the topic. Please organize the tasks into three groups, with the group name listed at the top of each group. Please include only the task names and group names in your response, as I will be parsing them using code. The final format should be as follows:
+
+Group Number: Group Name
+<task title here>
+<task title here>
+<task title here>
+<task title here>
+<task title here>
+
+Group Number: Group Name
+<task title here>
+<task title here>
+<task title here>
+<task title here>
+<task title here>
+
+Group Number: Group Name
+<task title here>
+<task title here>
+<task title here>
+<task title here>
+<task title here>` }],
 	})
 	const content = completion.data.choices[0].message.content
 	const groupsData = arrangeData(content)
@@ -259,12 +281,12 @@ function getGroup(groupData) {
 		archivedAt: null,
 		tasks: [getTask(groupData.task[0]), getTask(groupData.task[1]), getTask(groupData.task[2]), getTask(groupData.task[3]), getTask(groupData.task[4]),],
 		style: {
-			color: getRndColor(),
+			color: groupData.color || getRndColors()[0],
 		},
 	}
 }
 
-function getRndColor() {
+function getRndColors() {
 	const colors = [
 		'#037F4C',
 		'#00C875',
@@ -285,8 +307,12 @@ function getRndColor() {
 		'#C4C4C4',
 		'#808080',
 	]
-	const randomIdx = getRandomIntInclusive(0, colors.length - 1)
-	return colors[randomIdx]
+	const rndColors = []
+	while (rndColors.length < 3) {
+		const rndColor = colors[getRandomIntInclusive(0, colors.length - 1)]
+		if (!rndColors.includes(rndColor)) rndColors.push(rndColor)
+	}
+	return rndColors
 }
 
 function getBoard(boardObj, groupsData) {
@@ -325,10 +351,10 @@ function getRandomIntInclusive(min, max) {
 }
 function arrangeData(data) {
 	const groups = data.split("\n\n")
-
-	const groupsData = groups.map((group) => {
+	const rndColors = getRndColors()
+	const groupsData = groups.map((group, idx) => {
 		const lines = group.split("\n")
-		const title = lines[0].substring(lines[0].indexOf(': ') + 2)
+		const title = lines[0].substring(lines[0].indexOf(idx + 1 + ': ') + 2)
 		const tasks = lines.slice(1)
 
 		const taskData = tasks.map((task) => {
@@ -337,12 +363,11 @@ function arrangeData(data) {
 				title: taskTitle,
 			}
 		})
-
 		return {
 			title,
+			color: rndColors[idx],
 			task: taskData,
 		}
 	})
-
 	return groupsData
 }
