@@ -344,6 +344,7 @@
 				}
 				.ql-editor {
 					margin: 0;
+					padding-inline: 6px;
 					&::-webkit-scrollbar-track {
 						background-color: transparent;
 						opacity: 0;
@@ -359,6 +360,7 @@
 						border-radius: 6px;
 						background-color: #c3c6d4;
 					}
+					
 				}
 			}
 		}
