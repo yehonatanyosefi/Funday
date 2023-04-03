@@ -99,6 +99,9 @@ import Person from './dynamicCmps/Person.vue'
 import Menu from '../assets/svg/Menu.svg'
 import PersonSvg from '../assets/svg/PersonSvg.svg'
 import TimelineSvg from '../assets/svg/TimelineSvg.svg'
+import DateSvg from '../assets/svg/Date.svg'
+import GroupSvg from '../assets/svg/Group.svg'
+import StatusSvg from '../assets/svg/Status.svg'
 import Update from '../assets/svg/Update.svg'
 import AddUpdate from '../assets/svg/AddUpdate.svg'
 import { Container, Draggable } from 'vue3-smooth-dnd'
@@ -190,6 +193,10 @@ export default {
 		TimelineSvg,
 		Update,
 		AddUpdate,
+		DateSvg,
+		GroupSvg,
+		StatusSvg,
+		
 	},
 }
 </script>

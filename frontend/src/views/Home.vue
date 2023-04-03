@@ -19,18 +19,16 @@
 				<router-link to="#" @click="guestLogin">
 					<button class="cta-btn">
 						<span>Get started</span>
-						<span>→</span>
+						<span class="arrow-container">
+							<RightArrow class="svg-icon" width="14px" height="10px" />
+						</span>
 					</button>
 				</router-link>
 			</nav>
 		</header>
 
 		<section class="body">
-			<link
-				href="https://fonts.googleapis.com/css?family=Lato:300,400,700"
-				rel="stylesheet"
-				type="text/css"
-			/>
+			<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet" type="text/css" />
 			<div id="stars"></div>
 			<div id="stars2"></div>
 			<div id="stars3"></div>
@@ -38,22 +36,39 @@
 				<div>
 					<span>A platform built for a new way of working</span>
 					<br />
-					<span> What would you like to manage with Funday today? </span>
+					<span class="subtitle"> What would you like to <span class="manage-word ">manage <div class="underline">
+							</div></span> with Funday today? </span>
 				</div>
 				<nav>
 					<router-link to="#" @click="guestLogin">
 						<button class="cta-btn big">
 							<span>Get started</span>
-							<span>→</span>
+							<span class="arrow-container">
+								<RightArrow class="svg-icon" />
+							</span>
 						</button>
 					</router-link>
 				</nav>
+				<el-carousel indicator-position="none" autoplay :interval="3000" type="card" height="200px">
+					<el-carousel-item v-for="(imgUrl, idx) in imgs" :key="idx">
+						<img :src=imgUrl>
+					</el-carousel-item>
+				</el-carousel>
 			</div>
+			<div class="about-us">
+				<p >Team Funday</p>
+				<AboutUs />
+			</div>
+
 		</section>
+		
 	</section>
 </template>
 
 <script>
+import RightArrow from '../assets/svg/RightArrow.svg'
+import AboutUs from '../cmps/util/AboutUs.vue'
+
 export default {
 	name: 'home',
 	computed: {
@@ -70,7 +85,11 @@ export default {
 			profile: null,
 			login: null,
 			videoBG: 'stars.mp4',
-			
+			imgs: ['https://res.cloudinary.com/dcwibf9o5/image/upload/v1680444407/xitoef7v2grrunqkm0hq.jpg',
+					'https://res.cloudinary.com/dcwibf9o5/image/upload/v1680444428/orienza3omctjqagbmw7.jpg',
+					'https://res.cloudinary.com/dcwibf9o5/image/upload/v1680447960/uhcq0vnlq5nyefce89nj.jpg']
+					// 'https://res.cloudinary.com/dcwibf9o5/image/upload/v1680444443/l75bnwpjntvvfunetevp.jpg']
+	
 		}
 	},
 	methods: {
@@ -92,16 +111,16 @@ export default {
 		},
 
 		async guestLogin() {
-			// const loggedinUser = this.$store.getters.loggedinUser
-			// if (loggedinUser?._id) {
-				const boardList = this.$store.getters.boardList
-				const firstBoardId = boardList[0]._id
-				this.$router.push (`/board/${firstBoardId}/main-table`)
-			// }
-			// else{
-				// this.$store.dispatch({ type: 'guestLogin' })
-			// }
+			const boardList = this.$store.getters.boardList
+			const firstBoardId = boardList[0]._id
+			this.$router.push(`/board/${firstBoardId}/main-table`)
+
 		},
 	},
+	components: {
+		RightArrow,
+		AboutUs
+	}
 }
 </script>
+
