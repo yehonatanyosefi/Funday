@@ -106,6 +106,7 @@ import TimelineSvg from '../assets/svg/TimelineSvg.svg'
 import DateSvg from '../assets/svg/Date.svg'
 import GroupSvg from '../assets/svg/Group.svg'
 import StatusSvg from '../assets/svg/Status.svg'
+import TextSvg from '../assets/svg/Text.svg'
 import Update from '../assets/svg/Update.svg'
 import AddUpdate from '../assets/svg/AddUpdate.svg'
 import { Container, Draggable } from 'vue3-smooth-dnd'
@@ -200,6 +201,7 @@ export default {
 		DateSvg,
 		GroupSvg,
 		StatusSvg,
+		TextSvg,
 	},
 }
 </script>

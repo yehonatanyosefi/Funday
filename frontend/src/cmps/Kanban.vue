@@ -54,7 +54,15 @@
 						:checked="filteredCmpOrder.includes(cmpName)"
 						@click="toggleFilter(cmpName)"
 					/>
-					<label>{{ capitalizeFirstLetter(cmpName) }}</label>
+					<label>
+						{{ capitalizeFirstLetter(cmpName) }}
+						<component
+							v-if="capitalizeFirstLetter(cmpName) + 'Svg'"
+							:is="capitalizeFirstLetter(cmpName) + 'Svg'"
+							width="16px"
+							height="16px"
+						></component>
+					</label>
 				</div>
 			</div>
 		</div>
@@ -70,6 +78,7 @@ import TimelineSvg from '../assets/svg/TimelineSvg.svg'
 import DateSvg from '../assets/svg/Date.svg'
 import GroupSvg from '../assets/svg/Group.svg'
 import StatusSvg from '../assets/svg/Status.svg'
+import TextSvg from '../assets/svg/Text.svg'
 
 export default {
 	data() {
@@ -170,6 +179,16 @@ export default {
 			return window.innerWidth <= mobileScreenWidthThreshold
 		},
 	},
-	components: { Container, Draggable, KanbanColumn,PersonSvg,TimelineSvg,DateSvg,GroupSvg,StatusSvg},
+	components: {
+		Container,
+		Draggable,
+		KanbanColumn,
+		PersonSvg,
+		TimelineSvg,
+		DateSvg,
+		GroupSvg,
+		StatusSvg,
+		TextSvg,
+	},
 }
 </script>
