@@ -65,7 +65,7 @@ export const boardStore = {
 			}
 		},
 		addBoard(state, { board }) {
-			const minBoard = { _id: board._id, title: board.title }
+			const minBoard = { _id: board._id, title: board.title, position: board.position || 20 }
 			state.boardList.push(minBoard)
 			state.board = board
 			state.filteredBoard = JSON.parse(JSON.stringify(state.board))
@@ -323,9 +323,9 @@ export const boardStore = {
 		async addGptBoard({ commit, getters, state }, { boardName }) {
 			commit({ type: 'setIsSwitchingBoards', isSwitchingBoards: true })
 			try {
+				const user = getters.loggedinUser
 				const boardObj = {}
 				boardObj.boardName = boardName
-				const user = getters.loggedinUser
 				boardObj.createdBy = {
 					_id: user._id,
 					fullname: user.fullname,

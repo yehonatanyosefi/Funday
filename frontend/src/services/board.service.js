@@ -76,6 +76,8 @@ async function addGptBoard(boardObj) {
 	let currBoard = (savedBoards) ? savedBoards.find(boards => boards.title === boardObj.boardName) : null
 	if (currBoard) {
 		delete currBoard._id
+		currBoard.createdBy = boardObj.createdBy
+		currBoard.members = boardObj.members
 		board = saveBoard(currBoard)
 	} else {
 		board = await httpService.post(API_KEY + 'gpt', boardObj)
