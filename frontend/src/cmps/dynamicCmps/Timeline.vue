@@ -22,7 +22,7 @@
 			:style="dateStyles"
 		/>
 		<div class="timeline-progress" :style="{ backgroundColor: timelineBgc }">
-			<button v-if="this.info?.dueDate" :style="btnStyle"></button>
+			<button v-if="this.timelineInfo?.dueDate" :style="btnStyle"></button>
 			<div class="timeline-text">
 				{{ textDisplay }}
 			</div>
@@ -44,15 +44,20 @@ export default {
 			value: [],
 			size: 'small',
 			mouseOver: false,
+			timelineInfo: {
+				startDate: null,
+				dueDate: null,
+			},
 		}
 	},
 	created() {
-		// this.info.startDate = parseInt(this.info.startDate)
-		// this.info.dueDate = parseInt(this.info.dueDate)
-		if (this.info?.dueDate === -Infinity) this.info.dueDate = null
+		this.timelineInfo = { ...this.info }
+		this.timelineInfo.startDate = parseInt(this.timelineInfo.startDate)
+		this.timelineInfo.dueDate = parseInt(this.timelineInfo.dueDate)
+		if (this.timelineInfo?.dueDate === -Infinity) this.timelineInfo.dueDate = null
 		this.value = [
-			new Date(this.info?.startDate),
-			new Date(this.info?.dueDate || this.info?.startDate || Date.now()),
+			new Date(this.timelineInfo?.startDate),
+			new Date(this.timelineInfo?.dueDate || this.timelineInfo?.startDate || Date.now()),
 		]
 	},
 	methods: {
@@ -95,7 +100,7 @@ export default {
 	},
 	computed: {
 		btnStyle() {
-			const bgc = this.info?.dueDate ? this.groupColor : 'inherit'
+			const bgc = this.timelineInfo?.dueDate ? this.groupColor : 'inherit'
 			const width = (this.progressDate / 100) * 120
 			let radius = '0px'
 			if (width >= 115) {
@@ -114,16 +119,16 @@ export default {
 			return { width: '120px', height: '100%', cursor: 'pointer' }
 		},
 		timelineBgc() {
-			if (this.info?.dueDate) {
+			if (this.timelineInfo?.dueDate) {
 				return '#333333'
 			}
 		},
 		textDisplay() {
-			if (!this.info?.dueDate && !this.mouseOver) return '-'
-			if (!this.info?.dueDate && this.mouseOver) return 'Set Date'
+			if (!this.timelineInfo?.dueDate && !this.mouseOver) return '-'
+			if (!this.timelineInfo?.dueDate && this.mouseOver) return 'Set Date'
 			if (this.mouseOver) return this.calculatedDate
-			const startDate = this.formattedDate(this.info.startDate)
-			const dueDate = this.formattedDate(this.info.dueDate)
+			const startDate = this.formattedDate(this.timelineInfo.startDate)
+			const dueDate = this.formattedDate(this.timelineInfo.dueDate)
 			return `${startDate} - ${dueDate}`
 		},
 		progressDate() {
@@ -135,11 +140,12 @@ export default {
 			return percentageDisplay
 		},
 		daysPassed() {
-			return Math.floor((new Date() - new Date(this.info?.startDate)) / (1000 * 60 * 60 * 24))
+			return Math.floor((new Date() - new Date(this.timelineInfo?.startDate)) / (1000 * 60 * 60 * 24))
 		},
 		totalDays() {
 			return Math.ceil(
-				(new Date(this.info?.dueDate) - new Date(this.info?.startDate)) / (1000 * 60 * 60 * 24)
+				(new Date(this.timelineInfo?.dueDate) - new Date(this.timelineInfo?.startDate)) /
+					(1000 * 60 * 60 * 24)
 			)
 		},
 		calculatedDate() {
@@ -149,5 +155,10 @@ export default {
 		},
 	},
 	components: {},
+	watch: {
+		info() {
+			this.timelineInfo = { ...this.info }
+		},
+	},
 }
 </script>

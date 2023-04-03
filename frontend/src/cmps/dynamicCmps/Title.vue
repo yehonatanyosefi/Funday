@@ -34,5 +34,10 @@ export default {
 	},
 	computed: {},
 	components: {},
+	watch: {
+		info() {
+			this.title = this.info
+		},
+	},
 }
 </script>

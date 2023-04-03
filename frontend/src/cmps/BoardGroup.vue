@@ -318,5 +318,10 @@ export default {
 		ColorPicker,
 		ExpandGroup,
 	},
+	watch: {
+		group() {
+			this.groupTitle = this.group.title
+		},
+	},
 }
 </script>

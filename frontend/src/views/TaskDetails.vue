@@ -254,9 +254,24 @@ export default {
 			task.comments.unshift(comment)
 			if (!this.task.comments) this.task.comments = []
 			this.task.comments.unshift(comment)
-			const payload = { boardId: this.board._id, task, groupId: this.groupId }
-			this.$store.dispatch({ type: 'saveTask', payload })
+			// const payload = { boardId: this.board._id, task, groupId: this.groupId }
+			const taskToSave = { attName: 'comments', attValue: task.comments, taskId: task.id }
+			const payloadToSave = { task: taskToSave, groupId: this.groupId }
+			this.saveTask(payloadToSave)
 			this.$refs.inputTxt.setHTML('')
+		},
+		async saveTask(payload) {
+			try {
+				const payloadToSave = { ...payload, boardId: this.board._id }
+				const request = {
+					dispatch: () => this.$store.dispatch({ type: 'saveTask', payload: payloadToSave }),
+				}
+				await this.$store.dispatch('enqueueRequest', request)
+				// showSuccessMsg('Task updated')
+			} catch (err) {
+				console.log(err)
+				// showErrorMsg('Cannot update task')
+			}
 		},
 		getUserImg(userId) {
 			//   let user = this.users.find((user) => user._id === userId)
@@ -280,8 +295,11 @@ export default {
 				this.task.comments[commentIdx].likes.unshift(loggedinUser)
 			}
 
-			const payload = { boardId: this.board._id, task, groupId: this.groupId }
-			this.$store.dispatch({ type: 'saveTask', payload })
+			const taskToSave = { attName: 'comments', attValue: task.comments, taskId: task.id }
+			const payloadToSave = { task: taskToSave, groupId: this.groupId }
+			this.saveTask(payloadToSave)
+			// const payload = { boardId: this.board._id, task, groupId: this.groupId }
+			// this.$store.dispatch({ type: 'saveTask', payload })
 		},
 
 		deleteComment(commentIdx) {
@@ -293,8 +311,12 @@ export default {
 			} else {
 				showErrorMsg('Sorry, only the message creator can delete it.')
 			}
-			const payload = { boardId: this.board._id, task, groupId: this.groupId }
-			this.$store.dispatch({ type: 'saveTask', payload })
+
+			const taskToSave = { attName: 'comments', attValue: task.comments, taskId: task.id }
+			const payloadToSave = { task: taskToSave, groupId: this.groupId }
+			this.saveTask(payloadToSave)
+			// const payload = { boardId: this.board._id, task, groupId: this.groupId }
+			// this.$store.dispatch({ type: 'saveTask', payload })
 		},
 		handleFile(ev) {
 			//   let file

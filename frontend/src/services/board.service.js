@@ -70,7 +70,6 @@ async function save(boardId = null, type = 'task', payload, groupId = null) {
 	// board.activities.unshift(activity)
 }
 
-
 async function addGptBoard(boardObj) {
 	let board
 	const savedBoards = utilService.loadFromStorage(STORAGE_KEY) || []
