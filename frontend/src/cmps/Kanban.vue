@@ -55,7 +55,7 @@
 						@click="toggleFilter(cmpName)"
 					/>
 					<label>
-						{{ capitalizeFirstLetter(cmpName) }}
+						<div>{{ capitalizeFirstLetter(cmpName) }}</div>
 						<component
 							v-if="capitalizeFirstLetter(cmpName) + 'Svg'"
 							:is="capitalizeFirstLetter(cmpName) + 'Svg'"
@@ -78,7 +78,8 @@ import TimelineSvg from '../assets/svg/TimelineSvg.svg'
 import DateSvg from '../assets/svg/Date.svg'
 import GroupSvg from '../assets/svg/Group.svg'
 import StatusSvg from '../assets/svg/Status.svg'
-import TextSvg from '../assets/svg/Text.svg'
+import PrioritySvg from '../assets/svg/Status.svg'
+import TextSvg from '../assets/svg/TextCopy.svg'
 
 export default {
 	data() {
@@ -191,6 +192,7 @@ export default {
 		GroupSvg,
 		StatusSvg,
 		TextSvg,
+		PrioritySvg
 	},
 }
 </script>
