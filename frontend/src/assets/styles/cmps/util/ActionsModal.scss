@@ -1,10 +1,10 @@
 .checkbox-actions {
-     z-index: 5;
-     @include for-narrow-layout {
-          z-index: 10;
-     }
+     // z-index: 5;
+     z-index: 10;
+     // @include for-narrow-layout {
+     // }
      @include for-normal-layout {
-          z-index: 5;
+          // z-index: 5;
           min-width: 600px;
      }
      @include for-wide-layout {
