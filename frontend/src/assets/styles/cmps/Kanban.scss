@@ -52,9 +52,12 @@
       background: #f6f7fb;
       .card-title-container {
         width: 163px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
+        .elipsis {
+          width: 100%;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
       }
       .card-preview {
         // padding-inline-start: 8px;

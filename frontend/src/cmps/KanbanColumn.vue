@@ -52,7 +52,11 @@
 		<div v-else class="card">
 			<div v-for="task in cardsArr" :key="task.id" class="card-preview">
 				<div class="cmp-title">
-					<div class="card-title-container">{{ task.title }}</div>
+					<div class="card-title-container">
+						<div class="elipsis">
+							{{ task.title }}
+						</div>
+					</div>
 					<div class="cmp-buttons">
 						<div>
 							<RouterLink :to="'/board/' + board._id + '/kanban/task-kanban/' + task.id">
@@ -196,7 +200,6 @@ export default {
 		DateSvg,
 		GroupSvg,
 		StatusSvg,
-		
 	},
 }
 </script>
