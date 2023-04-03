@@ -23,7 +23,7 @@
                         <Ai class="svg-icon ai" width="19px" height="19px" />
                         <span class="optn">Add board with AI</span>
 
-                        <div v-if="isOpenAiModal" class="modal" v-click-outside="closeModal">
+                        <div v-if="isOpenAiModal" class="modal" v-click-outside="closeModal" @keydown.space.prevent="addSpace" >
                             <form @submit.prevent="sendGpt">
                                 <div class="flex input-container">
                                     <label for="boardName">
@@ -140,7 +140,10 @@ export default {
         },
         closeModal() {
 			this.isOpenAiModal = false
-		}
+		},
+        addSpace(){
+            this.aiBoardName+= ' '
+        }
 
     },
     computed: {

@@ -111,10 +111,15 @@ export default {
 		},
 
 		async guestLogin() {
-			const boardList = this.$store.getters.boardList
-			const firstBoardId = boardList[0]._id
+			const boardList = this.$store.getters.boardList 
+			let firstBoardId
+			if (boardList.length){
+				 firstBoardId = boardList[0]._id
+			}
+			else {
+				 firstBoardId = await this.$store.dispatch({type:'addDemoBoards'})
+			}
 			this.$router.push(`/board/${firstBoardId}/main-table`)
-
 		},
 	},
 	components: {
