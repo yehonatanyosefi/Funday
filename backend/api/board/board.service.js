@@ -184,22 +184,24 @@ async function removeBoardMsg(boardId, msgId) {
 	}
 }
 
-require('dotenv').config();
-const { Configuration, OpenAIApi } = require("openai");
+require('dotenv').config()
+const { Configuration, OpenAIApi } = require("openai")
 
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+	apiKey: process.env.OPENAI_API_KEY,
+})
 const openai = new OpenAIApi(configuration)
 
-async function gpt(boardName='Development'){
-const completion = await openai.createChatCompletion({
-  model: "gpt-3.5-turbo",
-  messages: [{role: "user", content: `write to me 15 task examples for a monday board named "${boardName}", write only the task names and make sure they are succinct and related to the topic. group them into 3 group, write the first group name at the top of the 5 tasks, then the 5 tasks for it. make sure to not include any other words in your answer but what I asked for because I need to parse it using code`}],
-});
-console.log(completion.data.choices[0].message.content);
-const content = completion.data.choices[0].message.content
-return content
+async function gpt(boardObj = { boardName: 'Development' }) {
+	const boardName = boardObj.boardName
+	const completion = await openai.createChatCompletion({
+		model: "gpt-3.5-turbo",
+		messages: [{ role: "user", content: `write to me 15 task examples for a monday board named "${boardName}", write only the task names and make sure they are succinct and related to the topic. group them into 3 group, write the first group name at the top of the 5 tasks, then the 5 tasks for it. make sure to not include any other words in your answer but what I asked for because I need to parse it using code` }],
+	})
+	const content = completion.data.choices[0].message.content
+	const groupsData = arrangeData(content)
+	const board = await add(getBoard(boardObj, groupsData))
+	return board
 }
 
 module.exports = {
@@ -212,4 +214,135 @@ module.exports = {
 	removeBoardMsg,
 	applyDrag,
 	gpt
+}
+
+function getRndStatus() {
+	const statuses = ['Done', 'Working on it', 'Stuck', '']
+	return statuses[getRandomIntInclusive(0, statuses.length - 1)]
+}
+function getRndPriority() {
+	const priorities = ['Critical', 'High', 'Medium', 'Low', '']
+	return priorities[getRandomIntInclusive(0, priorities.length - 1)]
+}
+
+function getTask(taskData) {
+	return {
+		id: makeId(),
+		title: taskData?.title || 'New Task',
+		status: getRndStatus(),
+		priority: getRndPriority(),
+		text: '',
+		comments: [],
+		person: [],
+		timeline: {
+			startDate: Date.now() - getRandomIntInclusive(100000000, 1000000000),
+			dueDate: Date.now() + getRandomIntInclusive(100000000, 1000000000),
+		},
+		date: Date.now(),
+		byMember: {
+			_id: '',
+			username: '',
+			fullname: '',
+			imgUrl: '',
+		},
+		style: {
+			bgColor: '',
+		},
+	}
+}
+
+function getGroup(groupData) {
+	return {
+		id: utilService.makeId(),
+		title: groupData?.title || 'New Group',
+		isExpanded: true,
+		archivedAt: null,
+		tasks: [getTask(groupData.task[0]), getTask(groupData.task[1]), getTask(groupData.task[2]), getTask(groupData.task[3]), getTask(groupData.task[4]),],
+		style: {
+			color: getRndColor(),
+		},
+	}
+}
+
+function getRndColor() {
+	const colors = [
+		'#037F4C',
+		'#00C875',
+		'#9CD326',
+		'#CAB641',
+		'#FFCB00',
+		'#784BD1',
+		'#A25DDC',
+		'#0086C0',
+		'#579BFC',
+		'#66CCFF',
+		'#BB3354',
+		'#E2445C',
+		'#FF5AC4',
+		'#FF642E',
+		'#FDAB3D',
+		'#7F5347',
+		'#C4C4C4',
+		'#808080',
+	]
+	const randomIdx = getRandomIntInclusive(0, colors.length - 1)
+	return colors[randomIdx]
+}
+
+function getBoard(boardObj, groupsData) {
+	const { boardName, createdBy, members } = boardObj
+	return {
+		title: boardName || 'New Board',
+		isStarred: false,
+		archivedAt: '',
+		cmpOrder: ['date', 'person', 'status', 'text', 'priority', 'timeline'],
+		createdBy: createdBy || {
+			_id: '',
+			fullname: '',
+			imgUrl: '',
+		},
+		style: {},
+		labels: [],
+		members: members || [],
+		groups: [getGroup(groupsData[0]), getGroup(groupsData[1]), getGroup(groupsData[2])],
+	}
+}
+
+function makeId(length = 6) {
+	var txt = ''
+	var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+	for (var i = 0; i < length; i++) {
+		txt += possible.charAt(Math.floor(Math.random() * possible.length))
+	}
+
+	return txt
+}
+function getRandomIntInclusive(min, max) {
+	min = Math.ceil(min)
+	max = Math.floor(max)
+	return Math.floor(Math.random() * (max - min + 1)) + min //The maximum is inclusive and the minimum is inclusive
+}
+function arrangeData(data) {
+	const groups = data.split("\n\n")
+
+	const groupsData = groups.map((group) => {
+		const lines = group.split("\n")
+		const title = lines[0].substring(lines[0].indexOf(': ') + 2)
+		const tasks = lines.slice(1)
+
+		const taskData = tasks.map((task) => {
+			const taskTitle = task.substring(task.indexOf(".") + 2)
+			return {
+				title: taskTitle,
+			}
+		})
+
+		return {
+			title,
+			task: taskData,
+		}
+	})
+
+	return groupsData
 }

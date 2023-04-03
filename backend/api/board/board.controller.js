@@ -41,8 +41,8 @@ async function addBoard(req, res) {
 
 async function addGptBoard(req, res) {
   try {
-    const boardName = req.body
-    const addedBoard = await boardService.gpt(boardName)
+    const boardObj = req.body
+    const addedBoard = await boardService.gpt(boardObj)
     res.json(addedBoard)
   } catch (err) {
     logger.error('Failed to add board', err)

@@ -17,11 +17,23 @@
                 </p>
                 <div class="btns flex column">
                     <button class="add-btn" @click.stop="addBoard">
-                        <Add class="svg-icon" /> <span class="optn">Add</span>
+                        <Add class="svg-icon" /> <span class="optn">Add new</span>
                     </button>
-                    <button class="filter-btn">
+                    <button class="filter-btn" @click="openGPT">
+                        <Ai class="svg-icon ai" /> <span class="optn">Add by Ai</span>
+                        <div v-if="isOpenAiModal" class="modal">
+                            <form @submit.prevent="sendGpt">
+                                <div class="flex">
+                                    <label for="boardName">Name: </label>
+                                    <input v-model="aiBoardName" id="boardName">
+                                </div>
+                                <button class="flex">Send</button>
+                            </form>
+                        </div>
+                    </button>
+                    <!-- <button class="filter-btn">
                         <Filter class="svg-icon" /> <span class="optn">Filters</span>
-                    </button>
+                    </button> -->
                     <div class="searching" @click.stop="isSearching = true">
                         <button>
                             <Search class="svg-icon" /> <span class="optn" v-if="!isSearching">Search</span>
@@ -43,12 +55,12 @@
 import Menu from '../assets/svg/Menu.svg'
 import Add from '../assets/svg/Add.svg'
 import Filter from '../assets/svg/Filter.svg'
+import Ai from '../assets/svg/Ai.svg'
 import Search from '../assets/svg/Search.svg'
 import Board from '../assets/svg/Board.svg'
 import BoardList from './BoardList.vue'
 import LeftArrow from '../assets/svg/LeftArrow.svg'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
-
 
 export default {
     created() {
@@ -60,7 +72,9 @@ export default {
             filterBy: { txt: '' },
             isFolded: true,
             isHoverOpen: false,
-            btnHover: false
+            btnHover: false,
+            isOpenAiModal: false,
+            aiBoardName: '',
         }
     },
     methods: {
@@ -112,6 +126,15 @@ export default {
             }
 
         },
+        async sendGpt() {
+            if (!this.aiBoardName) return
+            this.isOpenAiModal = false
+            this.$store.dispatch({ type: 'addGptBoard', boardName: this.aiBoardName })
+            this.aiBoardName = ''
+        },
+        async openGPT() {
+            this.isOpenAiModal = true
+        },
 
     },
     computed: {
@@ -126,7 +149,8 @@ export default {
         Search,
         Board,
         BoardList,
-        LeftArrow
+        LeftArrow,
+        Ai,
     },
     directives: {
         focus: {

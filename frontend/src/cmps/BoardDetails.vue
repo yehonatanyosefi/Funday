@@ -1,17 +1,44 @@
 <template>
-	<section class="board-details">
-		<div v-if="!board?.groups?.length" class="filter-no-results">
-			<img class="no-results-img" src="https://cdn.monday.com/images/general_not_found_state.svg" />
-			<div class="no-results-title">No results were found</div>
-		</div>
-		<Container
-			v-else-if="!isMobile"
-			orientation="vertical"
-			:drop-placeholder="dropPlaceholderOptions"
-			@drop="onGroupDrop($event)"
-			dragClass="dragged-element"
-		>
-			<Draggable v-for="group in board.groups" :key="group.id">
+	<div>
+		<section v-if="!isSwitchingBoards" class="board-details">
+			<div v-if="!board?.groups?.length" class="filter-no-results">
+				<img class="no-results-img" src="https://cdn.monday.com/images/general_not_found_state.svg" />
+				<div class="no-results-title">No results were found</div>
+			</div>
+			<Container
+				v-else-if="!isMobile"
+				orientation="vertical"
+				:drop-placeholder="dropPlaceholderOptions"
+				@drop="onGroupDrop($event)"
+				dragClass="dragged-element"
+			>
+				<Draggable v-for="group in board.groups" :key="group.id">
+					<BoardGroup
+						v-if="group?.isExpanded"
+						:group="group"
+						:cmpOrder="cmpOrder"
+						:selectedTasks="selectedTasks[group.id]"
+						@minimizeGroup="minimizeGroup"
+						@saveTask="saveTask"
+						@toggleSelectTask="toggleSelectTask"
+						@saveGroup="saveGroup"
+						@saveGroupAtt="saveGroupAtt"
+						@removeGroup="removeGroup"
+						@applyTaskDrag="applyTaskDrag"
+						@removeTask="removeTask"
+						@addTask="addTask"
+						@selectGroupTasks="selectGroupTasks"
+					></BoardGroup>
+					<BoardGroupCollapsed
+						v-else
+						:group="group"
+						:cmpOrder="cmpOrder"
+						@selectGroupTasks="selectGroupTasks"
+						@expandGroup="expandGroup"
+					/>
+				</Draggable>
+			</Container>
+			<div v-else v-for="group in board.groups" :key="group.id">
 				<BoardGroup
 					v-if="group?.isExpanded"
 					:group="group"
@@ -35,50 +62,27 @@
 					@selectGroupTasks="selectGroupTasks"
 					@expandGroup="expandGroup"
 				/>
-			</Draggable>
-		</Container>
-		<div v-else v-for="group in board.groups" :key="group.id">
-			<BoardGroup
-				v-if="group?.isExpanded"
-				:group="group"
-				:cmpOrder="cmpOrder"
-				:selectedTasks="selectedTasks[group.id]"
-				@minimizeGroup="minimizeGroup"
-				@saveTask="saveTask"
-				@toggleSelectTask="toggleSelectTask"
-				@saveGroup="saveGroup"
-				@saveGroupAtt="saveGroupAtt"
-				@removeGroup="removeGroup"
-				@applyTaskDrag="applyTaskDrag"
-				@removeTask="removeTask"
-				@addTask="addTask"
-				@selectGroupTasks="selectGroupTasks"
-			></BoardGroup>
-			<BoardGroupCollapsed
-				v-else
-				:group="group"
-				:cmpOrder="cmpOrder"
-				@selectGroupTasks="selectGroupTasks"
-				@expandGroup="expandGroup"
-			/>
-		</div>
-		<button @click="addGroup" class="add-group-btn">
-			<Plus class="add-new-group-plus"></Plus> Add new group
-		</button>
-		<ActionsModal
-			v-if="isActionsModalOpen"
-			@closeActionsModal="closeActionsModal"
-			@openRemoveModal="openRemoveModal"
-			:selectedTasks="selectedTasks"
-		></ActionsModal>
-		<RemoveModal v-if="isRemoveModalOpen" @closeModal="closeRemoveModal" @remove="handleRemoveTasks"
-			>Task<span v-if="Object.values(selectedTasks).length > 1">s</span></RemoveModal
-		>
-		<RouterView></RouterView>
-	</section>
+			</div>
+			<button @click="addGroup" class="add-group-btn">
+				<Plus class="add-new-group-plus"></Plus> Add new group
+			</button>
+			<ActionsModal
+				v-if="isActionsModalOpen"
+				@closeActionsModal="closeActionsModal"
+				@openRemoveModal="openRemoveModal"
+				:selectedTasks="selectedTasks"
+			></ActionsModal>
+			<RemoveModal v-if="isRemoveModalOpen" @closeModal="closeRemoveModal" @remove="handleRemoveTasks"
+				>Task<span v-if="Object.values(selectedTasks).length > 1">s</span></RemoveModal
+			>
+			<RouterView></RouterView>
+		</section>
+		<Loader v-else />
+	</div>
 </template>
 
 <script>
+import Loader from './util/Loader.vue'
 import { Container, Draggable } from 'vue3-smooth-dnd'
 import BoardHeader from './BoardHeader.vue'
 import BoardGroup from './BoardGroup.vue'
@@ -109,6 +113,9 @@ export default {
 		},
 		board() {
 			return this.$store.getters.filteredBoard
+		},
+		isSwitchingBoards() {
+			return this.$store.getters.isSwitchingBoards
 		},
 		cmpOrder() {
 			// return this.board.cmpOrder
@@ -278,6 +285,7 @@ export default {
 		ActionsModal,
 		RemoveModal,
 		BoardGroupCollapsed,
+		Loader,
 	},
 }
 </script>

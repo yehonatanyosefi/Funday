@@ -25,6 +25,7 @@ export const boardService = {
 	saveBoard,
 	getDemoDev,
 	getDemoFinance,
+	addGptBoard,
 }
 window.cs = boardService
 
@@ -67,6 +68,12 @@ async function save(boardId = null, type = 'task', payload, groupId = null) {
 	}
 	return await saveBoard(board)
 	// board.activities.unshift(activity)
+}
+
+
+async function addGptBoard(boardObj) {
+	const board = await httpService.post(API_KEY + 'gpt', boardObj)
+	return board
 }
 
 async function saveBoard(board) {

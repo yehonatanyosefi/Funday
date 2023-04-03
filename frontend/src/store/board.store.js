@@ -21,6 +21,7 @@ export const boardStore = {
 		},
 		requests: [],
 		requestsNum: 1,
+		isSwitchingBoards: false,
 	},
 	getters: {
 		board({ board }) {
@@ -38,8 +39,14 @@ export const boardStore = {
 		advanceFilter({ advanceFilter }) {
 			return advanceFilter
 		},
+		isSwitchingBoards({ isSwitchingBoards }) {
+			return isSwitchingBoards
+		},
 	},
 	mutations: {
+		setIsSwitchingBoards(state, { isSwitchingBoards }) {
+			state.isSwitchingBoards = isSwitchingBoards
+		},
 		addRequest(state, request) {
 			state.requests.push(request)
 		},
@@ -310,6 +317,32 @@ export const boardStore = {
 				return newBoard
 			} catch (err) {
 				console.log('Store: Error in addBoard', err)
+				throw err
+			}
+		},
+		async addGptBoard({ commit, getters, state }, { boardName }) {
+			commit({ type: 'setIsSwitchingBoards', isSwitchingBoards: true })
+			try {
+				const boardObj = {}
+				boardObj.boardName = boardName
+				const user = getters.loggedinUser
+				boardObj.createdBy = {
+					_id: user._id,
+					fullname: user.fullname,
+					imgUrl: user.imgUrl,
+				}
+				boardObj.members = [{
+					_id: user._id,
+					fullname: user.fullname,
+					imgUrl: user.imgUrl,
+				}]
+				const newBoard = await boardService.addGptBoard(boardObj)
+				commit({ type: 'addBoard', board: newBoard })
+				commit({ type: 'setIsSwitchingBoards', setTo: false })
+				return newBoard
+			} catch (err) {
+				console.log('Store: Error in addBoard', err)
+				commit({ type: 'setIsSwitchingBoards', setTo: false })
 				throw err
 			}
 		},
