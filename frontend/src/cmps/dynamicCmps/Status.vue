@@ -1,6 +1,6 @@
 <template>
-	<div class="status" :class="statusClass">
-		<div class="label" :class="{ first: isFirst }" @click="toggleModal">
+	<div class="status" :class="{ first: isFirst }">
+		<div class="label" :class="statusClass" @click="toggleModal">
 			{{ info }}
 			<div class="folding-corner"></div>
 		</div>

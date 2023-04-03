@@ -1,6 +1,6 @@
 <template>
-	<div class="priority" :class="info">
-		<div class="label" @click="toggleModal" :class="{ first: isFirst }">
+	<div class="priority" :class="{ first: isFirst }">
+		<div class="label" @click="toggleModal" :class="info">
 			<span>{{ info }}</span>
 			<Alert v-if="info === 'Critical'" class="svg-icon critical-alert-svg" height="15px" width="15px" />
 			<!-- <span>⚠️️</span> -->

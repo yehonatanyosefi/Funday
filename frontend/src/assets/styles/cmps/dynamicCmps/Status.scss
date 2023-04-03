@@ -58,7 +58,7 @@
 		transition: border-width 0.3s ease 0.2s;
 		background-color: $status-folding-corner;
 		border-bottom: 10px solid rgba(0, 0, 0, 0.4);
-		border-right: 10px solid transparent;
+		border-right: 10px solid white;
 		&:hover {
 			border-bottom: 15px solid rgba(0, 0, 0, 0.4);
 			border-right: 15px solid transparent;
