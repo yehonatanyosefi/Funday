@@ -153,8 +153,8 @@ export const boardStore = {
 				} catch (error) {
 					console.error(error)
 				}
-				console.log(`request sent, number:`, state.requestsNum)
-				commit('addRequestNum')
+				// console.log(`request sent, number:`, state.requestsNum)
+				// commit('addRequestNum')
 				commit('removeRequest')
 			}
 		},
