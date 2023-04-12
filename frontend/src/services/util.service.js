@@ -96,16 +96,16 @@ function getTimeDifference(now, then) {
 	const week = 7 * day
 
 	if (diff < minute) {
-		return 'just now'
+		return 'now' //just now
 	} else if (diff < hour) {
 		const minutes = Math.floor(diff / minute)
-		return `${minutes} minute${minutes === 1 ? '' : 's'} ago`
+		return `${minutes}m` //minute${minutes === 1 ? '' : 's'} ago
 	} else if (diff < day) {
 		const hours = Math.floor(diff / hour)
-		return `${hours} hour${hours === 1 ? '' : 's'} ago`
+		return `${hours}h` // hour${hours === 1 ? '' : 's'} ago
 	} else if (diff < week) {
 		const days = Math.floor(diff / day)
-		return `${days} day${days === 1 ? '' : 's'} ago`
+		return `${days}d` // day${days === 1 ? '' : 's'} ago
 	} else {
 		const date = new Date(timestamp)
 		const day = date.getDate()

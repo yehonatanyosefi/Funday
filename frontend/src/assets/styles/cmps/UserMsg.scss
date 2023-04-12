@@ -1,13 +1,25 @@
 .alert {
-	background-color: lightgray;
+	background-color: #258750;
+	color: #fff;
 	position: fixed;
 	top: 5%;
 	left: 50%;
+	height: 50px;
 	translate: -50%;
 	padding: 1em;
+	@include flex-center;
 	z-index: 500;
+	.x-btn {
+		@include flex-center;
+		background: inherit;
+		color: #fff;
+		border: none;
+		height: fit-content;
+		width: fit-content;
+		cursor: pointer;
+	}
 	&.alert-success {
-		background-color: lightgreen;
+		background-color: #258750;
 	}
 	&.alert-error {
 		background-color: lightcoral;

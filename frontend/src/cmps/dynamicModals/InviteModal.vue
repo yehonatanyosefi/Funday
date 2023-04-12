@@ -99,6 +99,7 @@ export default {
 			this.$emit('addMember', userId)
 		},
 		removeMember(userId) {
+			console.log(`userId:`, userId)
 			this.$emit('removeMember', userId)
 		},
 	},
