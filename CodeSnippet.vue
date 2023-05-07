@@ -1,15 +1,13 @@
 <template>
 	<div class="start-end-date-container" @mouseover="onMouseover" @mouseout="mouseout">
+		<!-- Background of progress bar -->
 		<div class="timeline-progress" :style="{ backgroundColor: timelineBgc }">
-			<!-- Background of progress bar -->
-
-			<div v-if="this.info?.dueDate" :style="btnStyle"></div>
 			<!-- Inner progress bar -->
-
+			<div v-if="this.info?.dueDate" :style="btnStyle"></div>
+			<!-- Text display of progress bar -->
 			<div class="timeline-text">
 				{{ textDisplay }}
 			</div>
-			<!-- Text display of progress bar -->
 		</div>
 	</div>
 </template>
@@ -29,18 +27,17 @@ export default {
 			mouseOver: false,
 			defaultRadius: '555px',
 			barWidth: 120,
+			DAYS: 1000 * 60 * 60 * 24,
 		}
 	},
 	computed: {
 		daysPassed() {
 			//Days passed from start date until today calculation
-			return Math.floor((new Date() - new Date(this.info?.startDate)) / (1000 * 60 * 60 * 24))
+			return Math.floor((new Date() - new Date(this.info?.startDate)) / this.DAYS)
 		},
 		totalDays() {
 			//Total days from start date until due date calculation
-			return Math.ceil(
-				(new Date(this.info?.dueDate) - new Date(this.info?.startDate)) / (1000 * 60 * 60 * 24)
-			)
+			return Math.ceil((new Date(this.info?.dueDate) - new Date(this.info?.startDate)) / this.DAYS)
 		},
 		progressDate() {
 			//Percentage of progress calculation

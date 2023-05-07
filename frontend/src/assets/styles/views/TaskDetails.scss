@@ -417,19 +417,25 @@
 			}
 
 			.comment-options {
+
 				grid-area: options;
 				display: grid;
-				grid-template-columns: 24px auto 24px;
+				grid-template-columns: auto 24px;
 				align-items: center;
 				padding-right: 15px;
 				height: 100%;
 
 				p {
+					margin-inline-start: auto;
+					margin-inline-end: 5px;
 					font-size: rem(16px);
-					display: block;
+					@include flex-center;
 					text-overflow: ellipsis;
 					white-space: nowrap;
 					overflow: hidden;
+				}
+				:last-child {
+					cursor: pointer;
 				}
 			}
 

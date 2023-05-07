@@ -1,93 +1,93 @@
 <template>
-	<div class="black-screen" :class="{ show: darken }"></div>
-	<section
-		class="task-details-container"
-		@mouseover="darken = true"
-		@mouseout="darken = false"
-		v-click-outside="close"
-	>
-		<span v-if="task" @click="close" class="close-modal-btn"><Close></Close></span>
-		<h1 v-if="task" class="task-modal-title">{{ task.title }}</h1>
-		<div v-if="task" class="modal-btns">
-			<div @click="goTo('comments')" :class="{ selected: showComp === 'comments' }">
-				<Home></Home>
-				<button class="task-comments-btn">Updates</button>
-			</div>
-			<span>|</span>
-			<div @click="goTo('files')" :class="{ selected: showComp === 'files' }">
-				<span></span>
-				<button>Files</button>
-			</div>
-			<span>|</span>
-			<div @click="goTo('activities')" :class="{ selected: showComp === 'activities' }">
-				<span></span>
-				<button>Activity Log</button>
-			</div>
-		</div>
-
-		<section v-if="task && showComp === 'comments'" class="task-comments">
-			<form @submit.prevent="addComment">
-				<quill-editor
-					ref="inputTxt"
-					placeholder="Write an update..."
-					class="comment-add-txt"
-					theme="snow"
-					contentType="text"
-				/>
-				<button class="add-comment-btn">Update</button>
-			</form>
-			<div
-				v-if="task.comments"
-				class="comment"
-				v-for="(comment, idx) in task.comments"
-				:key="comment.id"
-			>
-				<div class="comment-profile">
-					<img v-if="comment.byMember.imgUrl" :src="comment.byMember.imgUrl" alt="" />
-					<PersonRound v-else></PersonRound>
-					<p>{{ comment.byMember.fullname }}</p>
+	<div>
+		<div class="black-screen" :class="{ show: darken }"></div>
+		<section
+			class="task-details-container"
+			@mouseover="darken = true"
+			@mouseout="darken = false"
+			v-click-outside="close"
+		>
+			<span v-if="task" @click="close" class="close-modal-btn"><Close></Close></span>
+			<h1 v-if="task" class="task-modal-title">{{ task.title }}</h1>
+			<div v-if="task" class="modal-btns">
+				<div @click="goTo('comments')" :class="{ selected: showComp === 'comments' }">
+					<Home></Home>
+					<button class="task-comments-btn">Updates</button>
 				</div>
-
-				<div class="comment-options">
-					<Time></Time>
-					<p>{{ getFormattedTime(comment.createdAt) }}</p>
-					<Delete @click="deleteComment(idx)"></Delete>
+				<!-- <span>|</span>
+				<div @click="goTo('files')" :class="{ selected: showComp === 'files' }">
+					<span></span>
+					<button>Files</button>
+				</div> -->
+				<span>|</span>
+				<div @click="goTo('activities')" :class="{ selected: showComp === 'activities' }">
+					<span></span>
+					<button>Activity Log</button>
 				</div>
-				<div class="comment-content" v-html="comment.txt"></div>
+			</div>
 
-				<div class="comment-reactions">
-					<div v-if="comment.likes?.length" class="likes">
-						<div class="liked-users" v-for="user in comment.likes">
-							<img :src="user.imgUrl" :title="user.fullname" />
-						</div>
-						<p>Liked</p>
+			<section v-if="task && showComp === 'comments'" class="task-comments">
+				<form @submit.prevent="addComment">
+					<quill-editor
+						ref="inputTxt"
+						placeholder="Write an update..."
+						class="comment-add-txt"
+						theme="snow"
+						contentType="text"
+					/>
+					<button class="add-comment-btn">Update</button>
+				</form>
+				<div
+					v-if="task.comments"
+					class="comment"
+					v-for="(comment, idx) in task.comments"
+					:key="comment.id"
+				>
+					<div class="comment-profile">
+						<img v-if="comment.byMember.imgUrl" :src="comment.byMember.imgUrl" alt="" />
+						<PersonRound v-else></PersonRound>
+						<p>{{ comment.byMember.fullname }}</p>
 					</div>
-					<!-- <div class="seen-count">
+
+					<div class="comment-options">
+						<p><Time></Time>{{ getFormattedTime(comment.createdAt) }}</p>
+						<Delete @click="deleteComment(idx)"></Delete>
+					</div>
+					<div class="comment-content" v-html="comment.txt"></div>
+
+					<div class="comment-reactions">
+						<div v-if="comment.likes?.length" class="likes">
+							<div class="liked-users" v-for="user in comment.likes">
+								<img :src="user.imgUrl" :title="user.fullname" />
+							</div>
+							<p>Liked</p>
+						</div>
+						<!-- <div class="seen-count">
 						<Show></Show>
 						<p>1 Seen</p>
 					</div> -->
-				</div>
-				<!-- </div> -->
+					</div>
+					<!-- </div> -->
 
-				<div class="comment-like" @click.stop.prevent="likeComment(idx)">
-					<div>
-						<!-- <span v-if="comment?.likes?.includes(loggedinUser._id)"></span>-->
-						<LikeSolid v-if="likeByMe(comment)" :class="{ selected: likeByMe(comment) }"></LikeSolid>
-						<LikeSvg v-else></LikeSvg>
-						<button :class="{ selected: likeByMe(comment) }">Like</button>
+					<div class="comment-like" @click.stop.prevent="likeComment(idx)">
+						<div>
+							<!-- <span v-if="comment?.likes?.includes(loggedinUser._id)"></span>-->
+							<LikeSolid v-if="likeByMe(comment)" :class="{ selected: likeByMe(comment) }"></LikeSolid>
+							<LikeSvg v-else></LikeSvg>
+							<button :class="{ selected: likeByMe(comment) }">Like</button>
+						</div>
+					</div>
+
+					<div class="comment-reply">
+						<div>
+							<Replay></Replay>
+							<button @click="reply()">Reply</button>
+						</div>
 					</div>
 				</div>
+			</section>
 
-				<div class="comment-reply">
-					<div>
-						<Replay></Replay>
-						<button @click="reply()">Reply</button>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<!-- <div
+			<!-- <div
           v-if="!isLoading && !imgUrls.length"
           class="cta-container flex column center"
         >
@@ -115,9 +115,9 @@
           <img-preview :imgUrls="imgUrls" @removeImg="removeImg" />
         </section>
       </section> -->
-		<!-- </section>-->
+			<!-- </section>-->
 
-		<!-- <section v-if="showComp === 'activities'" class="activity-log">
+			<!-- <section v-if="showComp === 'activities'" class="activity-log">
 			<div class="activities-list">
 				<div v-for="activity in getUserActivities" class="activity-item">
 					<div class="created-time">
@@ -132,7 +132,8 @@
 				</div>
 			</div>
 		</section> -->
-	</section>
+		</section>
+	</div>
 </template>
 <script>
 import Home from '../assets/svg/Home.svg'
