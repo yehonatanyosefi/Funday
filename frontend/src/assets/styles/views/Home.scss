@@ -10,6 +10,9 @@
   color: #ffffff;
   font-size: 16px;
   font-family: pop-light;
+  @include for-mobile-layout {
+    height: 280vh;
+  }
 
   header {
     background-color: #fff;
@@ -22,6 +25,9 @@
     margin-block: 0;
     margin-inline: 32px;
     font-size: rem(14px);
+    @include for-mobile-layout {
+      margin-inline: 4px;
+    }
 
     .left-container {
       display: flex;
@@ -89,7 +95,7 @@
       padding: 2px;
       color: white;
       // background-color: #6161ff;
-      background-image: linear-gradient(90deg, #5034FF 25.69%, #B4B4FF 100%);
+      background-image: linear-gradient(90deg, #5034ff 25.69%, #b4b4ff 100%);
 
       transition: 0.4s;
       margin-left: 10px;
@@ -99,13 +105,13 @@
       &.big {
         width: 172px;
         height: 50px;
-        background-image: linear-gradient(90deg, #5034FF 25.69%, #B4B4FF 100%);
+        background-image: linear-gradient(90deg, #5034ff 25.69%, #b4b4ff 100%);
         font-size: rem(16px);
         font-family: pop-light;
       }
 
       &:hover {
-        background-image:  linear-gradient(90deg, #432cd5 25.69%, #9797d5 100%);;
+        background-image: linear-gradient(90deg, #432cd5 25.69%, #9797d5 100%);
       }
       span:nth-child(2) {
         padding-bottom: rem(2px);
@@ -128,18 +134,18 @@
     }
   }
 
-  .el-carousel{
+  .el-carousel {
     margin-block-end: em(20px);
   }
-  .el-carousel__mask{
+  .el-carousel__mask {
     background-color: transparent;
   }
-  .el-carousel__container{
+  .el-carousel__container {
     height: 287px !important;
   }
 
-  .el-carousel__item{
-    border-radius:5px;
+  .el-carousel__item {
+    border-radius: 5px;
   }
 
   .el-carousel__item img {
@@ -732,12 +738,12 @@
   span {
     font-family: pop-400;
   }
-  .subtitle{
+  .subtitle {
     font-size: rem(22px);
-    .manage-word{
-    font-size: rem(22px);
+    .manage-word {
+      font-size: rem(22px);
       position: relative;
-      .underline{
+      .underline {
         color: #fff;
         text-align: center;
         font-weight: 300;
@@ -747,22 +753,22 @@
         width: 105px;
         height: 1px;
         top: 35px;
-    left: -9px;
-        background: linear-gradient(90deg,transparent,#fff);
+        left: -9px;
+        background: linear-gradient(90deg, transparent, #fff);
       }
     }
-    }
   }
-  
+}
 
 #title div span:first-child {
   font-size: rem(72px);
   line-height: rem(85px);
   padding-bottom: rem(12px);
-  // font-family: pop-medium;
-  //   background: -webkit-linear-gradient(white, #38495a);
-  //   -webkit-background-clip: text;
-  //   -webkit-text-fill-color: transparent;
+  @include for-mobile-layout {
+    font-size: 2.5rem;
+    line-height: 1.3125rem;
+    padding-bottom: 0.35rem;
+  }
 }
 #title div span:nth-child(2) {
   font-size: rem(22px);
