@@ -115,6 +115,10 @@ export const boardStore = {
 			state.board.groups.splice(groupIdx, 1)
 			state.filteredBoard.groups.splice(groupIdx, 1)
 		},
+		removeBoards(state) {
+			state.board = {}
+			state.boardList = []
+		},
 		// saveTask({ board }, { payload }) {
 		// 	const { task, groupId } = payload
 		// 	const groupIdx = board.groups.findIndex(group => group.id === groupId)
@@ -168,7 +172,13 @@ export const boardStore = {
 			try {
 				const { boardId, task, groupId } = payload
 				const { attName, attValue, taskId } = task
-				const taskToSave = JSON.parse(JSON.stringify(state.board.groups.find((group) => group.id === groupId).tasks.find((task) => task.id === taskId)))
+				const taskToSave = JSON.parse(
+					JSON.stringify(
+						state.board.groups
+							.find((group) => group.id === groupId)
+							.tasks.find((task) => task.id === taskId)
+					)
+				)
 				taskToSave[attName] = attValue
 				const updatedBoard = await boardService.save(boardId, 'task', taskToSave, groupId)
 				dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
@@ -281,11 +291,14 @@ export const boardStore = {
 			}
 		},
 		async getFirstBoard({ dispatch, state }, { params }) {
-			const boardId = !params ? state.boardList[0]._id : params
+			if (!state.boardList.length) await dispatch({ type: 'loadBoardList' })
+			const boardId =
+				params && state.boardList.some((board) => board._id === params)
+					? params
+					: state.boardList[0]?._id
 			const board = dispatch({ type: 'getBoardById', boardId })
 			return board
 		},
-
 		async loadBoardList(context, { filterBy = { txt: '' } }) {
 			try {
 				filterBy.userId = context.getters.loggedinUser._id
@@ -331,11 +344,13 @@ export const boardStore = {
 					fullname: user.fullname,
 					imgUrl: user.imgUrl,
 				}
-				boardObj.members = [{
-					_id: user._id,
-					fullname: user.fullname,
-					imgUrl: user.imgUrl,
-				}]
+				boardObj.members = [
+					{
+						_id: user._id,
+						fullname: user.fullname,
+						imgUrl: user.imgUrl,
+					},
+				]
 				const newBoard = await boardService.addGptBoard(boardObj)
 				commit({ type: 'addBoard', board: newBoard })
 				commit({ type: 'setIsSwitchingBoards', setTo: false })

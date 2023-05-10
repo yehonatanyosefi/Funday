@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 import Home from './views/Home.vue'
-// import Chat from './views/Chat.vue'
 import BoardIndex from './views/BoardIndex.vue'
 import BoardDetails from './cmps/BoardDetails.vue'
 import LoginSignup from './views/LoginSignup.vue'
@@ -9,6 +8,7 @@ import UserDetails from './views/UserDetails.vue'
 import Kanban from './cmps/Kanban.vue'
 import Dashboard from './cmps/Dashboard.vue'
 import TaskDetails from './views/TaskDetails.vue'
+import { store } from './store'
 
 const routes = [
 	{
@@ -52,11 +52,6 @@ const routes = [
 			},
 		],
 	},
-	// {
-	//   path: '/chat',
-	//   name: 'Chat',
-	//   component: Chat,
-	// },
 	{
 		path: '/login',
 		name: 'LoginSignup',
@@ -77,5 +72,12 @@ const routes = [
 export const router = createRouter({
 	routes,
 	history: createWebHashHistory(),
-	// base: process.env.BASE_URL,
+})
+
+router.beforeEach((to, from) => {
+	const user = store.getters.loggedinUser
+	// if (!user._id && to.name !== 'LoginSignup') {
+	// 	return { name: 'LoginSignup' }
+	// } else
+	if (to.name === 'LoginSignup' && user._id && user.username !== 'guest@gmail.com') return { name: 'Home' }
 })

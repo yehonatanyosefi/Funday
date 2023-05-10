@@ -10,8 +10,7 @@
 				orientation="vertical"
 				:drop-placeholder="dropPlaceholderOptions"
 				@drop="onGroupDrop($event)"
-				dragClass="dragged-element"
-			>
+				dragClass="dragged-element">
 				<Draggable v-for="group in board.groups" :key="group.id">
 					<BoardGroup
 						v-if="group?.isExpanded"
@@ -27,15 +26,13 @@
 						@applyTaskDrag="applyTaskDrag"
 						@removeTask="removeTask"
 						@addTask="addTask"
-						@selectGroupTasks="selectGroupTasks"
-					></BoardGroup>
+						@selectGroupTasks="selectGroupTasks"></BoardGroup>
 					<BoardGroupCollapsed
 						v-else
 						:group="group"
 						:cmpOrder="cmpOrder"
 						@selectGroupTasks="selectGroupTasks"
-						@expandGroup="expandGroup"
-					/>
+						@expandGroup="expandGroup" />
 				</Draggable>
 			</Container>
 			<div v-else v-for="group in board.groups" :key="group.id">
@@ -53,15 +50,13 @@
 					@applyTaskDrag="applyTaskDrag"
 					@removeTask="removeTask"
 					@addTask="addTask"
-					@selectGroupTasks="selectGroupTasks"
-				></BoardGroup>
+					@selectGroupTasks="selectGroupTasks"></BoardGroup>
 				<BoardGroupCollapsed
 					v-else
 					:group="group"
 					:cmpOrder="cmpOrder"
 					@selectGroupTasks="selectGroupTasks"
-					@expandGroup="expandGroup"
-				/>
+					@expandGroup="expandGroup" />
 			</div>
 			<button @click="addGroup" class="add-group-btn">
 				<Plus class="add-new-group-plus"></Plus> Add new group
@@ -70,8 +65,7 @@
 				v-if="isActionsModalOpen"
 				@closeActionsModal="closeActionsModal"
 				@openRemoveModal="openRemoveModal"
-				:selectedTasks="selectedTasks"
-			></ActionsModal>
+				:selectedTasks="selectedTasks"></ActionsModal>
 			<RemoveModal v-if="isRemoveModalOpen" @closeModal="closeRemoveModal" @remove="handleRemoveTasks"
 				>Task<span v-if="Object.values(selectedTasks).length > 1">s</span></RemoveModal
 			>
@@ -129,7 +123,6 @@ export default {
 			return window.innerWidth <= mobileScreenWidthThreshold
 		},
 	},
-	created() {},
 	methods: {
 		selectGroupTasks(groupId) {
 			const group = this.board.groups.find((group) => group.id === groupId)
@@ -175,10 +168,9 @@ export default {
 					dispatch: () => this.$store.dispatch({ type: 'saveTask', payload: payloadToSave }),
 				}
 				await this.$store.dispatch('enqueueRequest', request)
-				// showSuccessMsg('Task updated')
 			} catch (err) {
 				console.log(err)
-				// showErrorMsg('Cannot update task')
+				showErrorMsg('Failed to update task')
 			}
 		},
 		closeActionsModal() {
@@ -212,7 +204,7 @@ export default {
 				return true
 			} catch (err) {
 				console.log(err)
-				showErrorMsg('Cannot remove task')
+				showErrorMsg('Failed to remove task')
 			}
 		},
 		minimizeGroup(groupId) {
@@ -228,18 +220,16 @@ export default {
 					dispatch: () => this.$store.dispatch({ type: 'saveGroupAtt', payload: payloadToSave }),
 				}
 				await this.$store.dispatch('enqueueRequest', request)
-				// showSuccessMsg('Task updated')
 			} catch (err) {
-				// showErrorMsg('Cannot update task')
+				showErrorMsg('Failed to update group')
 			}
 		},
 		async saveGroup(payload) {
 			try {
 				const payloadToSave = { ...payload, boardId: this.board._id }
 				await this.$store.dispatch({ type: 'saveGroup', payload: payloadToSave })
-				// showSuccessMsg('Task updated')
 			} catch (err) {
-				// showErrorMsg('Cannot update task')
+				showErrorMsg('Failed to update group')
 			}
 		},
 		async removeGroup(groupId) {
@@ -249,28 +239,36 @@ export default {
 				if (!this.board.groups.length) await this.$store.dispatch({ type: 'addGroup' })
 				showSuccessMsg('Group removed')
 			} catch (err) {
-				showErrorMsg('Cannot remove group')
+				showErrorMsg('Failed to remove group')
 			}
 		},
 		async addTask(payload) {
 			try {
 				await this.$store.dispatch({ type: 'addTask', payload })
 			} catch (err) {
-				showErrorMsg('Cannot add task')
+				showErrorMsg('Failed to add task')
 			}
 		},
-		onGroupDrop(dropPayload) {
-			const removedIndex = dropPayload.removedIndex
-			const addedIndex = dropPayload.addedIndex
-			if (removedIndex === null || addedIndex === null || addedIndex === removedIndex) return
-			const removedId = this.board.groups.find((group, idx) => idx === removedIndex).id
-			const addedId = this.board.groups.find((group, idx) => idx === addedIndex).id
-			const payload = { removedId, addedId, boardId: this.board._id }
-			this.$store.dispatch({ type: 'applyGroupDrag', payload })
+		async onGroupDrop(dropPayload) {
+			try {
+				const removedIndex = dropPayload.removedIndex
+				const addedIndex = dropPayload.addedIndex
+				if (removedIndex === null || addedIndex === null || addedIndex === removedIndex) return
+				const removedId = this.board.groups.find((group, idx) => idx === removedIndex).id
+				const addedId = this.board.groups.find((group, idx) => idx === addedIndex).id
+				const payload = { removedId, addedId, boardId: this.board._id }
+				await this.$store.dispatch({ type: 'applyGroupDrag', payload })
+			} catch (err) {
+				showErrorMsg('Failed to drag group')
+			}
 		},
-		applyTaskDrag(groupPayload) {
-			const payload = { ...groupPayload, boardId: this.board._id }
-			this.$store.dispatch({ type: 'applyTaskDrag', payload })
+		async applyTaskDrag(groupPayload) {
+			try {
+				const payload = { ...groupPayload, boardId: this.board._id }
+				await this.$store.dispatch({ type: 'applyTaskDrag', payload })
+			} catch (err) {
+				showErrorMsg('Failed to drag task')
+			}
 		},
 		addGroup() {
 			this.$store.dispatch({ type: 'addGroup' })

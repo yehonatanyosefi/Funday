@@ -6,7 +6,7 @@
 			<RouterView></RouterView>
 		</div>
 		<!-- <span v-if="!board?._id">LOADING...</span> -->
-		<Loader v-if="!board?._id"/>
+		<Loader v-if="!board?._id" />
 	</main>
 </template>
 
@@ -16,8 +16,8 @@ import BoardHeader from '../cmps/BoardHeader.vue'
 import { SOCKET_EMIT_SET_BOARD, SOCKET_EMIT_BOARD_MSG } from '../services/socket.service'
 import Loader from '../cmps/util/Loader.vue'
 export default {
-	props: {},
 	async created() {
+		if (!this.$store.getters.boardList.length) await this.$store.dispatch({ type: 'loadBoardList' })
 		const params = this.$route.params?.boardId
 		await this.$store.dispatch({ type: 'getFirstBoard', params })
 		this.onBoardChanged(params)
@@ -54,7 +54,7 @@ export default {
 	components: {
 		MainSidebar,
 		BoardHeader,
-		Loader
+		Loader,
 	},
 }
 </script>
