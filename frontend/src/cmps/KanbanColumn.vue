@@ -11,12 +11,13 @@
 			orientation="vertical"
 			dragClass="dragged-element"
 			@drop="onCardDrop($event)"
-			:drop-placeholder="dropPlaceholderOptions"
-		>
+			:drop-placeholder="dropPlaceholderOptions">
 			<!-- :should-accept-drop="shouldAcceptDrop" -->
 			<Draggable class="card-preview" v-for="task in cardsArr" :key="task.id">
 				<div class="cmp-title">
-					<div class="card-title-container">{{ task.title }}</div>
+					<div class="card-title-container">
+						<div class="elipsis">{{ task.title }}</div>
+					</div>
 					<div class="cmp-buttons">
 						<div>
 							<RouterLink :to="'/board/' + board._id + '/kanban/task-kanban/' + task.id">
@@ -25,7 +26,11 @@
 								<AddUpdate v-else class="svg-icon add-update" width="24" height="24" />
 							</RouterLink>
 						</div>
-						<Menu class="svg-icon menu-btn" width="20" height="20" />
+						<Menu
+							class="svg-icon menu-btn"
+							width="20"
+							height="20"
+							@click="handleOpenModal(task.id, task.taskGroupId)" />
 					</div>
 				</div>
 				<div class="cmp-preview" v-for="(cmp, idx) in filteredCmpOrder" :key="idx">
@@ -34,8 +39,7 @@
 							v-if="capitalizeFirstLetter(cmp) + 'Svg'"
 							:is="capitalizeFirstLetter(cmp) + 'Svg'"
 							width="16px"
-							height="16px"
-						></component>
+							height="16px"></component>
 						{{ capitalizeFirstLetter(cmp) }}
 					</div>
 					<div class="card-cmp">
@@ -43,8 +47,7 @@
 							:is="capitalizeFirstLetter(cmp)"
 							:info="task[cmp]"
 							:groupColor="task.groupColor"
-							@saveTask="saveTask($event, { cmp, task, groupId: task.taskGroupId })"
-						></component>
+							@saveTask="saveTask($event, { cmp, task, groupId: task.taskGroupId })"></component>
 					</div>
 				</div>
 			</Draggable>
@@ -65,7 +68,11 @@
 								<AddUpdate v-else class="svg-icon add-update" width="24" height="24" />
 							</RouterLink>
 						</div>
-						<Menu class="svg-icon menu-btn" width="20" height="20" />
+						<Menu
+							class="svg-icon menu-btn"
+							width="20"
+							height="20"
+							@click="handleOpenModal(task.id, task.taskGroupId)" />
 					</div>
 				</div>
 				<div class="cmp-preview" v-for="(cmp, idx) in filteredCmpOrder" :key="idx">
@@ -74,8 +81,7 @@
 							v-if="capitalizeFirstLetter(cmp) + 'Svg'"
 							:is="capitalizeFirstLetter(cmp) + 'Svg'"
 							width="16px"
-							height="16px"
-						></component>
+							height="16px"></component>
 						{{ capitalizeFirstLetter(cmp) }}
 					</div>
 					<div class="card-cmp">
@@ -83,12 +89,14 @@
 							:is="capitalizeFirstLetter(cmp)"
 							:info="task[cmp]"
 							:groupColor="task.groupColor"
-							@saveTask="saveTask($event, { cmp, task, groupId: task.taskGroupId })"
-						></component>
+							@saveTask="saveTask($event, { cmp, task, groupId: task.taskGroupId })"></component>
 					</div>
 				</div>
 			</div>
 		</div>
+		<RemoveModal v-if="isModalOpen" @closeModal="handleCloseModal" @remove="removeCurrTask"
+			>task</RemoveModal
+		>
 	</div>
 </template>
 
@@ -111,8 +119,9 @@ import TextSvg from '../assets/svg/TextCopy.svg'
 import Update from '../assets/svg/Update.svg'
 import AddUpdate from '../assets/svg/AddUpdate.svg'
 import { Container, Draggable } from 'vue3-smooth-dnd'
+import RemoveModal from './util/RemoveModal.vue'
 export default {
-	emits: ['saveTask', 'setDraggedTask', 'setDraggedColumn'],
+	emits: ['saveTask', 'setDraggedTask', 'setDraggedColumn', 'removeTask'],
 	name: 'KanbanColumn',
 	props: {
 		board: Object,
@@ -130,6 +139,8 @@ export default {
 				animationDuration: '150',
 				showOnTop: true,
 			},
+			isModalOpen: false,
+			currTaskIds: null,
 		}
 	},
 	methods: {
@@ -171,6 +182,17 @@ export default {
 			//needed to check if the drop is on the right column
 			return e === 'col-items'
 		},
+		handleOpenModal(taskId, groupId) {
+			this.currTaskIds = { taskId, groupId }
+			this.isModalOpen = true
+		},
+		handleCloseModal() {
+			this.isModalOpen = false
+		},
+		removeCurrTask() {
+			this.$emit('removeTask', this.currTaskIds)
+			this.handleCloseModal()
+		},
 	},
 	computed: {
 		cardsArr() {
@@ -203,7 +225,8 @@ export default {
 		GroupSvg,
 		StatusSvg,
 		TextSvg,
-		PrioritySvg
+		PrioritySvg,
+		RemoveModal,
 	},
 }
 </script>

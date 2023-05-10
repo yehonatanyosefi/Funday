@@ -73,7 +73,7 @@ async function save(boardId = null, type = 'task', payload, groupId = null) {
 async function addGptBoard(boardObj) {
 	let board
 	const savedBoards = utilService.loadFromStorage(STORAGE_KEY) || []
-	let currBoard = (savedBoards) ? savedBoards.find(boards => boards.title === boardObj.boardName) : null
+	let currBoard = savedBoards ? savedBoards.find((boards) => boards.title === boardObj.boardName) : null
 	if (currBoard) {
 		delete currBoard._id
 		currBoard.createdBy = boardObj.createdBy
@@ -292,12 +292,9 @@ function setAdvanceFilter(board, advanceFilter) {
 	// }, [])
 	// return board
 }
-async function applyDrag(addedId, removedId, type, boardId, groupId, filterBy) {
-	//arr, dragResult
-	let board
+async function applyDrag(addedId, removedId, type, board, groupId) {
 	switch (type) {
 		case 'task':
-			board = await getById(boardId)
 			const groupIdx = board.groups.findIndex((group) => group.id === groupId)
 			const addedIdx = board.groups[groupIdx].tasks.findIndex((task) => task.id === addedId)
 			const removedIdx = board.groups[groupIdx].tasks.findIndex((task) => task.id === removedId)
@@ -308,8 +305,20 @@ async function applyDrag(addedId, removedId, type, boardId, groupId, filterBy) {
 			}
 			return await saveBoard(board)
 			break
+		case 'taskBetweenGroups':
+			const groupAddedIdx = board.groups.findIndex((group) => group.id === addedId.addedGroupId)
+			const addedTIdx = board.groups[groupAddedIdx].tasks.findIndex((task) => task.id === addedId.addedId)
+			const groupRemovedIdx = board.groups.findIndex((group) => group.id === removedId.removedGroupId)
+			const removedTIdx = board.groups[groupRemovedIdx].tasks.findIndex(
+				(task) => task.id === removedId.removedId
+			)
+			if (addedTIdx !== -1 && removedTIdx !== -1) {
+				board.groups[groupAddedIdx].tasks.splice(addedTIdx, 0, board.groups[groupRemovedIdx].tasks[removedTIdx])
+				board.groups[groupRemovedIdx].tasks.splice(removedTIdx, 1)
+			}
+			return await saveBoard(board)
+			break
 		case 'group':
-			board = await getById(boardId)
 			const addedGroupIdx = board.groups.findIndex((group) => group.id === addedId)
 			const removedGroupIdx = board.groups.findIndex((group) => group.id === removedId)
 			if (addedGroupIdx !== -1 && removedGroupIdx !== -1) {
