@@ -20,6 +20,7 @@
 			color: $clr-divider;
 			font-family: Figtree-reg;
 			cursor: pointer;
+			margin: 0;
 		}
 
 		svg {
@@ -28,6 +29,7 @@
 		}
 
 		&:not(.regular-modal) {
+			gap: 0;
 			&:hover {
 				background-color: $color-btn-hover;
 				border-radius: 4px;
@@ -59,6 +61,7 @@
 			border-bottom-right-radius: 0.2em;
 			width: 28px;
 			border-left: 1px solid (darken($primary-blue, 8%));
+			padding-inline-end: 3px;
 
 			&:hover {
 				background-color: (darken($primary-blue, 8%));
