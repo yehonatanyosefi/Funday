@@ -14,7 +14,7 @@
 						<Board class="svg-icon board-svg" height="19px" width="19px" />
 						<span v-if="(isRename && editedBoardId !== board._id) || !isRename">{{ board.title }}</span>
 						<form v-else @submit.prevent="renameBoard()">
-							<input v-focus v-model="title" type="text" @click.stop />
+							<input v-focus v-model="title" type="text" @click.stop required/>
 						</form>
 						<Menu
 							class="svg-icon small-menu"

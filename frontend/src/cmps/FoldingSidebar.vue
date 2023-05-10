@@ -27,7 +27,7 @@
                             <form @submit.prevent="sendGpt">
                                 <div class="flex input-container">
                                     <label for="boardName">
-                                        <input v-model="aiBoardName" id="boardName" placeholder="Enter board theme" />
+                                        <input v-model="aiBoardName" id="boardName" placeholder="Enter board theme" required />
                                     </label>
                                 </div>
                                 <button class="flex send-btn">Make with AI</button>
@@ -40,7 +40,7 @@
                     <div class="searching" @click.stop="isSearching = true">
                         <button>
                             <Search class="svg-icon" /> <span class="optn" v-if="!isSearching">Search</span>
-                            <input v-focus v-else v-model="filterBy.txt" type="search" placeholder="Search" @input="search">
+                            <input v-focus v-else v-model="filterBy.txt" type="search" placeholder="Search" @input="search" required>
                         </button>
 
                     </div>

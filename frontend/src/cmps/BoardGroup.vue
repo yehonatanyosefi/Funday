@@ -37,6 +37,7 @@
 							@blur="saveGroupTitle"
 							@keyup.enter="unfocus('groupTitleInput' + group.id)"
 							@focus="showCircle"
+							required
 						/>
 					</label>
 					<ColorPicker
@@ -62,6 +63,7 @@
 							class="task-checkbox"
 							:checked="selectedTasks?.length === group.tasks?.length"
 							@click="$emit('selectGroupTasks', group.id)"
+							required
 						/>
 						<!-- v-model="isActionsModalOpen" -->
 					</div>
@@ -135,6 +137,7 @@
 					@keyup.enter="addTask"
 					class="board-input add-task-input"
 					placeholder="+ Add task"
+					required
 				/>
 			</div>
 		</section>

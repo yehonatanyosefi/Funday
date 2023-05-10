@@ -8,6 +8,7 @@
 			ref="titleInput"
 			@keyup.enter="unfocus"
 			@blur="$emit('saveTask', title)"
+			required
 		/>
 	</div>
 </template>

@@ -20,6 +20,7 @@
 				@blur="isSearchClicked = false"
 				v-model="txt"
 				@input="setFilter({ txt })"
+				required
 			/>
 			<div v-if="txt" class="svg-small" @click.stop="clearFilter('txt')">
 				<CloseSolid class="svg-small"></CloseSolid>
