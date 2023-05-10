@@ -34,9 +34,6 @@
                             </form>
                         </div>
                     </button>
-                    <!-- <button class="ai-btn">
-                        <Filter class="svg-icon" /> <span class="optn">Filters</span>
-                    </button> -->
                     <div class="searching" @click.stop="isSearching = true">
                         <button>
                             <Search class="svg-icon" /> <span class="optn" v-if="!isSearching">Search</span>
@@ -49,7 +46,6 @@
 
             <div class="spacer"></div>
             <BoardList />
-            <!-- :boardList="boardList" -->
         </div>
     </main>
 </template>
@@ -84,8 +80,6 @@ export default {
         async addBoard() {
             try {
                 await this.$store.dispatch({ type: 'addBoard' })
-                // await this.$store.dispatch({ type: 'loadBoardList', filterBy: this.filterBy })
-
                 showSuccessMsg('Board added')
             }
             catch {
@@ -110,8 +104,6 @@ export default {
             this.isHoverOpen = false
         },
         mouseOverUnfold() {
-
-            // console.log('this.btnHover', this.btnHover)
             if (!this.btnHover) {
                 this.isHoverOpen = true
                 this.isFolded = false
@@ -120,8 +112,6 @@ export default {
 
         },
         mouseOutFold() {
-
-            // console.log('this.btnHover', this.btnHover)
             if (this.isFolded || this.btnHover) return
             else {
                 this.isHoverOpen = false
@@ -130,10 +120,14 @@ export default {
 
         },
         async sendGpt() {
-            if (!this.aiBoardName) return
-            this.isOpenAiModal = false
-            this.$store.dispatch({ type: 'addGptBoard', boardName: this.aiBoardName })
-            this.aiBoardName = ''
+            try{
+                if (!this.aiBoardName) return
+                this.isOpenAiModal = false
+                this.$store.dispatch({ type: 'addGptBoard', boardName: this.aiBoardName })
+                this.aiBoardName = ''
+            } catch (err){
+                console.log('Cannot currently add board with AI', err)
+            }
         },
         async openGPT() {
             this.isOpenAiModal = true

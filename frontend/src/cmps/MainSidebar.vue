@@ -7,9 +7,7 @@
 				</router-link>
 
 			</div>
-			<!-- <div class="monday-style-divider surface-divider bottom monday-style-divider--horizontal"></div> -->
 			<div class="divider"></div>
-			<!-- <div class="triangle"></div> -->
 			<div class="mid-icons flex column">
 				<div class="inside-icons flex column">
 					<div class="svg-wrapper selected">
@@ -23,40 +21,9 @@
 							<WorkManagement class="svg-icon" />
 						</a>
 					</div>
-
-					<!-- <button @click="hey">
-						<Notifications class="svg-icon" />
-					</button>
-					<button disabbled>
-						<Inbox class="svg-icon" />
-					</button>
-					<button disabbled>
-						<MyWork class="svg-icon" />
-					</button>
-					<button disabbled>
-						<Favorite class="svg-icon" />
-					</button> -->
 				</div>
-				<!-- <button disabbled>
-					<Apps class="svg-icon" />
-				</button>
-				<button disabbled>
-					<Invite class="svg-icon" />
-				</button>
-				<button disabbled>
-					<Search class="svg-icon" />
-				</button>
-				<button disabbled>
-					<Help class="svg-icon" />
-				</button> -->
 			</div>
 			<div class="divider"></div>
-
-			<!-- <button disabbled>
-				<InstalledProducts class="svg-icon InstalledProducts" />
-			</button> -->
-			<!-- :src="loggedinUser.imgUrl" v-if="loggedinUser"-->
-			<!-- src="https://files.monday.com/euc1/photos/41054538/thumb/41054538-user_photo_2023_03_18_19_59_31.png?1679169572" -->
 			<img @click="toggleModal" :src="loggedinUser.imgUrl" v-if="loggedinUser" class="profile" :title="loggedinUser.fullname" alt="Dor Toledano" />
 
 			<div v-if="isModalOpen" class="modal" v-click-outside.stop="closeModal">
@@ -97,23 +64,11 @@ export default {
 	data() {
 		return {
 			isSelected: false,
-			loggedinUpser: null,
 			isModalOpen: false,
 			isMobile:false
 		}
 	},
-	computed: {
-		// loggedinUser() {
-		// 	return this.$store.getters.loggedinUser
-		// },
-	},
 	methods: {
-		hey() {
-			this.loggedinUser = this.$store.getters.loggedinUser
-			console.log('loggedinUser', this.loggedinUser)
-			console.log(this.$store.getters.users)
-
-		},
 		toggleModal(){
 			this.isModalOpen=!this.isModalOpen
 		},
