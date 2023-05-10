@@ -1,12 +1,11 @@
 <template>
 	<main class="main-layout">
 		<MainSidebar v-show="board?._id"></MainSidebar>
-		<div class="container" v-show="board?._id">
+		<div class="container" v-if="board?._id && !isSwitchingBoards">
 			<BoardHeader></BoardHeader>
 			<RouterView></RouterView>
 		</div>
-		<!-- <span v-if="!board?._id">LOADING...</span> -->
-		<Loader v-if="!board?._id" />
+		<Loader v-else />
 	</main>
 </template>
 
@@ -49,6 +48,9 @@ export default {
 	computed: {
 		board() {
 			return this.$store.getters.board
+		},
+		isSwitchingBoards() {
+			return this.$store.getters.isSwitchingBoards
 		},
 	},
 	components: {

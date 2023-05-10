@@ -71,12 +71,10 @@
 			>
 			<RouterView></RouterView>
 		</section>
-		<Loader v-else />
 	</div>
 </template>
 
 <script>
-import Loader from './util/Loader.vue'
 import { Container, Draggable } from 'vue3-smooth-dnd'
 import BoardHeader from './BoardHeader.vue'
 import BoardGroup from './BoardGroup.vue'
@@ -283,7 +281,6 @@ export default {
 		ActionsModal,
 		RemoveModal,
 		BoardGroupCollapsed,
-		Loader,
 	},
 }
 </script>
