@@ -1,13 +1,26 @@
 .login-signup {
-    .upload-preview{
-        margin: auto;
-        label{
-            text-align: center;
-        }
+  .showbox {
+    margin: auto;
+    .google-loader {
+      margin: auto;
+      width: 100px;
     }
-    form > * {
-        margin: 20px 0px;
+  }
+  .upload-preview {
+    margin: auto;
+    label {
+      text-align: center;
     }
+  }
+  form > * {
+    margin: 20px 0px;
+  }
+  .msg {
+    color: red;
+    font-family: Figtree600;
+    font-size: 16px;
+    width: 100%;
+  }
   header {
     background-color: $color-login-header;
     height: 65px;
@@ -15,10 +28,9 @@
     align-items: center;
     padding: 10px 0 0 8px;
 
-    
     .left-container {
-        display: flex;
-        flex-direction: column;
+      display: flex;
+      flex-direction: column;
 
       a {
         display: flex;
@@ -26,8 +38,8 @@
         justify-content: center;
         font-size: 40px;
         margin-block-end: 8px;
-        &:hover{
-            text-decoration: none;
+        &:hover {
+          text-decoration: none;
         }
 
         h1 {
@@ -48,88 +60,90 @@
     justify-content: flex-start;
     align-items: center;
     padding: 40px;
-    h1{
-        font-size: rem(40px);
-
+    h1 {
+      font-size: rem(40px);
     }
-    h2{
-        font-size: 32px;
-        width: 100%;
+    h2 {
+      font-size: 32px;
+      width: 100%;
     }
-    label{
-        margin: 0 0 4px;
-        font-weight: 500;
-        font-size: 16px;
-        display: inline-block;
-        font-size: 16px;
-        width: 100%;
+    label {
+      margin: 0 0 4px;
+      font-weight: 500;
+      font-size: 16px;
+      display: inline-block;
+      font-size: 16px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      &#mail-label {
+        align-items: center;
+      }
+    }
+    input {
+      width: 360px;
+      height: 40px;
+      border-radius: 4px;
+      border: 1px solid #d2d2d2;
+      padding: 6px 12px;
+      font-size: 16px;
+      color: #555;
+      outline: none;
+      &::placeholder {
+        color: #d2d2d2;
+      }
+      &:focus-within {
+        border: 1px solid #66afe9;
+      }
+    }
+    button:not(.pre-signup-btn) {
+      width: 360px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      font-size: 18px;
+      background-color: $primary-blue;
+      color: $color-snow_white;
+      border-radius: 4px;
+      &:disabled {
+        background-color: rgba(128, 128, 128, 0.329);
+      }
+      .login-btn {
         display: flex;
-        flex-direction: column;
-        &#mail-label{
-            align-items: center;
-        }
-
-    }
-    input{
-        width: 360px;
-        height: 40px;
-        border-radius: 4px;
-        border: 1px solid #d2d2d2;
-        padding: 6px 12px;
-        font-size: 16px;
-        color: #555;
-        outline: none;
-        &::placeholder{
-            color: #d2d2d2;
-        }
-        &:focus-within{
-            border: 1px solid #66afe9;
-        }
-    }
-    button:not(.pre-signup-btn){
-        width: 360px;
-        height: 48px;
-        display: flex;
+        gap: 12px;
         align-items: center;
         justify-content: center;
-        flex: 1;
-        font-size: 18px;
-        background-color: $primary-blue;
-        color: $color-snow_white;
-        border-radius: 4px;
-        .login-btn{
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            p{
-                margin: 0;
-            }
+        cursor: pointer;
+
+        p {
+          margin: 0;
         }
+      }
     }
-    button.pre-signup-btn{
-        background-color: transparent;
-        border: none;
-        color: #0fa2e2;
-        font-size: 16px;
+    button.pre-signup-btn {
+      background-color: transparent;
+      border: none;
+      color: #0fa2e2;
+      font-size: 16px;
     }
-    .pre-signup{
-        display: flex;
-    width: 100%;
-    align-items: center;
-    span{
+    .pre-signup {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      span {
         padding-inline-end: 5px;
-    font-size: 16px;
-    }
-    button{
+        font-size: 16px;
+      }
+      button {
         background-color: transparent;
         border: none;
         color: #0fa2e2;
         font-size: 16px;
         margin: 0;
-    padding: 0;
-    }
+        padding: 0;
+      }
     }
   }
 }
