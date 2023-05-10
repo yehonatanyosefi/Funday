@@ -107,7 +107,7 @@ function getTimeDifference(now, then) {
 		const days = Math.floor(diff / day)
 		return `${days}d` // day${days === 1 ? '' : 's'} ago
 	} else {
-		const date = new Date(timestamp)
+		const date = new Date(then)
 		const day = date.getDate()
 		const month = date.toLocaleString('default', { month: 'long' })
 		const year = date.getFullYear()

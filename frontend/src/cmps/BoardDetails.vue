@@ -10,7 +10,8 @@
 				orientation="vertical"
 				:drop-placeholder="dropPlaceholderOptions"
 				@drop="onGroupDrop($event)"
-				dragClass="dragged-element">
+				dragClass="dragged-element"
+				group-name="group">
 				<Draggable v-for="group in board.groups" :key="group.id">
 					<BoardGroup
 						v-if="group?.isExpanded"
@@ -97,6 +98,8 @@ export default {
 				animationDuration: '150',
 				showOnTop: true,
 			},
+			removeIds: null,
+			addIds: null,
 		}
 	},
 	computed: {
@@ -261,9 +264,24 @@ export default {
 			}
 		},
 		async applyTaskDrag(groupPayload) {
+			const { removedId, addedId, groupId } = groupPayload
+			if (removedId) this.removeIds = { removedId, removedGroupId: groupId }
+			if (addedId) this.addIds = { addedId, addedGroupId: groupId }
+			if (!this.addIds || !this.removeIds) return
 			try {
-				const payload = { ...groupPayload, boardId: this.board._id }
-				await this.$store.dispatch({ type: 'applyTaskDrag', payload })
+				if (this.removeIds?.removedGroupId !== this.addIds?.addedGroupId) {
+					const payload = {
+						removedIds: this.removeIds,
+						addedIds: this.addIds,
+						boardId: this.board._id,
+					}
+					await this.$store.dispatch({ type: 'applyTaskDragBetweenGroups', payload })
+				} else {
+					const payload = { ...groupPayload, boardId: this.board._id }
+					await this.$store.dispatch({ type: 'applyTaskDrag', payload })
+				}
+				this.removeIds = null
+				this.addIds = null
 			} catch (err) {
 				showErrorMsg('Failed to drag task')
 			}

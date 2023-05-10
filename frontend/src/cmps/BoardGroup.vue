@@ -8,24 +8,21 @@
 							class="svg-icon menu-btn"
 							width="20"
 							height="20"
-							@click="$emit('selectGroupTasks', group.id)"
-						/>
+							@click="$emit('selectGroupTasks', group.id)" />
 					</div>
 				</div>
 				<ExpandGroup
 					@click="$emit('minimizeGroup', group.id)"
 					class="arrow"
 					title="Minimize Group"
-					:style="{ color: group.style.color }"
-				></ExpandGroup>
+					:style="{ color: group.style.color }"></ExpandGroup>
 				<div class="group-title-input">
 					<label for="groupTitleInput" v-click-outside="hideCircle">
 						<div
 							v-if="isCircleShown"
 							class="color-circle"
 							@click.stop="openColorPicker"
-							:style="{ backgroundColor: group.style.color }"
-						></div>
+							:style="{ backgroundColor: group.style.color }"></div>
 						<input
 							class="board-input group-title-input"
 							name="groupTitleInput"
@@ -37,16 +34,14 @@
 							@blur="saveGroupTitle"
 							@keyup.enter="unfocus('groupTitleInput' + group.id)"
 							@focus="showCircle"
-							required
-						/>
+							required />
 					</label>
 					<ColorPicker
 						@click.stop
 						v-if="openColorPickerModal"
 						v-click-outside="closeColorPicker"
 						@closeColorPicker="closeColorPicker"
-						@chooseColor="chooseGroupColor"
-					></ColorPicker>
+						@chooseColor="chooseGroupColor"></ColorPicker>
 				</div>
 				<div class="task-count">{{ group.tasks.length }} Tasks</div>
 			</h4>
@@ -63,8 +58,7 @@
 							class="task-checkbox"
 							:checked="selectedTasks?.length === group.tasks?.length"
 							@click="$emit('selectGroupTasks', group.id)"
-							required
-						/>
+							required />
 						<!-- v-model="isActionsModalOpen" -->
 					</div>
 					<section class="task-title">Task</section>
@@ -79,10 +73,10 @@
 			v-if="!isMobile"
 			orientation="vertical"
 			class="group"
-			@drop="onTaskDrop($event)"
+			@drop="onTaskDrop(group.id, $event)"
 			:drop-placeholder="dropPlaceholderOptions"
 			dragClass="dragged-element"
-		>
+			group-name="tasks">
 			<Draggable v-for="(task, idx) in group.tasks" :key="task.id">
 				<TaskPreview
 					:idx="idx"
@@ -98,8 +92,7 @@
 							groupId: group.id,
 							groupColor: group.style.color,
 						})
-					"
-				></TaskPreview>
+					"></TaskPreview>
 			</Draggable>
 		</Container>
 		<div v-else v-for="(task, idx) in group.tasks" :key="task.id">
@@ -117,8 +110,7 @@
 						groupId: group.id,
 						groupColor: group.style.color,
 					})
-				"
-			></TaskPreview>
+				"></TaskPreview>
 		</div>
 		<section class="task-preview add-task">
 			<div class="task-sticky task task-title-container add-task-container">
@@ -126,8 +118,7 @@
 				<div class="task-checkbox-container">
 					<div
 						class="task-preview-color last-task"
-						:style="{ backgroundColor: group.style.color }"
-					></div>
+						:style="{ backgroundColor: group.style.color }"></div>
 					<!-- :style="borderStyle" -->
 					<input type="checkbox" class="task-checkbox" disabled />
 				</div>
@@ -137,8 +128,7 @@
 					@keyup.enter="addTask"
 					class="board-input add-task-input"
 					placeholder="+ Add task"
-					required
-				/>
+					required />
 			</div>
 		</section>
 		<div class="progress-bar">
@@ -151,8 +141,7 @@
 					v-if="cmp === 'timeline' && timelineProgress"
 					:groupColor="group.style.color"
 					:info="timelineProgress"
-					:isProgressBar="true"
-				></Timeline>
+					:isProgressBar="true"></Timeline>
 			</div>
 		</div>
 	</section>
@@ -237,13 +226,12 @@ export default {
 		removeGroup() {
 			this.$emit('removeGroup', this.group.id)
 		},
-		onTaskDrop(dropPayload) {
-			const removedIndex = dropPayload.removedIndex
-			const addedIndex = dropPayload.addedIndex
-			if (removedIndex === null || addedIndex === null || addedIndex === removedIndex) return
-			const removedId = this.group.tasks.find((task, idx) => idx === removedIndex).id
-			const addedId = this.group.tasks.find((task, idx) => idx === addedIndex).id
-			const payload = { removedId, addedId, groupId: this.group.id }
+		onTaskDrop(groupId, dropPayload) {
+			const { addedIndex, removedIndex } = dropPayload
+			if ((removedIndex === null && addedIndex === null) || addedIndex === removedIndex) return
+			const removedId = this.group.tasks.find((task, idx) => idx === removedIndex)?.id
+			const addedId = this.group.tasks.find((task, idx) => idx === addedIndex)?.id
+			const payload = { removedId, addedId, groupId }
 			this.$emit('applyTaskDrag', payload)
 		},
 		addTask() {

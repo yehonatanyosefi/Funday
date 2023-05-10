@@ -388,10 +388,21 @@ export const boardStore = {
 			dispatch({ type: 'loadBoardList', filterBy: { userId } })
 			return updatedBoard
 		},
+		async applyTaskDragBetweenGroups({ dispatch, state }, { payload }) {
+			try {
+				const { addedIds, removedIds } = payload
+				const updatedBoard = await boardService.applyDrag(addedIds, removedIds, 'taskBetweenGroups', JSON.parse(JSON.stringify(state.board)))
+				dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
+				return true
+			} catch (err) {
+				console.log('Store: Error in apply task drag', err)
+				throw err
+			}
+		},
 		async applyTaskDrag({ dispatch }, { payload }) {
 			try {
-				const { addedId, removedId, boardId, groupId } = payload
-				const updatedBoard = await boardService.applyDrag(addedId, removedId, 'task', boardId, groupId)
+				const { addedId, removedId, groupId } = payload
+				const updatedBoard = await boardService.applyDrag(addedId, removedId, 'task', JSON.parse(JSON.stringify(state.board)), groupId)
 				dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
 				return true
 			} catch (err) {
@@ -402,7 +413,7 @@ export const boardStore = {
 		async applyGroupDrag({ dispatch }, { payload }) {
 			try {
 				const { addedId, removedId, boardId } = payload
-				const updatedBoard = await boardService.applyDrag(addedId, removedId, 'group', boardId)
+				const updatedBoard = await boardService.applyDrag(addedId, removedId, 'group', JSON.parse(JSON.stringify(state.board)))
 				dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
 				return true
 			} catch (err) {

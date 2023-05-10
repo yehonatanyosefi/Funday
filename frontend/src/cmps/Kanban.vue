@@ -8,8 +8,7 @@
 				dragClass="dragged-element"
 				orientation="horizontal"
 				:drop-placeholder="dropPlaceholderOptions"
-				@drop="onColumnDrop($event)"
-			>
+				@drop="onColumnDrop($event)">
 				<Draggable v-for="(column, idx) in currColumns.words" :key="idx">
 					<KanbanColumn
 						:filteredCmpOrder="filteredCmpOrder"
@@ -20,7 +19,7 @@
 						@saveTask="saveTask"
 						@setDraggedTask="setDraggedTask"
 						@setDraggedColumn="setDraggedColumn"
-					/>
+						@removeTask="removeTask" />
 				</Draggable>
 			</Container>
 			<div v-else v-for="(column, idx) in currColumns.words" :key="idx">
@@ -33,7 +32,7 @@
 					@saveTask="saveTask"
 					@setDraggedTask="setDraggedTask"
 					@setDraggedColumn="setDraggedColumn"
-				/>
+					@removeTask="removeTask" />
 			</div>
 		</div>
 		<div class="kanban-options">
@@ -52,16 +51,14 @@
 						class="checkbox"
 						type="checkbox"
 						:checked="filteredCmpOrder.includes(cmpName)"
-						@click="toggleFilter(cmpName)"
-					/>
+						@click="toggleFilter(cmpName)" />
 					<label>
 						<div>{{ capitalizeFirstLetter(cmpName) }}</div>
 						<component
 							v-if="capitalizeFirstLetter(cmpName) + 'Svg'"
 							:is="capitalizeFirstLetter(cmpName) + 'Svg'"
 							width="16px"
-							height="16px"
-						></component>
+							height="16px"></component>
 					</label>
 				</div>
 			</div>
@@ -80,6 +77,7 @@ import GroupSvg from '../assets/svg/Group.svg'
 import StatusSvg from '../assets/svg/Status.svg'
 import PrioritySvg from '../assets/svg/Status.svg'
 import TextSvg from '../assets/svg/TextCopy.svg'
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
 
 export default {
 	data() {
@@ -155,7 +153,7 @@ export default {
 				// showSuccessMsg('Task updated')
 			} catch (err) {
 				console.log(err)
-				// showErrorMsg('Cannot update task')
+				showErrorMsg('Cannot update task')
 			}
 		},
 		toggleFilter(cmpName) {
@@ -165,6 +163,20 @@ export default {
 		},
 		capitalizeFirstLetter(str) {
 			return str.charAt(0).toUpperCase() + str.slice(1)
+		},
+		async removeTask(ids) {
+			try {
+				ids = { ...ids, boardId: this.board._id }
+				await this.$store.dispatch({ type: 'removeTask', ids })
+				const groupIdx = this.board.groups.findIndex((group) => group.id === ids.groupId)
+				if (!this.board.groups[groupIdx].tasks?.length)
+					await this.$store.dispatch({ type: 'addTask', payload: ids.groupIdx })
+				showSuccessMsg('Task removed')
+				return true
+			} catch (err) {
+				console.log(err)
+				showErrorMsg('Failed to remove task')
+			}
 		},
 	},
 	computed: {
@@ -192,7 +204,7 @@ export default {
 		GroupSvg,
 		StatusSvg,
 		TextSvg,
-		PrioritySvg
+		PrioritySvg,
 	},
 }
 </script>
