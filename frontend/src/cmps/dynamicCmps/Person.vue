@@ -33,6 +33,7 @@
 							v-model="searchTxt"
 							placeholder="Search names"
 							@click.stop
+							required
 						/>
 						<Search class="svg-icon" color="#676879" width="16px" height="16px" />
 					</div>

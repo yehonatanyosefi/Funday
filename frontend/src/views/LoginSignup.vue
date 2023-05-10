@@ -20,24 +20,21 @@
 
 				<ImgUploader @uploaded="onUploaded" @isUploading="toggleIsUploading" />
 				<h2>Set up your account</h2>
-				<input type="email" v-model="signupCred.username" placeholder="name@company.com" require />
+				<input type="email" v-model="signupCred.username" placeholder="name@company.com"
+					pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$" required />
 				<label id="text" for="">
 					Full name
-					<input type="text" v-model="signupCred.fullname" placeholder="e.g. Jane Doe" require />
+					<input type="text" v-model="signupCred.fullname" placeholder="e.g. Jane Doe" required />
 				</label>
 				<label for="">
 					Password
-					<input
-						type="password"
-						v-model="signupCred.password"
-						placeholder="Enter at least 8 characters"
-						require
-					/>
+					<input type="password" v-model="signupCred.password" placeholder="Enter at least 8 characters"
+						pattern=".{8,}" required />
 				</label>
 				<button>Signup</button>
 				<div class="pre-signup">
-					<span>Already have an account?</span
-					><button @click="isSignin = !isSignin" type="button" class="pre-signup-btn">Log in</button>
+					<span>Already have an account?</span><button @click="isSignin = !isSignin" type="button"
+						class="pre-signup-btn">Log in</button>
 				</div>
 			</form>
 
@@ -48,16 +45,10 @@
           </select> -->
 				<label id="mail-label" for="mail">
 					Enter your work email address
-					<input
-						id="mail"
-						type="email"
-						v-model="loginCred.username"
-						placeholder="Example@company.com"
-						require
-					/>
+					<input id="mail" type="email" v-model="loginCred.username" placeholder="Example@company.com" pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$" required />
 				</label>
 
-				<input type="password" v-model="loginCred.password" placeholder="Password" require />
+				<input type="password" v-model="loginCred.password" placeholder="Password" required />
 				<button>
 					<div class="login-btn">
 						<p>Login</p>
@@ -66,13 +57,8 @@
 				</button>
 
 				<div class="pre-signup">
-					<span>Don't have an account yet?</span
-					><button
-						@click="isSignin = !isSignin"
-						type="button"
-						class="pre-signup-btn"
-						:disabled="isUploading"
-					>
+					<span>Don't have an account yet?</span><button @click="isSignin = !isSignin" type="button"
+						class="pre-signup-btn" :disabled="isUploading">
 						Sign up
 					</button>
 				</div>
@@ -168,8 +154,8 @@ export default {
 			// console.log('imgUrl',imgUrl)
 			this.isUploading = false
 			this.signupCred.imgUrl = imgUrl
-			console.log('imgUrl',imgUrl)
-			
+			console.log('imgUrl', imgUrl)
+
 		},
 		toggleIsUploading() {
 			this.isUploading = true
