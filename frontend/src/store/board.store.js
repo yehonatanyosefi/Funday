@@ -281,10 +281,12 @@ export const boardStore = {
 			}
 		},
 		async getBoardById({ dispatch, commit }, { boardId }) {
+			commit({ type: 'setIsSwitchingBoards', isSwitchingBoards: true })
 			try {
 				const board = await boardService.getById(boardId)
 				// commit({ type: 'resetFilters', board })
 				await dispatch({ type: 'setAndFilterBoard', board })
+			commit({ type: 'setIsSwitchingBoards', isSwitchingBoards: false	 })
 				return board
 			} catch (err) {
 				console.log('Store: Error in getBoardById', err)
