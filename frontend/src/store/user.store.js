@@ -49,8 +49,10 @@ export const userStore = {
 	},
 	actions: {
 		async login({ commit, dispatch }, { userCred }) {
+ 
 			try {
 				let user = await userService.login(userCred)
+        if (!user) return null
 				user = JSON.parse(JSON.stringify(user))
 				commit({ type: 'setLoggedinUser', user })
 				commit({ type: 'removeBoards' })

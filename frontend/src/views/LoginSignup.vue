@@ -1,5 +1,6 @@
 <template>
-	<div class="login-signup">
+	<div class="login-signup" >
+		
 		<header>
 			<div class="left-container">
 				<router-link to="/">
@@ -13,13 +14,10 @@
 			<h1 class="login-header">{{ isSignin ? 'Welcome to Funday.com' : 'Log in to your account' }}</h1>
 
 			<form v-if="isSignin" @submit.prevent="doSignup">
-				<!-- <label @drop.prevent="handleFile" @dragover.prevent>
-          <img class="user-img" :src="signupCred.imgUrl" alt="">
-          <input type="file" @change="handleFile" hidden>
-        </label> -->
-
 				<ImgUploader @uploaded="onUploaded" @isUploading="toggleIsUploading" />
 				<h2>Set up your account</h2>
+				<GoogleLoader v-if="isLoading"/>
+
 				<input type="email" v-model="signupCred.username" placeholder="name@company.com"
 					pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$" required />
 				<label id="text" for="">
@@ -37,52 +35,42 @@
 						class="pre-signup-btn">Log in</button>
 				</div>
 			</form>
-
+			
 			<form v-else @submit.prevent="doLogin">
-				<!-- <select v-model="loginCred.username">
-            <option value="">Select User</option>
-            <option v-for="user in users" :key="user._id" :value="user.username">{{ user.fullname }}</option>
-          </select> -->
+				<GoogleLoader v-if="isLoading"/>
+		
 				<label id="mail-label" for="mail">
 					Enter your work email address
-					<input id="mail" type="email" v-model="loginCred.username" placeholder="Example@company.com" pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$" required />
+					<input id="mail" type="email" v-model="loginCred.username" placeholder="Example@company.com"
+						pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$" required />
 				</label>
 
 				<input type="password" v-model="loginCred.password" placeholder="Password" required />
-				<button>
+				<button class="login-btn-container" :disabled="isLoading">
 					<div class="login-btn">
 						<p>Login</p>
 						<Next class="svg-icon" />
 					</div>
 				</button>
 
+				<p class="msg">{{ msg }}</p>
+
 				<div class="pre-signup">
-					<span>Don't have an account yet?</span><button @click="isSignin = !isSignin" type="button"
-						class="pre-signup-btn" :disabled="isUploading">
+					<span>Don't have an account yet?</span>
+					<button @click="isSignin = !isSignin" type="button"
+						class="pre-signup-btn" :disabled="isUploading || isLoading">
 						Sign up
 					</button>
 				</div>
 			</form>
 		</div>
-		<!-- <hr />
-      <details>
-        <summary>
-          Admin Section
-        </summary>
-        <ul>
-          <li v-for="user in users" :key="user._id">
-            <pre>{{ user }}</pre>
-            <button @click="removeUser(user._id)">x</button>
-          </li>
-        </ul>
-      </details> -->
 	</div>
 </template>
 
 <script>
 import ImgUploader from '../cmps/ImgUploader.vue'
 import Next from '../assets/svg/Next.svg'
-// import { uploadService } from '../services/upload.service.js'
+import GoogleLoader from '../cmps/util/GoogleLoader.vue'
 
 export default {
 	name: 'login-signup',
@@ -93,6 +81,7 @@ export default {
 			signupCred: { username: '', password: '', fullname: '', imgUrl: '' },
 			isSignin: false,
 			isUploading: false,
+			isLoading:false
 		}
 	},
 	computed: {
@@ -113,8 +102,9 @@ export default {
 				return
 			}
 			try {
-				// console.log('this.loginCred',this.loginCred)
+				this.isLoading=true
 				const user = await this.$store.dispatch({ type: 'login', userCred: this.loginCred })
+				this.isLoading=false
 				if (!user) {
 					this.msg = 'User not found'
 					return
@@ -122,8 +112,9 @@ export default {
 				const firstBoard = await this.$store.dispatch({ type: 'getUserBoardList' })
 				this.$router.push(`/board/${firstBoard._id}/main-table`)
 			} catch (err) {
+				this.isLoading=false
 				console.log(err)
-				this.msg = 'Failed to login'
+				this.msg = 'Incorrect username or password'
 			}
 		},
 		doLogout() {
@@ -134,9 +125,10 @@ export default {
 				this.msg = 'Please fill up the form'
 				return
 			}
-			// console.log('this.signupCred',this.signupCred)
+			this.isLoading=true
 			await this.$store.dispatch({ type: 'signup', userCred: this.signupCred })
 			const firstBoard = await this.$store.dispatch({ type: 'getUserBoardList' })
+			this.isLoading=false
 			this.$router.push(`/board/${firstBoard._id}/main-table`)
 		},
 		loadUsers() {
@@ -151,7 +143,6 @@ export default {
 			}
 		},
 		onUploaded(imgUrl) {
-			// console.log('imgUrl',imgUrl)
 			this.isUploading = false
 			this.signupCred.imgUrl = imgUrl
 			console.log('imgUrl', imgUrl)
@@ -160,18 +151,11 @@ export default {
 		toggleIsUploading() {
 			this.isUploading = true
 		},
-		// async handleFile(ev) {
-		//   const file = ev.type === 'change' ?
-		//     ev.target.files[0] :
-		//     ev.dataTransfer.files[0]
-		//   const { imgUrl } = await uploadService.uploadImg(file)
-		//   // this.item.imgUrl=imgUrl
-		//   this.signupCred.imgUrl = imgUrl
-		// }
 	},
 	components: {
 		ImgUploader,
 		Next,
+		GoogleLoader
 	},
 }
 </script>

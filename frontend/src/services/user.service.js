@@ -72,9 +72,15 @@ async function login(userCred) {
 	// const user = users.find(user => user.username === userCred.username)
 	// // const user = await httpService.post('auth/login', userCred)
 	// if (user) return saveLocalUser(user)
+	try{
+		const user = await httpService.post('auth/login', userCred)
+		if (user) return saveLocalUser(user)
+		return null	
+	}catch(err){
+		console.log('error in login',err)
+		throw err
+	}
 
-	const user = await httpService.post('auth/login', userCred)
-	if (user) return saveLocalUser(user)
 	// socketService.login(user._id)
 }
 async function signup(userCred) {
