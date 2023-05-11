@@ -53,9 +53,10 @@
 					<div class="comment-reactions">
 						<div v-if="comment.likes?.length" class="likes">
 							<div class="liked-users" v-for="(user,idx) in comment.likes">
-								<img :src="comment.likes.length<3?user.imgUrl:''" :title="user.fullname" />
+								<img v-if="idx < 3" :src="user.imgUrl" :title="user.fullname" />
+								<!-- <img :src="comment.likes.length<=3?user.imgUrl:continue" :title="user.fullname" /> -->
 							</div>
-							<p>Liked by {{ comment.likes[0].fullname }} and {{ idx }} {{idx>1 ? 'others':'other'}}</p>
+							<p>Liked by {{ comment.likes[0].fullname }} and {{ comment.likes.length-1 }} {{ comment.likes.length>1 ? 'others':'other'}}</p>
 						</div>
 					</div>
 
