@@ -18,6 +18,9 @@
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
   transition: background 0.2s ease, box-shadow 0.2s ease;
+  @include for-mobile-layout {
+    margin-inline-start: 0;
+  }
   .slash {
     margin-inline-start: 4px;
     margin-inline-end: 4px;
@@ -88,14 +91,15 @@
           @include flex-center;
           .menu-btn {
             margin-inline-start: 4px;
-            color: rgb(103,104,121);
+            color: rgb(103, 104, 121);
             cursor: pointer;
             &:hover {
               background-color: #dcdfec;
               border-radius: 4px;
             }
           }
-          div, a {
+          div,
+          a {
             // height: 24px;
             @include flex-center;
           }
@@ -119,7 +123,7 @@
           width: 72px;
           text-overflow: ellipsis;
           margin-inline-end: 8px;
-          color: rgb(103,104,121);
+          color: rgb(103, 104, 121);
           svg {
             margin-inline-end: 4px;
           }
@@ -210,45 +214,47 @@
   .checkbox {
     height: 16px;
   }
-    .update,
-    .add-update {
-      width: 24px;
-      height: 24px;
-      cursor: pointer;
-      font-size: 24px;
+  .update,
+  .add-update {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 24px;
+  }
+
+  .add-update {
+    color: $color-empty-label;
+    &:hover {
+      color: #0073ea;
     }
-  
-    .add-update {
-      color: $color-empty-label;
-      &:hover {
-        color: #0073ea;
-      }
-    }
-      .update {
-        position: relative;
-        color: #0073ea;
-      }
-  
-      .update-num {
-        color: #fff;
-        background-color: #0073ea;
-        position: absolute;
-        top: 18px;
-        right: 30px;
-        width: 12px;
-        height: 12px;
-        font-size: 10px;
-        border-radius: 50%;
-        @include flex-center;
-      }
+  }
+  .update {
+    position: relative;
+    color: #0073ea;
+  }
+
+  .update-num {
+    color: #fff;
+    background-color: #0073ea;
+    position: absolute;
+    top: 18px;
+    right: 30px;
+    width: 12px;
+    height: 12px;
+    font-size: 10px;
+    border-radius: 50%;
+    @include flex-center;
+  }
 }
 .kanban-options {
-  // width: 270px;
   width: 380px;
   height: 100%;
   padding: 16px 16px 100px;
   border-inline-start: 2px solid #c3c6d4;
-  // overflow-y: auto;
+  @include for-mobile-layout {
+    width: 123px;
+    padding: 16px 10px 100px;
+  }
   .custom-view {
     margin-bottom: em(16px);
     color: #676879;
@@ -265,12 +271,15 @@
     margin-bottom: em(16px);
     display: flex;
     align-items: center;
+    @include for-mobile-layout{
+      width: 85px;
+    }
 
     select {
-     border: none;
-     width: 95%;
-     outline: none;
-     padding-inline: 5%;
+      border: none;
+      width: 95%;
+      outline: none;
+      padding-inline: 5%;
     }
   }
   .card-cols {
@@ -284,21 +293,24 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      label{
+      label {
         display: flex;
         width: 100%;
-        div{
+        div {
           width: 150px;
+          @include for-mobile-layout{
+            width: 58px;
+          }
         }
-        svg{
+        svg {
           margin-left: auto;
           margin-right: 8px;
           color: #c5c7d0;
         }
       }
-      input{
-          width: 14px;
-          height: 14px;
+      input {
+        width: 14px;
+        height: 14px;
       }
     }
   }
