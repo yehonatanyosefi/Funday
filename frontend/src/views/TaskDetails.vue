@@ -14,11 +14,6 @@
 					<Home></Home>
 					<button class="task-comments-btn">Updates</button>
 				</div>
-				<!-- <span>|</span>
-				<div @click="goTo('files')" :class="{ selected: showComp === 'files' }">
-					<span></span>
-					<button>Files</button>
-				</div> -->
 				<span>|</span>
 				<div @click="goTo('activities')" :class="{ selected: showComp === 'activities' }">
 					<span></span>
@@ -57,21 +52,15 @@
 
 					<div class="comment-reactions">
 						<div v-if="comment.likes?.length" class="likes">
-							<div class="liked-users" v-for="user in comment.likes">
-								<img :src="user.imgUrl" :title="user.fullname" />
+							<div class="liked-users" v-for="(user,idx) in comment.likes">
+								<img :src="comment.likes.length<3?user.imgUrl:''" :title="user.fullname" />
 							</div>
-							<p>Liked</p>
+							<p>Liked by {{ comment.likes[0].fullname }} and {{ idx }} {{idx>1 ? 'others':'other'}}</p>
 						</div>
-						<!-- <div class="seen-count">
-						<Show></Show>
-						<p>1 Seen</p>
-					</div> -->
 					</div>
-					<!-- </div> -->
 
 					<div class="comment-like" @click.stop.prevent="likeComment(idx)">
 						<div>
-							<!-- <span v-if="comment?.likes?.includes(loggedinUser._id)"></span>-->
 							<LikeSolid v-if="likeByMe(comment)" :class="{ selected: likeByMe(comment) }"></LikeSolid>
 							<LikeSvg v-else></LikeSvg>
 							<button :class="{ selected: likeByMe(comment) }">Like</button>
@@ -86,52 +75,6 @@
 					</div>
 				</div>
 			</section>
-
-			<!-- <div
-          v-if="!isLoading && !imgUrls.length"
-          class="cta-container flex column center"
-        >
-          <div class="files-gallery-cmp flex column center">
-            <img
-              class="empty-state-image"
-              src="https://cdn.monday.com/images/files-gallery/empty-state.png"
-            />
-            <div class="cta-container-title">
-              <b>Drag &amp; drop</b>&nbsp;or&nbsp;<b>add files here</b>
-            </div>
-            <div class="cta-container-subtitle">
-              Upload, comment and review all files in this item to easily
-              collaborate in context
-            </div>
-            <button class="add-file-btn flex center">
-              <input type="file" @change="handleFile" />
-              <span v-svg-icon="'outlinePlus'"></span>
-              <div>Add file</div>
-            </button>
-          </div>
-        </div>
-
-        <section v-if="imgUrls.length" class="img-gallery">
-          <img-preview :imgUrls="imgUrls" @removeImg="removeImg" />
-        </section>
-      </section> -->
-			<!-- </section>-->
-
-			<!-- <section v-if="showComp === 'activities'" class="activity-log">
-			<div class="activities-list">
-				<div v-for="activity in getUserActivities" class="activity-item">
-					<div class="created-time">
-						<Time></Time>
-						<p>{{ getFormattedTime(activity.createdAt) }}</p>
-					</div>
-					<div class="user">
-						<img :src="activity.byUser.imgUrl" alt="" />
-						<p>{{ task.title }}</p>
-					</div>
-					<activity-cmp :activity="activity" />
-				</div>
-			</div>
-		</section> -->
 		</section>
 	</div>
 </template>
@@ -161,10 +104,6 @@ export default {
 			imgToShow: '',
 			isLoading: false,
 			isDragover: false,
-			// content: {
-			// 	icon: 'addComment',
-			// 	type: 'Comment',
-			// },
 			darken: false,
 		}
 	},

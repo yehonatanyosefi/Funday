@@ -4,7 +4,10 @@
   left: 50%;
   transform: translateX(-50%) translateY(25%);
   padding: 24px 32px 8px 32px;
-
+  @include for-mobile-layout{
+    padding: 15px 15px 8px 15px;
+    top: 0;
+  }
   h1 {
     font-size: 24px;
   }
@@ -26,6 +29,9 @@
     .board-subscribers {
       width: 100%;
       padding-inline: 0 !important;
+      @include for-mobile-layout{
+        flex-wrap: wrap;
+      }
     }
     ul {
       &::-webkit-scrollbar-track {
@@ -50,6 +56,7 @@
       .no-members{
         min-height: 36px;
         min-width: 466px;
+        
       }
       li {
         font-size: 15px;
@@ -57,6 +64,10 @@
         min-height: 36px;
         min-width: 466px;
         align-items: center;
+        @include for-mobile-layout{
+          min-width: 350px;
+
+        }
         img{
             aspect-ratio: 1/1;
         }
