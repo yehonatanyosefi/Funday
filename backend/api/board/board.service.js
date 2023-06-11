@@ -47,7 +47,6 @@ async function query(filterBy = { txt: '', userId: '' }) {
 
 		return boardList
 
-
 		// let boardsCopy = JSON.parse(JSON.stringify(boards))
 		// if (filterBy.txt) {
 		// 	const regex = new RegExp(filterBy.txt, 'i')
@@ -185,45 +184,77 @@ async function removeBoardMsg(boardId, msgId) {
 }
 
 require('dotenv').config()
-const { Configuration, OpenAIApi } = require("openai")
+const { Configuration, OpenAIApi } = require('openai')
 
 const configuration = new Configuration({
 	apiKey: process.env.OPENAI_API_KEY,
 })
 const openai = new OpenAIApi(configuration)
 
-async function gpt(boardObj = { boardName: 'Development' }) {
-	const boardName = boardObj.boardName
-	const completion = await openai.createChatCompletion({
-		model: "gpt-3.5-turbo",
-		messages: [{
-			role: "user", content: `Please provide 15 task names for a Monday board with the name "${boardName}". Each task name should be concise and relevant to the topic. Please organize the tasks into three groups, with the group name listed at the top of each group. Please include only the task names and group names in your response, as I will be parsing them using code. The final format should be as follows:
+async function promptGpt(prompt, qualifiers, format) {
+	try {
+		const completion = await openai.createChatCompletion({
+			model: 'gpt-3.5-turbo',
+			messages: [
+				{
+					role: 'user',
+					content: `${prompt} ${qualifiers} The final format should be exactly as follows: ${format}`,
+				},
+			],
+		})
 
-Group Number: Group Name
-<task title here>
-<task title here>
-<task title here>
-<task title here>
-<task title here>
+		const response = completion.data.choices[0].message.content
+		return response
+	} catch (error) {
+		console.error(`Error in promptGpt function: ${error.message}`)
+		throw error
+	}
+}
 
-Group Number: Group Name
-<task title here>
-<task title here>
-<task title here>
-<task title here>
-<task title here>
+async function createBoardWithAi(boardObj = { boardName: `Development` }) {
+	try {
+		const boardName = boardObj.boardName
+		const prompt = `Please provide 15 task names for a Monday board with the name "${boardName}". Please organize the tasks into three groups.`
+		const qualifiers = `Make sure each group is unique. Each task name should be concise and relevant to the topic. Please include only the task names and group names in your response, as I will be parsing them using code.`
+		const format = `<Number>: <Group Name>
+<Task Title>
+<Task Title>
+<Task Title>
+<Task Title>
+<Task Title>
 
-Group Number: Group Name
-<task title here>
-<task title here>
-<task title here>
-<task title here>
-<task title here>` }],
-	})
-	const content = completion.data.choices[0].message.content
-	const groupsData = arrangeData(content)
-	const board = await add(getBoard(boardObj, groupsData))
-	return board
+<Number>: <Group Name>
+<Task Title>
+<Task Title>
+<Task Title>
+<Task Title>
+<Task Title>
+
+<Number>: <Group Name>
+<Task Title>
+<Task Title>
+<Task Title>
+<Task Title>
+<Task Title>`
+
+		const content = await promptGpt(prompt, qualifiers, format)
+		if (!content) {
+			throw new Error('Failed to get content from GPT')
+		}
+		const aiRegex = /sorry, as an ai language model/i
+		const isInvalid = aiRegex.test(content)
+		if (isInvalid) {
+			throw new Error('Invalid answer')
+		}
+		const groupsData = arrangeGroupsData(content)
+		const boardToAdd = arrangeBoardData(boardObj, groupsData)
+		const board = await add(boardToAdd)
+
+		return board
+	} catch (error) {
+		console.error(`Error in gpt function: ${error.message}`)
+		return null
+	}
 }
 
 module.exports = {
@@ -235,7 +266,7 @@ module.exports = {
 	addBoardMsg,
 	removeBoardMsg,
 	applyDrag,
-	gpt
+	createBoardWithAi,
 }
 
 function getRndStatus() {
@@ -248,7 +279,7 @@ function getRndPriority() {
 }
 
 function getTask(taskData) {
-	return {
+	const task = {
 		id: makeId(),
 		title: taskData?.title || 'New Task',
 		status: getRndStatus(),
@@ -271,19 +302,27 @@ function getTask(taskData) {
 			bgColor: '',
 		},
 	}
+	return task
 }
 
 function getGroup(groupData) {
-	return {
+	const group = {
 		id: utilService.makeId(),
 		title: groupData?.title || 'New Group',
 		isExpanded: true,
 		archivedAt: null,
-		tasks: [getTask(groupData.task[0]), getTask(groupData.task[1]), getTask(groupData.task[2]), getTask(groupData.task[3]), getTask(groupData.task[4]),],
+		tasks: [
+			getTask(groupData.task[0]),
+			getTask(groupData.task[1]),
+			getTask(groupData.task[2]),
+			getTask(groupData.task[3]),
+			getTask(groupData.task[4]),
+		],
 		style: {
 			color: groupData.color || getRndColors()[0],
 		},
 	}
+	return group
 }
 
 function getRndColors() {
@@ -315,7 +354,7 @@ function getRndColors() {
 	return rndColors
 }
 
-function getBoard(boardObj, groupsData) {
+function arrangeBoardData(boardObj, groupsData) {
 	const { boardName, createdBy, members } = boardObj
 	return {
 		title: boardName || 'New Board',
@@ -334,6 +373,31 @@ function getBoard(boardObj, groupsData) {
 	}
 }
 
+function arrangeGroupsData(data) {
+	const groups = data.split('\n\n')
+	const rndColors = getRndColors()
+	const groupsData = groups.map((group, idx) => {
+		const lines = group.split('\n')
+		const title = lines[0].substring(lines[0].indexOf(':') + 2)
+		const tasks = lines.slice(1)
+
+		const taskData = tasks.map((task) => {
+			let taskTitle = task.replace(/^\d+\.\s/, "")
+			taskTitle = taskTitle.replace(/^- /, "")
+			return {
+				title: taskTitle,
+			}
+		})
+
+		return {
+			title,
+			color: rndColors[idx],
+			task: taskData,
+		}
+	})
+	return groupsData
+}
+
 function makeId(length = 6) {
 	var txt = ''
 	var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -348,26 +412,4 @@ function getRandomIntInclusive(min, max) {
 	min = Math.ceil(min)
 	max = Math.floor(max)
 	return Math.floor(Math.random() * (max - min + 1)) + min //The maximum is inclusive and the minimum is inclusive
-}
-function arrangeData(data) {
-	const groups = data.split("\n\n")
-	const rndColors = getRndColors()
-	const groupsData = groups.map((group, idx) => {
-		const lines = group.split("\n")
-		const title = lines[0].substring(lines[0].indexOf(idx + 1 + ': ') + 2)
-		const tasks = lines.slice(1)
-
-		const taskData = tasks.map((task) => {
-			const taskTitle = task.substring(task.indexOf(".") + 2)
-			return {
-				title: taskTitle,
-			}
-		})
-		return {
-			title,
-			color: rndColors[idx],
-			task: taskData,
-		}
-	})
-	return groupsData
 }

@@ -286,7 +286,7 @@ export const boardStore = {
 				const board = await boardService.getById(boardId)
 				// commit({ type: 'resetFilters', board })
 				await dispatch({ type: 'setAndFilterBoard', board })
-			commit({ type: 'setIsSwitchingBoards', isSwitchingBoards: false	 })
+				commit({ type: 'setIsSwitchingBoards', isSwitchingBoards: false })
 				return board
 			} catch (err) {
 				console.log('Store: Error in getBoardById', err)
@@ -391,7 +391,12 @@ export const boardStore = {
 		async applyTaskDragBetweenGroups({ dispatch, state }, { payload }) {
 			try {
 				const { addedIds, removedIds } = payload
-				const updatedBoard = await boardService.applyDrag(addedIds, removedIds, 'taskBetweenGroups', JSON.parse(JSON.stringify(state.board)))
+				const updatedBoard = await boardService.applyDrag(
+					addedIds,
+					removedIds,
+					'taskBetweenGroups',
+					JSON.parse(JSON.stringify(state.board))
+				)
 				dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
 				return true
 			} catch (err) {
@@ -399,10 +404,16 @@ export const boardStore = {
 				throw err
 			}
 		},
-		async applyTaskDrag({ dispatch }, { payload }) {
+		async applyTaskDrag({ dispatch, state }, { payload }) {
 			try {
 				const { addedId, removedId, groupId } = payload
-				const updatedBoard = await boardService.applyDrag(addedId, removedId, 'task', JSON.parse(JSON.stringify(state.board)), groupId)
+				const updatedBoard = await boardService.applyDrag(
+					addedId,
+					removedId,
+					'task',
+					JSON.parse(JSON.stringify(state.board)),
+					groupId
+				)
 				dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
 				return true
 			} catch (err) {
@@ -410,10 +421,15 @@ export const boardStore = {
 				throw err
 			}
 		},
-		async applyGroupDrag({ dispatch }, { payload }) {
+		async applyGroupDrag({ dispatch, state }, { payload }) {
 			try {
 				const { addedId, removedId, boardId } = payload
-				const updatedBoard = await boardService.applyDrag(addedId, removedId, 'group', JSON.parse(JSON.stringify(state.board)))
+				const updatedBoard = await boardService.applyDrag(
+					addedId,
+					removedId,
+					'group',
+					JSON.parse(JSON.stringify(state.board))
+				)
 				dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
 				return true
 			} catch (err) {

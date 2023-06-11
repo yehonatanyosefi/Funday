@@ -399,6 +399,24 @@ function getEmptyGroup() {
 	}
 }
 
+function getEmptyBoard() {
+	return {
+		title: 'New Board',
+		isStarred: false,
+		archivedAt: '',
+		cmpOrder: ['date', 'person', 'status', 'text', 'priority', 'timeline'],
+		createdBy: {
+			_id: '',
+			fullname: '',
+			imgUrl: '',
+		},
+		style: {},
+		labels: [],
+		members: [],
+		groups: [getEmptyGroup(), getEmptyGroup()],
+	}
+}
+
 function getRndColor() {
 	const colors = [
 		'#037F4C',
@@ -424,23 +442,6 @@ function getRndColor() {
 	return colors[randomIdx]
 }
 
-function getEmptyBoard() {
-	return {
-		title: 'New Board',
-		isStarred: false,
-		archivedAt: '',
-		cmpOrder: ['date', 'person', 'status', 'text', 'priority', 'timeline'],
-		createdBy: {
-			_id: '',
-			fullname: '',
-			imgUrl: '',
-		},
-		style: {},
-		labels: [],
-		members: [],
-		groups: [getEmptyGroup(), getEmptyGroup()],
-	}
-}
 
 // import jsonBoard from '../../data/board.json' assert { type: 'json' }
 // function _createDemoData() {
