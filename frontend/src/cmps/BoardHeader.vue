@@ -17,13 +17,9 @@
 					<FavoriteFull class="selected" v-else @click="favorite"></FavoriteFull>
 				</div>
 				<div class="board-title-right-container">
-					<!-- <div v-if="getlastSeenUserImg" class="last-seen">
-            Last seen <img :src="getlastSeenUserImg" alt="" />
-          </div> -->
 					<div class="invite" @click="isOpen = !isOpen">
 						<Invite class="svg-icon" />
 						Invite/{{ membersCount }}
-						<!-- <a :href="getBoardUrl" target="_blank" rel="noopener noreferrer"></a> -->
 						<InviteModal
 							v-if="isOpen"
 							:isOpen="isOpen"

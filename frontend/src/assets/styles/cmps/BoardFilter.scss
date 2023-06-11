@@ -42,13 +42,13 @@
 		cursor: pointer;
 		margin-right: 16px;
 		border-radius: 4px;
-		width: 106px;
+		// width: 106px;
 		
 		button {
 			color: white;
 			padding: 0;
 			height: 100%;
-			// width: 62px;
+			padding-inline: 7px;
 			border-radius: 0.2em;
 			&:hover {
 				background-color: (darken($primary-blue, 8%));
@@ -61,7 +61,6 @@
 			border-bottom-right-radius: 0.2em;
 			width: 28px;
 			border-left: 1px solid (darken($primary-blue, 8%));
-			padding-inline-end: 3px;
 
 			&:hover {
 				background-color: (darken($primary-blue, 8%));

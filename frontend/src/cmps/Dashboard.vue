@@ -28,84 +28,94 @@ export default {
 			priorityLabels: ['Critical', 'High', 'Medium', 'Low', 'Empty'],
 			statusOptions: {
 				plugins: {
-					legend: { display: true, position: 'bottom' },
-				},
-				responsive: true,
-				maintainAspectRatio: false,
-				scales: {
-					y: {
-						beginAtZero: true,
+					legend: {
+						display: true,
+						position: 'top',
 					},
 				},
-			},
-			priorityOptions: {
-				plugins: {
-					legend: { display: false, position: 'bottom' },
-				},
-				responsive: true,
-				maintainAspectRatio: false,
-				scales: {
-					y: {
-						beginAtZero: true,
+				
+					responsive: true,
+					maintainAspectRatio: false,
+					scales: {
+						y: {
+							beginAtZero: true,
+							grid: {
+								display: false,
+							},
+						},
 					},
 				},
-			},
-		}
-	},
-	async created() {},
-	methods: {},
-	computed: {
-		board() {
-			return this.$store.getters.filteredBoard
-		},
-		priorityData() {
-			if (!this.board?.groups) return
-			const priorities = this.board?.groups
-				.map((group) => {
-					return group.tasks.map((task) => (!task.priority ? 'Empty' : task.priority))
-				})
-				.flat()
-			return this.priorityLabels.map((priorityLabel) => {
-				return priorities.reduce((acc, priority) => {
-					return priorityLabel === priority ? acc + 1 : acc
-				}, 0)
-			})
-		},
-		statusData() {
-			if (!this.board?.groups) return
-			const statuses = this.board?.groups
-				.map((group) => {
-					return group.tasks.map((task) => (!task.status ? 'Empty' : task.status))
-				})
-				.flat()
-			return this.statusLabels.map((statusLabel) => {
-				return statuses.reduce((acc, status) => {
-					return statusLabel === status ? acc + 1 : acc
-				}, 0)
-			})
-		},
-		priorityDataFull() {
-			return {
-				labels: this.priorityLabels,
-				datasets: [
-					{
-						data: this.priorityData,
-						backgroundColor: ['#333333', '#401694', '#5559df', '#579bfc', '#c4c4c4'],
+				priorityOptions: {
+					plugins: {
+						legend: { display: false, position: 'bottom'},
 					},
-				],
+					responsive: true,
+					maintainAspectRatio: false,
+					scales: {
+						y: {
+							beginAtZero: true,
+							grid: {
+								display: false,
+							},
+						},
+					},
+				},
 			}
 		},
-		statusDataFull() {
-			return {
-				labels: this.statusLabels,
-				datasets: [
-					{
-						data: this.statusData,
-						backgroundColor: ['#00c875', '#fdab3d', '#e2445c', '#c4c4c4'],
-					},
-				],
-			}
+			async created() { },
+		methods: { },
+		computed: {
+			board() {
+				return this.$store.getters.filteredBoard
+			},
+			priorityData() {
+				if (!this.board?.groups) return
+				const priorities = this.board?.groups
+					.map((group) => {
+						return group.tasks.map((task) => (!task.priority ? 'Empty' : task.priority))
+					})
+					.flat()
+				return this.priorityLabels.map((priorityLabel) => {
+					return priorities.reduce((acc, priority) => {
+						return priorityLabel === priority ? acc + 1 : acc
+					}, 0)
+				})
+			},
+			statusData() {
+				if (!this.board?.groups) return
+				const statuses = this.board?.groups
+					.map((group) => {
+						return group.tasks.map((task) => (!task.status ? 'Empty' : task.status))
+					})
+					.flat()
+				return this.statusLabels.map((statusLabel) => {
+					return statuses.reduce((acc, status) => {
+						return statusLabel === status ? acc + 1 : acc
+					}, 0)
+				})
+			},
+			priorityDataFull() {
+				return {
+					labels: this.priorityLabels,
+					datasets: [
+						{
+							data: this.priorityData,
+							backgroundColor: ['#333333', '#401694', '#5559df', '#579bfc', '#c4c4c4'],
+						},
+					],
+				}
+			},
+			statusDataFull() {
+				return {
+					labels: this.statusLabels,
+					datasets: [
+						{
+							data: this.statusData,
+							backgroundColor: ['#00c875', '#fdab3d', '#e2445c', '#c4c4c4'],
+						},
+					],
+				}
+			},
 		},
-	},
-}
+	}
 </script>

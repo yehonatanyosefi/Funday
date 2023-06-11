@@ -28,6 +28,10 @@
 		overflow: auto;
 		@include for-mobile-layout{
 			height: calc(100vh - 66px);
+			&.kanban1{
+				overflow-x: hidden;
+			}
+			
 		}
 		.board-header-container {
 			position: sticky;

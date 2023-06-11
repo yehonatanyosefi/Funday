@@ -1,7 +1,7 @@
 <template>
 	<main class="main-layout">
 		<MainSidebar v-show="board?._id"></MainSidebar>
-		<div class="container" v-if="board?._id && !isSwitchingBoards">
+		<div :class="[view +'1', 'container']" v-if="board?._id && !isSwitchingBoards">
 			<BoardHeader></BoardHeader>
 			<RouterView></RouterView>
 		</div>
@@ -20,12 +20,15 @@ export default {
 		const params = this.$route.params?.boardId
 		await this.$store.dispatch({ type: 'getFirstBoard', params })
 		this.onBoardChanged(params)
+		console.log('params', this.$route.href.split('/')[3])
 	},
 	destroyed() {
 		socketService.off(SOCKET_EMIT_BOARD_MSG, this.onBoardUpdate)
 	},
 	data() {
-		return {}
+		return {
+			view:'main-table'
+		}
 	},
 	methods: {
 		onBoardUpdate(data) {
@@ -42,6 +45,13 @@ export default {
 				const boardId = this.$route.params?.boardId
 				if (!boardId) return
 				this.onBoardChanged(boardId)
+			},
+		},
+		'$route.href': {
+			handler() {
+				this.view = this.$route.href.split('/')[3]
+				if (!this.view) return
+				console.log('view-watch', this.view)
 			},
 		},
 	},

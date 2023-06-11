@@ -6,6 +6,10 @@
   padding-inline-start: em(12px);
   padding-inline-end: em(8px);
   margin: 0;
+  @include for-mobile-layout{
+    height: 400px;
+    overflow-y: scroll;
+  }
   &:first-child {
     padding-top: 16px;
   }
