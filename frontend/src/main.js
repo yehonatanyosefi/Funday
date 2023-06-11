@@ -5,7 +5,7 @@ import ElementPlus from 'element-plus'
 
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import 'element-plus/theme-chalk/index.css'
-import FloatingVue from 'floating-vue'
+// import FloatingVue from 'floating-vue'
 
 import { router } from './router.js'
 import { store } from './store/index.js'
@@ -21,6 +21,6 @@ app.directive('click-outside', clickOutsideDirective)
 app.use(router)
 app.use(store)
 app.use(ElementPlus)
-app.use(FloatingVue)
+// app.use(FloatingVue)
 
 app.mount('#app')
