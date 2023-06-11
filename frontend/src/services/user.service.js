@@ -18,10 +18,7 @@ export const userService = {
 	getById,
 	remove,
 	update,
-	//   changeScore,
 }
-
-window.userService = userService
 
 import jsonUsers from '../../data/user.json' assert { type: 'json' }
 function getUsers() {
@@ -100,14 +97,6 @@ async function logout() {
 	return await httpService.post('auth/logout')
 }
 
-// async function changeScore(by) {
-//   const user = getLoggedinUser()
-//   if (!user) throw new Error('Not loggedin')
-//   user.score = user.score + by || by
-//   await update(user)
-//   return user.score
-// }
-
 function saveLocalUser(user) {
 	user = {
 		_id: user._id,
@@ -123,9 +112,3 @@ function saveLocalUser(user) {
 function getLoggedinUser() {
 	return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
 }
-
-// ;(async ()=>{
-//     await userService.signup({fullname: 'Puki Norma', username: 'puki', password:'123',score: 10000, isAdmin: false})
-//     await userService.signup({fullname: 'Master Adminov', username: 'admin', password:'123', score: 10000, isAdmin: true})
-//     await userService.signup({fullname: 'Muki G', username: 'muki', password:'123', score: 10000})
-// })()

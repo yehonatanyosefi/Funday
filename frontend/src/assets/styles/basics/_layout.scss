@@ -3,6 +3,7 @@
 	// position: absolute;
 	margin: 0;
 	height: 100vh;
+	height: 100dvh;
 	width: 100%;
 	display: grid;
 	overflow-y: hidden;
@@ -19,19 +20,21 @@
 	.side-bars {
 		grid-area: sidebar;
 		height: 100vh;
+		height: 100dvh;
 		width: 100%;
 	}
 	.container {
 		grid-area: container;
 		height: 100vh;
+		height: 100dvh;
 		width: 100%;
 		overflow: auto;
-		@include for-mobile-layout{
+		@include for-mobile-layout {
 			height: calc(100vh - 66px);
-			&.kanban1{
+			height: calc(100dvh - 66px);
+			&.kanban1 {
 				overflow-x: hidden;
 			}
-			
 		}
 		.board-header-container {
 			position: sticky;

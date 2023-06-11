@@ -20,7 +20,6 @@ export default {
 		const params = this.$route.params?.boardId
 		await this.$store.dispatch({ type: 'getFirstBoard', params })
 		this.onBoardChanged(params)
-		console.log('params', this.$route.href.split('/')[3])
 	},
 	destroyed() {
 		socketService.off(SOCKET_EMIT_BOARD_MSG, this.onBoardUpdate)
@@ -50,8 +49,6 @@ export default {
 		'$route.href': {
 			handler() {
 				this.view = this.$route.href.split('/')[3]
-				if (!this.view) return
-				console.log('view-watch', this.view)
 			},
 		},
 	},

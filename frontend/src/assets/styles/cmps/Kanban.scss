@@ -52,6 +52,7 @@
       border-bottom-left-radius: 8px;
       transition: background 0.2s ease, box-shadow 0.2s ease;
       max-height: calc(100vh - 245px);
+      max-height: calc(100dvh - 245px);
       // max-height: calc(100vh - 176px);
       width: 260px;
       margin: 0;

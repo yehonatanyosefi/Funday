@@ -27,7 +27,7 @@
                             <form @submit.prevent="sendGpt">
                                 <div class="flex input-container">
                                     <label for="boardName">
-                                        <input v-model="aiBoardName" id="boardName" placeholder="Enter board theme" required />
+                                        <input v-model="aiBoardName" id="boardName" placeholder="Enter board theme" required @keydown.enter="sendGpt" />
                                     </label>
                                 </div>
                                 <button class="flex send-btn">Make with AI</button>

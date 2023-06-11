@@ -82,7 +82,7 @@ import BoardGroup from './BoardGroup.vue'
 import BoardGroupCollapsed from './BoardGroupCollapsed.vue'
 import Plus from '../assets/svg/plus.svg'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service'
-import { boardService } from '../services/board.service.local'
+import { boardService } from '../services/board.service'
 import ActionsModal from './util/ActionsModal.vue'
 import RemoveModal from './util/RemoveModal.vue'
 export default {
