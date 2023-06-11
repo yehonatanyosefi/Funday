@@ -81,18 +81,17 @@ export const boardStore = {
 		},
 		filterBoard(state, { filterBy }) {
 			let filter = !filterBy ? state.filterBy : filterBy
-
 			filter.txt = filterBy.txt || ''
 			filter.member = filterBy.member || null
-
+			
 			let filterBoard = JSON.parse(JSON.stringify(state.board))
 			if (filter.txt !== '') {
 				filterBoard = boardService.filterByTxt(filterBoard, filter.txt)
 			}
-			if (filter.member) {
+			if (filter.member?._id) {
 				filterBoard = boardService.filterByMember(filterBoard, filter.member)
 			}
-			state.filteredBoard = filterBoard
+			state.filteredBoard = JSON.parse(JSON.stringify(filterBoard))
 			state.filterBy = filter
 		},
 		setAdvanceFilter(state, { advanceFilter }) {
@@ -195,7 +194,7 @@ export const boardStore = {
 				throw err
 			}
 		},
-		async addTask({ dispatch, state }, { payload = { groupId: null, title: null } }) {
+		async addTask({ dispatch }, { payload = { groupId: null, title: null } }) {
 			try {
 			const { groupId, title } = payload
 			const task = boardService.getEmptyTask()
@@ -238,7 +237,7 @@ dispatch({type:'saveTask',payload: newPayload})
 				throw err
 			}
 		},
-		async removeGroup({ state, dispatch }, { payload }) {
+		async removeGroup({ commit, dispatch }, { payload }) {
 			try {
 				commit({type:'removeTasks',payload})
 				dispatch({type:'filterBoard'})
@@ -277,7 +276,7 @@ dispatch({type:'saveTask',payload: newPayload})
 				commit({ type: 'filterBoard', filterBy })
 			}
 		},
-		setAndFilterBoard({ commit, state, dispatch }, { board }) {
+		setAndFilterBoard({ commit, dispatch }, { board }) {
 			if (!board?._id) return
 			commit({ type: 'setBoard', board })
 			dispatch({type:'filterBoard'})
@@ -287,7 +286,7 @@ dispatch({type:'saveTask',payload: newPayload})
 			try {
 				const board = await boardService.getById(boardId)
 				// commit({ type: 'resetFilters', board })
-				await dispatch({ type: 'setAndFilterBoard', board })
+				dispatch({ type: 'setAndFilterBoard', board })
 				commit({ type: 'setIsSwitchingBoards', isSwitchingBoards: false })
 				return board
 			} catch (err) {
@@ -381,13 +380,19 @@ dispatch({type:'saveTask',payload: newPayload})
 			}
 		},
 		async updateBoard({ getters, dispatch }, { payload }) {
-			const { newBoardId } = payload
-			const userId = JSON.parse(JSON.stringify(getters.loggedinUser))._id
-			const boardId = newBoardId || getters.board._id
-			const updatedBoard = await boardService.updateBoard(boardId, payload)
-			dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
-			dispatch({ type: 'loadBoardList', filterBy: { userId } })
-			return updatedBoard
+			try {
+				const { newBoardId } = payload
+				const userId = JSON.parse(JSON.stringify(getters.loggedinUser))._id
+				const boardId = newBoardId || getters.board._id
+				const updatedBoard = await boardService.updateBoard(boardId, payload)
+				if (!updatedBoard) return
+				dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
+				dispatch({ type: 'loadBoardList', filterBy: { userId } })
+				return updatedBoard
+			} catch (err) {
+				console.error('error in updateBoard:',err)
+				throw err
+			}
 		},
 		async applyTaskDragBetweenGroups({ dispatch, state }, { payload }) {
 			try {
@@ -443,7 +448,6 @@ dispatch({type:'saveTask',payload: newPayload})
 				const { addedId, removedId } = payload
 				await boardService.applyDrag(addedId, removedId, 'board')
 				await context.dispatch({ type: 'loadBoardList' })
-				return true
 			} catch (err) {
 				console.log('Store: Error in apply board drag', err)
 				throw err
@@ -461,7 +465,6 @@ dispatch({type:'saveTask',payload: newPayload})
 			dispatch({ type: 'loadBoardList' })
 			return savedBoard
 		},
-
 		async getUserBoardList({ commit, dispatch, getters }) {
 			const user = JSON.parse(JSON.stringify(getters.loggedinUser))
 			const boards =

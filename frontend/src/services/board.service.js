@@ -173,7 +173,6 @@ function setAdvanceFilter(board, advanceFilter) {
 				const personInclude = advanceFilter.person.length
 					? advanceFilter.person.some((item) => task.person?.some((person) => person === item._id))
 					: true
-
 				if (priorityInclude && statusInclude && personInclude) {
 					taskArr.push(task)
 				}
