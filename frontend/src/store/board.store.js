@@ -140,7 +140,7 @@ export const boardStore = {
 				const { attName, attValue, taskId } = task
 				const groupIdx = board?.groups.findIndex((group) => group.id === groupId)
 				const taskIdx = board.groups[groupIdx].tasks.findIndex((task) => task.id === taskId)
-				if (taskIdx > -1) {
+				if (taskIdx && taskIdx > -1) {
 					board.groups[groupIdx].tasks[taskIdx][attName] = attValue
 				} else {
 					board.groups[groupIdx].tasks.push(payload.task)
@@ -194,11 +194,12 @@ export const boardStore = {
 				throw err
 			}
 		},
-		async addTask({ dispatch }, { payload = { groupId: null, title: null } }) {
+		async addTask({ state, dispatch }, { payload = { groupId: null, title: null } }) {
 			try {
-			const { groupId, title } = payload
+			let { groupId, title } = payload
 			const task = boardService.getEmptyTask()
 			if (title) task.title = title
+			if (!groupId) groupId = state.board.groups[0].id
 			const newPayload = {task, groupId}
 dispatch({type:'saveTask',payload: newPayload})
 			} catch (err) {
