@@ -83,7 +83,7 @@ export const boardStore = {
 			let filter = !filterBy ? state.filterBy : filterBy
 			filter.txt = filterBy.txt || ''
 			filter.member = filterBy.member || null
-			
+
 			let filterBoard = JSON.parse(JSON.stringify(state.board))
 			if (filter.txt !== '') {
 				filterBoard = boardService.filterByTxt(filterBoard, filter.txt)
@@ -106,12 +106,12 @@ export const boardStore = {
 			const { groupId, taskId } = ids
 			const groupIdx = board.groups.findIndex((group) => group.id === groupId)
 			const taskIdx = board.groups[groupIdx].tasks.findIndex((task) => task.id === taskId)
-				const tasks = board.groups[groupIdx].tasks.splice(taskIdx, 1)[0]
-				const group = board.groups.splice(groupIdx, 1, tasks)[0]
-				board.groups[groupIdx] = group
+			const tasks = board.groups[groupIdx].tasks.splice(taskIdx, 1)[0]
+			const group = board.groups.splice(groupIdx, 1, tasks)[0]
+			board.groups[groupIdx] = group
 		},
 		removeTasks(state, { ids }) {
-			const {groupId, taskId, tasksToRemove} = ids
+			const { groupId, taskId, tasksToRemove } = ids
 			const board = state.board
 			for (let groupId in tasksToRemove) {
 				const groupIdx = board.groups.findIndex((group) => group.id === groupId)
@@ -126,37 +126,36 @@ export const boardStore = {
 				} else board.groups[groupIdx].tasks = tasks
 			}
 		},
-		removeGroup({board, filteredBoard}, { groupId }) {
+		removeGroup({ board, filteredBoard }, { groupId }) {
 			const groupIdx = state.board.groups.findIndex((group) => group.id === groupId)
 			board.groups.splice(groupIdx, 1)
 			filteredBoard.groups.splice(groupIdx, 1)
 		},
-		removeMember({board},{userId}) {
+		removeMember({ board }, { userId }) {
 			const memberIdx = board.members.findIndex((member) => member._id === userId)
 			board.members.splice(memberIdx, 1)
 		},
-		saveTask({board},{payload}) {
-				const { task, groupId } = payload
-				const { attName, attValue, taskId } = task
-				const groupIdx = board?.groups.findIndex((group) => group.id === groupId)
-				const taskIdx = board.groups[groupIdx].tasks.findIndex((task) => task.id === taskId)
-				if (taskIdx && taskIdx > -1) {
-					board.groups[groupIdx].tasks[taskIdx][attName] = attValue
-				} else {
-					board.groups[groupIdx].tasks.push(payload.task)
+		saveTask({ board }, { payload }) {
+			const { task, groupId } = payload
+			const { attName, attValue, taskId } = task
+			const groupIdx = board?.groups.findIndex((group) => group.id === groupId)
+			const taskIdx = board.groups[groupIdx].tasks.findIndex((task) => task.id === taskId)
+			if (taskIdx > -1) {
+				board.groups[groupIdx].tasks[taskIdx][attName] = attValue
+			} else {
+				board.groups[groupIdx].tasks.push(payload.task)
 			}
-
 		},
-		saveGroup({board},{payload}) {
-				const { attName, att, groupId } = payload
-	const groupIdx = board?.groups.findIndex((group) => group.id === groupId)
+		saveGroup({ board }, { payload }) {
+			const { attName, att, groupId } = payload
+			const groupIdx = board?.groups.findIndex((group) => group.id === groupId)
 			if (groupIdx > -1) {
 				board.groups[groupIdx][attName] = att
 			} else {
 				board.groups.unshift(payload)
 			}
 		},
-		saveMember({board},{payload}) {
+		saveMember({ board }, { payload }) {
 			const memberIdx = board?.members.findIndex((member) => member._id === payload._id)
 			if (memberIdx > -1) {
 				console.log('hi')
@@ -186,9 +185,9 @@ export const boardStore = {
 		},
 		async saveTask({ dispatch, state, commit }, { payload }) {
 			try {
-				commit({type:'saveTask',payload})
-				dispatch({type:'filterBoard'})
-				await boardService.saveBoard(state.board)
+				commit({ type: 'saveTask', payload })
+				dispatch({ type: 'filterBoard' })
+				await boardService. saveBoard(state.board)
 			} catch (err) {
 				console.log('Store: Error in updateTask', err)
 				throw err
@@ -196,12 +195,12 @@ export const boardStore = {
 		},
 		async addTask({ state, dispatch }, { payload = { groupId: null, title: null } }) {
 			try {
-			let { groupId, title } = payload
-			const task = boardService.getEmptyTask()
-			if (title) task.title = title
-			if (!groupId) groupId = state.board.groups[0].id
-			const newPayload = {task, groupId}
-dispatch({type:'saveTask',payload: newPayload})
+				let { groupId, title } = payload
+				const task = boardService.getEmptyTask()
+				if (title) task.title = title
+				if (!groupId) groupId = state.board.groups[0].id
+				const newPayload = { task, groupId }
+				dispatch({ type: 'saveTask', payload: newPayload })
 			} catch (err) {
 				console.log('Store: Error in addTask', err)
 				throw err
@@ -209,8 +208,8 @@ dispatch({type:'saveTask',payload: newPayload})
 		},
 		async removeTask({ state, dispatch, commit }, { ids }) {
 			try {
-				commit({type:'removeTask',ids})
-				dispatch({type:'filterBoard'})
+				commit({ type: 'removeTask', ids })
+				dispatch({ type: 'filterBoard' })
 				await boardService.saveBoard(state.board)
 			} catch (err) {
 				console.log('Store: Error in removeTask', err)
@@ -219,8 +218,8 @@ dispatch({type:'saveTask',payload: newPayload})
 		},
 		async removeTasks({ state, dispatch, commit }, { ids }) {
 			try {
-				commit({type:'removeTasks',ids})
-				dispatch({type:'filterBoard'})
+				commit({ type: 'removeTasks', ids })
+				dispatch({ type: 'filterBoard' })
 				await boardService.saveBoard(state.board)
 			} catch (err) {
 				console.log('Store: Error in removeTask', err)
@@ -229,9 +228,9 @@ dispatch({type:'saveTask',payload: newPayload})
 		},
 		async addGroup({ dispatch, state, commit }) {
 			try {
-			const payload = boardService.getEmptyGroup()
-				commit({type:'saveGroup',payload})
-				dispatch({type:'filterBoard'})
+				const payload = boardService.getEmptyGroup()
+				commit({ type: 'saveGroup', payload })
+				dispatch({ type: 'filterBoard' })
 				await boardService.saveBoard(state.board)
 			} catch (err) {
 				console.log('boardStore: Error in addGroup', err)
@@ -240,8 +239,8 @@ dispatch({type:'saveTask',payload: newPayload})
 		},
 		async removeGroup({ commit, dispatch }, { payload }) {
 			try {
-				commit({type:'removeTasks',payload})
-				dispatch({type:'filterBoard'})
+				commit({ type: 'removeTasks', payload })
+				dispatch({ type: 'filterBoard' })
 				await boardService.saveBoard(updatedBoard)
 			} catch (err) {
 				console.log('boardStore: Error in deleteBoard', err)
@@ -250,25 +249,25 @@ dispatch({type:'saveTask',payload: newPayload})
 		},
 		async saveGroupAtt({ state, dispatch, commit }, { payload }) {
 			try {
-				commit({type:'saveGroup',payload})
-				dispatch({type:'filterBoard'})
+				commit({ type: 'saveGroup', payload })
+				dispatch({ type: 'filterBoard' })
 				await boardService.saveBoard(state.board)
 			} catch (err) {
 				console.log('Store: Error in saveGroup', err)
 				throw err
 			}
 		},
-		async saveGroup({state, commit, dispatch}, { payload }) {
+		async saveGroup({ state, commit, dispatch }, { payload }) {
 			try {
-				commit({type:'saveGroup',payload})
-				dispatch({type:'filterBoard'})
+				commit({ type: 'saveGroup', payload })
+				dispatch({ type: 'filterBoard' })
 				await boardService.saveBoard(state.board)
 			} catch (err) {
 				console.log('Store: Error in saveGroup', err)
 				throw err
 			}
 		},
-		filterBoard({commit,state}) {
+		filterBoard({ commit, state }) {
 			const filterBy = state.filterBy
 			const advanceFilter = state.advanceFilter
 			if (Object.values(advanceFilter).some((arr) => Array.isArray(arr) && arr.length > 0)) {
@@ -280,7 +279,7 @@ dispatch({type:'saveTask',payload: newPayload})
 		setAndFilterBoard({ commit, dispatch }, { board }) {
 			if (!board?._id) return
 			commit({ type: 'setBoard', board })
-			dispatch({type:'filterBoard'})
+			dispatch({ type: 'filterBoard' })
 		},
 		async getBoardById({ dispatch, commit }, { boardId }) {
 			commit({ type: 'setIsSwitchingBoards', isSwitchingBoards: true })
@@ -391,7 +390,7 @@ dispatch({type:'saveTask',payload: newPayload})
 				dispatch({ type: 'loadBoardList', filterBy: { userId } })
 				return updatedBoard
 			} catch (err) {
-				console.error('error in updateBoard:',err)
+				console.error('error in updateBoard:', err)
 				throw err
 			}
 		},
@@ -494,6 +493,7 @@ dispatch({type:'saveTask',payload: newPayload})
 			try {
 				const boardDev = boardService.getDemoDev()
 				const boardFinance = boardService.getDemoFinance()
+				console.log(`boardService:`, boardService)
 				const user = getters.loggedinUser
 				boardDev.createdBy = {
 					_id: user._id,
@@ -515,23 +515,23 @@ dispatch({type:'saveTask',payload: newPayload})
 					fullname: user.fullname,
 					imgUrl: user.imgUrl,
 				})
-				commit({ type: 'addBoard', board: newBoardDev })
-				commit({ type: 'addBoard', board: newBoardFinance })
 				const newBoardDev = await boardService.saveBoard(boardDev)
 				const newBoardFinance = await boardService.saveBoard(boardFinance)
+				commit({ type: 'addBoard', board: newBoardDev })
+				commit({ type: 'addBoard', board: newBoardFinance })
 				return newBoardDev
 			} catch (err) {
 				console.log('Store: Error in add demo boards', err)
 				throw err
 			}
 		},
-		async addMember({commit, dispatch, state}, { userId }) {
+		async addMember({ commit, dispatch, state }, { userId }) {
 			try {
 				const member = await userService.getById(userId)
 				const payload = { _id: member._id, fullname: member.fullname, imgUrl: member.imgUrl }
-commit({type:'saveMember',payload})
-dispatch({type:'filterBoard'})
-await boardService.saveBoard(state.board)
+				commit({ type: 'saveMember', payload })
+				dispatch({ type: 'filterBoard' })
+				await boardService.saveBoard(state.board)
 				// const board = JSON.parse(JSON.stringify(state.board))
 				// const updatedBoard = boardService.save(board, 'member', payload)
 				// dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
@@ -541,16 +541,16 @@ await boardService.saveBoard(state.board)
 				throw err
 			}
 		},
-		async removeMember({state, dispatch, commit}, { userId }) {
+		async removeMember({ state, dispatch, commit }, { userId }) {
 			try {
 				commit({ type: 'removeMember', userId })
 				dispatch({ type: 'filterBoard' })
 				await boardService.saveBoard(state.board)
 				// const member = await userService.getById(userId)
-// 	const board = JSON.parse(JSON.stringify(state.board))
-// 	const updatedBoard = boardService.remove({ board, memberId: member._id }, 'member')
-// 	dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
-//   const savedBoard = await boardService.saveBoard(updatedBoard)
+				// 	const board = JSON.parse(JSON.stringify(state.board))
+				// 	const updatedBoard = boardService.remove({ board, memberId: member._id }, 'member')
+				// 	dispatch({ type: 'setAndFilterBoard', board: updatedBoard })
+				//   const savedBoard = await boardService.saveBoard(updatedBoard)
 			} catch (err) {
 				console.log('boardStore: Error in removeMember', err)
 				throw err
