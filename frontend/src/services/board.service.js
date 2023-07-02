@@ -62,20 +62,28 @@ async function getById(boardId) {
 // }
 
 async function addGptBoard(boardObj) {
-	let board
-	const savedBoards = utilService.loadFromStorage(STORAGE_KEY) || []
-	let currBoard = savedBoards ? savedBoards.find((boards) => boards.title === boardObj.boardName) : null
-	if (currBoard) {
-		delete currBoard._id
-		currBoard.createdBy = boardObj.createdBy
-		currBoard.members = boardObj.members
-		board = await saveBoard(currBoard)
-	} else {
-		board = await httpService.post(API_KEY + 'gpt', boardObj)
-		savedBoards.push(board)
-		utilService.saveToStorage(STORAGE_KEY, savedBoards)
+	try {
+		let board
+		const savedBoards = utilService.loadFromStorage(STORAGE_KEY) || []
+		let currBoard = savedBoards.length
+			? savedBoards.find((boards) => boards.title === boardObj.boardName)
+			: null
+		if (currBoard) {
+			delete currBoard._id
+			currBoard.createdBy = boardObj.createdBy
+			currBoard.members = boardObj.members
+			board = await saveBoard(currBoard)
+			if (!board) throw new Error('Could not add board')
+		} else {
+			board = await httpService.post(API_KEY + 'gpt', boardObj)
+			if (!board) throw new Error('Could not add board')
+			savedBoards.push(board)
+			utilService.saveToStorage(STORAGE_KEY, savedBoards)
+		}
+		return board
+	} catch (err) {
+		console.log('Error adding board with gpt:', err)
 	}
-	return board
 }
 
 async function saveBoard(board) {
